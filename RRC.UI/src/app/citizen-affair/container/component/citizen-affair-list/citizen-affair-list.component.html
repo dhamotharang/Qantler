@@ -1,0 +1,194 @@
+<div class="dashboard mb-3">
+  <div class="row mb-4">
+    <ng-container *ngIf="IsDocumentLoad">
+      <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+        <div class="card mouse-point" *ngIf="det.show" (click)="changeType(det.type)">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img src="{{det.image}}">
+              </div>
+              <div class="col col-ls-12 col-xl">
+                <div class="count">{{det.count}}</div>
+              </div>
+            </div>
+            <div class="name">{{det.name}}</div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="progress my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress"
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="col-sm-12 mb-2 col-md-4">
+      <div class="card mouse-point h-100" routerLink="/app/citizen-affair/citizen-affair-documents">
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <div class="col-auto col-ls-12 col-xl-auto">
+              <img class="document" src="assets/inbox@2x.png">
+            </div>
+            <div class="row mt-3">
+              <div class="col-12 txt-ct">
+                <div class="name" style="font-weight: bold">Citizen Affair Document</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper mb-3">
+    <div class="form-title">
+      FILTER BY
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label for="status">Status</label>
+          <ng-select [items]="status" [closeOnSelect]="true" [multiple]="false" bindLabel="DisplayName"
+            bindValue="DisplayName" [(ngModel)]="filter.Status">
+          </ng-select>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">Reference Number</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="filter.ReferenceNumber">
+        </div>
+
+        <div class="form-group col-sm-4">
+          <label for="status">Request Type</label>
+          <ng-select [items]="requestList" [closeOnSelect]="true" [multiple]="false" bindLabel="name" bindValue="name"
+            [(ngModel)]="filter.RequestType" (change)="FilterLoad($event)">
+          </ng-select>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Date Range From">Request Date From</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" bsDatepicker #dpFrom="bsDatepicker"
+              [maxDate]="maxDate(ReqDateTo)" [bsConfig]="bsConfig" [(ngModel)]="ReqDateFrom">
+            <div (click)="dpFrom.toggle()">
+              <i class="far fa-calendar date"></i>
+            </div>
+          </div>
+          <div class="col-12" class="text-danger">
+            <ng-container *ngIf="dateValidation()">
+              {{ validateStartEndDate.msg }}
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Date Range From">Request Date To</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" maxlength="0" [minDate]="minDate(ReqDateFrom)"
+              bsDatepicker #dpTo="bsDatepicker" [bsConfig]="bsConfig" [(ngModel)]="ReqDateTo">
+            <div (click)="dpTo.toggle()">
+              <i class="far fa-calendar date"></i>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="source">Source Name</label>
+          <ng-select [items]="userList" [closeOnSelect]="true" [multiple]="false" bindLabel="EmployeeName"
+            bindValue="EmployeeName" [(ngModel)]="filter.sourcename">
+          </ng-select>
+        </div>
+        <ng-container *ngIf=IsPlaceLoc>
+          <div class="form-group col-sm-4">
+            <label for="name">Personal/Location Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="filter.PersonalLocationName">
+          </div>
+        </ng-container>
+        <div class="form-group col-sm-4">
+          <label for="name">Phone Number</label>
+          <input type="number" class="form-control" id="name" [(ngModel)]="filter.PhoneNumber">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">Smart Search</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="filter.SmartSearch">
+        </div>
+        <div class="row justify-content-center filter-Btn-width pt-4 mx-2">
+          <div class="col-auto p-0 py-2">
+            <button class="rounded-btn" (click)="filterList()">Search</button>
+          </div>
+          <div class="form-group col-auto col-md-auto p-0 py-2 p-md-2">
+            <button class="rounded-btn" (click)="openReport()">Show Available Reports</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="destination"></div>
+  <div class="page-form-wrapper mb-3 d-none d-md-block">
+    <!-- <div class="d-none d-md-block" id="destination"></div> -->
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns" [headerHeight]="50"
+      [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+    </ngx-datatable>
+    <!-- <div id="destination"></div> -->
+    <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+      <div class="table-action-btn">
+        <button class="table-view"
+          *ngIf="!((row.status == 'Draft' && row.creator == currentUser.DisplayName) || (row.status=='Pending for Resubmission' && row.creator == currentUser.DisplayName))"
+          (click)="viewData('',value)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+        <button
+          *ngIf="(row.status == 'Draft' && row.creator == currentUser.DisplayName) || (row.status=='Pending for Resubmission' && row.creator == currentUser.DisplayName)"
+          class="table-edit" name="edit" (click)="viewData('edit',value)"><i class="fas fa-edit"
+            style="cursor: pointer;"></i></button>
+      </div>
+    </ng-template>
+    <ngb-pagination *ngIf="true" class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize"
+      [boundaryLinks]="true" [collectionSize]="count" [rotate]="false" (pageChange)="onChangePage($event)"
+      (numPages)="numPages = $event"></ngb-pagination>
+  </div>
+  <div class="d-block d-md-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12"><span><b>Ref ID : </b></span><span>{{row.referenceNumber}}</span></div>
+          <div class="col-12"><span><b>Request Type : </b></span><span>{{row.requestType}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col"><span><b>Personal/ Location Name : </b></span><span> {{row.personalName}}</span></div>
+          <div class="col"><span><b>Phone Number : </b></span><span> {{row.phoneNumber}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col"><span><b>Status : </b></span><span> {{row.status}}</span></div>
+          <div class="col"><span><b>Assign To : </b></span><span> {{row.assignedTo}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col"><span><b>Request Date : </b></span><span> {{row.requestDate}}</span></div>
+          <div class="col" *ngIf="filter.RequestType && filter.RequestType == 'Complaints/Suggestion'"><span><b>Reporter
+                : </b></span><span>
+              {{row.requestDate}}</span></div>
+        </div>
+        <div class="row" *ngIf="filter.RequestType && filter.RequestType == 'Complaints/Suggestion'">
+          <div class="col"><span><b>Created By : </b></span><span> {{row.creator}}</span></div>
+        </div>
+        <div class="row mar-top">
+          <div class="col"></div>
+          <div class="col-auto table-action-btn">
+            <button class="table-view"
+              *ngIf="!((row.status == 'Draft' && row.creator == currentUser.DisplayName) || (row.status=='Pending for Resubmission' && row.creator == currentUser.DisplayName))"
+              (click)="viewData('',row)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+            <button
+              *ngIf="(row.status == 'Draft' && row.creator == currentUser.DisplayName) || (row.status=='Pending for Resubmission' && row.creator == currentUser.DisplayName)"
+              class="table-edit" name="edit" (click)="viewData('edit',row)"><i class="fas fa-edit"
+                style="cursor: pointer;"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="count > 0">
+      <ngb-pagination *ngIf="true" class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize"
+        [boundaryLinks]="true" [collectionSize]="count" [rotate]="false" (pageChange)="onChangePage($event)"
+        (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>

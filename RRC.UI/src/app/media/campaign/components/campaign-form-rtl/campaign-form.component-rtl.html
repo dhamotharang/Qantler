@@ -1,0 +1,410 @@
+<div class="campaign-form">
+  <div class="page-form-wrapper"  id="trigger-scroll">
+    <div class="form-title ar-rtl">
+      <span *ngIf="editMode">{{arabic('requestforcampaign')}}</span>
+      <span *ngIf="!editMode">{{arabic('requestforcampaignview')}}</span>
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row" *ngIf="!editMode || reSubmit">
+        <div class="form-group right col-12 col-md-4">
+          <label for="refId">{{arabic('referenceid')}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="refId"
+            id="refId">
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="Date">{{arabic('date')}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              disabled
+              class="form-control pr-4"
+              value="{{date | date:'dd/MM/yyyy'}}"/>
+            <i class="far fa-calendar date ar-rtl-icon" (click)="dp.toggle()"></i>
+          </div>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="sourceou">{{arabic('sourceofficeSlashDepartment')}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceou"
+            id="sourceou">
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="source-name">{{arabic('sourcename')}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceName"
+            id="sourceName">
+        </div>
+      </div>
+      <hr *ngIf="!editMode"/>
+      <div class="row">
+        <div class="form-group right col-12 col-md-4">
+          <label for="approverDept">{{arabic('approverofficeSlashDepartment')}}</label>
+          <ng-select
+            class="approverDept-ddown"
+            [disabled]="!editMode"
+            [items]="approverDeptList"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            (change)="onDepartmentSelect()"
+            bindValue="OrganizationID"
+            placeholder=" {{arabic('approverdepartment')}}"
+            [(ngModel)]="approverDept">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="approvers">{{arabic('approvername')}}</label>
+          <ng-select
+            class="approvers-ddown"
+            [disabled]="!editMode"
+            [items]="approverList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="{{arabic('approvername')}}"
+            [(ngModel)]="approver">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="projectDetail">{{arabic('initiativeactivityprojectdetail')}}</label>
+          <input
+            type="text"
+            [disabled]="!editMode"
+            class="form-control"
+            [(ngModel)]="initiativeProjectActivity"
+            placeholder="{{arabic('initiativeactivityprojectdetail')}}"
+            (change)="validate()"
+            id="projectDetail">
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="startDate">{{arabic('campaignstartdate')}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              [disabled]="!editMode"
+              placeholder="{{arabic('campaignstartdate')}}"
+              class="form-control pr-4"
+              bsDatepicker
+              #dpSD="bsDatepicker"
+              [(ngModel)]="campaignStartDate"
+              [bsConfig]="bsConfig">
+              <span (click)="editMode ? dpSD.toggle() : ''">
+                <i class="far fa-calendar date ar-rtl-icon"></i>
+              </span>
+          </div>
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="campaignPeriod">{{arabic('campaignperiod')}}</label>
+          <input
+            type="text"
+            [disabled]="!editMode"
+            placeholder="{{arabic('campaignperiod')}}"
+            class="form-control"
+            [(ngModel)]="campaignPeriod"
+            (blur)="validate()"
+            id="campaignPeriod">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="diwanRole">{{arabic('diwansrole')}}</label>
+          <input
+            type="text"
+            [disabled]="!editMode"
+            placeholder="{{arabic('diwansrole')}}"
+            class="form-control"
+            [(ngModel)]="diwanRole"
+            (blur)="validate()"
+            id="diwanRole">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="otherEntities">{{arabic('otherentities')}}</label>
+          <input
+            type="text"
+            placeholder="{{arabic('otherentities')}}"
+            [disabled]="!editMode"
+            class="form-control"
+            [(ngModel)]="otherEntities"
+            (blur)="validate()"
+            id="otherEntities">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="targetAudience">{{arabic('targetaudience')}}</label>
+          <input
+            type="text"
+            [disabled]="!editMode"
+            placeholder="{{arabic('targetaudience')}}"
+            class="form-control"
+            [(ngModel)]="targetAudience"
+            (blur)="validate()"
+            id="targetAudience">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="location">{{arabic('location')}}</label>
+          <input
+            type="text"
+            [disabled]="!editMode"
+            placeholder="{{arabic('location')}}"
+            class="form-control"
+            [(ngModel)]="location"
+            (blur)="validate()"
+            id="location">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="language">{{arabic('languages')}}</label>
+          <ng-select
+            class="approverDept-ddown"
+            placeholder="{{arabic('languages')}}"
+            [disabled]="!editMode"
+            [items]="languageList"
+            [closeOnSelect]="true"
+            (change)="validate()"
+            bindLabel="LanguageName"
+            bindValue="LanguageID"
+            placeholder="Select Languages"
+            [(ngModel)]="language">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="mediaChannel">{{arabic('mediachannel')}}</label>
+          <ng-select
+            class="approverDept-ddown"
+            [disabled]="!editMode"
+            placeholder="{{arabic('mediachannel')}}"
+            [items]="mediaChannelList"
+            [closeOnSelect]="true"
+            (change)="validate()"
+            bindLabel="MediaChannelName"
+            bindValue="MediaChannelID"
+            placeholder="Select Media Channel"
+            [(ngModel)]="mediaChannel">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="notes">{{arabic('notes')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            placeholder="{{arabic('notes')}}"
+            class="form-control"
+            id="notes"
+            (ngModelChange)="validate()"
+            [(ngModel)]="notes"></textarea>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="requestDetails">{{arabic('requestdetails')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control"
+            id="requestDetails"
+            placeholder="{{arabic('requestdetails')}}"
+            (ngModelChange)="validate()"
+            [(ngModel)]="requestDetails"></textarea>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="generalInformation">{{arabic('generalinformation')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control"
+            placeholder="{{arabic('generalinformation')}}"
+            id="generalInformation"
+            (ngModelChange)="validate()"
+            [(ngModel)]="generalInformation"></textarea>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="mainObjective">{{arabic('mainobjective')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control"
+            placeholder="{{arabic('mainobjective')}}"
+            id="mainObjective"
+            (ngModelChange)="validate()"
+            [(ngModel)]="mainObjective"></textarea>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="mainIdea">{{arabic('mainidea')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            placeholder="{{arabic('mainidea')}}"
+            class="form-control"
+            id="mainIdea"
+            (ngModelChange)="validate()"
+            [(ngModel)]="mainIdea"></textarea>
+        </div>
+        <div class="form-group right col-12" [ngClass]="{'required':editMode}">
+          <label for="planVision">{{arabic('strategicgoalsplanvisionofrrc')}}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control"
+            placeholder="{{arabic('strategicgoalsplanvisionofrrc')}}"
+            id="planVision"
+            (ngModelChange)="validate()"
+            [(ngModel)]="planVision"></textarea>
+        </div>
+        <div class="form-group right col-12 col-md-6">
+          <label for="certificate">{{arabic('attachments')}}</label>
+          <input
+            #fileInput
+            [disabled]="!editMode"
+            multiple
+            type="file"
+            (change) = "handleFileUpload($event)"
+            name="Attachments"
+            class="form-control attachment"
+            name="certificate"
+            id="certificate"
+            placeholder="Select file" />
+          <div class="col-12 col-md-6" *ngIf="uploadProcess">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                  aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+              </div>
+            </div>
+            <div class="col-12 ar-rtl" *ngIf="attachments.length>0">
+                <label for="Keywords">{{ arabic('attachmentlist')}}</label>
+                <div class="row border font-weight-bold">
+                  <div class="col border">{{ arabic('filename')}}</div>
+                  <div class="col border text-center" *ngIf="editMode">{{ arabic('action')}}</div>
+                </div>
+                <div *ngFor="let file of attachments; let i = index">
+                  <div class="row">
+                    <div class="col{{editMode ? '-6' : ''}} border">
+                      <a class="cursor break-word"
+                      href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+                    </div>
+                    <div class="col-6 border text-center" *ngIf="editMode" >
+                      <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section
+              [comments]="RequestComments"
+              [commentType]="'Campaign'"
+              [moduleId]="CampaignID"
+              [moduleNameID]="'CampaignID'">
+            </app-comment-section>
+            <div class="row comment-section">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{userProfileImg}}" class="user-ProfileImg"/>
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text">
+                <div class="comment-section-user-info ar-rtl">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea
+                    class="form-control vertical-resize"
+                    [(ngModel)]="comment"
+                    id="NewCommentContent"
+                    [disabled]="!canComment || status == 87"
+                    placeholder=""
+                    (ngModelChange)="commentValid()"
+                    rows="3">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center px-3">
+          <div class="col-auto p-1" *ngIf="editMode && !reSubmit && !id">
+            <button
+              [ngClass]="{'disabled-btn': inProgress || !validate() }"
+              [disabled]="inProgress || !validate()"
+              class="rounded-btn"
+              (click)="sendRequest()">
+              {{arabic('submit')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="editMode && reSubmit && screenStatus == 'edit'">
+            <button
+              [ngClass]="{'disabled-btn': inProgress || !validate() }"
+              [disabled]=" inProgress || !validate()"
+              class="rounded-btn"
+              (click)="ReSubmit()">
+              {{arabic('submit')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 86 && isApprover">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              (click)="updateAction('Approve')">
+              {{arabic('approve')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 86 && isApprover">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress || !isComment }"
+              [disabled]="inProgress || !isComment"
+              (click)="onEscalate('Escalate')">
+              {{arabic('escalate')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 86 && isApprover">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress || !isComment }"
+              [disabled]="inProgress || !isComment"
+              (click)="updateAction('Reject')">
+              {{arabic('reject')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 86 && isApprover">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress || !isComment }"
+              [disabled]="inProgress || !isComment"
+              (click)="updateAction('ReturnForInfo')">
+              {{arabic('returnforinfo')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 82 && (OrgUnitID == 17) && IsOrgHead && !isAssignedToMe">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              (click)="onAssignTo()">
+              {{arabic('assign')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode && status == 82 && (OrgUnitID == 17) && !IsOrgHead && !isAssignedToMe">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              (click)="updateAction('AssignToMe')">
+              {{arabic('assigntome')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="!editMode  && status == 82 && (OrgUnitID == 17) &&  isAssignedToMe">
+            <button
+              class="rounded-btn"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              (click)="updateAction('Close')">
+              {{arabic('close')}}
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

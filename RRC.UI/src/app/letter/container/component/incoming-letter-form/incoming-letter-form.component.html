@@ -1,0 +1,409 @@
+<div class="page-form-wrapper" id="trigger-letter-in">
+  <div class="form-title">
+    INCOMING {{screenTitle}}
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Letter Ref">Letter Ref</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Letter Ref"
+          placeholder="Enter Ref" [(ngModel)]="letterModel.LetterReferenceNumber">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="status">Status</label>
+        <select [disabled]="screenStatus!='Create'" class="form-control" [(ngModel)]="letterModel.Status"
+          id="exampleFormControlSelect1">
+          <option *ngFor="let us of status" [value]="us.LookupsID">{{us.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Creation Date">Creation Date</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus!='Create'" type="text" class="form-control"
+            [(ngModel)]="letterModel.CreatedDateTime" bsDatepicker #dpCreate="bsDatepicker" [bsConfig]="bsConfigs">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source OU">Source Office/Department</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Source OU"
+          placeholder="Enter Source OU" [(ngModel)]="letterModel.SourceOU">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source Name">Source Name</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Source Name"
+          placeholder="Enter Source Name" [(ngModel)]="letterModel.SourceName">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus!='Create'">
+    <div class="row">
+      <div class="form-group col-12 col-md" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Letter Title">Letter Title</label>
+        <input type="text" [disabled]="screenStatus=='View'" class="form-control" id="Letter Title" placeholder=""
+          [(ngModel)]="letterModel.Title">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Destination OU">Destination Office/Department</label>
+        <ng-select [items]="destinationDepartment" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (remove)="checkDepartmentUser($event)" (clear)="letterModel.DestinationUserId = ''"
+          (change)="Destination($event)" [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="letterModel.DestinationOU" [disabled]="screenStatus=='View'">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="User Name">Destination Name</label>
+        <ng-select [items]="userReceiver" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="userName($event)" [multiple]="false" bindLabel="EmployeeName" bindValue="UserID"
+          [(ngModel)]="letterModel.DestinationUserId" [disabled]="screenStatus=='View'">
+        </ng-select>
+      </div>
+
+
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='View'"
+        [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">Receiving Date</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus=='View'" type="text" class="form-control"
+            [(ngModel)]="letterModel.ReceivingDate" bsDatepicker #dpReceive="bsDatepicker" [bsConfig]="bsConfigs">
+          <div (click)="dpReceive.toggle()">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus=='View'"
+        [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">Receiving Date</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus=='View'" type="text" class="form-control"
+            [(ngModel)]="letterModel.ReceivingDate" bsDatepicker #dpReceive="bsDatepicker" [bsConfig]="bsConfigs">
+          <span (click)="dpReceive.click()">
+            <i class="far fa-calendar date"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="from-froup col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">Received From</label>
+        <div>
+          <input type="radio" name="entity" [disabled]="screenStatus =='View'"
+            [(ngModel)]="letterModel.OfficialEntity" id="attentionTo" value="1"
+            (change)=onentitychange(letterModel.OfficialEntity)> Government Entity
+        </div>
+        <div>
+          <input type="radio" [disabled]="screenStatus =='View'" [(ngModel)]="letterModel.OfficialEntity"
+            name="entity" id="attentionAddress" value="2" (change)=onentitychange(letterModel.OfficialEntity)>
+          Non-Government Entity
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Received from-Goverment entity">Sender Entity</label>
+        <ng-select [items]="organisationEntity" [closeOnSelect]="true" (change)="checkEntity($event)"
+          [disabled]="screenStatus=='View'" [multiple]="false" bindLabel="EntityName" bindValue="ID"
+          [(ngModel)]="letterModel.ReceivedFromGovernmentEntity">
+          <!-- <ng-template ng-notfound-tmp let-searchTerm="searchTerm" *ngIf="canEditContact">
+                        <button class="rounded-btn" (click)="addContact()">
+              Add
+            </button>
+                    </ng-template> -->
+        </ng-select>
+
+      </div>
+
+      <div class="form-group col-12 col-md-4">
+        <label for="Received from-Name">Sender Name</label>
+        <!-- <ng-select [items]="organisationEntityNames" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false" bindLabel="UserName" bindValue="ID" [(ngModel)]="letterModel.ReceivedFromName"> -->
+        <input type="text" [disabled]="screenStatus=='View'" class="form-control"
+          [(ngModel)]="letterModel.ReceivedFromName">
+        <!-- <ng-template ng-notfound-tmp let-searchTerm="searchTerm" *ngIf="canEditContact"> -->
+        <button *ngIf="canEditContact && screenStatus!='View'" class="rounded-btn mt-1"
+          style="margin-right: 0px;float: right;" (click)="addContact()">
+          Add
+        </button>
+        <!-- </ng-template> -->
+        <!-- </ng-select> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Department">Approver Office/Department</label>
+        <ng-select [items]="approverDepartment" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="ApproverDestination($event)" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationID" [(ngModel)]="letterModel.ApproverDepartmentId">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Name">Approver Name</label>
+        <ng-select [items]="userDestination" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="letterModel.ApproverId">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-6">
+        <label for="Related to outgoing letter(s)">Related to outgoing letter(s)</label>
+        <div class="d-flex flex-row">
+          <tag-input class="form-control" [disable]="screenStatus=='View'" (onAdd)="onAddChangeout($event)"
+            (onRemove)="onRemoveChangeout($event)" [placeholder]="' +Enter Letter'"
+            [secondaryPlaceholder]="'Enter Outgoing Letter'" [(ngModel)]='letterModel.RelatedToOutgoingLetter'>
+          </tag-input>
+          <button *ngIf="screenStatus!='View'" class="custom-btn" (click)="openLinkToModal('out')">...</button>
+        </div>
+        <div *ngIf="Ismemolink" class="alert alert-danger alert-dismissible fade" [ngClass]="{'show':Ismemolink}"
+          role="alert">
+          Invalid ref id or access to this ref id is denied.
+          <button type="button" class="close" (click)="Ismemolink = !Ismemolink" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-auto" *ngFor="let link of link_list">
+            <a [href]="getRefLink(link,1)"
+              target="_blank">{{(link.ReferenceNo?link.ReferenceNo:link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Related to outgoing letter(s)">Related to incoming letter(s)</label>
+        <div class="d-flex flex-row">
+          <tag-input class="form-control" [disable]="screenStatus=='View'" (onAdd)="onAddChangein($event)"
+            (onRemove)="onRemoveChangein($event)" [placeholder]="' +Enter Letter'"
+            [secondaryPlaceholder]="'Enter Incoming Letter'" [(ngModel)]='letterModel.RelatedToIncomingLetter'>
+          </tag-input>
+          <button *ngIf="screenStatus!='View'" class="custom-btn" (click)="openLinkToModal('in')">...</button>
+        </div>
+        <div *ngIf="Isletterlink" class="alert alert-danger alert-dismissible fade" [ngClass]="{'show':Isletterlink}"
+          role="alert">
+          Invalid ref id or access to this ref id is denied.
+          <button type="button" class="close" (click)="Isletterlink = !Isletterlink" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-auto" *ngFor="let income_link of incoming_link_list">
+            <a [href]="getRefLink(income_link,0)"
+              target="_blank">{{(income_link.ReferenceNo?income_link.ReferenceNo:income_link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-auto" *ngFor="let link of link_list">
+            <a [href]="getRefLink(link,1)"
+              target="_blank">{{(link.ReferenceNo?link.ReferenceNo:link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-auto" *ngFor="let income_link of incoming_link_list">
+            <a [href]="getRefLink(income_link,0)"
+              target="_blank">{{(income_link.ReferenceNo?income_link.ReferenceNo:income_link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class=" row py-3">
+      <div class="col-12">
+        Letter Details
+      </div>
+      <div class="col-12">
+        <tinymce [config]="tinyConfig" [disabled]="screenStatus=='View'" [(ngModel)]="letterModel.LetterDetails">
+        </tinymce>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col">
+        <label for="notes">Notes</label>
+        <textarea [disabled]="screenStatus=='View'" class="form-control" [(ngModel)]="letterModel.Notes" id="notes"
+          placeholder="Enter Notes" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Decument classification">Document classification</label>
+        <ng-select [items]="documentList" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="us" bindValue="us" [(ngModel)]="letterModel.DocumentClassification">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Priority">Priority</label>
+        <ng-select [items]="priorityList" [disabled]="screenStatus=='View'" bindLabel="name" bindValue="name"
+          [(ngModel)]="letterModel.Priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="form-group col-12" *ngIf="screenStatus!='View'">
+            <label for="Attachments">Attachments</label>
+            <input #variable type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'"
+              name="Attachments" (change)="Attachments($event)" id="Attachments" placeholder="Select file" />
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+            <label for="Keywords">Attachment List</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">File Name</div>
+              <div class="col border text-center" *ngIf="screenStatus!='View'">Action</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                  <a class="cursor"
+                    href="{{environment.AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Keywords">Keywords</label>
+        <tag-input class="form-control" [disable]="screenStatus=='View'" [placeholder]="" [clearOnBlur]="true"
+          (onBlur)="onTextChange($event)" [secondaryPlaceholder]="'Enter Keyword'" [(ngModel)]='letterModel.Keywords'>
+        </tag-input>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Need Reply">Need Reply</label>
+        <div>
+          <input type="radio" name="reply" [(ngModel)]="letterModel.NeedReply" value="true"
+            [disabled]="screenStatus=='View'"> Yes
+          <input class="ml-2" type="radio" name="reply" [(ngModel)]="letterModel.NeedReply" value="false"
+            [disabled]="screenStatus=='View'"> No
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Need Reply">Did original letter physically send?</label>
+        <div>
+          <input type="radio" name="replys" [(ngModel)]="letterModel.LetterPhysicallySend" value="true"
+            [disabled]="screenStatus=='View'"> Yes
+          <input class="ml-2" type="radio" name="replys" [(ngModel)]="letterModel.LetterPhysicallySend" value="false"
+            [disabled]="screenStatus=='View'"> No
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="screenStatus=='View' && approverBtn">
+      <div class="form-group col">
+        <label for="Reference Id">Comments</label>
+        <textarea class="form-control" [(ngModel)]="letterModel.Comments" id="comments" placeholder="Enter Comments"
+          rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+      <div *ngIf="approverBtn || destinationBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="distinationBtnDis || btnLoad"
+          [ngClass]="{'disabled-btn': distinationBtnDis}"
+          (click)="btnLoad = 'true';statusChange('Close',template);closeBtnLoad='true'">
+          <app-btn-loader *ngIf="closeBtnLoad" class="btn-loader"></app-btn-loader>CLOSE
+        </button>
+      </div>
+      <div *ngIf="approverBtn || destinationBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="distinationBtnDis" [ngClass]="{'disabled-btn': distinationBtnDis}"
+          (click)="popup('Letter Redirect',destinationBtn)">REDIRECT</button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || btnLoad" [ngClass]="{'disabled-btn': approverBtnDis}"
+          (click)="btnLoad = 'true';statusChange('Approve',template);approveBtnLoad='true'">
+          <app-btn-loader *ngIf="approveBtnLoad" class="btn-loader"></app-btn-loader>APPROVE
+        </button>
+      </div>
+
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || letterModel.Comments == '' || btnLoad "
+          [ngClass]="{'disabled-btn': approverBtnDis || letterModel.Comments =='' || btnLoad}"
+          (click)="popup('Letter Escalate',template)">ESCALATE</button>
+      </div>
+      <div *ngIf="draftBtn || createBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}"
+          (click)="btnLoad = 'true';saveLetter('Submit');sendBtnLoad='true'">
+          <app-btn-loader *ngIf="sendBtnLoad" class="btn-loader"></app-btn-loader>SEND
+        </button>
+      </div>
+      <div *ngIf="createBtnShow || draftBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';saveLetter('Save');sendDraftBtnLoad='true'">
+          <app-btn-loader *ngIf="sendDraftBtnLoad" class="btn-loader"></app-btn-loader>SAVE AS DRAFT
+        </button>
+      </div>
+      <div *ngIf="downloadBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';downloadPdf();downloadBtnLoad='true'">
+          <app-btn-loader *ngIf="downloadBtnLoad" class="btn-loader"></app-btn-loader>DOWNLOAD
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="approverBtn">
+        <button class="rounded-btn" [disabled]="approverBtnDis || btnLoad" [ngClass]="{'disabled-btn': approverBtnDis}"
+          (click)="createDutyTask()">
+          CREATE DUTY TASK RELATED
+          <!-- <app-btn-loader *ngIf="downloadBtnLoad" class="btn-loader"></app-btn-loader> -->
+        </button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || letterModel.Comments =='' || btnLoad"
+          [ngClass]="{'disabled-btn': approverBtnDis || letterModel.Comments =='' || btnLoad}"
+          (click)="btnLoad = 'true';statusChange('Reject',template);rejectBtnLoad='true'">
+          <app-btn-loader *ngIf="rejectBtnLoad" class="btn-loader"></app-btn-loader>REJECT
+        </button>
+      </div>
+      <div *ngIf="creatorBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';saveClone('Clone',template);cloneBtnLoad='true'">
+          <app-btn-loader *ngIf="cloneBtnLoad" class="btn-loader"></app-btn-loader>CLONE
+        </button>
+      </div>
+      <div *ngIf="deleteBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" (click)="btnLoad = 'true';delete();deleteBtnLoad = 'true'">
+          <app-btn-loader *ngIf="deleteBtnLoad" class="btn-loader"></app-btn-loader>DELETE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="screenStatus != 'Create'" class="page-form-wrapper my-3 p-4">
+  <div class="row" *ngFor="let his of letterModel.HistoryLog">
+    <div class="col-auto">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png"> {{his.ActionDateTime | date: 'hh:mm a'}} /
+        {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+      </div>
+    </div>
+    <div class="col p-2">
+      <div class="row">
+        <div class="col-12">{{hisLog(his.Action)}} By : {{his.ActionBy}}<span *ngIf="showSpanForEscalateRedirect(his.Action)"> To : {{his.Escalate_RedirectUser}}</span></div>
+        <div class="col-12 comment" *ngIf="his.Comments !=''">Comments : {{his.Comments}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Success</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">Ok</button>
+  </div>
+</ng-template>

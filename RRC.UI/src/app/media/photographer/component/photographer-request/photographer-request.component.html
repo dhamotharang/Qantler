@@ -1,0 +1,237 @@
+<div class="photographer-form-container">
+  <div class="page-form-wrapper" id="trigger-scroll">
+    <div class="form-title">
+      REQUEST FOR PHOTOGRAPHER
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row" *ngIf="mode!=='create'">
+        <div class="form-group col-12 col-md-4">
+          <label for="Date">Ref ID</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="photographer.ReferenceNumber"
+              placeholder="RefID"
+              disabled>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Date">Date</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              value="{{photographer.Date | date:'dd/MM/yyyy'}}"/>
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="sourceou">Source Office/Department</label>
+          <input
+            type="text"
+            [(ngModel)]="photographer.SourceOU"
+            placeholder="Source OU"
+            disabled
+            class="form-control"
+            id="sourceou">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="source-name">Source Name</label>
+          <input
+            type="text"
+            placeholder="Source Name"
+            disabled
+            [(ngModel)]="photographer.SourceName"
+            class="form-control"
+            id="sourceName">
+        </div>
+      </div>
+      <hr *ngIf="mode!=='create'">
+      <div class="row before">
+        <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+          <label for="employeeCode">Event Name</label>
+          <input
+            type="text"
+            [disabled]='!editMode'
+            placeholder="Enter Event Name"
+            class="form-control"
+            [(ngModel)]="photographer.EventName"
+            id="eventName"
+            (blur)="validate()">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+          <label for="Date">Event Date</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              [disabled]='!editMode'
+              class="form-control"
+              [minDate]="allowedDateLimit"
+              [(ngModel)]="photographer.EventDate"
+              placeholder="Select Event Date"
+              bsDatepicker
+              #dp="bsDatepicker"
+              [bsConfig]="bsConfig">
+              <span *ngIf="submitBtn" (click)="dp.toggle()"><i class="far fa-calendar date"></i></span>
+              <span *ngIf="!submitBtn"><i class="far fa-calendar date"></i></span>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{required: editMode}">
+          <label for="employeeGrade">Location</label>
+          <input
+            type="text"
+            placeholder="Enter Location"
+            [disabled]='!editMode'
+            class="form-control"
+            [(ngModel)]="photographer.Location"
+            id="location">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label for="country-of-birth">Approver Office/Department</label>
+          <ng-select
+            [closeOnSelect]="true"
+            (change)="onChangeApproverDepartment()"
+            [items]="department"
+            [disabled]='!editMode'
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder="Select Approver-Department"
+            [(ngModel)]="photographer.ApproverDepartmentID">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="city-of-birth">Approver - Name</label>
+          <ng-select
+            [closeOnSelect]="true"
+            [items]="userApproverList"
+            [disabled]='!editMode'
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="Select Approver-Name"
+            [(ngModel)]="photographer.ApproverID">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section
+              [comments]="photographerRequestComments"
+              [commentType]="'Photographer'"
+              [moduleId]="id"
+              [moduleNameID]="'PhotographerID'">
+            </app-comment-section>
+
+            <!-- [readOnly]="!canComment" -->
+
+            <div class="row leave-comment-section">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{empProfileImg}}" class="user-ProfileImg"/>
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text">
+                <div class="comment-section-user-info">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea
+                    class="form-control vertical-resize"
+                    [(ngModel)]="photographer.Comments"
+                    id="NewCommentContent"
+                    placeholder=""
+                    rows="3"
+                    [disabled]="!canComment"
+                    >
+                  </textarea>
+                </div>
+
+                <!-- [disabled]="!canComment" -->
+
+                <!-- <div class="comment-reply-section">
+                  <button class="rounded-btn" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> SEND</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-reply-section text-center">
+        <button
+          (click)='createPhotographer()'
+          class="rounded-btn"
+          *ngIf="submitBtn && !reSubmit"
+          [disabled]="validate() || inProgress"
+          [ngClass]="{'disabled-btn': validate() || inProgress}">
+          SUBMIT
+        </button>
+        <button
+          (click)="userAction('resubmit')"
+          class="rounded-btn"
+          *ngIf="submitBtn && reSubmit"
+          [disabled]="validate() || inProgress"
+          [ngClass]="{'disabled-btn': validate() || inProgress}">
+          SUBMIT
+        </button>
+        <button
+          *ngIf='approveBtn'
+          class="rounded-btn"
+          [disabled]="validate() || inProgress"
+          (click)="userAction('approve')">
+          APPROVE
+        </button>
+        <button
+          *ngIf='escalateBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('escalate')">
+          ESCALATE
+        </button>
+        <button
+          *ngIf='rejectBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('reject')">
+          REJECT
+        </button>
+        <button
+          *ngIf='returnForInfoBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('returnforinfo')">
+          RETURN FOR INFO
+        </button>
+        <button
+          *ngIf='assingBtn'
+          class="rounded-btn"
+          [disabled]="inProgress"
+          (click)="userAction('assign')" [ngClass]="{'disabled-btn': inProgress}">
+          ASSIGN
+        </button>
+        <button
+          *ngIf='assignToMeBtn'
+          class="rounded-btn"
+          [disabled]="inProgress"
+          (click)="userAction('assigntome')" [ngClass]="{'disabled-btn': inProgress}">
+          ASSIGN TO ME
+        </button>
+        <button
+          *ngIf='closeBtnShow'
+          class="rounded-btn"
+          [disabled]="isApiLoading"
+          (click)="userAction('close')" [ngClass]="{'disabled-btn': isApiLoading}">
+          CLOSE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

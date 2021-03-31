@@ -1,0 +1,130 @@
+<div class="side-nav-wrapper">
+  <accordion [closeOthers]="true" [isAnimated]="true">
+    <accordion-group [panelClass]="'side-nav-collapse'" [(isOpen)]="isMemoOpen">
+      <div class="row side-nav" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon" src="assets/home/notebook.png"></span>Memos</div>
+        <div class="col-auto">
+          {{(isMemoOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseMemo">
+        <div class="mouse-point" [class.selected]="'Pending Memo List'==data_type"
+          (click)="type_change('memo','Pending Memo List','en/app/memo/memo-list')">Pending Memo List</div>
+        <div class="mouse-point" [class.selected]="'Incoming Memos'==data_type"
+          (click)="type_change('memo','Incoming Memos','en/app/memo/memo-list')">Incoming
+          Memos
+        </div>
+        <div class="mouse-point" [class.selected]="'Outgoing Memos'==data_type"
+          (click)="type_change('memo','Outgoing Memos','en/app/memo/memo-list')">Outgoing
+          Memos
+        </div>
+        <div class="mouse-point" [class.selected]="'Draft Memos'==data_type"
+          (click)="type_change('memo','Draft Memos','en/app/memo/memo-list')">Draft Memos</div>
+        <div class="mouse-point" [class.selected]="'Historical Memos Incoming'==data_type"
+          (click)="type_change('memo','Historical Memos Incoming','en/app/memo/memo-list')">Historical Memos Incoming</div>
+        <div class="mouse-point" [class.selected]="'Historical Memos Outgoing'==data_type"
+          (click)="type_change('memo','Historical Memos Outgoing','en/app/memo/memo-list')">Historical Memos Outgoing</div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isLetterOpen">
+      <div class="row side-nav" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon" src="assets/home/e-mail-envelope.png"></span>Letters
+        </div>
+        <div class="col-auto">
+          {{(isLetterOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseLetters">
+        <div class="mouse-point" [class.selected]="'My Pending Actions Incoming'==data_type"
+          (click)="type_change('letter','My Pending Actions Incoming','en/app/letter/letter-list')">My Pending Actions Incoming
+        </div>
+        <div class="mouse-point" [class.selected]="'My Pending Actions Outgoing'==data_type"
+          (click)="type_change('letter','My Pending Actions Outgoing','en/app/letter/letter-list')">My Pending Actions Outgoing
+        </div>
+        <div class="mouse-point" [class.selected]="'Incoming Letters'==data_type"
+          (click)="type_change('letter','Incoming Letters','en/app/letter/letter-list')">Incoming Letters</div>
+        <div class="mouse-point" [class.selected]="'Outgoing Letters'==data_type"
+          (click)="type_change('letter','Outgoing Letters','en/app/letter/letter-list')">Outgoing Letters</div>
+        <div class="mouse-point" [class.selected]="'Draft Letters'==data_type"
+          (click)="type_change('letter','Draft Letters','en/app/letter/letter-list')">Draft
+          Letters</div>
+        <div class="mouse-point" [class.selected]="'Historical Letters'==data_type"
+          (click)="type_change('letter','Historical Letters','en/app/letter/letter-list')">
+          Historical Letters</div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isTaskOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon" src="assets/home/list.png"></span>Duty Tasks</div>
+        <div class="col-auto">
+          {{(isTaskOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseDuty">
+        <div class="mouse-point" [class.selected]="'Task Dashboard'==data_type"
+          (click)="type_change('task','Task Dashboard','en/app/task/task-dashboard')">Dashboard</div>
+        <div class="mouse-point" [class.selected]="'Create Task'==data_type"
+          (click)="type_change('task','Create Task','en/app/task/task-create')">Create Task</div>
+        <div class="mouse-point" [class.selected]="'My Task'==data_type" (click)="eventTypeSelect(1,'My Task')">My Tasks
+          ({{taskStatus.Mytask}})</div>
+        <div class="mouse-point" [class.selected]="'Assigned Task'==data_type"
+          (click)="eventTypeSelect(2,'Assigned Task')">Assigned Tasks ({{taskStatus.Assignee}})</div>
+        <div class="mouse-point" [class.selected]="'Participants'==data_type"
+          (click)="eventTypeSelect(3,'Participants')">Participants ({{taskStatus.Participants}})</div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isMeetingOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point">
+          <span><img class="icon" src="assets/home/meet.png"></span>Meetings</div>
+        <div class="col-auto">
+          {{ isMeetingOpen ? '-' : '+' }}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseMeeting">
+        <div
+          class="mouse-point"
+          [class.selected]="'My Calendar'==data_type"
+          (click)="type_change('meeting', 'My Calendar', 'en/app/meeting/my-calendar')">
+          My Calendar
+        </div>
+        <div
+          class="mouse-point"
+          [class.selected]="'Meeting List'==data_type"
+          (click)="type_change('meeting', 'Meeting List', 'en/app/meeting/list')">
+          Meeting List
+        </div>
+        <div
+          class="mouse-point"
+          [class.selected]="'Create Meeting'==data_type"
+          (click)="type_change('meeting', 'Create Meeting', 'en/app/meeting/create')">
+          Create Meeting
+        </div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isCircularOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon" src="assets/home/e-mail-envelope.png"></span>Circulars
+        </div>
+        <div class="col-auto">
+          {{(isCircularOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseCirculars">
+        <div class="mouse-point" [class.selected]="'My Pending Circulars'==data_type"
+          (click)="type_change('circular','My Pending Circulars','en/app/circular/circular-list')">My
+          Pending Circulars</div>
+        <div class="mouse-point" [class.selected]="'Incoming Circulars'==data_type"
+          (click)="type_change('circular','Incoming Circulars','en/app/circular/circular-list')">
+          Incoming
+          Circulars</div>
+        <div class="mouse-point" [class.selected]="'Outgoing Circulars'==data_type"
+          (click)="type_change('circular','Outgoing Circulars','en/app/circular/circular-list')">
+          Outgoing
+          Circulars</div>
+        <div class="mouse-point" [class.selected]="'Draft Circulars'==data_type"
+          (click)="type_change('circular','Draft Circulars','en/app/circular/circular-list')">Draft Circulars</div>
+        </div>
+    </accordion-group>
+  </accordion>
+</div>

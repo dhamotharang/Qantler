@@ -1,0 +1,36 @@
+<div class="page-wrapper container-fluid px-0">
+  <div class="page-wrapper-main" *ngIf="lang=='en'">
+    <div class="page-header">
+      <app-page-header></app-page-header>
+    </div>
+    <div class="page-header-top" *ngIf="screenStatus != 'login'">
+      <app-page-header-top></app-page-header-top>
+    </div>
+    <div class="page-body">
+      <!-- <app-page-body *ngIf="screenStatus != 'home'"></app-page-body> -->
+      <app-page-body *ngIf="screenStatus != 'home' && screenStatus != 'login'"></app-page-body>
+      <app-home-body *ngIf="screenStatus == 'home'"></app-home-body>
+      <app-login *ngIf="screenStatus == 'login'"></app-login>
+    </div>
+    <div class="page-footer">
+      <app-page-footer></app-page-footer>
+    </div>
+  </div>
+  <div class="page-wrapper-main" dir="rtl" *ngIf="lang!='en'">
+    <div class="page-header">
+      <app-page-header-rtl></app-page-header-rtl>
+    </div>
+    <div class="page-header-top" *ngIf="screenStatus != 'login'">
+      <app-page-header-top-rtl></app-page-header-top-rtl>
+    </div>
+    <div class="page-body">
+      <!-- <app-page-body-rtl *ngIf="screenStatus != 'home'"></app-page-body-rtl> -->
+      <app-page-body-rtl *ngIf="screenStatus != 'home' && screenStatus != 'login'"></app-page-body-rtl>
+      <app-home-body-rtl *ngIf="screenStatus == 'home'"></app-home-body-rtl>
+      <app-login *ngIf="screenStatus == 'login'"></app-login>
+    </div>
+    <div class="page-footer">
+      <app-page-footer-rtl></app-page-footer-rtl>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,211 @@
+<!-- <div class="page-body-wrapper h-50">
+  <div class="row p-3" >
+    <div class="col p-4 shadow">
+      <div class="row">
+        <div class="col title-sy">Dashboard</div>
+        <div class="col-auto">
+          <button class="rounded-btn" *ngIf="!isLegalDepartmentHeadUserID && !isLegalDepartmentTeamUserID" (click)="createLegalRequest()"><i class="fa fa-plus"></i>Create Requests</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="dashboard mb-3">
+  <div class="row">
+    <ng-container *ngFor="let details of legalRequestCardDetails">
+      <div class="col-sm-12 mb-2 col-md-4" *ngIf="details.showRequestType">
+        <div class="card" (click)="reqSelect(details.requestType)">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img class="md-image" src="{{details.image}}" />
+              </div>
+              <div class="col col-ls-12 col-xl">
+                <div class="count">{{details.count}}</div>
+                <ng-container *ngIf="details.requestTitle=='My Pending Actions'">
+                  <div class="displayname">{{details.requestTitle}}</div>
+                </ng-container>
+                <ng-container *ngIf="details.requestTitle!='My Pending Actions'">
+                  <div class="name">{{details.requestTitle}}</div>
+                </ng-container>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="progress my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="details.progress"
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="col-12 col-md-12 line-separator">
+    <hr />
+  </div>
+  <div class="row dashboard-user-cards">
+    <div class="col-md-4 col-sm-12 col-auto" *ngFor="let card of userCards">
+      <div class="card user-card" [routerLink]="card.pageLink">
+        <div class="card-body user-card-content">
+          <div class="col-md-12 col-xl-auto col-sm-12 col-auto user-card-icon"
+            [ngClass]="{'profile': card.title == 'Employee Profile', 'docs': card.title === 'HR Documents' }">
+            <img src="{{card.image}}" />
+          </div>
+          <div class="col col-ls-12 col-xl col-md-12 user-card-title">
+            {{card.title}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper mb-3">
+    <div class="form-title">
+      FILTER BY
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label for="status">Status</label>
+          <!-- <select class="form-control" [(ngModel)]="filterBy.Status" id="LookupsID">
+            <option value=''>All</option>
+            <option *ngFor="let st of statusList" value="{{st.DisplayName}}">{{st.DisplayName}}</option>
+          </select> -->
+          <ng-select [items]="statusList" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName"
+            placeholder="Status" [(ngModel)]="filterBy.Status">
+          </ng-select>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="SourceOU">Source Office/Department</label>
+          <!-- <select class="form-control" [(ngModel)]="filterBy.SourceOU" id="Source">
+            <option value=''>All</option>
+            <option *ngFor="let dt of departmentList" value="{{dt.OrganizationID}}">{{dt.OrganizationUnits}}</option>
+          </select> -->
+          <ng-select [items]="departmentList" [closeOnSelect]="true" bindLabel="OrganizationUnits"
+            bindValue="OrganizationID" placeholder="Source" [(ngModel)]="filterBy.SourceOU">
+          </ng-select>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Date Range From">Request Date From</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" [(ngModel)]="filterBy.ReqDateFrom" bsDatepicker #fdp="bsDatepicker"
+              [bsConfig]="bsConfig">
+            <span (click)="fdp.toggle()"><i class="far fa-calendar date"></i></span>
+          </div>
+          <div class="col-12" class="text-danger">
+            <ng-container *ngIf="dateValidation()">
+              {{ validateStartEndDate.msg }}
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Date Range From">Request Date To</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" bsDatepicker #tdp="bsDatepicker" [(ngModel)]="filterBy.ReqDateTo"
+              [bsConfig]="bsConfig">
+            <span (click)="tdp.toggle()"><i class="far fa-calendar date"></i></span>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">Subject</label>
+          <input type="text" class="form-control" id="subject" [(ngModel)]="filterBy.Subject">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">Label</label>
+          <input type="text" class="form-control" id="creator" [(ngModel)]="filterBy.Label">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">Submitted By</label>
+          <input type="text" class="form-control" id="attended" [(ngModel)]="filterBy.AttendedBy">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="power">Smart Search</label>
+          <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder=""
+            [(ngModel)]="filterBy.SmartSearch">
+        </div>
+        <div class="row justify-content-center justify-content-md-end filter-Btn-width pt-4">
+          <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2 p-left">
+            <button class="rounded-btn" (click)="onSearch()">Search</button>
+          </div>
+          <div class="form-group col-auto col-md-auto p-0 p-md-2">
+            <button class="rounded-btn" (click)="openReport()">Show Available Reports</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="destination"></div>
+  <div class="page-form-wrapper mb-3 d-md-block d-none">
+    <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [sorts]="[{prop: 'RequestDate', dir: 'desc'}]"
+      [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+    </ngx-datatable>
+    <ng-template #creationDateTemplate let-row="row" let-value="value" let-i="index">
+      {{row.RequestDate | date:'dd/MM/yyyy'}}
+    </ng-template>
+    <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+      <div class="table-action-btn">
+        <button class="table-view" *ngIf="row.Status != 'Pending for Resubmission'" (click)="viewData(row)">
+          <i class="fas fa-eye" style="cursor: pointer;"></i>
+        </button>
+        <ng-container *ngIf="row.Status == 'Pending for Resubmission'">
+          <button *ngIf="row.Attendedby == currentUser.DisplayName" class="table-edit" name="edit"
+            (click)="viewData(row)">
+            <i class="fas fa-edit" style="cursor: pointer;"></i>
+          </button>
+          <button class="table-view" *ngIf="row.Attendedby != currentUser.DisplayName" (click)="viewData(row)">
+            <i class="fas fa-eye" style="cursor: pointer;"></i>
+          </button>
+        </ng-container>
+      </div>
+
+    </ng-template>
+    <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top"
+      [(page)]="config.pageNumber" [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true"
+      [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)"
+      (numPages)="numPages = $event"></ngb-pagination>
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card table-cards shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let legalReqrow of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12"><span><b>Ref ID : </b></span><span>{{legalReqrow.ReferenceNumber}}</span></div>
+          <div class="col-12"><span><b>Source : </b></span><span>{{legalReqrow.SourceOU}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col"><span><b>Subject : </b></span><span> {{legalReqrow.Subject}}</span></div>
+          <div class="col"><span><b>Status : </b></span><span> {{legalReqrow.Status}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col"><span><b>Request Date :
+              </b></span><span>{{legalReqrow.RequestDate | date:'dd/MM/yyyy'}}</span></div>
+          <div class="col"><span><b>Submitted By : </b></span><span> {{legalReqrow.Attendedby }}</span></div>
+        </div>
+        <div class="row" *ngIf="isLegalDepartmentHeadUserID || isLegalDepartmentTeamUserID">
+          <div class="col"><span><b>Assigned To : </b></span><span>{{legalReqrow.AssignedTo}}</span></div>
+        </div>
+        <div class="row  mar-top">
+          <div class="col"></div>
+          <div class="col-auto">
+            <button class="table-view list-btn" *ngIf="legalReqrow.Status != 'Pending for Resubmission'"
+              (click)="viewData(legalReqrow)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+            <button class="table-view edit-btn" *ngIf="legalReqrow.Status == 'Pending for Resubmission'" name="edit"
+              (click)="viewData(legalReqrow)"><i class="fas fa-edit" style="cursor: pointer;"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="config.totalItems > 0">
+      <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top"
+        [(page)]="config.pageNumber" [pageSize]="config.itemsPerPage" [boundaryLinks]="true"
+        [collectionSize]="config.totalItems" [maxSize]="config.maxSize" (numPages)="numPages = $event"
+        (pageChange)="onChangePage(config, $event)"></ngb-pagination>
+    </ng-container>
+  </div>
+</div>

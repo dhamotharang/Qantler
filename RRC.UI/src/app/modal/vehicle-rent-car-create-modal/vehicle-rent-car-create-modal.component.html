@@ -1,0 +1,42 @@
+<div dir="auto" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{formlabels.title}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body">
+  <div class="row">
+    <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label [ngClass]="{'ar-rtl':lang=='ar'}" for="From">{{formlabels.createddate}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="createDate" bsDatepicker
+          #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <span>
+            <i class="far fa-calendar date"></i>
+          </span>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6 required" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="To">{{formlabels.companyname}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [(ngModel)]="companyName">
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6 required" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="To">{{formlabels.contactname}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [(ngModel)]="contactName">
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6 required" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="To">{{formlabels.contactnumber}}</label>
+      <div class="position-relative">
+        <input type="number" onkeydown="return event.keyCode == 69 ? false : true" class="form-control" [(ngModel)]="contactNumber">
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center my-3">
+    <button type="button" class="rounded-btn" [ngClass]="{'disabled-btn':validate()}" [disabled]="validate()" (click)="save()">{{ formlabels.submit}}</button>
+    <button type="button" *ngIf="screenType !='Create'" class="rounded-btn" [disabled]="disableBtn" (click)="delete()">{{ formlabels.delete}}</button>
+  </div>
+</div>

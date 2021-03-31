@@ -1,0 +1,250 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title ar-rtl">
+    {{arabic('requestfordesign')}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="ReferenceNumber">{{arabic('refid')}}</label>
+        <input
+          type="text"
+          class="form-control"
+          [disabled]="screenStatus!='Create'"
+          [(ngModel)]="mediarequestDesign.ReferenceNumber"
+          id="ReferenceNumber">
+      </div>
+      <div class="form-group right col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Creation Date">{{arabic('date')}}</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus!='Create'" type="text" class="form-control"
+            [(ngModel)]="mediarequestDesign.Date" bsDatepicker #dpReceive="bsDatepicker" [bsConfig]="bsConfig">
+            <!-- <div (click)="dpReceive.toggle()"> -->
+              <i class="far fa-calendar date ar-rtl-icon"></i>
+            <!-- </div> -->
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source OU">{{arabic('sourceofficeSlashDepartment')}}</label>
+        <input name="sourceou" type="text" class="form-control" [disabled]="screenStatus!='Create'"
+          [(ngModel)]="mediarequestDesign.SourceOU" id="Source OU" placeholder="Enter Source OU">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source Name">{{arabic('sourcename')}}</label>
+        <input name="sourcename" type="text" class="form-control" [disabled]="screenStatus!='Create'"
+          [(ngModel)]="mediarequestDesign.SourceName" id="Source Name" placeholder="Enter Source Name">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus!='Create'">
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Title">{{arabic('title')}}</label>
+        <input name="title" [disabled]="screenStatus=='View'" placeholder="{{arabic('title')}}" [(ngModel)]="mediarequestDesign.Title" type="text" class="form-control" id="Title" placeholder="Enter Title">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Project">{{arabic('initiativeactivityprojectdetail')}}</label>
+        <input type="text" [disabled]="screenStatus=='View'" placeholder="{{arabic('initiativeactivityprojectdetail')}}" name="project" [(ngModel)]="mediarequestDesign.Project" class="form-control" id="ReceivedFromName" placeholder="">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="DiwansRole">{{arabic('diwansrole')}}</label>
+        <input type="text" [disabled]="screenStatus=='View'" placeholder="{{arabic('diwansrole')}}" name="DiwansRole" [(ngModel)]="mediarequestDesign.DiwansRole" class="form-control" id="ReceivedFromName" placeholder="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="OtherParties">{{arabic('otherparties')}}</label>
+        <input name="OtherParties" [disabled]="screenStatus=='View'" placeholder="{{arabic('otherparties')}}" [(ngModel)]="mediarequestDesign.OtherParties"  type="text" class="form-control" id="OtherParties" placeholder="">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="TargetGroups">{{arabic('targetgroups')}}</label>
+        <input name="TargetGroups" [disabled]="screenStatus=='View'" placeholder="{{arabic('targetgroups')}}" [(ngModel)]="mediarequestDesign.TargetGroups" type="text" class="form-control" id="ReceivedFromName" placeholder="">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="DateofDeliverable">{{arabic('dateofdeliverable')}}</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus=='View'" placeholder="{{arabic('dateofdeliverable')}}" name="DateofDeliverable" [(ngModel)]="mediarequestDesign.DateofDeliverable" type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <div  (click)="(screenStatus != 'View')?dp.toggle():''" class="ar-rtl">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Received from-Name">{{arabic('typeofdesignrequired')}}</label>
+
+        <ng-select [items]="designlist" placeholder="{{arabic('typeofdesignrequired')}}" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+         [multiple]="false" bindLabel="DesignTypeName"
+          bindValue="DesignTypeName" [(ngModel)]="mediarequestDesign.TypeofDesignRequired">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Need Reply">{{arabic('languages')}}</label>
+        <div>
+          <input type="radio" name="english" value="0" [(ngModel)]="mediarequestDesign.Languages" [disabled]="screenStatus=='View'"> {{arabic('english')}}
+          <input class="ml-2" type="radio" name="arabic" value="1"  [(ngModel)]="mediarequestDesign.Languages" [disabled]="screenStatus=='View'"> {{arabic('arabic')}}
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Department">{{arabic('approverofficeSlashDepartment')}}</label>
+         <ng-select [items]="department" placeholder="{{arabic('approverdepartment')}}" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="onChangeDepartment()" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationID" [(ngModel)]="mediarequestDesign.ApproverDepartmentID">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Name">{{arabic('approvername')}}</label>
+         <ng-select [items]="userDestination" placeholder="{{arabic('approvername')}}" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="mediarequestDesign.ApproverID">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="notes">{{arabic('generalinformationaboutproject')}}</label>
+        <textarea [disabled]="screenStatus=='View'" placeholder="{{arabic('generalinformationaboutproject')}}" [(ngModel)]="mediarequestDesign.GeneralObjective" class="form-control" id="notes" placeholder="" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="notes">{{arabic('mainobjectiveofproject')}}</label>
+        <textarea [disabled]="screenStatus=='View'" placeholder="{{arabic('mainobjectiveofproject')}}" [(ngModel)]="mediarequestDesign.MainObjective" class="form-control" id="notes" placeholder="" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="notes">{{arabic('Howdoesthisactivityfitwiththestrategicobjectivesvisionandplansofthediwan')}}</label>
+        <textarea [disabled]="screenStatus=='View'" [(ngModel)]="mediarequestDesign.StrategicObjective" class="form-control" id="notes" placeholder="{{arabic('Howdoesthisactivityfitwiththestrategicobjectivesvisionandplansofthediwan')}}" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <div class="row ar-rtl">
+          <div class="form-group right col-12"  *ngIf="screenStatus!='View'">
+            <label for="Attachments" class="ar-rtl">{{arabic('attachments')}}</label>
+            <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+            <input #variable type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'"
+              name="Attachments" (change)="uploadFiles($event)" [(ngModel)]="mediarequestDesign.Attachments"
+              id="Attachments" placeholder="Select file" />
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2 ar-rtl" *ngIf="attachments.length>0">
+            <label for="Keywords" class="ar-rtl">{{arabic('attachmentlist')}}</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">{{arabic('filename')}}</div>
+              <div class="col border text-center" *ngIf="screenStatus!='View'">{{arabic('action')}}</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                  <a class="cursor" href="{{attachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" >{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-form-wrapper my-3 p-4">
+      <div class="col-12 comment">
+        <!-- <div *ngIf="this.screenStatus == 'View'" class="page-form-wrapper my-3 p-4">
+                <div class="row" *ngFor="let his of mediarequestDesign.HistoryLog">
+                  <div class="col-auto">
+                    <div class="rounded-btn">
+                      <img class="clock" src="assets/home/Meeting-clock.png">
+                    </div>
+                  </div>
+                  <div class="col p-2">
+                    <div class="row">
+                      <div class="col-12">{{hisLog(his.Action)}} By : {{his.CreatedBy}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+        <app-comment-section [comments]="RequestComments" [commentType]="'Design'" [moduleId]="DesignID"
+          [moduleNameID]="'DesignID'">
+        </app-comment-section>
+        <div class="row comment-section">
+          <div class="col-2 com-md-2 profile">
+            <div class="comment-section-img">
+              <img src="{{userProfileImg}}" class="user-ProfileImg" />
+            </div>
+          </div>
+          <div class="col-10 col-md-10 comment-text text-right">
+            <div class="comment-section-user-info text-right pull-right">
+              <p class="comment-section-username text-right">{{currentUser.username}}</p>
+            </div>
+            <div class="comment-section-content">
+              <textarea class="form-control vertical-resize" [(ngModel)]="mediarequestDesign.Comments"
+                id="NewCommentContent" [disabled]="screenStatus=='View' && (mediarequestDesign.Status == 66) || (!createBtnShow && !approverBtn && !assignBtn && !assigntomeBtn && !closeBtn)" placeholder="" rows="3">
+                </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center px-3">
+          <div *ngIf="createBtnShow" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}"
+              (click)="btnLoad = true;saveRequestDesign();sendBtnLoad='true'">
+              <app-btn-loader *ngIf="sendBtnLoad" class="btn-loader"></app-btn-loader>
+              {{arabic('submit')}}
+            </button>
+          </div>
+          <div *ngIf="approverBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+              (click)="btnLoad = 'true';statusChange('Approve',template);approveBtnLoad='true'">
+              <app-btn-loader *ngIf="approveBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('approve')}}
+            </button>
+          </div>
+          <div *ngIf="approverBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="mediarequestDesign.Comments == '' || btnLoad"
+              [ngClass]="{'disabled-btn': mediarequestDesign.Comments =='' || btnLoad}"
+              (click)="btnLoad = 'true';popup('Letter Escalate',template)">{{arabic('escalate')}}</button>
+          </div>
+          <div *ngIf="approverBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="mediarequestDesign.Comments == '' || btnLoad"
+              [ngClass]="{'disabled-btn': mediarequestDesign.Comments == '' || btnLoad}"
+              (click)="btnLoad = true;statusChange('ReturnForInfo');returnInfoBtnLoad = true">
+              <app-btn-loader *ngIf="returnInfoBtnLoad" class="btn-loader"></app-btn-loader>
+              {{arabic('returnforinfo')}}
+            </button>
+          </div>
+          <div *ngIf="approverBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="mediarequestDesign.Comments == '' || btnLoad"
+              [ngClass]="{'disabled-btn': mediarequestDesign.Comments =='' || btnLoad}"
+              (click)="btnLoad = 'true';statusChange('Reject',template);rejectBtnLoad='true'">
+              <app-btn-loader *ngIf="rejectBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('reject')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="assignBtn">
+            <button class="rounded-btn" (click)="btnLoad=true;assignpopup('AssignTo')" [disabled]="btnLoad"
+              [ngClass]="{'disabled-btn': btnLoad}">
+              <app-btn-loader *ngIf="assignBtnLd" class="btn-loader"></app-btn-loader>{{arabic('assign')}}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="assigntomeBtn">
+            <button class="rounded-btn" (click)="btnLoad=true;statusChange('AssignToMe')" [disabled]="btnLoad"
+              [ngClass]="{'disabled-btn': btnLoad}">
+              <app-btn-loader *ngIf="assigntomeBtnLd" class="btn-loader"></app-btn-loader>{{arabic('assigntome')}}
+            </button>
+          </div>
+          <div *ngIf="closeBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="btnLoad"
+              (click)="btnLoad = 'true';statusChange('Close',template);closeBtnLoad='true'">
+              <app-btn-loader *ngIf="closeBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('close')}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

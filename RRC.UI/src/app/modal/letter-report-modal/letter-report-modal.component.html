@@ -1,0 +1,96 @@
+<div dir="auto" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{(language=='English')?'Report':arabic('report')}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':language!='English'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body">
+  <div class="row">
+    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="status">{{(language=='English')?'Status':arabic('status')}}</label>
+      <!-- <select class="form-control" [disabled]="statusDisable" [(ngModel)]="report.status" id="LookupsID">
+        <option *ngFor="let us of statusOptions" [value]="us.DisplayName">{{us.DisplayName}}</option>
+      </select> -->
+      <ng-select [items]="statusOptions" [closeOnSelect]="false" [multiple]="false" bindLabel="DisplayName" id="LookupsID"
+      bindValue="DisplayName" [(ngModel)]="report.status">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="SourceOU">{{(language=='English')?'Source Office/Department':arabic('sourceofficeSlashDepartment')}}</label>
+      <ng-select [items]="sourceouOptions" [closeOnSelect]="false" [multiple]="false" bindLabel="OrganizationUnits"
+        bindValue="OrganizationUnits" [(ngModel)]="report.sourceOU">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="SourceOU">{{(language=='English')?'Destination Office/Department':arabic('destinationoffice/department')}}</label>
+      <ng-select [items]="destinationOptions" [closeOnSelect]="false" [multiple]="false" bindLabel="OrganizationUnits"
+        bindValue="OrganizationUnits" [(ngModel)]="report.destination">
+      </ng-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-4" [ngClass]="{'right':language!='English'}">
+      <label for="status">{{(language=='English')?'User Name':arabic('username')}}</label>
+      <!-- <select class="form-control" [(ngModel)]="report.username" id="UserID">
+        <option value="">{{(language=='English')?'All':arabic('all')}}</option>
+        <option *ngFor="let us of userList" [value]="us.EmployeeName">{{us.EmployeeName}}</option>
+      </select> -->
+      <ng-select [items]="userList" [closeOnSelect]="false" [multiple]="false" bindLabel="EmployeeName" id="UserID"
+      bindValue="EmployeeName" [(ngModel)]="report.username">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-4"  [ngClass]="{'ar-rtl':language!='English'}">
+      <label for="Date Range From">{{(language=='English')?'Date Range From':arabic('daterangefrom')}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control pr-4" [maxDate]="maxDate(report.dateRangeTo)" bsDatepicker #dpCreate="bsDatepicker" [(ngModel)]="report.dateRangeForm"
+          [bsConfig]="bsConfig">
+        <div (click)="dpCreate.toggle()">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+      <div class="col-12" class="text-danger">
+          <ng-container *ngIf="dateValidation()">
+            {{ validateDueStartEndDate.msg }}
+          </ng-container>
+        </div>
+    </div>
+    <div class="form-group col-sm-4"  [ngClass]="{'ar-rtl':language!='English'}">
+      <label for="Date Range To">{{(language=='English')?'Date Range To':arabic('daterangeto')}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control pr-4" [minDate]="maxDate(report.dateRangeForm)" bsDatepicker #dp="bsDatepicker" [(ngModel)]="report.dateRangeTo"
+          [bsConfig]="bsConfig">
+        <div (click)="dp.toggle()">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+    </div>
+    <!--    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="power">Is Private?</label>
+      <select class="form-control" [(ngModel)]="report.private">
+        <option value='yes'>Yes</option>
+        <option value='no'>No</option>
+      </select>
+    </div> -->
+   
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="Priority">{{(language=='English')?'Priority':arabic('priority')}}</label>
+      <ng-select [items]="priorityList" bindLabel="name" bindValue="name" [(ngModel)]="report.priority">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+          <div class="select-priority mr-1" [ngClass]="item"></div>
+          <div class="d-inline">{{item}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-4"  [ngClass]="{'right':language!='English'}">
+      <label for="name">{{(language=='English')?'Smart Search':arabic('smartsearch')}}</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="report.smartSearch">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn"
+      (click)="Download()">{{(language=='English')?'Download Excel':arabic('downloadexcel')}}</button>
+  </div>
+</div>

@@ -1,0 +1,291 @@
+  <div class="dashboard mb-3">
+    <div class="row dashboard-user-cards">
+        <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+            <div class="card user-card" (click)="reqSelect(det.redirectTo,true)">
+                <div class="card-body user-card-content">
+                    <div class="row">
+                      <div class="col-12 text-center user-card-icon">
+                          <img class="icon-img" src="{{det.image}}">
+                      </div>
+                      <div class="col-12 text-center user-card-title" [ngClass]="{'text-right': lang == 'ar'}">
+                        <div class="name">{{det.name}}</div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-12 col-md-12 line-separator">
+          <hr/>
+        </div> -->
+        <!-- <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of mgmtDetails">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-auto col-ls-12 col-xl-auto">
+                          <img src="{{det.image}}">
+                      </div>
+                      <div class="col col-ls-12 col-xl mgmt-details" [ngClass]="{'text-right': lang == 'ar'}">
+                          <div class="name">{{det.name}}</div>
+                          <div class="mgmt-count"><div class="redcolor"></div>200</div>
+                          <div class="mgmt-count"><div class="greencolor"></div>150</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div> -->
+    </div>
+  </div>
+  <div class="col-12 col-md-12 line-separator">
+    <hr/>
+  </div>
+  <div class="page-form-wrapper" [ngClass]="{'text-right':lang == 'ar'}">
+    <div class="form-title">
+        <ng-container *ngIf="lang == 'en'"> FILTER BY </ng-container>
+        <ng-container *ngIf="lang == 'ar'"> {{arabic('filterby')}} </ng-container>
+    </div>
+    <div class="container page-form-body">
+        <div class="row">
+            <div class="form-group col-sm-4">
+              <label for="status">
+                <ng-container *ngIf="lang == 'en'"> Plate Number </ng-container>
+                <ng-container *ngIf="lang == 'ar'"> {{arabic('platenumber')}} </ng-container>
+              </label>
+              <ng-select class="approverDept-ddown" [items]="plateNumberList" [(ngModel)]="filterBy.PlateNumber"  [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" bindValue="DisplayName">
+              </ng-select>
+            </div>
+
+            <div class="form-group col-sm-4">
+              <label for="status">
+                <ng-container *ngIf="lang == 'en'">  Plate Colour </ng-container>
+                <ng-container *ngIf="lang == 'ar'"> {{arabic('platecolour')}} </ng-container>
+              </label>
+              <ng-select class="approverDept-ddown" [items]="plateColourList" [(ngModel)]="filterBy.PlateColor"  [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" bindValue="DisplayName">
+              </ng-select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="status">
+                  <ng-container *ngIf="lang == 'en'">Department/Office</ng-container>
+                  <ng-container *ngIf="lang == 'ar'"> {{arabic('departmentslashoffice')}}  </ng-container>
+                </label>
+                <ng-select class="approverDept-ddown" [items]="departmentList" [(ngModel)]="filterBy.DepartmentOffice" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID" placeholder="{{ lang == 'en' ? 'Select Requestor' : arabic('requestorname') }}">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="name">
+              <ng-container *ngIf="lang == 'en'"> Alternative Vehicle? </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('alternativevehicle')}} </ng-container>
+            </label>
+            <ng-select class="approverDept-ddown" [items]="alternativeVehicleList" [(ngModel)]="filterBy.AlternativeVehicle" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID">
+            </ng-select>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="name">
+              <ng-container *ngIf="lang == 'en'">  Smart Search </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('smartsearch')}} </ng-container>
+            </label>
+              <input type="text" class="form-control" autocomplete="off" [(ngModel)]="filterBy.SmartSearch" id="name">
+          </div>
+          <div class="form-group col-auto mt-30">
+            <button class="rounded-btn" (click)="onSearch()">
+              <ng-container *ngIf="lang == 'en'">  Search </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('search')}} </ng-container>
+            </button>
+            <button class="rounded-btn availablereport" (click)="openReport()">
+              <ng-container *ngIf="lang == 'en'">  Show Available Reports </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('showavailablereports')}} </ng-container>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div id="destination"></div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ng-container outsideBody>
+        <div class="table-responsive" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <ngx-datatable style="width: 100%" class="bootstrap width-100" [ngClass]="{'ar-rtl': lang=='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'" [rowClass]="getRowClass">
+                <ng-template #vehicleRegExpiry let-row="row" let-value="value" let-i="index">
+                  {{row.vehicleRegistrationExpiry | date:'dd/MM/yyyy'}}
+                </ng-template>
+                <ng-template #actionTemplate let-row="row" [ngStyle]="{'width': '10px'}" let-value="value" let-i="index">
+                  <div class="table-action-btn">
+                      <button class="table-view" (click)="viewData(row)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>                      
+                      <!-- <button [style.font-size.px]="10" class="table-view list-btn mt-10 mar-top" (click)="openLogModal(row, 'service')">
+                        LOG A SERVICE
+                      </button>
+                      <button [style.font-size.px]="10" class="table-view list-btn mt-10 mar-top" (click)="openLogModal(row, 'tyre')" >
+                        LOG A TYRE CHANGE
+                      </button>
+                      <button [style.font-size.px]="10" class="table-view list-btn mt-10 mar-top" (click)="openLogModal(row, 'fire')">
+                        LOG A FINE
+                      </button> -->
+                  </div>
+                </ng-template>
+            </ngx-datatable>
+        </div>
+    </ng-container>
+    <!-- <ng-container footer dir="auto"> -->
+      <div class="row  row-separator" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="col-md-12 text-center">
+          <div class="d-block d-md-inline-block col-auto">
+            <span class="legends-color dwe-color"></span>
+            <span class="legends-title" [ngStyle]="{'float': lang=='ar' ? 'left' : 'right'}"> {{ lang == 'en' ? 'Document will expire soon' : arabicfn('documentwillexpiresoon') }} </span>
+          </div>
+          <div class="d-block d-md-inline-block col-auto">
+            <span class="legends-color ed-color"></span>
+            <span class="legends-title" [ngStyle]="{'float': lang=='ar' ? 'left' : 'right'}"> {{ lang == 'en' ? 'Expired Document' : arabicfn('expireddocument') }} </span>
+          </div>
+          <div class="d-block d-md-inline-block col-auto">
+            <span class="legends-color nst-color"></span>
+            <span class="legends-title" [ngStyle]="{'float': lang=='ar' ? 'left' : 'right'}"> {{ lang == 'en' ? 'Next Service/Tyre change is due soon' : arabicfn('nextservicetyre') }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row  row-separator" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="col-md-12" [ngClass]="{'pagination-pl': lang == 'ar'}">
+          <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+              [maxSize]="2" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+              (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+        </div>
+      </div>
+      
+    <!-- </ng-container> -->
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card mobile-cards shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngFor="let hrReqrow of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <span>
+              <b>
+                  {{lang=='en'?'Plate Number':arabic('platenumber')}} :
+              </b>
+            </span>
+            <span>{{hrReqrow.plateNumber}}</span></div>
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <span><b>
+                {{lang=='en'?'Plate Colour':arabic('platecolour')}} :
+            <!-- <ng-container *ngIf="lang == 'en'">Plate Colour : </ng-container>
+            <ng-container *ngIf="lang == 'ar'">{{arabicfn('platecolour')}} : </ng-container> -->
+            </b></span>
+            <span>{{hrReqrow.plateColor}}</span></div>
+        </div>
+      </div>
+      <div class="card-body" [ngClass]="getRowClass(hrReqrow)">
+        <div class="row">
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <span>
+              <b>
+                  {{lang=='en'?'Vehicle Model':arabic('vehiclemodel')}} :
+                <!-- <ng-container *ngIf="lang == 'en'">Vehicle Model :  </ng-container>
+                <ng-container *ngIf="lang == 'ar'">{{arabicfn('vehiclemodel')}} :  </ng-container> -->
+              </b>
+            </span>
+            <span> {{hrReqrow.vehicleModel}}</span></div>
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <span>
+              <b>
+                  {{lang=='en'?'Contract End Date':arabic('contractenddate')}} :
+                <!-- <ng-container *ngIf="lang == 'en'">Contract End Date : </ng-container>
+                <ng-container *ngIf="lang == 'ar'">{{arabicfn('contractenddate')}} : </ng-container> -->
+              </b>
+            </span>
+            <span> {{hrReqrow.contractEndDate}}</span></div>
+        </div>
+        <div class="row mar-top">
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+              <span>
+                <b>
+                    {{lang=='en'?'Vehicle Registration Expiry':arabic('vehicleregistrationexpiry')}} :
+                  <!-- <ng-container *ngIf="lang == 'en'">Vehicle Registration Expiry : </ng-container>
+                  <ng-container *ngIf="lang == 'ar'"> {{arabicfn('vehicleregistrationexpiry')}}: </ng-container> -->
+                </b>
+              </span>
+              <span> {{hrReqrow.vehicleRegistrationExpiry | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <div class = "col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+              <span>
+                <b>
+                    {{lang=='en'?'Next Service/ Tyre Change':arabic('nextserviceslashtyrechange')}} :
+                  <!-- <ng-container *ngIf="lang == 'en'">Next Service/ Tyre Change : </ng-container>
+                  <ng-container *ngIf="lang == 'ar'"> {{arabicfn('nextserviceslashtyrechange')}}: </ng-container> -->
+                </b>
+              </span>
+              <span> {{hrReqrow.nextService}}</span>
+          </div>
+        </div>
+        <div class="row mar-top">
+          <div class="col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+              <span>
+                <b>
+                    {{lang=='en'?'Name of the user':arabic('nameoftheuser')}} :
+                  <!-- <ng-container *ngIf="lang == 'en'">Name of the user : </ng-container>
+                  <ng-container *ngIf="lang == 'ar'"> {{arabicfn('nameoftheuser')}}: </ng-container> -->
+                </b>
+              </span>
+              <span> {{hrReqrow.nameofuser}}</span>
+          </div>
+          <div class = "col-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+              <span>
+                <b>
+                    {{lang=='en'?'Department / office':arabic('departmentslashoffice')}} :
+                  <!-- <ng-container *ngIf="lang == 'en'">Department / office : </ng-container>
+                  <ng-container *ngIf="lang == 'ar'"> {{arabicfn('departmentslashoffice')}}: </ng-container> -->
+                </b>
+              </span>
+              <span> {{hrReqrow.nameofDepartment}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class = "col-12" [ngClass]="{'text-right': lang == 'en', 'text-left':lang != 'en' } ">
+            <!-- <button class="table-view " class="table-view view-btn mt-10" name="edit" (click)="viewData(hrReqrow)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </!-->
+            <button class="table-view list-btn mt-10 mar-top" (click)="viewData(hrReqrow)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </button>
+            <!-- <button class="table-view list-btn mt-10 mar-top">
+              LOG A SERVICE
+            </button>
+            <button class="table-view list-btn mt-10 mar-top">
+              LOG A TYRE CHANGE
+            </button>
+            <button class="table-view list-btn mt-10 mar-top">
+              LOG A FINE
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer>
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="d-block d-md-inline-block row-separator">
+            <span class="legends-color dwe-color"></span>
+            <span class="legends-title"> {{ lang == 'en' ? 'Document will expire soon' : arabicfn('documentwillexpiresoon') }} </span>
+          </div>
+          <div class="d-block d-md-inline-block  row-separator">
+            <span class="legends-color ed-color"></span>
+            <span class="legends-title"> {{ lang == 'en' ? 'Expired Document' : arabicfn('expireddocument') }} </span>
+          </div>
+          <div class="d-block d-md-inline-block row-separator">
+            <span class="legends-color nst-color"></span>
+            <span class="legends-title"> {{ lang == 'en' ? 'Next Service/Tyre change is due soon' : arabicfn('nextservicetyre') }} </span>
+          </div>
+        </div>
+        <div class="col-12">
+          <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+            [maxSize]="2" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+            (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+        </div>
+        
+      </div>
+    </ng-container>
+  </div>
+  <div class="row row-separator">
+    <div class="col-12 text-center">
+        <button class="rounded-btn" (click)="downloadExcel()"> {{ lang == 'en' ? 'Download As Excel' : arabicfn('downloadasexcel') }} </button>
+    </div>
+  </div>

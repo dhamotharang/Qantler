@@ -1,0 +1,194 @@
+<!-- <div class="dashboard mb-3">
+  <div class="row">
+    <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-auto col-ls-12 col-xl-auto">
+              <img src="{{det.image}}">
+            </div>
+            <div class="col col-ls-12 col-xl">
+              <div class="count">{{det.count}}</div>
+              <div class="name">{{det.name}}</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="progress my-3">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress"
+                  aria-valuemin="0" aria-valuemax="100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr> -->
+<div class="dashboard mb-3">
+  <div class="row">
+    <div class="col-sm-12 mb-2 col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <div class="col-auto col-ls-12 col-xl-auto">
+              <img src="assets/media/inbox.png">
+            </div>
+           <!--  <div class="col col-ls-12 col-xl">
+              <div class="count">{{det.count}}</div>
+              <div class="name">{{det.name}}</div>
+            </div> -->
+          </div>
+          <div class="row mt-3" >
+            <div class="col-12 txt-ct">
+              <!-- <div class="progress my-3">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress"
+                  aria-valuemin="0" aria-valuemax="100">
+                </div>
+              </div> -->
+              <div class="name"><b>Media Documents</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row mb-3">
+  <div class="col-12 mb-2 col-md-6 mb-md-0">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        Uncompleted tasks per priorities
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <canvas id="pieChart" width="400" height="300" #pieChart></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        Tasks per status
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <canvas id="barChart" width="400" height="300" #barChart></canvas>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="page-form-wrapper">
+  <div class="form-title">
+    FILTER BY
+  </div>
+  <div class="container page-form-body">
+    <div class="row">
+     <div class="form-group col-sm-4">
+        <label for="status">Status</label>
+        <select class="form-control" [(ngModel)]="status" id="LookupsID">
+          <option *ngFor="let us of statusOptions" [value]="us.DisplayName">{{us.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">Source Office/Department</label>
+        <select class="form-control" [(ngModel)]="source" id="sourceID">
+          <option *ngFor="let us of sourceouOptions" [value]="us.OrganizationUnits">{{us.OrganizationUnits}}</option>
+        </select>
+      </div>
+       <div class="form-group col-sm-4">
+        <label for="SourceOU">Request Type</label>
+        <select class="form-control" [(ngModel)]="source" id="destinationID">
+          <option *ngFor="let us of destinationOptions" [value]="us.OrganizationUnits">{{us.OrganizationUnits}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="Date Range From">Request Date To</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [(ngModel)]="date_from"
+            [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="Date Range To">Request Date From</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [(ngModel)]="date_to"
+            [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+       <div class="row justify-content-end pt-4">
+        <div class="form-group col-auto p-2">
+          <button class="rounded-btn" (click)="changeList()">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper my-3 d-md-block d-none">
+  <ng-container outsideBody>
+    <div class="table-responsive">
+      <!-- <div class="noResult al-ct" *ngIf="length == 0">
+                <p>There is no List.</p>
+            </div> -->
+      <!-- <ng-table [config]="config" *ngIf="length > 0" (tableChanged)="onChangeTable(config)"
+        (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns"></ng-table> -->
+      <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns" [headerHeight]="50"
+        [columnMode]="'force'" [rowHeight]="'auto'">
+      </ngx-datatable>
+      <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+        <div class="table-action-btn">
+          <button class="table-view" (click)="viewData('',value)"><i class="fas fa-eye"
+              style="cursor: pointer;"></i></button>
+          <button *ngIf="memo_type == 'Draft Memos'" class="table-edit" name="edit" (click)="viewData('edit',value)"><i
+              class="fas fa-edit" style="cursor: pointer;"></i></button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>Ref Id : </b></span><span>{{row.ReferenceNumber}}</span></div>
+        <div class="col-12"><span><b>Title : </b></span><span>{{row.Title}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col"><span><b>Source : </b></span><span> {{row.SourceOU}}</span></div>
+        <div class="col"><span><b>Destination : </b></span><span> {{row.Destination}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col"><span><b>Status : </b></span><span> {{row.Status}}</span></div>
+        <div class="col"><span><b>Date : </b></span><span> {{row.CreatedDateTime}}</span></div>
+      </div>
+      <div class="row mar-top">
+        <div class="col"></div>
+        <div class="col-auto">
+          <button class="list-btn" (click)="viewData('')"><i class="fas fa-eye"></i></button>&nbsp;
+          <button *ngIf="memo_type=='Draft Memos'" class="edit-btn" (click)="viewData('edit')"><i
+              class="fas fa-edit"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+  <button name="edit" (click)="viewData('edit',$event)"></button>
+  <button name="view" (click)="viewData('',$event)"></button>
+
+</div>

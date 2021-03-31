@@ -1,0 +1,15 @@
+@import '../../../../../styles.scss';
+.recipient{
+    color: $light-color;
+    cursor: pointer;
+}
+.custom-btn {
+    color: #ffffff;
+    background-color: #BEA76C;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    padding-bottom: 8px;
+    max-height: 40px;
+}

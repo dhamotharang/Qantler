@@ -1,0 +1,57 @@
+<div class="maintenance-home">
+  <div class="col-md-12 calendar-view">
+    <div class="row text-left">
+      <button class="rounded-btn" [routerLink]="['/app/media/calendar-management/list']"> {{ lang == 'en' ? 'SHOW LIST VIEW' : 'اعرض القائمة' }} </button>
+    </div>
+  </div>
+  <div class="col-md-12" [ngClass]="{'ar-rtl': lang=='ar'}">
+    <!-- <full-calendar
+      defaultView="dayGridMonth"
+      [plugins]="calendarPlugins"
+      [events]="calendarEvents">
+    </full-calendar> -->
+    <full-calendar
+      #ucCalendar
+      defaultView="dayGridMonth"
+      [plugins]="calendarPlugins"
+      [navLinks]= "true"
+      [eventTimeFormat]="eventTimeOptions"
+      [columnHeaderFormat]="columnHeaderOptions"
+      (eventRender)="eventRender($event)"
+      (eventClick)="handleEventClick($event)"
+      [events]="calendarEvents"
+      (dayRender)="dayRender($event)"
+      (datesRender)="monthChange($event)"
+      [views]="calenderViewOptions"
+      [header] = "calendarHeaderOptions"
+      [locale] = "calendarLocale"
+      [buttonText] = "buttonTextOptions"
+      [allDayText]="allDayText"
+      >
+    </full-calendar>
+    <div class="row row-separator" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <div class="col-12">
+        <div class="d-block d-md-inline-block">
+          <span class="legends-color wap-color"></span>
+          <span class="legends-title"> {{ lang == 'en' ? 'Waiting For Approval' : arabic.words.waitingforapproval }} </span>
+        </div>
+        <div class="d-block d-md-inline-block">
+          <span class="legends-color ap-color"></span>
+          <span class="legends-title"> {{ lang == 'en' ? 'Approved' : arabic.words.approved }} </span>
+        </div>
+        <div class="d-block d-md-inline-block">
+          <span class="legends-color cp-color"></span>
+          <span class="legends-title"> {{ lang == 'en' ? 'Completed' : arabic.words.completed }} </span>
+        </div>
+        <div class="d-block d-md-inline-block">
+          <span class="legends-color cd-color"></span>
+          <span class="legends-title"> {{ lang == 'en' ? 'Cancelled' : arabic.words.cancelled }} </span>
+        </div>
+        <!-- <div class="legends-block">
+          <span class="legends-color oth-color"></span>
+          <span class="legends-title"> Public Holiday </span>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

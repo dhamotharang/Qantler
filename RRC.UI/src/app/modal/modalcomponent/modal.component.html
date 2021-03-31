@@ -1,0 +1,54 @@
+<div  [ngClass]="{'direction': language=='ar'}" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':language=='ar'}" aria-label="Close"
+    (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div  [ngClass]="{'direction': language=='ar'}" class="modal-body">
+  <div class="row">
+    <ng-container *ngFor="let drop of multipledropdown;let i = index">
+      <div class="form-group col-12" [ngClass]="{'ar-rtl' : language == 'ar'}">
+        <label for="Department" *ngIf="!destination && status != 'Share Memo'">{{(language=='ar')? 'للإعتماد من (مكتب / إدارة)':'Approver Office/Department'}}</label>
+        <label for="Department" *ngIf="destination && status == 'Share Memo'">{{(language=='ar')? arabic('office/departments'):'Office/Departments'}}</label>
+        <label for="Department" *ngIf="destination && status != 'Share Memo'">{{(language=='ar')? arabic('destinationoffice/department'):'Destination Office/Department'}}</label>
+        <ng-select [items]="department" (change)="onChangeDepartment(i)" [disabled]="isCitizen" [closeOnSelect]="true" [multiple]="false"
+          bindLabel="OrganizationUnits" bindValue="OrganizationID" [(ngModel)]="departmentSel[i]">
+        </ng-select>
+      </div>
+      <div class="form-group col-12" [ngClass]="{'ar-rtl' : language == 'ar'}">
+        <label for="dropdown" *ngIf="!destination || (destination && status == 'Share Memo')">{{(language=='ar')?'الإسم':'User'}}</label>
+        <label for="dropdown" *ngIf="destination && status != 'Share Memo'">{{(language=='ar')?'الإسم':'All RRC User'}}</label>
+        <ng-select [items]="list" (change)="selectionChanged(i)" [closeOnSelect]="true" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="userSel[i]">
+        </ng-select>
+      </div>
+    </ng-container>
+    <button type="button" *ngIf="status == 'Share Memo' " class="rounded-btn addbtn"
+      (click)="addNew()">{{(language=='ar')?'اضف جديد':'Add New'}}</button>
+  </div>
+</div>
+<div [ngClass]="{'direction': language=='ar'}" class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="close()">{{(language=='ar')?'أغلق':'Close'}}</button>
+  <button class="rounded-btn" [ngClass]="{'disabled-btn':flag}" [disabled]="validate()"
+    (click)="saveStatus();isSave = true">
+    <app-btn-loader *ngIf="submitted" class="btn-loader"></app-btn-loader>
+    {{button}}
+  </button>
+</div>
+
+
+<ng-template #template>
+  <div  [ngClass]="{'direction': language=='ar'}" class="modal-header modalclass">
+    <h4 class="modal-title pull-left">{{(language=='ar')?'نجاح':'Success'}}</h4>
+    <button type="button" class="close ml-0 pull-right" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" [ngClass]="{'text-right':language=='ar'}">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div  [ngClass]="{'direction': language=='ar'}" class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{(language=='ar')?'حسنا':'Ok'}}</button>
+  </div>
+</ng-template>

@@ -1,0 +1,98 @@
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+<!-- <div *ngIf="isLoading" class="spinner">
+  <div class="lds-hourglass"></div>
+</div> -->
+<!-- 
+<app-progress-bar *ngIf="isLoading"></app-progress-bar> -->
+<!-- <div id="calendar"></div> -->
+
+<div class="driver-calendar">
+  <full-calendar #ucCalendar 
+  defaultView="resourceTimelineDay" 
+  [plugins]="calendarPlugins" 
+  [navLinks]="true"
+  [eventTimeFormat]="eventTimeOptions" 
+  [header]="calendarHeaderOptions" 
+  [events]="calendarEvents"
+  [resourceLabelText]="resourceLabel" 
+  [resources]="resourcesArr" 
+  [locale]="calendarLocale" 
+  [allDayText]="allDayText" 
+  [scrollTime]="scrollTime"
+  [dragScroll]="true"
+  [filterResourcesWithEvents]="true"
+  [schedulerLicenseKey]="schedulerLicenseKey"
+  (datesRender)="handleDatesRender($event)"
+  (eventClick)="eventrenderFunction($event)"
+  (click)="clickCalender()"
+  >
+  </full-calendar>
+</div>
+<div class="modal-footer">
+  <div class="col-auto d-none d-lg-block d-md-block popup-wrapper" *ngIf="!isHidden" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <div dir="auto" class="modal-header modalclass">
+      <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">
+        {{title}}</h4>
+      <button *ngIf="lang=='en'" type="button" class="close pull-right-top color-white" aria-label="Close"
+        (click)="clickCalender()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <button *ngIf="lang=='ar'" type="button" class="close pull-left-top m-left" aria-label="Close"
+        (click)="clickCalender()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="col-auto d-block d-lg-none d-md-none popup-wrapper-mob" *ngIf="!isHidden" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <div dir="auto" class="modal-header modalclass">
+      <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">
+        {{title}}</h4>
+      <button *ngIf="lang=='en'" type="button" class="close pull-right-top color-white" aria-label="Close"
+        (click)="clickCalender()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <button *ngIf="lang=='ar'" type="button" class="close pull-left-top m-left" aria-label="Close"
+        (click)="clickCalender()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="col-auto">
+    <button [ngClass]="{'disabled-btn': inProgress}" (click)="print(printPDF)" class="rounded-btn" 
+    [disabled]="inProgress">
+    {{ lang=='en' ? 'Print Preview' : arabic('printpreview')}}
+  </button>
+</div>
+
+<ng-template #printPDF>
+  <div dir="auto" class="modal-header modalclass">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">
+      {{ (lang=='ar') ? arabic('printpreview') : 'Print Preview' }}</h4>
+    <button *ngIf="lang=='en'" type="button" class="close pull-right color-white" aria-label="Close"
+      (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+      (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body" #printContent [ngClass]="{'ar-rtl':lang=='ar'}">
+    <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+  </div>
+  <div dir="auto" class="modal-footer">
+    <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress"
+      (click)="printPdf(printContent);bsModalRef.hide()">{{ (lang=='ar') ? arabic('print') : 'Print' }}</button>
+    <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress"
+      (click)="downloadPrint();bsModalRef.hide()">{{ (lang=='ar') ? arabic('download') : 'Download' }}</button>
+  </div>
+</ng-template>
+
+ <!-- [filterResourcesWithEvents]="true" -->
+ <!-- <div class="driver-calendar">
+<full-calendar 
+  [events]="calendarEvents"  #ucCalendar  [plugins]="calendarPlugins" [locale]="calendarLocale"
+  [schedulerLicenseKey]="schedulerLicenseKey" (datesRender)="handleDatesRender($event)" ></full-calendar>
+ </div>
+
+ <button (click)="testbtn()">test</button> -->

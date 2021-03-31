@@ -1,0 +1,46 @@
+<div dir="auto" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{(language=='ar')?arabic('report'):'Report'}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':language=='ar'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="{{language == 'ar' ? 'rtl' : 'ltr'}}" class="modal-body {{language == 'ar' ? 'ar-rtl' : ''}}">
+    <div class="row">
+        <div class="form-group col-sm-4">
+          <label for="status">{{!(language=='ar') ? 'Entity Name' :arabic('entityname')}}</label>
+          <input type="text" class="form-control" [(ngModel)]="EntityName" id="name">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="status">{{!(language=='ar') ? 'Contact Name' :arabic('contactname')}}</label>
+          <input type="text" class="form-control" [(ngModel)]="UserName" id="name">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">{{!(language=='ar') ? 'Email ID' : arabic('emailid')}}</label>
+          <input type="text" class="form-control" [(ngModel)]="EmailID" id="name">
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">{{!(language=='ar') ? 'Phone Number' : arabic('phonenumber')}}</label>
+          <input type="number" class="form-control" (keypress)="numberOnly($event)"  [(ngModel)]="PhoneNumber" id="name" >
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">{{!(language=='ar') ? 'Government Entity' :arabic('govtentity')}}</label>
+          <ng-select
+            [items]="GovernmentEntityList"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationUnitsID"
+            id="attentionTo" [multiple]="false"
+            [(ngModel)]="GovernmentEntity">
+          </ng-select>
+         
+        </div>
+    
+       
+    </div>
+  
+  </div>
+  <div dir="{{language == 'ar' ? 'rtl' : 'ltr'}}" class="modal-footer">
+      <button type="button" [ngClass]="{'right':language=='ar'}" class="rounded-btn"
+      (click)="Download()">{{(language=='ar')?arabic('downloadexcel'):'Download Excel'}}</button>
+    </div>

@@ -1,0 +1,72 @@
+<div dir="auto" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{(language=='English')?'Upload Citizen Affair Documents':arabic('uploadcitizenaffairdocuments')}}</h4>
+  <button type="button" class="close pull-right ml-0" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [dir]="(language=='English')?'lrt':'rtl'">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="row">
+        <div class="form-group col-12" >
+          <label for="Attachments">{{(language=='English')?'Attachments':arabic('attachment')}}</label>
+          <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+          <input type="file" class="form-control attachment" 
+            name="Attachments" #modalFileInput (change)="HrAttachments($event)" [disabled]="requestType || isApiLoading"  id="Attachments"
+            placeholder="Select file" />
+        </div>
+        <div class="col-11 col-md-6" *ngIf="uploadProcess">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+              aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+          </div>
+        </div>
+        <div class="col-11 mx-3 mb-2 {{(language=='English')?'':'text-right'}}" *ngIf="attachments.length>0">
+          <label for="Keywords">{{(language=='English')?'Attachment List':arabic('attachmentlist')}}</label>
+          <div class="row border font-weight-bold">
+            <div class="col border">{{(language=='English')?'File Name':arabic('filename')}}</div>
+            <div class="col border text-center">{{(language=='English')?'Action':arabic('action')}}</div>
+          </div>
+          <div *ngFor="let file of attachments; let i = index">
+            <div class="row">
+              <div class="col border">
+                <a class="cursor break-word"
+                href="{{environment.AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+              </div>
+              <div class="col border text-center" >
+                <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>      
+    <!-- <div class="form-group col-12 col-md-6" >        
+      <label for="status">Request Type</label>
+      <select class="form-control" [(ngModel)]="requestType" id="RequestType">
+        <option value=''>All</option>
+        <option *ngFor="let rt of requestTypeList" value="{{rt.value}}">{{rt.label}}</option>
+      </select>          
+    </div> -->
+  </div>
+</div>
+<div class="modal-footer" [dir]="(language=='English')?'lrt':'rtl'">
+  <button type="button" class="btn btn-default" (click)="close()">{{(language=='English')?'Close':arabic('close')}}</button>
+  <button class="rounded-btn" [disabled]="attachments.length < 0 || isApiLoading" [ngClass]="{'disabled-btn': attachments.length < 0}"  (click)="saveAttachments()">{{(language=='English')?'Upload':arabic('upload')}}</button>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header modalclass" [dir]="(language=='English')?'lrt':'rtl'">
+    <h4 class="modal-title pull-left">{{(language=='English')?'Success':arabic('success')}}</h4>
+    <button type="button" class="close pull-right ml-0" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <p class="messagebody {{(language=='English')?'':'text-right'}}">{{message}}</p>
+  </div>
+  <div class="modal-footer" [dir]="(language=='English')?'lrt':'rtl'">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{(language=='English')?'Ok':arabic('ok')}}</button>
+  </div>
+</ng-template>

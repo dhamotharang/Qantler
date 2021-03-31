@@ -1,0 +1,61 @@
+.comment-section-container{
+    .profile {
+        max-width: 94px;
+    }
+    .comment-section-img{        
+        .user-ProfileImg{            
+            width: 65px;            
+            height: 65px;
+            border-radius: 50%;
+            @media (max-width: 1024px) {
+                height: 46px;
+                width: 46px;
+            }
+        }
+    }
+    .comment-text {
+        @media (max-width: 1024px) {
+            max-width: 75%;
+            padding-left: 10px; 
+        }
+    }
+    .comment-section-user-info{
+        .comment-section-username{
+            font-weight: bold;
+            margin-bottom:2px;
+        }        
+        .comment-section-timeline{
+            color:lightgray;
+        }
+    }
+
+    .comment-section-content{
+        margin-bottom: 10px;
+    }
+   
+    .comment-reply-section .reply-text-label{
+        color:#726236;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .vertical-resize{
+        resize: vertical;
+    }
+
+    .btn-row{
+        margin-top: 1rem;
+    }
+
+    .comment-line-separator{
+        margin:1rem;
+    }
+    .comment-section-area{
+        margin-top:15px;
+    }
+    margin-top: 1rem;
+}
+
+.comment-reply-btn{
+    margin:5px;
+}

@@ -1,0 +1,225 @@
+@import '../../../../styles.scss';
+$card-color: #f1f1f1;
+
+.dashboard {
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    cursor: pointer;
+    .card-body {
+      box-shadow: none !important;
+      img {
+        width: 54px;
+      }
+      .count {
+        color: $medium-color;
+        font-size: 40px;
+        font-weight: 900;
+      }
+
+      .name {
+        font-size: 16px;
+        /* font-weight: 600; */
+        line-height: 16px;
+        display: contents;
+      }
+      .txt-ct{
+        text-align: center;
+      }
+
+      @media screen and (max-width:1200px) and(min-width:760px) {
+        .count {
+          color: $medium-color;
+          font-size: 30px;
+          font-weight: 900;
+        }
+
+        .name {
+          font-size: 9px;
+          /* font-weight: 600; */
+          line-height: 5px;
+        }
+
+      }
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+
+        .progress-bar{
+            background: $medium-color !important;
+        }
+      }
+    }
+  }
+
+  .shadow {
+    box-shadow: 0px 0px 2px -1px;
+  }
+
+    .dashboard-user-cards{
+        margin-bottom: 15px;
+        .user-card{
+            background: #f8f9fa;
+            border-radius: inherit;
+            .user-card-content{
+                box-shadow: none !important;
+                margin: 0 auto;
+                .user-card-icon{
+                    display: block;
+                    width: 60%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding: 0;
+                }
+                .user-card-icon.profile{
+                    width: 40%;
+                }
+                .user-card-title{
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+
+
+    .line-separator{
+        padding:0px;
+    }
+
+    .non-it-card{
+      .card{
+        min-height: 190px;
+        max-height: 190px;
+        .card-body-top{
+          min-height: 100px;
+          max-height: 100px;
+        }
+      }
+    }
+  
+}
+
+.rounded-btn .fa-plus{
+    margin: 5px;
+}
+
+.page-body-wrapper .title-sy{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.request-modal-body{
+    .request-modal-icon{
+        width:35%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        display: block;
+    }
+    .request-modal-content{
+        font-size: 18px;
+        margin: auto;
+        cursor: pointer;
+    }
+
+    .line-separator{
+        padding:0px;
+    }
+}
+
+.create-request-modal.modal-header{
+    padding: 0.5rem 1rem;
+    background: #726236;
+    color: white;
+    border-bottom: 1px solid #726236;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+    font-size: 12px;
+    .modal-title{
+        font-size: 1rem;
+    }
+    .close{
+        color: #fff;
+        opacity: 1;
+    }
+}
+.it-container {
+  height: 150px;
+  max-width: 300px;
+  background-color: $card-color;
+}
+
+.it-container-col {
+  padding: 10px 0 20px 17px;
+}
+
+.services-container, .components-container, .dashboard-user-cards{
+  padding-top: 15px;
+}
+
+.container-page {
+  border: 1px solid #e4e2d5;
+  padding: 8px 20px 18px 20px;
+  margin-bottom: 30px;
+  .title-icon {
+    height: 50px;
+    width: 50px;
+  }
+  .title-text {
+    font-size: 18px;
+  }
+  .pb2 {
+    padding-bottom: 20px;
+  }
+}
+
+.text-title-left {
+  padding: 0 0 0 15px !important;
+}
+
+.text-title-right {
+  padding: 0 15px 0 0 !important;
+}
+
+.list-btn, .edit-btn {
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+  margin-right: 5px;
+}
+
+.list-btn{
+  background: #b59647;
+}
+
+.page-form-wrapper {
+  padding-bottom: 0px !important;
+}
+
+.home-action-buttons {
+  margin-top: 9px !important;
+}
+
+@media screen and (max-width:320px){
+  .availableRecords {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 768px) and (min-width: 600px) {
+  .availableRecords {
+    margin-top: 10px;
+  }
+}
+
+.p-right {
+  padding-right: 35px !important;
+}
+
+.p-left {
+  padding-left: 25px !important;
+}

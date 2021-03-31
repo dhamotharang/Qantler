@@ -1,0 +1,139 @@
+<div class="page-form-wrapper new_baby_addition" id="trigger-scroll">
+  <div class="form-title text-right">
+    {{arabic('newbabyaddition')}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="mode == 'view'">
+      <div class="form-group col-12 col-md-3">
+        <label for="Ref ID"> {{arabic('refid')}}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="refNo" id="Ref_ID">
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="Date">{{arabic('date')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control pr-4" [disabled]="true" bsDatepicker #dp="bsDatepicker"
+            [(ngModel)]="date_to" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" *ngIf="mode == 'create'" (click)="dp.toggle()"></i>
+          <i class="far fa-calendar date" *ngIf="mode == 'view'"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="Source OU">{{arabic('newbabysourceou')}}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="sourceOU" id="Source OU"
+          placeholder="Enter Source OU">
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="Source Name">{{arabic('newbabysourcename')}}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="sourceName" id="Source Name"
+          placeholder="Enter Source Name">
+      </div>
+      <div class="col-12">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required': editMode}">
+        <label for="Baby Name">{{arabic('babyname')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="babyName" id="Baby Name" [disabled]="mode == 'view'"
+          (blur)="validate()" placeholder="{{arabic('enterbabyname')}}">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+        <label for="Gender">{{arabic('gender')}}</label>
+        <div>
+          <input type="radio" name="gender" [disabled]="mode == 'view'" (change)="validate()" [(ngModel)]="gender"
+            [disabled]="screenStatus=='View'" value="0"> {{arabic('male')}}
+          <input class="ml-2" type="radio" [disabled]="mode == 'view'" (change)="validate()" [(ngModel)]="gender"
+            [disabled]="screenStatus=='View'" name="gender" value="1"> {{arabic('female')}}
+        </div>
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'required':editMode}">
+        <label for="BirthDay">{{arabic('birthday')}}</label>
+        <div class="position-relative">
+          <input type="text" (ngModelChange)="updateDate($event)" [maxDate]="maxDate()" [disabled]="mode == 'view'" class="form-control pr-4" bsDatepicker
+            #dp="bsDatepicker" [ngModel]="birthday" [bsConfig]="bsConfig">
+          <span *ngIf="mode == 'create'" (click)="dp.toggle()"><i class="far fa-calendar date"></i></span>
+          <span *ngIf="mode == 'view'"><i class="far fa-calendar date"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+        <label for="Hospital Name">{{arabic('hospitalname')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="hospitalName" placeholder="{{arabic('enterhospitalname')}}" id="Baby Name" [disabled]="mode == 'view'"
+          (blur)="validate()">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+        <label for="country-of-birth">{{arabic('countryofbirth')}}</label>
+        <ng-select class="country-of-birth" [items]="countryList" [closeOnSelect]="true" bindLabel="CountryName"
+          bindValue="CountryID" (change)="onCountrySelect($event)" (clear)="onCountryClear()"
+          placeholder="{{arabic('selectcountryofbirth')}}" [(ngModel)]="country" [disabled]="mode == 'view'">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+        <label for="city-of-birth">{{arabic('cityofbirth')}}</label>
+        <ng-select *ngIf="!othersCountry" class="city-of-birth" [items]="cityList" [closeOnSelect]="true" (change)="validate()"
+          bindLabel="CityName" bindValue="CityID" placeholder="{{arabic('selectcityofbirth')}}" [(ngModel)]="city"
+          [disabled]="mode == 'view'">
+        </ng-select>
+        <input *ngIf="othersCountry" type="text" class="form-control" (blur)="validate()"
+              [disabled]="mode == 'view'" [(ngModel)]="city" id="city">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="certificate">{{arabic('birthcertificate')}}</label>
+        <input type="file" class="form-control attachment" name="certificate" #variable [(ngModel)]="certificate"
+          id="certificate" (change)="handleFileUpload($event)" placeholder="Select file" [disabled]="mode == 'view'" />
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4" *ngIf="attachments.length>0">
+      <label for="Keywords">{{arabic('attachmentlist')}}</label>
+      <div class="row border font-weight-bold">
+        <div class="border" [ngClass]="mode=='create' ? 'col-6': 'col-12'">{{arabic('filename')}}</div>
+        <div class="col-6 border text-center" *ngIf="mode == 'create'">{{arabic('action')}}</div>
+      </div>
+      <div *ngFor="let file of attachments; let i = index">
+        <div class="row">
+          <div class="attachment-width border" [ngClass]="mode=='create' ? 'col-6': 'col-12'">
+            <a class="cursor"
+              href="{{attachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+          </div>
+          <div class="col-6 border text-center" *ngIf="mode == 'create'">
+            <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row action-btn">
+      <div class="col-auto p-1" *ngIf="mode == 'create'">
+        <button (click)="onSubmit()" class="rounded-btn" [disabled]="isApiLoading">{{arabic('submit')}}</button>
+      </div>
+      <div class="col-auto p-1" *ngIf="mode == 'view'">
+        <button (click)="onAssigneTo()" class="rounded-btn"
+          *ngIf="status == 40 && IsOrgHead && !ifAssignedToMe && OrgUnitID == '9'"
+          [disabled]="isApiLoading">{{arabic('assign')}}</button>
+        <button (click)="onAssigneToMe()" class="rounded-btn"
+          *ngIf="status == 40 && OrgUnitID == '9' && !IsOrgHead && !ifAssignedToMe"
+          [disabled]="isApiLoading">{{arabic('assigntome')}}</button>
+        <button (click)="onClose()" class="rounded-btn"
+          *ngIf="status == 40 && OrgUnitID == '9' && ifAssignedToMe"
+          [disabled]="isApiLoading">{{arabic('close')}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper my-3 p-4" *ngIf="mode == 'view' && historyLogs && (historyLogs.length > 0)">
+  <div class="row" *ngFor="let his of historyLogs">
+    <div class="col-auto" *ngIf="his.ActionDateTime">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'dd/MM/yyyy'}} / {{his.ActionDateTime | date: 'hh:mm'}} {{(his.ActionDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}
+      </div>
+    </div>
+    <div class="col p-2" *ngIf="his.Action">
+      <div class="row text-right">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+      </div>
+    </div>
+  </div>
+</div>

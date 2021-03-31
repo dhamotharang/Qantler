@@ -1,0 +1,301 @@
+<div class="maintenance-form-container" [ngClass]="{'rtl-mode': lang == 'ar'}">
+  <div class="page-form-wrapper"  id="trigger-scroll">
+    <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <span class="row" *ngIf="editMode">
+        {{ lang == 'en' ? 'CREATE MAINTENANCE REQUEST' : arabic.words.createMaintenanceRequest }}
+      </span>
+      <span class="row" *ngIf="!editMode">
+        {{ lang == 'en' ? 'VIEW MAINTENANCE REQUEST' : arabic.words.viewMaintenanceRequest }}
+      </span>
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row" *ngIf="!editMode || showResubmitBtn">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="refId">{{ lang == 'en' ? 'Reference Id' : arabic.words.referenceid }}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="refId"
+            id="refId">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="status">{{ lang == 'en' ? 'Status' : arabic.words.status }}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="status"
+            id="status">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="Date">{{ lang == 'en' ? 'Date' : arabic.words.date }}</label>
+          <div class="position-relative">
+            <div>
+              <i class="far fa-calendar date" [ngClass]="{'ar-rtl':lang =='ar'}"></i>
+            </div>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              value="{{date | date:'dd/MM/yyyy'}}"/>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="sourceou">{{ lang == 'en' ? 'Source Office/Department' : arabic.words.sourceou }}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceou"
+            id="sourceou">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="source-name">{{ lang == 'en' ? 'Source Name' : arabic.words.sourcename }}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceName"
+            id="sourceName">
+        </div>
+      </div>
+      <hr *ngIf="!editMode || showResubmitBtn"/>
+      <div class="row">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="status">{{ lang == 'en' ? 'Requestor Office/Department' : arabic.words.requestorofficeSlashDepartment }}</label>
+          <ng-select
+            [disabled]="!editMode || currentUser.OrgUnitID != 12"
+            class="status-ddown"
+            [items]="departmentList"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            (change)="onDepartmentSelect('requester', true)"
+            [(ngModel)]="requesterDepartment">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="status">{{ lang == 'en' ? 'Requestor Name' : arabic.words.requestorname }}</label>
+          <ng-select
+            [disabled]="!editMode || currentUser.OrgUnitID != 12"
+            class="status-ddown"
+            [items]="requesterList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            (change)="onRequesterChange()"
+            [(ngModel)]="requester">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="subject" [ngClass]="{'f-right': lang == 'ar'}">{{ lang == 'en' ? 'Subject' : arabic.words.subject }}</label>
+          <input
+            [disabled]="!editMode"
+            type="text"
+            (blur)="validate()"
+            class="form-control"
+            [(ngModel)]="subject"
+            id="subject">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="status" [ngClass]="{'f-right': lang == 'ar'}">{{ lang == 'en' ? 'Approver Office/Department' : arabic.words.approverofficeSlashDepartment }}</label>
+          <ng-select
+            [disabled]="!editMode"
+            class="status-ddown"
+            [items]="approverDepartmentList"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            (change)="onDepartmentSelect('approver', true)"
+            [(ngModel)]="approverDepartment">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="status" [ngClass]="{'f-right': lang == 'ar'}">{{ lang == 'en' ? 'Approver Name' : arabic.words.approvername }}</label>
+          <ng-select
+            [disabled]="!editMode"
+            class="status-ddown"
+            [items]="approverList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            (blur)="validate()"
+            [(ngModel)]="approver">
+          </ng-select>
+        </div>
+        <div class="form-group col-12" [ngClass]="{'required':editMode}">
+          <label for="RequestDetails" [ngClass]="{'f-right': lang == 'ar'}">{{ lang =='en' ? 'Request Details' : arabic.words.requestdetails }}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control vertical-resize"
+            [(ngModel)]="RequestDetails"
+            id="RequestDetails"
+            (ngModelChange)="validate()"
+            rows="5">
+          </textarea>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode}">
+          <label for="priority" [ngClass]="{'f-right': lang == 'ar'}">{{ lang == 'en' ? 'Priority' : arabic.words.priority }}</label>
+          <div [ngClass]="{'priority': lang == 'ar'}">
+            <input
+              [disabled]="!editMode"
+              type="radio"
+              (change)="validate()"
+              [ngClass]="{'m-right': lang == 'ar'}"
+              name="priority"
+              [(ngModel)]="priority"
+              value="high"> {{ lang == 'en' ? 'High' : arabic.words.high }}
+            <input
+              [disabled]="!editMode"
+              class="ml-2"
+              type="radio"
+              (change)="validate()"
+              name="priority"
+              [(ngModel)]="priority"
+              value="low"> {{ lang == 'en' ? 'Low' : arabic.words.low }}
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="Attachments">{{ lang == 'en' ? 'Attachments' : arabic.words.attachments }}</label>
+          <input
+            #fileInput
+            type="file"
+            multiple
+            class="form-control attachment"
+            name="Attachments"
+            id="Attachments"
+            (change) = "handleFileUpload($event)"
+            />
+        </div>
+        <div class="col-md-{{editMode?8:4}} col-12" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="attachments.length>0">
+          <label for="Keywords">{{lang == 'en' ? 'Attachment List' : arabic.words.attachmentlist}}</label>
+          <div class="row mx-auto border font-weight-bold">
+            <div class="col-{{editMode?6:12}} border">{{ lang == 'en' ? 'File Name' : arabic.words.filename }}</div>
+            <div class="col-6 border text-center" *ngIf="editMode">{{ lang == 'en' ? 'Action' : arabic.words.action }}</div>
+          </div>
+          <div *ngFor="let file of attachments; let i = index">
+            <div class="row mx-auto">
+              <div class="col-{{editMode?6:12}} border">
+                <span class="cursor" (click)="handleFileDownload(file)">
+                  {{file.AttachmentsName}}
+                </span>
+              </div>
+              <div class="col-6 border text-center action" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="editMode">
+                <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section
+              [comments]="RequestComments"
+              [commentType]="'Maintenance'"
+              [moduleId]="MaintenanceID"
+              [moduleNameID]="'MaintenanceID'">
+            </app-comment-section>
+            <div class="row comment-section" *ngIf="showCommentBox">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{empProfileImg}}" class="user-ProfileImg"/>
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text" [ngClass]="{'ar-rtl': lang=='ar'}">
+                <div class="comment-section-user-info">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea
+                    class="form-control vertical-resize"
+                    (ngModelChange)="validate()"
+                    [(ngModel)]="Comments"
+                    id="NewCommentContent"
+                    placeholder=""
+                    rows="3">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="comment-reply-section text-center">
+              <button
+                *ngIf="showSubmitBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': !valid || inProgress }"
+                [disabled]="!valid || inProgress"
+                (click)="sendRequest()">
+                {{ lang == 'en' ? 'SUBMIT' : arabic.words.submit }}
+              </button>
+              <button
+                *ngIf="showResubmitBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': !valid || inProgress }"
+                [disabled]="!valid || inProgress"
+                (click)="reSubmitRequest()">
+                {{ lang == 'en' ? 'SUBMIT' : arabic.words.submit }}
+              </button>
+              <button
+                *ngIf="!editMode && showApproveBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="updateAction('Approve')">
+                {{ lang == 'en' ? 'APPROVE' : arabic.words.approve }}
+              </button>
+              <button
+                *ngIf="!editMode && showEscalateBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="onEscalate()">
+                {{ lang == 'en' ? 'ESCALATE' : arabic.words.escalate }}
+              </button>
+              <button
+                *ngIf="!editMode && showRejectBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="updateAction('Reject')">
+                {{ lang == 'en' ? 'REJECT' : arabic.words.reject }}
+              </button>
+              <button
+                *ngIf="!editMode && showReturnBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="updateAction('ReturnForInfo')">
+                {{ lang == 'en' ? 'RETURN FOR INFO' : arabic.words.returnforinfo }}
+              </button>
+              <button
+                *ngIf="!editMode && showAssignBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="onAssignTo()">
+                {{ lang == 'en' ? 'ASSIGN' : arabic.words.assign }}
+              </button>
+              <button
+                *ngIf="!editMode && showAssignToMeBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="updateAction('AssignToMe')">
+                {{ lang == 'en' ? 'ASSIGN TO ME' : arabic.words.assigntome }}
+              </button>
+              <button
+                *ngIf="!editMode  && showCloseBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="updateAction('Close')">
+                {{ lang == 'en' ? 'CLOSE' : arabic.words.close }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

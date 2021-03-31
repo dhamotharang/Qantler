@@ -1,0 +1,438 @@
+<div class="dashboard mb-3">
+  <div class="row" *ngIf="isVehicleTeam">
+      <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+          <div class="card" (click)="reqSelect(det.redirectTo, det.name)">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-auto col-ls-12 col-xl-auto">
+                          <img src="{{det.image}}">
+                      </div>
+                      <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': lang == 'ar'}">
+                          <div class="count">{{det.count}}</div>
+                          <div class="name">{{det.name}}</div>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-12">
+                          <div class="progress my-3">
+                              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress" aria-valuemin="0" aria-valuemax="100">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-12 col-md-12 line-separator">
+        <hr/>
+      </div>
+      <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of mgmtDetails" >
+        <div class="card" (click)="reqSelect(det.redirectTo, true)">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-auto col-ls-12 col-xl-auto">
+                        <img src="{{det.image}}">
+                    </div>
+                    <div class="col col-ls-12 col-xl mgmt-details" [ngClass]="{'text-right': lang == 'ar'}">
+                        <div class="name">{{det.name}}</div>
+                        <div class="mgmt-count"><div class="redcolor"></div>{{det.ontrip}}</div>
+                        <div class="mgmt-count"><div class="greencolor"></div>{{det.offtrip}}</div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!isVehicleTeam">
+      <div class="col-sm-12 mb-2 col-md-4" *ngIf="pendingRequests.length>0">
+          <div class="card" (click)="getVehicleList(pendingRequests[0].reqtype)">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-auto col-ls-12 col-xl-auto">
+                          <img src="{{pendingRequests[0].image}}">
+                      </div>
+                      <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': lang == 'ar'}">
+                          <div class="count">{{pendingRequests[0].count}}</div>
+                          <div class="name" style="font-weight: bold;">{{pendingRequests[0].name}}</div>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-12">
+                          <div class="progress my-3">
+                              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="pendingRequests[0].progress" aria-valuemin="0" aria-valuemax="100">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-12 mb-2 col-md-4" *ngIf="ownRequestsList.length>0">
+          <div class="card" (click)="getVehicleList(ownRequestsList[0].reqtype)">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-auto col-ls-12 col-xl-auto">
+                          <img src="{{ownRequestsList[0].image}}">
+                      </div>
+                      <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': lang == 'ar'}">
+                          <div class="count">{{ownRequestsList[0].count}}</div>
+                          <ng-container>
+                              <div class="name" style="font-weight: 400">{{ownRequestsList[0].name}}</div>
+                          </ng-container>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-12">
+                          <div class="progress my-3">
+                              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="ownRequestsList[0].progress" aria-valuemin="0" aria-valuemax="100">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-12 mb-2 col-md-4" *ngIf="processedRequests.length>0">
+          <div class="card" (click)="getVehicleList(processedRequests[0].reqtype)">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-auto col-ls-12 col-xl-auto">
+                          <img src="{{processedRequests[0].image}}">
+                      </div>
+                      <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': lang == 'ar'}">
+                          <div class="count">{{processedRequests[0].count}}</div>
+                          <div class="name" style="font-weight: 400">{{processedRequests[0].name}}</div>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-12">
+                          <div class="progress my-3">
+                              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="processedRequests[0].progress" aria-valuemin="0" aria-valuemax="100">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="col-12 col-md-12 line-separator">
+  <hr/>
+</div>
+  <div class="dashboard mb-3">
+    <div class="row">
+      <div class="col-12 mb-2 col-md-4">
+        <div class="card" (click)="goToDocuments();">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img src="assets/media/inbox.png">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12 txt-ct">
+                <div class="name">
+                  {{ lang == 'ar' ? arabic('vehicledocuments') : 'Vehicle Management Documents' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper" [ngClass]="{'text-right':lang == 'ar'}">
+  <div class="form-title">
+      <ng-container *ngIf="lang == 'en'"> FILTER BY </ng-container>
+      <ng-container *ngIf="lang == 'ar'"> {{arabic('filterby')}} </ng-container>
+  </div>
+  <div class="container page-form-body">
+      <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="status">
+              <ng-container *ngIf="lang == 'en'"> Status </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('status')}} </ng-container>
+            </label>
+            <ng-select class="approverDept-ddown" [items]="statusOptions" [(ngModel)]="filterBy.Status" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" bindValue="DisplayName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('status') }}">
+            </ng-select>
+          </div>
+
+          <div class="form-group col-sm-4">
+            <label for="SourceOU">
+              <ng-container *ngIf="lang == 'en'">  Request Type </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('requesttype')}} </ng-container>
+            </label>
+            <ng-select class="approverDept-ddown" [items]="reqTypeList" [(ngModel)]="filterBy.RequestType" [closeOnSelect]="true" bindLabel="name" bindValue="name" bindValue="name" placeholder="{{ lang == 'en' ? 'Select Request Type' : arabic('requesttype') }}">
+            </ng-select>
+          </div>
+          <div class="form-group col-sm-4">
+              <label for="SourceOU">
+                <ng-container *ngIf="lang == 'en'">Requestor</ng-container>
+                <ng-container *ngIf="lang == 'ar'"> {{arabic('requestorname')}}  </ng-container>
+              </label>
+              <ng-select class="approverDept-ddown" [(ngModel)]="filterBy.Requestor" [items]="requestorList" [closeOnSelect]="true" bindLabel="EmployeeName" bindValue="EmployeeName" bindValue="EmployeeName" placeholder="{{ lang == 'en' ? 'Select Requestor' : arabic('requestorname') }}">
+              </ng-select>
+            </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label for="Date Range To">
+            <ng-container *ngIf="lang == 'en'">  Trip Date From </ng-container>
+            <ng-container *ngIf="lang == 'ar'"> {{arabic('requestdatefrom')}}  </ng-container>
+          </label>
+          <div class="position-relative">
+            <input type="text" class="form-control" [(ngModel)]="filterBy.TripDateFrom" bsDatepicker #dp1="bsDatepicker" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'start')">
+            <span (click)="dp1.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="Date Range From">
+            <ng-container *ngIf="lang == 'en'">  Trip Date To </ng-container>
+            <ng-container *ngIf="lang == 'ar'"> {{arabic('requestdateto')}} </ng-container>
+          </label>
+          <div class="position-relative">
+              <input type="text" class="form-control" [(ngModel)]="filterBy.TripDateTo" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'end')">
+              <span (click)="dp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+          </div>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="name">
+            <ng-container *ngIf="lang == 'en'"> Destination </ng-container>
+            <ng-container *ngIf="lang == 'ar'"> {{arabic('destination')}} </ng-container>
+          </label>
+            <input type="text" class="form-control" [(ngModel)]="filterBy.Destination" autocomplete="off" id="name">
+        </div>
+      </div>
+      <div class="row">
+          <div class="form-group col-sm-4">
+              <label for="SourceOU">
+                <ng-container *ngIf="lang == 'en'">Requestor Office/Department</ng-container>
+                <ng-container *ngIf="lang == 'ar'"> {{arabic('requestorofficeSlashDepartment')}}  </ng-container>
+              </label>
+              <ng-select class="approverDept-ddown" [(ngModel)]="filterBy.RequestorOfficeDepartment" [items]="departmentList" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationUnits" bindValue="OrganizationUnits" placeholder="{{ lang == 'en' ? 'Select Requestor Office/Department' : arabic('requestorofficeSlashDepartment') }}">
+              </ng-select>
+            </div>
+        <div class="form-group col-sm-4">
+            <label for="name">
+              <ng-container *ngIf="lang == 'en'">  Smart Search </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('smartsearch')}} </ng-container>
+            </label>
+              <input type="text" class="form-control" [(ngModel)]="filterBy.Smartsearch" autocomplete="off" id="name">
+          </div>       
+        </div>
+      <div class="row">
+          <div class="form-group col-auto">
+            <button class="rounded-btn" (click)="getVehicleRequestList()">
+              <ng-container *ngIf="common.currentLang == 'en'">  Search </ng-container>
+              <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('search')}} </ng-container>
+            </button>
+            <button class="rounded-btn availablereport" (click)="openReport(report)">
+              <ng-container *ngIf="lang == 'en'">  Show Available Reports </ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('showavailablereports')}} </ng-container>
+            </button>
+          </div>
+      </div>
+  </div>
+</div>
+<div id="destination"></div>
+<div class="page-form-wrapper my-3 d-md-block d-none">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <ng-container outsideBody>
+      <div class="table-responsive" [ngClass]="{'ar-rtl': lang=='ar'}">
+          <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang=='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'">
+          </ngx-datatable>
+          <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+              {{value | date:'dd/MM/yyyy'}}
+          </ng-template>
+          <ng-template #requestType let-row="row" let-value="value" let-i="index">
+              {{getRequestListName(value)}}
+          </ng-template>
+          <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+            <div class="table-action-btn">
+              <button class="table-view" (click)="viewData('approve', value)"><i class="fas fa-eye"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.RequestType != 1 && row.StatusCode == 214 && UserId == row.Requestor">
+              <button class="table-view release-view" (click)="viewData('releaseconfirmation', value)"><i class="fas fa-check"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.RequestType != 1 && row.StatusCode == 215 && UserId == row.Requestor">
+              <button class="table-view return-view red" (click)="viewData('returnconfirmation', value)"><i class="fas fa-undo"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.RequestType != 2 && row.StatusCode == 210 && isVehicleTeam" >
+              <!-- Assign -->
+              <button class="table-view assign-view blue" (click)="viewData('assignto', value)"><i class="fas fa-file"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.RequestType != 2 && row.RequestType != 3 && row.StatusCode == 211 && isVehicleTeam" >
+              <button class="table-view reassign-view yellow"  (click)="viewData('reassign', value)"><i class="fas fa-sync-alt"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.StatusCode == 211 && isVehicleTeam" >
+              <button class="table-view release-view green" (click)="viewData('release', value)"><i class="fas fa-check"
+                  style="cursor: pointer;"></i></button>
+            </div>
+            <div class="table-action-btn vehicle-btns" *ngIf="row.StatusCode == 212 && isVehicleTeam">
+              <button class="table-view return-view red" (click)="viewData('return', value)"><i class="fas fa-undo"
+                  style="cursor: pointer;"></i></button>
+            </div>
+          </ng-template>
+      </div>
+  </ng-container>
+  
+  <ng-container footer *ngIf="config && config.totalItems>0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+</div>
+
+<!-- show available reportemplate -->
+<ng-template #report>
+  <div dir="auto" class="modal-header modalclass">
+    <h6 class="modal-title pull-left">{{reportTitle}}</h6>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="status"> {{ lang == 'en' ? 'Status' : arabic('status') }}</label>
+        <ng-select class="status-ddown" [items]="statusOptions" [closeOnSelect]="true" [(ngModel)]="Reportfilter.Status" bindLabel="DisplayName" bindValue="DisplayName" bindValue="DisplayName" 
+        placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="status"> {{ lang == 'en' ? 'Request Type' : arabic('requesttype') }}</label>
+        <ng-select class="status-ddown" [items]="reqTypeList" [closeOnSelect]="true" [(ngModel)]="Reportfilter.RequestType" bindLabel="name"
+          bindValue="name" placeholder="{{ lang == 'en' ? 'Select Request Type' : arabic('requesttype') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="status"> {{ lang == 'en' ? 'Requestor' : arabic('requestorname') }}</label>
+        <ng-select class="status-ddown" [items]="requestorList" [closeOnSelect]="true" [closeOnSelect]="true"[(ngModel)]="Reportfilter.Requestor" bindLabel="EmployeeName"
+          bindValue="EmployeeName" bindValue="EmployeeName"  placeholder="{{ lang == 'en' ? 'Select Requestor' : arabic('requestorname') }}">
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="Date Range To">
+          <ng-container *ngIf="lang == 'en'">  Trip Date From </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('requestdatefrom')}}  </ng-container>
+        </label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="Reportfilter.TripDateFrom" bsDatepicker #dp1="bsDatepicker" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'start')">
+          <span (click)="dp1.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="Date Range From">
+          <ng-container *ngIf="lang == 'en'">  Trip Date To </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('requestdateto')}} </ng-container>
+        </label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="Reportfilter.TripDateTo" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'end')">
+          <span (click)="dp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+      </div>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="name">
+          <ng-container *ngIf="lang == 'en'"> Destination </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('destination')}} </ng-container>
+        </label>
+        <input type="text" class="form-control" [(ngModel)]="Reportfilter.Destination" autocomplete="off" id="name">
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="SourceOU">
+              <ng-container *ngIf="lang == 'en'">Requestor Office/Department</ng-container>
+              <ng-container *ngIf="lang == 'ar'"> {{arabic('requestorofficeSlashDepartment')}}  </ng-container>
+            </label>
+            <ng-select class="approverDept-ddown" [(ngModel)]="Reportfilter.RequestorOfficeDepartment" [items]="departmentList" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationUnits" bindValue="OrganizationUnits" placeholder="{{ lang == 'en' ? 'Select Requestor Office/Department' : arabic('requestorofficeSlashDepartment') }}">
+            </ng-select>
+          </div> 
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="name">
+          <ng-container *ngIf="lang == 'en'">  Smart Search </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('smartsearch')}} </ng-container>
+        </label>
+        <input type="text" class="form-control" [(ngModel)]="Reportfilter.Smartsearch" autocomplete="off" id="name">
+      </div>      
+    </div>
+  </div>
+  <div class="modal-footer" dir="{{lang!='en' ? 'rtl' : 'ltr'}}">
+      <button type="button" class="rounded-btn" (click)="Download()">{{ lang == 'en' ? 'Download Excel' : arabic('downloadexcel')}}</button>
+    </div>
+</ng-template>
+<!-- ------ -->
+
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang=='ar'}" *ngFor="let row of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>{{ lang=='en' ? 'Ref Id' : arabic('refid') }} : </b></span><span>{{row.ReferenceNumber}}</span></div>
+        <div class="col-12"><span><b>{{ lang=='en' ? 'Requestor Name' : arabic('requestorname') }} : </b></span><span>{{row.RequestorName}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col"><span><b>{{ lang=='en' ? 'Trip Date From' : arabic('tripdatefrom') }} : </b></span><span> {{row.TripDateFrom | date:'dd/MM/yyyy'}}</span></div>
+        <div class="col"><span><b>{{ lang=='en' ? 'Trip Date To' : arabic('tripdateto') }} : </b></span><span> {{row.TripDateTo | date:'dd/MM/yyyy'}}</span></div>
+      </div>
+      <div class="row">
+          <div class="col"><span><b>{{ lang=='en' ? 'Trip Time From' : arabic('triptimefrom') }} : </b></span><span> {{row.TripTimeFrom}}</span></div>
+          <div class="col"><span><b>{{ lang=='en' ? 'Trip Time To' : arabic('triptimeto') }} : </b></span><span> {{row.TripTimeTo}}</span></div>
+        </div>
+      <div class="row">
+        <div class="col"><span><b>{{ lang=='en' ? 'Request Type' : arabic('requesttype') }} : </b></span><span> {{getRequestListName(row.RequestType)}}</span></div>
+        <div class="col"><span><b>{{ lang=='en' ? 'Destination' : arabic('destination') }} : </b></span><span> {{row.Destination}}</span></div>
+      </div>
+      <div class="row">
+          <div class="col"><span><b>{{ lang=='en' ? 'City' : arabic('city') }} : </b></span><span> {{row.City}}</span></div>
+          <div class="col"><span><b>{{ lang=='en' ? 'Status' : arabic('status') }} : </b></span><span>{{row.Status}}</span></div>
+        </div>
+      <div class="row mar-top">
+        <div class="col"></div>
+        <div class="col-auto vehicle-btns mobile-btns">
+          <span><button class="list-btn" (click)="viewData('approve', row)"><i class="fas fa-eye"></i></button>&nbsp;</span>
+          <span *ngIf="row.RequestType != 1 && row.StatusCode == 214 && UserId == row.Requestor">
+            <button class="list-btn release-view" (click)="viewData('releaseconfirmation', row)"><i class="fas fa-check"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+          <span *ngIf="row.RequestType != 1 && row.StatusCode == 215 && UserId == row.Requestor">
+            <button class="list-btn return-view red" (click)="viewData('returnconfirmation', row)"><i class="fas fa-undo"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+          <!-- Assign -->
+          <span *ngIf="row.RequestType != 2 && row.StatusCode == 210 && isVehicleTeam">
+            <button class="list-btn assign-view blue" (click)="viewData('assignto', row)"><i class="fas fa-file"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+          <span *ngIf="row.RequestType != 2 && row.RequestType != 3 && row.StatusCode == 211 && isVehicleTeam">
+            <button class="list-btn mobile-reassign-view yellow" (click)="viewData('reassign', row)"><i class="fas fa-sync-alt"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+          <span *ngIf="row.StatusCode == 211 && isVehicleTeam">
+            <button class="list-btn release-view green" (click)="viewData('release', row)"><i class="fas fa-check"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+          <span *ngIf="row.StatusCode == 212 && isVehicleTeam">
+            <button class="list-btn return-view red" (click)="viewData('return', row)"><i class="fas fa-undo"
+              style="cursor: pointer;"></i></button>&nbsp;
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="config && config.totalItems>0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+  
+</div>

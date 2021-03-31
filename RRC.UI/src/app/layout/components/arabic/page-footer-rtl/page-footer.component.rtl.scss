@@ -1,0 +1,66 @@
+@import '../../../../../styles.scss';
+.btn-color{
+    border: 1px solid $dark-color;
+    color: $dark-color;
+    background: transparent;
+    border-radius: 5px;
+    &:hover{
+        color: $dark-color !important;
+    }
+}
+.foot-body{
+    background: #282828;
+    color: white;
+    .foot-icon{
+        height: 15px;
+        width: 15px;
+        margin-right: 5px;
+    }
+    .social-media{
+        color: $medium-color;    
+    }
+    .youtube{
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+    }
+    .footer-sec {
+        button {
+            width: 100%;
+            text-align: right;
+            @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+                width: 62%;
+                text-transform: capitalize;
+                .foot-icon {
+                    margin-right: 8px;
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+    .footer-content {
+        display: flex;
+        @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+            display: unset;
+        }
+        padding-right: 0;
+        li {
+            padding-left: 6px;
+            list-style: none;
+            &:not(:first-child):before {
+                content: " | ";
+                @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+                    content: "  ";
+                }
+            }
+            @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+                padding-top: 4px;
+            }
+        }
+    }
+}
+.foot{
+    background: $medium-color;
+    color:white;
+    padding: 10px;
+}

@@ -1,0 +1,207 @@
+<div #myScrollElem class="page-form-wrapper contacts-part" *ngIf="!successMsg && contactType == 'internal'">
+  <div class="modal-header modalclass" dir="{{!isEngLang ? 'rtl' : ''}}">
+    <span class="screenStatus">{{Headername}}</span>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container-fluid py-2 {{!isEngLang ? 'ar-rtl' : ''}}">
+    <div class="row">
+      <div class="form-group col-12 col-md-4 user-pic-div">
+        <div class="profile-picure" *ngIf="!uploadProcess">
+          <img src="{{ImageUrl ? ImageUrl :'assets/home/user_male.png'}}" class="user-pic"
+            (click)="screenStatus!='View' ? fileInput.click():''">
+          <input id="fileInput" type='file' #fileInput (change)="uploadFiles($event)">
+          <div class="profileImg">
+            <img class="photo-camera" (click)="screenStatus!='View' ? fileInput.click():''"
+              src="assets/media/photo-camera.png">
+          </div>
+        </div>
+        <div class="progress" *ngIf="uploadProcess">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+            aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Create Date"> {{isEngLang ? 'Office/Department' : arabic('office/department')}}</label>
+        <ng-select [items]="departmentList" [closeOnSelect]="true" bindLabel="OrganizationUnits"
+          bindValue="OrganizationID" [disabled]="screenStatus=='View'" [(ngModel)]="formData.Department"
+          [placeholder]="placeholderselect">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Section' : arabic('section')}}</label>
+        <ng-select [items]="sectionList" [closeOnSelect]="true" bindLabel="SectionName" bindValue="SectionID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="formData.Unit" [placeholder]="placeholdersection">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Unit' : arabic('unit')}}</label>
+        <ng-select [items]="unitList" [closeOnSelect]="true" bindLabel="UnitName" bindValue="UnitID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="formData.Section" [placeholder]="placeholderunit">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source OU">{{isEngLang ? 'User Name' : arabic('username')}}</label>
+        <input type="text" class="form-control" autocomplete="off" [disabled]="screenStatus =='View'"
+          [(ngModel)]="formData.UserName" id="Source OU">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{isEngLang ? 'Designation' : arabic('designation')}}</label>
+        <input type="text" class="form-control" autocomplete="off" [disabled]="screenStatus =='View'"
+          [(ngModel)]="formData.Designation" id="Source Name">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{isEngLang ? 'Email ID' : arabic('emailid')}}</label>
+        <input type="text" class="form-control" autocomplete="off" [disabled]="screenStatus =='View'"
+          [(ngModel)]="formData.EmailId" id="Source Name">
+        <div class="row" *ngIf="contactType == 'internal' && formData.EmailId && checkMail()">
+          <div class="col-12">
+            <span class="text-danger">
+              {{isEngLang ? 'Please Enter a valid Email ID' : arabic('Pleaseentervalidemail')}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{isEngLang ? 'Phone Number' : arabic('phonenumber')}}</label>
+        <input class="form-control" autocomplete="off" (keydown)="numberOnlyPhoneNumber($event)"
+          [disabled]="screenStatus =='View'" [(ngModel)]="formData.PhoneNumber"  min="0" id="Source Name" maxlength="18" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
+        <div class="row" *ngIf="PhoneNumberValidation == '1'">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'The phone number should have at least 9 digits' : 'يجب أن يحتوي رقم الهاتف على 9 أرقام على الأقل' }}
+            </span>
+          </div>
+        </div>
+        <div class="row" *ngIf="PhoneNumberValidation == '2'">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a maximum of 14 digits' : 'الرجاء إدخال 14 رقماً كحد أقصى' }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Extension Number' : arabic('extensionnumber')}}</label>
+        <input class="form-control" autocomplete="off" (keydown)="numberOnly($event)"
+          [disabled]="screenStatus =='View'" [(ngModel)]="formData.PhoneNumberExtension"  min="0" id="Source Name" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center" *ngIf="screenStatus =='create'">
+      <div>
+        <button class="rounded-btn" [disabled]="!validateInternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'"
+          [ngClass]="{'disabled-btn': !validateInternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'}"
+          (click)="saveContact()">{{isEngLang?'SUBMIT':arabic('submit')}}</button>
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center" *ngIf="screenStatus =='edit'">
+      <div>
+        <button class="rounded-btn" [disabled]="!validateInternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'"
+          [ngClass]="{'disabled-btn': !validateInternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'}"
+          (click)="updateContact()">{{isEngLang?'SUBMIT':arabic('submit')}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper contacts-part" *ngIf="!successMsg && contactType == 'external'">
+  <div class="modal-header modalclass" dir="{{!isEngLang ? 'rtl' : ''}}">
+    <span class="screenStatus">{{Headername}}</span>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container-fluid py-2 {{!isEngLang ? 'ar-rtl' : ''}}">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{isEngLang ? 'Entity Name' :arabic('entityname')}}</label>
+        <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="formData.EntityName"
+          autocomplete="off" id="Source Name">
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Contact Name' :arabic('contactname')}}</label>
+        <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="formData.UserName"
+          autocomplete="off" id="Source Name">
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Email ID' : arabic('emailid')}}</label>
+        <input type="text" class="form-control" [disabled]="screenStatus =='View'" (keypress)="validMail()"
+          (keydown)="emptyValid()" autocomplete="off" [(ngModel)]="formData.EmailId" id="Source Name">
+        <div class="row" *ngIf="contactType == 'external' && formData.EmailId && checkMail()">
+          <div class="col-12">
+            <span class="text-danger">
+              {{isEngLang ? 'Please Enter a valid Email ID' : arabic('Pleaseentervalidemail')}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{isEngLang ? 'Phone Number' : arabic('phonenumber')}}</label>
+        <input class="form-control" [disabled]="screenStatus =='View'" autocomplete="off"
+          (keydown)="numberOnlyPhoneNumber($event)" min="0" [(ngModel)]="formData.PhoneNumber" id="Source Name" maxlength="18" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
+          <div class="row" *ngIf="PhoneNumberValidation == '1'">
+            <div class="col-12">
+              <span class="text-danger">
+                {{ isEngLang ? 'The phone number should have at least 9 digits' : 'يجب أن يحتوي رقم الهاتف على 9 أرقام على الأقل' }}
+              </span>
+            </div>
+          </div>
+          <div class="row" *ngIf="PhoneNumberValidation == '2'">
+            <div class="col-12">
+              <span class="text-danger">
+                {{ isEngLang ? 'Please enter a maximum of 14 digits' : 'الرجاء إدخال 14 رقماً كحد أقصى' }}
+              </span>
+            </div>
+          </div>
+      </div>
+      <div class="form-group col-12 col-md-4 attentionSec" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{isEngLang?'Government Entity':arabic('govtentity')}}</label>
+        <div class="radioSec">
+          <input type="radio" name="attention" [disabled]="screenStatus =='View'" [(ngModel)]="formData.OfficialEntity"
+            id="attentionTo" value="true"> {{isEngLang?'Yes':arabic('yes')}}
+          <input class="ml-2" type="radio" [disabled]="screenStatus =='View'" [(ngModel)]="formData.OfficialEntity"
+            name="attention" id="attentionAddress" value="false"> {{isEngLang?'No':arabic('no')}}
+        </div>
+      </div>
+
+    </div>
+    <div class="row px-3 justify-content-center" *ngIf="screenStatus =='create'">
+      <div>
+        <button class="rounded-btn" [disabled]="!validateExternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'"
+          [ngClass]="{'disabled-btn': !validateExternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'}"
+          (click)="saveContact()">{{isEngLang?'SUBMIT':arabic('submit')}}</button>
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center" *ngIf="screenStatus =='edit'">
+      <div>
+        <button class="rounded-btn" [disabled]="!validateExternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'"
+          [ngClass]="{'disabled-btn': !validateExternalForm() || valid || PhoneNumberValidation == '1' || PhoneNumberValidation == '2'}"
+          (click)="updateContact()">{{isEngLang?'SUBMIT':arabic('submit')}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template *ngIf="!successMsg">
+  <div class="modal-header  modalclass" style="background: #726236; color: white;" dir="{{!isEngLang ? 'rtl' : ''}}">
+    <h4 class="modal-title pull-left">{{isEngLang?'Success':arabic('success')}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':!isEngLang}" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body {{!isEngLang ? 'ar-rtl' : ''}}">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div dir="{{!isEngLang ? 'rtl' : ''}}" class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{isEngLang?'Ok':arabic('ok')}}</button>
+  </div>
+</ng-template>
+
+<app-contacts [successMsg]="successMsg" [contactType]="contactType" *ngIf="successMsg">
+</app-contacts>

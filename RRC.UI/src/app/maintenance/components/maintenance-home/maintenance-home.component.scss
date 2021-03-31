@@ -1,0 +1,114 @@
+
+.maintenance-home {
+  .title-sy {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .home-card {
+    height: 200px;
+    cursor: pointer;
+    .home-card-row-one {
+      min-height: 105px;
+    }
+  }
+  .filter-btns {
+    padding: 0px;
+    button {
+      margin-top: 5px;
+    }
+  }
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    .card-body {
+      box-shadow: none !important;
+      img {
+        width: 80px;
+        height: 80px;
+      }
+      .count {
+        color: #A39161;
+        font-size: 40px;
+        font-weight: 900;
+      }
+      .displayname
+      {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 16px;
+        display: contents;
+      }
+      .name {
+        font-size: 16px;
+        /* font-weight: 600; */
+        line-height: 16px;
+        display: contents;
+      }
+      .txt-ct{
+        text-align: center;
+      }
+      @media screen and (max-width:1200px) and(min-width:760px) {
+        .count {
+          color: #A39161;
+          font-size: 30px;
+          font-weight: 900;
+        }
+        .name {
+          font-size: 9px;
+          /* font-weight: 600; */
+          line-height: 5px;
+        }
+      }
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+        .progress-bar{
+          background: #A39161 !important;
+        }
+      }
+    }
+  }
+
+  .dashboard-user-cards {
+    .user-card {
+      background: #f8f9fa;
+      border-radius: inherit;
+      cursor: pointer;
+      .user-card-content{
+        box-shadow: none !important;
+        margin: 0 auto;
+        .user-card-icon{
+          display: block;
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 0;
+        }
+        .user-card-icon.profile{
+          width: 40%;
+        }
+        .user-card-title{
+          font-size: 16px;
+          font-weight: bold;
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+
+  .form-container {
+    margin-top: 20px;
+    .btn-search {
+      margin-top: 30px;
+    }
+  }
+}
+
+.list-btn{
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}

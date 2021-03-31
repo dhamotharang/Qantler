@@ -1,0 +1,173 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title ar-rtl">
+    {{screenTitle}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="screenStatus == 'View'">
+      <div class="form-group right col-12 col-md-4">
+        <label for="Creation Date">{{arabic('date')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.CreatedDateTime"
+            bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date ar-rtl-icon"></i>
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="Source OU">{{arabic('sourceofficeSlashDepartment')}}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.SourceOU"
+          id="Source OU" placeholder="Enter Source OU">
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="Source Name">{{arabic('sourcename')}}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.SourceName"
+          id="Source Name" placeholder="Enter Source Name">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus == 'View'">
+    <div class="row">
+      <div class="form-group right col-12 col-md-4">
+        <label for="approverDept">{{arabic('approverofficeSlashDepartment')}}</label>
+        <ng-select class="approverDept-ddown" [items]="approverDeptList" [closeOnSelect]="true"
+          bindLabel="OrganizationUnits" (change)="onDepartmentSelect()" bindValue="OrganizationID"
+          [disabled]="!editMode" placeholder="{{arabic('approverdepartment')}}" [(ngModel)]="formData.ApproverDepartmentID">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="approvers">{{arabic('approvername')}}</label>
+        <ng-select class="approvers-ddown" [items]="approverList" [closeOnSelect]="true" bindLabel="EmployeeName"
+          [disabled]="!editMode" bindValue="UserID" placeholder="{{arabic('approvername')}}"
+          [(ngModel)]="formData.ApproverID">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{arabic('subject')}}</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Subject" id="Source Name" placeholder="{{arabic('subject')}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="status">{{arabic('type')}}</label>
+        <ng-select class="approvers-ddown" [items]="typeList" [closeOnSelect]="true" bindLabel="label" bindValue="value"
+          (change)="validate()" [disabled]="!editMode" placeholder="{{arabic('type')}}" [(ngModel)]="formData.Type">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Eventname">{{arabic('eventname')}}</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.EventName" id="eventname" placeholder="{{arabic('eventname')}}">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{arabic('location')}}</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Location" id="Source Name" placeholder="{{arabic('location')}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">{{arabic('attendedby')}}</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.AttendedBy" id="Source Name" placeholder="{{arabic('attendedby')}}">
+      </div>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Eventname">{{arabic('partners')}}</label>
+        <input type="text" class="form-control" (change)="validate()" id="eventname" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Partners" placeholder="{{arabic('partners')}}">
+      </div>
+    </div>
+    <div class="page-form-wrapper my-3 p-4">
+      <div class="row ">
+        <div class="col-12 comment">
+          <app-comment-section [comments]="RequestComments" [commentType]="'PressRelease'" [moduleId]="PressReleaseID"
+            [moduleNameID]="'PressReleaseID'">
+          </app-comment-section>
+          <div class="row comment-section">
+            <div class="col-2 com-md-2 profile">
+              <div class="comment-section-img">
+                <img src="{{userProfileImg}}" class="user-ProfileImg" />
+              </div>
+            </div>
+            <div class="col-10 col-md-10 comment-text">
+              <div class="comment-section-user-info ar-rtl">
+                <p class="comment-section-username">{{currentUser.username}}</p>
+              </div>
+              <div class="comment-section-content">
+                <textarea class="form-control vertical-resize" [(ngModel)]="formData.Comments" id="NewCommentContent"
+                  placeholder="" [disabled]="!canComment" (ngModelChange)="commentValid()" rows="3">
+                  </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+        <div class="col-auto p-1" *ngIf="editMode && !reSubmit && screenStatus == 'Create'">
+          <button 
+            [ngClass]="{'disabled-btn': !validate() || inProgress }"
+            [disabled]="!validate() || inProgress" class="rounded-btn" (click)="sendRequest()">
+            {{arabic('submit')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="editMode && reSubmit">
+          <button 
+            [ngClass]="{'disabled-btn': !validate() || inProgress }"
+            [disabled]="!validate() || inProgress" class="rounded-btn" (click)="ReSubmit()">
+            {{arabic('submit')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+          <button
+            class="rounded-btn"
+            [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress" (click)="updateAction('Approve')">
+            {{arabic('approve')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+          <button
+            class="rounded-btn"
+            [ngClass]="{'disabled-btn': inProgress || !isComment }" [disabled]="inProgress || !isComment"
+            (click)="onEscalate('Escalate')">
+            {{arabic('escalate')}}
+          </button>
+          </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+          <button
+            class="rounded-btn"
+            [ngClass]="{'disabled-btn': inProgress || !isComment }" [disabled]="inProgress || !isComment"
+            (click)="updateAction('Reject')">
+            {{arabic('reject')}}
+          </button>
+          </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+          <button
+            class="rounded-btn"
+            [ngClass]="{'disabled-btn': inProgress || !isComment }" [disabled]="inProgress || !isComment"
+            (click)="updateAction('ReturnForInfo')">
+            {{arabic('returnforinfo')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 76 && (OrgUnitID == 17) && IsOrgHead && !isAssignedToMe">
+          <button 
+            class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+            (click)="onAssignTo()">
+            {{arabic('assign')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 76 && (OrgUnitID == 17) && !IsOrgHead && !isAssignedToMe">
+          <button 
+            class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+            (click)="updateAction('AssignToMe')">
+            {{arabic('assigntome')}}
+          </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="!editMode  && formData.Status == 76 && (OrgUnitID == 17) && isAssignedToMe">
+          <button 
+            class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+            (click)="updateAction('Close')">
+          {{arabic('close')}}
+          </button>
+        </div>
+      </div>
+  </div>
+</div>

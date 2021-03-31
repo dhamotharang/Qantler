@@ -1,0 +1,15 @@
+// .date {
+//   right: 25px;
+// }
+.ar-rtl svg.date.start{
+    left:25px;
+    right:unset;
+}
+
+.ar-rtl svg.date{
+    right:unset;
+}
+
+svg.date.start{
+    right: 25px;
+}

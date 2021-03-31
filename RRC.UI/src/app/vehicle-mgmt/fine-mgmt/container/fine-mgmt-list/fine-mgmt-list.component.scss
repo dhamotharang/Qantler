@@ -1,0 +1,25 @@
+@import '../../../../../styles.scss';
+.search-container {
+    padding: 31px 0 0 10px;
+}
+
+.modalclass {
+    background: $medium-color;
+    color: white;
+  
+    .modal-title{
+        font-size: 16px;
+    }
+  }
+
+  .list-btn{
+    background: #b59647;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+  }
+
+  .aml-1{
+    margin-right: 0.25rem!important;
+  }

@@ -1,0 +1,79 @@
+  <!-- <div class="modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}" *ngIf="lang == 'en'">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl': lang == 'ar'}">{{Title}}</h4>
+   <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-header modalclass" *ngIf="lang == 'ar'">
+    <h4 class="modal-title" [ngClass]="{'ar-rtl': lang == 'ar'}">{{arabicfn('escalate')}}</h4>
+    <button type="button" class="close"  [ngClass]="{'ar-rtl': lang == 'ar'}" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div  [ngClass]="{'direction': lang=='ar'}" class="modal-header modalclass">
+      <h5 class="modal-title pull-left">{{lang == 'en' ? 'Escalate' : arabicfn('escalate')}}</h5>
+      <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+        (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <div  [ngClass]="{'direction': lang=='ar'}" class="modal-body">
+    <div class="row">
+      <ng-container>
+        <div class="form-group col-12" *ngIf="!isDepartmentNotNeeded" [ngClass]="{'ar-rtl' : lang == 'ar'}">
+          <label for="Department">{{lang == 'en' ? 'Approver Office/Department' : arabicfn('approverofficeSlashDepartment')}}</label>
+          <!-- <select class="form-control" [(ngModel)]="departmentSel" (change)="onChangeDepartment($event.target.value)" id="exampleFormControlSelect1">
+            <option *ngFor="let dept of department" [value]="dept.OrganizationID">{{dept.OrganizationUnits}}</option>
+          </!-->
+          <ng-select
+            class="official-task-type"
+            [items]="department"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            (change)="getUserList()"
+            bindValue="OrganizationID"
+            [(ngModel)]="departmentSel">
+          </ng-select>
+        </div>
+        <div class="form-group col-12" [ngClass]="{'ar-rtl' : lang == 'ar'}">
+          <label for="dropdown">{{lang == 'en' ? 'Approver Name' : arabicfn('approvername')}}</label>
+          <!-- <select class="form-control" [(ngModel)]="ApproverId">
+            <option selected="true" value="">{{lang == 'en' ? 'Select user' : arabicfn('selectuser')}}</option>
+            <option *ngFor="let dept of userList" value={{dept.UserID}}>{{dept.EmployeeName}}</option>
+          </!-->
+          <ng-select
+            class="status-ddown"
+            [items]="userList"
+            [(ngModel)]="ApproverId"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID">
+          </ng-select>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="modal-footer"  [ngClass]="{'direction': lang=='ar'}">
+    <button type="button" class="btn btn-default" (click)="close()">{{lang== 'en' ? 'Close' : arabicfn('close')}}</button>
+    <button class="rounded-btn" [disabled]="!ApproverId || (userList.length < 0) || inProgress" [ngClass]="{'disabled-btn': !ApproverId || inProgress}"  (click)="saveStatus('Escalate')">{{lang == 'en' ? 'Escalate' : arabicfn('escalate')}}</button>
+  </div>
+
+
+  <ng-template #template>
+    <div  class="modal-header modalclass"  [ngClass]="{'direction': lang=='ar'}">
+      <h4 class="modal-title pull-left">{{lang == 'en' ? 'Success' : arabicfn('success')}}</h4>
+      <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0': lang == 'ar'}" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body"  [ngClass]="{'ar-rtl': lang=='ar'}">
+        <p class="messagebody">{{message}}</p>
+    </div>
+    <div class="modal-footer"  [ngClass]="{'direction': lang=='ar'}">
+      <button type="button" class="rounded-btn" (click)="closemodal()">{{lang == 'en' ? 'Ok' : arabicfn('ok')}}</button>
+    </div>
+  </ng-template>

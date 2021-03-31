@@ -1,0 +1,202 @@
+<div *ngIf="!formPage" class="page-form-wrapper mb-3">
+    <div class="titleTab">
+      <div class="form-title {{isEngLang ? '' : 'ar-rtl'}}" [ngClass]="enableInternal?'internalTab1':'internalTab11'" (click)="showInternal()">
+        {{isEngLang ? 'INTERNAL ADDRESS BOOK' : arabic('internaladdressbook')}}
+      </div>
+      <div class="form-title {{isEngLang ? '' : 'ar-rtl'}}" [ngClass]="enableExternal?'externalTab1':'externalTab11'" (click)="showExternal()">
+        {{isEngLang ? 'EXTERNAL ADDRESS BOOK' : arabic('externaladdressbook')}}
+      </div>
+    </div>
+    <div class="container-fluid py-2" *ngIf="canEditContact">
+        <div class="row">
+          <div class="form-group col-12 col-md-12 addButton">
+              <button class="rounded-btn" (click)="addContact()">{{isEngLang ? 'Add Contact' : arabic('addcontact')}}</button>
+          </div>
+        </div>
+    </div>
+    <div class="container-fluid py-2 {{isEngLang ? '' : 'ar-rtl'}}" >
+        <div class="form-title">
+          {{isEngLang ? 'FILTER BY' : arabic('filterby')}}
+        </div>
+        <div class="container-fluid page-form-body py-2" *ngIf="enableExternal">
+          <div class="row">
+            <div class="form-group col-sm-4">
+              <label for="status">{{isEngLang ? 'Entity Name' :arabic('entityname')}}</label>
+              <input type="text" class="form-control" [(ngModel)]="EntityName" id="name">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="status">{{isEngLang ? 'Contact Name' :arabic('contactname')}}</label>
+              <input type="text" class="form-control" [(ngModel)]="UserName" id="name">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="name">{{isEngLang ? 'Email ID' : arabic('emailid')}}</label>
+              <input type="text" class="form-control" [(ngModel)]="EmailID" id="name">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="name">{{isEngLang ? 'Phone Number' : arabic('phonenumber')}}</label>
+              <input class="form-control" (keypress)="numberOnly($event)"  [(ngModel)]="PhoneNumber" id="name" >
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="name">{{isEngLang ? 'Government Entity' :arabic('govtentity')}}</label>
+              <ng-select
+                [items]="GovernmentEntityList"
+                [closeOnSelect]="true"
+                bindLabel="OrganizationUnits"
+                bindValue="OrganizationUnitsID"
+                id="attentionTo" [multiple]="false"
+                [(ngModel)]="GovernmentEntity">
+              </ng-select>
+              <!-- <select class="form-control" [(ngModel)]="GovernmentEntity" id="attentionTo">
+                <option value="0">{{isEngLang ? 'All' : arabic('all')}}</option>
+                <option value="1">{{isEngLang ? 'Yes' : arabic('yes')}}</option>
+                <option value="2">{{isEngLang ? 'No' : arabic('no')}}</option>
+              </select> -->
+            </div>
+            
+          
+          </div>
+          <div class="row justify-content-center justify-content-md-end filter-Btn-width pt-4">
+              <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2">
+                <button class="rounded-btn" (click)="loadContactsList()">{{isEngLang ? 'Search' : arabic('search')}}</button>
+              </div>
+              <div class="form-group col-auto col-md-auto p-0 p-md-2">
+                  <button class="rounded-btn" (click)="loadexternalreports()">{{isEngLang ? 'Show Available Reports' : arabic('showavailablereports')}}</button>
+                </div></div>
+        </div>
+        <div class="container-fluid page-form-body py-2" *ngIf="enableInternal">
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="status">{{isEngLang ? 'Office/Department' : arabic('office/department')}}</label>
+                <ng-select
+                [items]="departmentList"
+                [closeOnSelect]="true"
+                bindLabel="OrganizationUnits"
+                bindValue="OrganizationID"
+                id="LookupsID" [multiple]="false"
+                [(ngModel)]="Department">
+              </ng-select>
+                <!-- <select class="form-control" [(ngModel)]="Department" id="LookupsID">
+                  <option value="">All</option>
+                  <option *ngFor="let us of departmentList" [value]="us.OrganizationUnits">{{us.OrganizationUnits}}</option>
+                </select> -->
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="name">{{isEngLang ? 'User Name' : arabic('username')}}</label>
+                <input type="text" class="form-control" [(ngModel)]="UserName" id="name">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="name">{{isEngLang ? 'Designation' : arabic('designation')}}</label>
+                <input type="text" class="form-control" [(ngModel)]="Designation" id="name" >
+              </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                  <label for="status">{{isEngLang ? 'Email ID' : arabic('emailid')}}</label>
+                  <input type="text" class="form-control" [(ngModel)]="EmailID" id="name">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="name">{{isEngLang ? 'Phone Number' : arabic('phonenumber')}}</label>
+                  <input class="form-control" (keypress)="numberOnly($event)"  [(ngModel)]="PhoneNumber" id="name">
+                </div>
+                
+              </div>
+              <div class="row pull-left justify-content-md-end filter-Btn-width pt-4">
+                  <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2">
+                    <button class="rounded-btn" (click)="loadContactsList()">{{isEngLang ? 'Search' : arabic('search')}}</button>
+                  </div>
+                  <div class="form-group col-auto col-md-auto p-0 p-md-2">
+                    <button class="rounded-btn" (click)="loadinternalreports()">{{isEngLang ? 'Show Available Reports' : arabic('showavailablereports')}}</button>
+                  </div>
+                </div>
+             
+          </div>
+    </div>
+  </div>
+  <div  *ngIf="!formPage" class="{{isEngLang ? '' : 'ar-rtl'}}">
+    <div class="container-fluid page-form-body py-2" *ngIf="enableInternal">
+      <div class="row media-section-container">
+        <div class="col-md-6 contactBody"  *ngFor="let item of contactsList">
+          <div class="listSec">
+            <div class="col-md-4">
+                <img src="{{item.profileURL ? item.profileURL: 'assets/home/user_male.png' }}" class="{{isEngLang ? 'mr-3' : ''}} user-ProfileImg" alt="USER_PROFILE">
+              </div>
+            <div class="col-md-6">
+              <div class="media-body">
+                  <h5 class="mt-0" class="checklength">{{item.UserName}}</h5>
+                  <div class="checklength">{{item.Designation}}</div>
+                  <div class="checklength">{{item.EmailId}}<br/>{{item.PhoneNumber}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mar-top">
+              <div class="col"></div>
+              <div>
+                <button class="list-btn" (click)="viewContact('view', item.ContactID)"><i class="fas fa-eye"></i></button>&nbsp;
+                <button class="edit-btn" *ngIf="canEditContact" (click)="viewContact('edit', item.ContactID)"><i class="fas fa-edit"></i></button>&nbsp;
+                <button class="delete-btn" *ngIf="canEditContact" (click)="deleteContact(item.ContactID)"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="emptyData" class="emptyRow"> <span>{{isEngLang ? 'No data to display' : arabic('noItemsFound')}}</span> </div>
+      <ngb-pagination *ngIf="config.paging && config.totalItems>0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+      [maxSize]="config.maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </div>
+    <div class="container-fluid page-form-body py-2" *ngIf="enableExternal">
+        <div class="row media-section-container">
+            <div class="col-md-6 contactBody"  *ngFor="let item of contactsList">
+                <div class="listSec">
+                  <div class="col-md-5">
+                    <div class="media-body">
+                      <div class="entityname"><h5>{{item.EntityName}}</h5></div>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="media-body">
+                      <div class="checklength">{{item.Designation}}</div>
+                      <div class="checklength">{{item.EmailId}}</div>
+                      <div class="checklength" style="padding-top: 5px;">{{item.PhoneNumber}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mar-top">
+                  <div class="col"></div>
+                  <div>
+                    <button class="list-btn" (click)="viewContact('view', item.ContactID)"><i class="fas fa-eye"></i></button>&nbsp;
+                    <button class="edit-btn" *ngIf="canEditContact" (click)="viewContact('edit', item.ContactID)"><i class="fas fa-edit"></i></button>&nbsp;
+                    <button class="delete-btn" *ngIf="canEditContact" (click)="deleteContact(item.ContactID)"><i class="fas fa-trash"></i></button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="emptyData" class="emptyRow"> <span>{{isEngLang ? 'No data to display' : arabic('noItemsFound')}}</span> </div>
+        <ngb-pagination *ngIf="config.paging && config.totalItems>0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+        [maxSize]="config.maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+        (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+      </div>
+  </div>
+  
+  <ng-template *ngIf="!formPage" #template>
+    <div class="modal-header modalclass" style="background: #726236; color: white;" dir="{{isEngLang ? 'ltr' : 'rtl'}}">
+      <h4 class="modal-title pull-left">{{isEngLang?'Delete':arabic('delete')}}</h4>
+      <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':!isEngLang}" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" [ngClass]="{'ar-rtl':!isEngLang}">
+      <p class="messagebody">{{isEngLang?'Do You Really Want To Delete This Contact?':arabic('doyouwanttodeletecontact')}}</p>
+    </div>
+    <div dir="{{isEngLang ? 'ltr' : 'rtl'}}" class="modal-footer">
+      <button type="button" class="rounded-btn" (click)="confirmDelete(contactId)">{{isEngLang ? 'Yes' : arabic('yes')}}</button>
+      <button type="button" class="rounded-btn" (click)="closemodal()">{{isEngLang ? 'No' : arabic('no')}}</button>
+    </div>
+  </ng-template>
+  <app-contacts-form
+    [contactType]="contactType"
+    [contactId]="contactId"
+    [screenStatus]="screenStatus"
+    *ngIf="formPage"
+  >
+  </app-contacts-form>
+  

@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="container login-wrapper">
+    <div class="row" [dir]="lang=='en'?'ltr':'rtl'" [ngClass]="lang=='en'?'text-left':'text-right'">
+      <div [@showhide]="isShow ? 'open':'closed'" class="col-md-6 d-none d-md-flex login-sidepanel-image"
+        [ngClass]="lang=='en'?'':'arabic'">
+        <div class="px-4 login-siedpanel-content">
+          <span><img class="mb-3" src="assets/login/login-icon.png" alt=""></span>
+          <ng-container *ngIf="lang=='en'">
+            <span class="d-block font-20">SMART System</span>
+          </ng-container>
+          <span *ngIf="lang!='en'" class="d-block font-20 pb-2">{{formLabels.loginsmartsystem}}</span>
+          <span class="d-block border-b pb-2">&nbsp;</span>
+          <span class="d-block">{{formLabels.loginStatement}}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 login-sidepanel">
+        <div [@showhide]="!isShow ? 'open':'closed'">
+          <ng-container *ngIf="lang=='en'">
+            <span class="d-block d-md-none font-20">SMART System</span>
+          </ng-container>
+          <span *ngIf="lang!='en'" class="d-block d-md-none font-20 pb-2">{{formLabels.loginsmartsystem}}</span>
+          <span class="d-block d-md-none border-b pb-2">&nbsp;</span>
+          <span class="d-block d-md-none pb-2">{{formLabels.loginStatement}}</span>
+        </div>
+        <div class="login-title mb-4">
+          {{formLabels.logintitle}}
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="inputEmail">{{formLabels.loginusername}}</label>
+            <input name="email" type="email" id="inputEmail" [(ngModel)]="logindet.username" class="form-control"
+              [placeholder]="formLabels.loginuserplaceholder" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">{{formLabels.loginpassword}}</label>
+            <input name="password" type="password" id="inputPassword" [(ngModel)]="logindet.password"
+              class="form-control" [placeholder]="formLabels.loginpassplaceholder" required>
+          </div>
+          <div class="row" *ngIf="errormsg">
+              <div class="col-12">
+                <span class="text-danger">
+                    {{formLabels.usernamepwderr}}
+                </span>
+              </div>
+            </div>
+          <div class="mt-4">
+            <button class="login-btn" (click)="login()" type="submit">{{formLabels.loginbottom}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

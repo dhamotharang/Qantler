@@ -1,0 +1,102 @@
+<div class="modal-header modalclass" dir="{{ lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">{{title}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" dir="{{ lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <!-- for desktop view -->
+  <div class="page-form-wrapper mb-3 d-none d-md-block" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <ngx-datatable style="width: 100%"
+      class="bootstrap"
+      [rows]="rows"
+      [columns]="columns"
+      [headerHeight]="50"
+      [columnMode]="'force'"
+      [messages]="tableMessages"
+      [rowHeight]="'auto'">
+    </ngx-datatable>
+    <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+      <div class="table-action-btn">
+        <input type="checkbox" value="{{value.ReferenceNumber}}" (change)="onCheckboxChange($event)"/>
+      </div>
+    </ng-template>
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ng-container footer *ngIf="length > 0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top"
+        [(page)]="page"
+        [maxSize]="maxSize" 
+        [boundaryLinks]="true" 
+        [collectionSize]="length" 
+        [rotate]="false"
+        (pageChange)="onChangePage(config, $event)">
+      </ngb-pagination>
+    </ng-container>
+  </div>
+  <!-- end of desktop view -->
+  
+  <!-- for mobile view -->
+  <div class="d-block d-md-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <div class="card shadow my-3 d-block d-md-none" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6"><span><b>{{refIdLabel}} : </b></span><span>{{row.ReferenceNumber}}</span></div>
+          <div *ngIf="type!='meeting'" class="col-6"><span><b>{{titleLabel}} : </b></span><span>{{row.Title}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{subjectLabel}} : </b></span><span> {{row.Subject}}</span></div>
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{locationLabel}} : </b></span><span> {{row.Location}}</span></div>
+          <div *ngIf="type != 'meeting'" class="col-6"><span><b>{{souceLabel}} : </b></span><span> {{row.Source}}</span></div>
+          <div *ngIf="type != 'meeting'" class="col-6"><span><b>{{destinationLabel}} : </b></span><span class="word-wrap"> {{row.Destination}}</span></div>
+          <div *ngIf="type != 'meeting'" class="col-6"><span><b>{{statusLabel}} : </b></span><span> {{row.Status}}</span></div>
+          <div *ngIf="type != 'letter'" class="col-6"><span><b>{{senderNameLabel}} : </b></span><span> {{row.SenderName}}</span></div>
+          <div *ngIf="type != 'meeting'" class="col-6"><span><b>{{dateLabel}} : </b></span><span> {{row.CreatedDateTime || row.Date}}</span></div>
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{startDateLabel}} : </b></span><span> {{row.StartDateTime}}</span></div>
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{endDateLabel}} : </b></span><span> {{row.EndDateTime}}</span></div>
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{meetingTypeLabel}} : </b></span><span> {{row.MeetingType}}</span></div>
+          <div *ngIf="type == 'meeting'" class="col-6"><span><b>{{inviteesLabel}} : </b></span><span> {{row.Invitees}}</span></div>
+          <div *ngIf="type == 'memo'" class="col-6"><span><b>{{isPrivateLabel}} : </b></span><span> {{row.Private}}</span></div>
+          <div *ngIf="type != 'letter'" class="col-6"><span><b>{{repliedLabel}} : </b></span><span> {{row.Replied}}</span></div>
+          <div *ngIf="type != 'meeting'" class="col-6">
+            <span class=""><b>{{priorityLabel}} : </b></span>
+            <span *ngIf="row.Priority==high" class="priority-red-clr"></span>
+            <span *ngIf="row.Priority==medium" class="priority-gl-clr"></span>
+            <span *ngIf="row.Priority==low" class="priority-ylw-clr"></span>
+            <span *ngIf="row.Priority==verylow" class="priority-gry-clr"></span>
+            <span> {{row.Priority}}</span>
+
+          </div>
+          <div class="col-6">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox" 
+                value="{{row.ReferenceNumber}}" 
+                (change)="onCheckboxChange($event)"
+                id="{{row.ReferenceNumber}}"
+                />
+              <label class="form-check-label" for="{{row.ReferenceNumber}}">{{selectLabel}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="length > 0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+        (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>    
+  </div>
+  <!-- end of mobile view -->
+</div>
+<div class="modal-footer" dir="{{ lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <button class="rounded-btn" (click)="onSelect()">
+    {{selectLabel}}   
+  </button>
+  <button class="rounded-btn" (click)="bsModalRef.hide()">
+    {{closeLabel}}   
+  </button>
+</div>

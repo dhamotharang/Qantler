@@ -1,0 +1,119 @@
+<div class="page-body-wrapper h-50">
+  <div class="row p-3" >
+    <div class="col p-4 shadow">
+      <div class="row">
+        <div class="col title-sy" [ngClass]="{'ar-rtl': !isEngLang}">{{isEngLang ? 'Employee Profile': arabicfn('employeeprofile')}}</div>
+        <div class="col-auto">
+          <!-- <button class="rounded-btn" *ngIf="isHRDepartmentHeadUserID" (click)="createProfile()"><i class="fa fa-plus"></i> CREATE PROFILE</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard mb-3">
+  <div class="row">
+    <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+      <div class="card" (click)="getUserProfileList(det.type)">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-auto col-ls-12 col-xl-auto">
+              <img class="md-image" src="{{det.image}}">
+            </div>
+            <div class="col col-ls-12 col-xl" [ngClass]="{'ar-rtl': common.currentLang != 'en'}">
+              <div class="count">{{det.count}}</div>
+              <div class="name">{{det.name}}</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="progress my-3">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress"
+                  aria-valuemin="0" aria-valuemax="100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper mb-3">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+     {{ isEngLang ? 'FILTER BY':'تصنيف بواسطة' }}
+  </div>
+  <div class="container-fluid page-form-body py-2">
+    <div class="row">
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="status">{{ isEngLang ? 'Office/Department':'المكتب / الإدارة' }}</label>
+        <ng-select [items]="department" id="Department" [closeOnSelect]="true" [multiple]="false" bindLabel="OrganizationUnits"
+        bindValue="OrganizationID" [(ngModel)]="organizations">
+      </ng-select>
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="name">{{ isEngLang ? 'Name': arabicfn('name') }}</label>
+        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="userName" id="name">
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="name">{{ isEngLang ? 'Smart Search': arabicfn('smartsearch') }}</label>
+        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="smartSearch" id="name" >
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="name">{{ isEngLang ? 'Job Title': arabicfn('designation') }}</label>
+        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="jobTitle" id="name">
+      </div>
+      <div class="form-group col-sm-4 p-md-4 pl-3" [ngClass]="{'ar-rtl': !isEngLang}">
+        <button class="rounded-btn" (click)="getUserProfileList(type, 'search')">{{ isEngLang ? 'Search':'بحث' }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="destination"></div>
+<div class="page-form-wrapper mb-3 d-md-block d-none">
+  <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50"
+    [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+  </ngx-datatable>
+  <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn">
+      <button class="table-view" (click)="viewData('',row)"><i class="fas fa-eye" style="cursor: pointer;"></i></button> &nbsp;
+      <button class="table-edit" name="edit" *ngIf="isHRDepartmentHeadUserID" (click)="viewData('edit',row)"><i
+          class="fas fa-edit" style="cursor: pointer;"></i></button>
+    </div>
+  </ng-template>
+  <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+      [maxSize]="config.maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let hrReqrow of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>{{ isEngLang ? 'Ref ID':'الرقم المرجعي' }} : </b></span><span>{{hrReqrow.referenceNumber}}</span></div>
+        <div class="col-12"><span><b>{{ isEngLang ? 'Office/Department':'المكتب / الإدارة' }} : </b></span><span>{{hrReqrow.DepartmentName}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col"><span><b>{{ isEngLang ? 'Name': arabicfn('name') }} : </b></span><span> {{hrReqrow.EmployeeName}}</span></div>
+        <div class="col"><span><b>{{ isEngLang ? 'Job Title': arabicfn('jobtitle') }} : </b></span><span> {{hrReqrow.JobTitle}}</span></div>
+      </div>
+      <div class="row mar-top ar-rtl" *ngIf="isEngLang">
+        <div class = "col-sm-12">
+          <button class="list-btn" (click)="viewData('',hrReqrow)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+          <button class="edit-btn" name="edit" *ngIf="isHRDepartmentHeadUserID" (click)="viewData('edit',hrReqrow)"><i class="fas fa-edit" style="cursor: pointer;"></i></button>
+        </div>
+      </div>
+      <div class="row mar-top" *ngIf="!isEngLang">
+        <div class = "col-sm-12">
+          <button class="list-btn" (click)="viewData('',hrReqrow)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+          <button class="edit-btn" name="edit" *ngIf="isHRDepartmentHeadUserID" (click)="viewData('edit',hrReqrow)"><i class="fas fa-edit" style="cursor: pointer;"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="config.totalItems > 0">
+    <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" (pageChange)="onChangePage(config, $event)" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [maxSize]="config.maxSize" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+</div>

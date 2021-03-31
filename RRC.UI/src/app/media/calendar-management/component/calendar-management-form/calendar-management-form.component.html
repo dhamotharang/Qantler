@@ -1,0 +1,328 @@
+<div class="photographer-form-container">
+    <div class="page-form-wrapper"  id="trigger-scroll">
+      <div class="form-title" *ngIf="mode =='create'">
+        CREATE EVENTS
+      </div>
+      <div class="form-title" *ngIf="mode == 'view'">
+        EVENTS VIEW
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="mode == 'view' || bulkEvent">
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">Reference ID</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                [(ngModel)]="calendarForm.ReferenceID"
+                class="form-control"
+                [disabled]="true">
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">Status</label>
+            <div class="position-relative">
+              <ng-select
+                class="status-ddown"
+                [disabled]="true"
+                [items]="statusList"
+                [(ngModel)]="calendarForm.Status"
+                [closeOnSelect]="true"
+                bindLabel="DisplayName"
+                bindValue="LookupsID"
+                placeholder="All">
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="sourceou">Created By</label>
+              <ng-select
+                class="status-ddown"
+                [disabled]="true"
+                [items]="userList"
+                [(ngModel)]="calendarForm.CreatedBy"
+                [closeOnSelect]="true"
+                bindLabel="EmployeeName"
+                bindValue="UserID">
+              </ng-select>
+          </div>
+          <div>
+            <hr/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'required': submitButton}">
+            <label for="employeeCode">Event Requestor</label>
+            <input
+              type="text"
+              [disabled]="!editMode"
+              [(ngModel)]="calendarForm.EventRequestor"
+              placeholder="Select Event Requestor"
+              (change)="validate()"
+              class="form-control"
+              id="eventName">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'required': submitButton}">
+            <label for="Date">Event Type</label>
+            <div class="position-relative">
+              <ng-select
+                class="status-ddown"
+                [disabled]="!editMode"
+                [items]="EventTypes"
+                [(ngModel)]="calendarForm.EventType"
+                (change)="validate()"
+                [closeOnSelect]="true"
+                bindLabel="MeetingTypeName"
+                bindValue="EventID"
+                placeholder="All">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12" [ngClass]="{'required': submitButton}">
+            <label for="country-of-birth">Event Details</label>
+              <textarea class="form-control" placeholder="Event Details" [disabled]="!editMode" [(ngModel)]="calendarForm.EventDetails" id="EventDetails" (ngModelChange)="validate()"></textarea>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row date_from">
+            <div class="form-group col-md-4" [ngClass]="{'required': submitButton}">
+                <label for="Date">Date From</label>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    [disabled]="!editMode"
+                    class="form-control"
+                    placeholder="Event Date From"
+                    [(ngModel)]="calendarForm.DateFrom"
+                    [maxDate]="maxDate(0)"
+                    bsDatepicker
+                    #fdp="bsDatepicker"
+                    [bsConfig]="bsConfig">
+                    <span *ngIf="mode === 'create'" (click)="fdp.toggle()"><i class="far fa-calendar date"></i></span>
+                    <span *ngIf="mode !== 'create'"><i class="far fa-calendar date"></i></span>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="position-relative time_label">
+                  <label for="Date"></label>
+                  <ng-select
+                    class="status-ddown"
+                    [disabled]="!editMode || calendarForm.AllDayEvents"
+                    [items]="timeList"
+                    [(ngModel)]="calendarForm.StartTime"
+                    (change)="onStartTimeSelect()"
+                    [closeOnSelect]="true"
+                    bindLabel="label"
+                    bindValue="value"
+                    placeholder="Select Time">
+                  </ng-select>
+                  <div class="row" *ngIf="showValidTimeAlert">
+                    <div class="col-12">
+                      <span class="text-danger">
+                        Please select valid Start Time.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="Gender"></label>
+              <div class="all-day-events">
+                <p><input
+                  (change)="onChecked()"
+                  type="checkbox"
+                  [disabled]="!editMode"
+                  [(ngModel)]="calendarForm.AllDayEvents"
+                  name="all_day_events"
+                  value="all-day-events"> All Day Events</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+            <div class="row date_from">
+              <div class="form-group col-md-4" [ngClass]="{'required': submitButton}">
+                  <label for="Date">Date To</label>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      [disabled]="!editMode"
+                      class="form-control"
+                      placeholder="Event Date To"
+                      [(ngModel)]="calendarForm.DateTo"
+                      [minDate]="minDate(0)"
+                      bsDatepicker
+                      #tdp="bsDatepicker"
+                      [bsConfig]="bsConfig">
+                      <span *ngIf="mode === 'create'" (click)="tdp.toggle()"><i class="far fa-calendar date"></i></span>
+                      <span *ngIf="mode !== 'create'"><i class="far fa-calendar date"></i></span>
+                  </div>
+                  <div class="row" *ngIf="calendarForm.DateTo && checkStartTime()">
+                    <div class="col-12">
+                      <span class="text-danger">
+                        Please select Start Date and Time.
+                      </span>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group col-md-4">
+                  <div class="position-relative time_label">
+                    <label for="Date"></label>
+                    <ng-select
+                      class="status-ddown"
+                      [disabled]="!editMode || calendarForm.AllDayEvents"
+                      [items]="timeList"
+                      [(ngModel)]="calendarForm.EndTime"
+                      (change)="onEndTimeSelect()"
+                      [closeOnSelect]="true"
+                      bindLabel="label"
+                      bindValue="value"
+                      placeholder="Select Time">
+                    </ng-select>
+                  </div>
+              </div>
+              <div class="form-group col-md-4"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-12 col-md-4" [ngClass]="{'required': submitButton}">
+              <label for="employeeCode">Location</label>
+                <ng-select
+                  class="status-ddown"
+                  placeholder="Location"
+                  [disabled]="!editMode"
+                  [items]="locationList"
+                  [(ngModel)]="calendarForm.Location"
+                  [closeOnSelect]="true"
+                  (change)="validate()"
+                  bindLabel="LocationName"
+                  bindValue="LocationID">
+                </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'required': submitButton}">
+              <label for="Date">City</label>
+              <div class="position-relative">
+                <ng-select
+                  class="status-ddown"
+                  placeholder="City"
+                  [disabled]="!editMode"
+                  [items]="cityList"
+                  [(ngModel)]="calendarForm.City"
+                  [closeOnSelect]="true"
+                  (change)="validate()"
+                  bindLabel="CityName"
+                  bindValue="CityID">
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'required': (submitButton && !bulkEvent) && (submitButton && !returnForInfo)}">
+                <label for="Date">Approver Name</label>
+                <div class="position-relative">
+                  <ng-select
+                    class="status-ddown"
+                    [disabled]="bulkEvent || mode == 'view'"
+                    [items]="approverList"
+                    [(ngModel)]="calendarForm.ApproverID"
+                    [closeOnSelect]="true"
+                    (change)="validate()"
+                    bindLabel="EmployeeName"
+                    bindValue="UserID"
+                    placeholder="Approver Name">
+                  </ng-select>
+                </div>
+              </div>
+          </div>
+        <div class="page-form-wrapper my-3 p-4" *ngIf="mode=='view'">
+          <div class="row ">
+            <div class="col-12 comment">
+              <app-comment-section
+                [comments]="calendarManagementRequestComments"
+                [commentType]="'Calendar'"
+                [moduleId]="calendarID"
+                [moduleNameID]="'CalendarID'" *ngIf="calendarManagementRequestComments.length > 0">
+              </app-comment-section>
+              <div class="row leave-comment-section">
+                <div class="col-2 com-md-2 profile">
+                  <div class="comment-section-img">
+                    <img src="assets/home/user_male.png" class="user-ProfileImg"/>
+                  </div>
+                </div>
+                <div class="col-10 col-md-10 comment-text">
+                  <div class="comment-section-user-info">
+                    <p class="comment-section-username"></p>
+                  </div>
+                  <div class="comment-section-content">
+                    <textarea
+                      class="form-control vertical-resize"
+                      id="NewCommentContent"
+                      [disabled]="!submitButton && !ApproveButton && !EscalateButton && !RejectButton && !ReturnForInfoButton"
+                      placeholder=""
+                      [(ngModel)]="calendarForm.Comments"
+                      rows="3">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-reply-section buttons-container text-center">
+          <button *ngIf="submitButton"
+            (click)="createEvent('')"
+            [disabled]="(editMode && !valid) || inProgress"
+            [ngClass]="{'disabled-btn': (editMode && !valid) || inProgress}"
+            class="rounded-btn">
+            SUBMIT
+          </button>
+          <ng-container *ngIf="mode==='view' && showOptions">
+            <button
+              (click)="updateAction('Approve')"
+              *ngIf="ApproveButton"
+              [ngClass]="{'disabled-btn': inProgress}"
+              class="rounded-btn">
+              APPROVE
+            </button>
+            <button
+              *ngIf="EscalateButton"
+              (click)="updateAction('Escalate')"
+              [disabled]="!this.calendarForm.Comments || inProgress"
+              [ngClass]="{'disabled-btn': !this.calendarForm.Comments || inProgress}"
+              class="rounded-btn">
+              ESCALATE
+            </button>
+            <button
+              (click)="updateAction('Reject')"
+              *ngIf="RejectButton"
+              [disabled]="!this.calendarForm.Comments || inProgress"
+              [ngClass]="{'disabled-btn':!this.calendarForm.Comments || inProgress}"
+              class="rounded-btn">
+              REJECT
+            </button>
+            <button
+              *ngIf="ReturnForInfoButton"
+              [disabled]="!this.calendarForm.Comments || inProgress"
+              [ngClass]="{'disabled-btn':!this.calendarForm.Comments || inProgress}"
+              (click)="updateAction('ReturnForInfo')"
+              class="rounded-btn">
+              RETURN FOR INFO
+            </button>
+          </ng-container>
+          <button *ngIf="mode==='create'"
+            (click)="createEventforBulk()"
+            [disabled]="(editMode && !valid) || inProgress"
+            [ngClass]="{'disabled-btn': (editMode && !valid) || inProgress}"
+            class="rounded-btn">
+            ADD MORE EVENTS
+          </button>
+          <button *ngIf="mode==='create'"
+            (click)="MarkAsCompleted()"
+            [disabled]="(!isMarkAsComplete() || !valid) || inProgress"
+            [ngClass]="{'disabled-btn': (!isMarkAsComplete() || !valid || inProgress)}"
+            class="rounded-btn">
+            MARK AS COMPLETED
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

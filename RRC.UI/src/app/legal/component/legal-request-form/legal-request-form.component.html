@@ -1,0 +1,160 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title">
+    LEGAL REQUEST {{screenStatus | uppercase}}
+  </div>
+  <form [formGroup]="legalFormGroup" autocomplete="off">
+    <div class="container-fluid page-form-content py-2">
+      <div class="row" *ngIf="mode=='view'">
+        <div class="form-group col-12 col-md-4">
+          <label for="ReferenceNumber">Reference Id</label>
+          <input type="text" class="form-control" formControlName="ReferenceNumber" id="ReferenceNumber">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Status">Status</label>
+          <input type="text" class="form-control" formControlName="Status" id="Status">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Date">Date</label>
+          <div class="position-relative">
+            <input type="text" class="form-control pr-4" formControlName="CreatedDateTime">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">Source OU</label>
+          <input type="text" class="form-control" formControlName="SourceOU" id="Source OU">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source Name">Source Name</label>
+          <input type="text" class="form-control" formControlName="SourceName" id="Source Name">
+        </div>
+      </div>
+      <hr *ngIf="mode=='view'">
+      <div class="row">
+        <div class="form-group col-12 col-md-8" [ngClass]="{'required':isrequired}">
+          <label for="Subject">Subject</label>
+          <input type="text" class="form-control" formControlName="Subject" id="Subject">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12" [ngClass]="{'required':isrequired}">
+          <label for="RequestDetails">Request Details</label>
+          <!-- <input
+              type="text"
+              class="form-control"
+              formControlName="RequestDetails"
+              id="RequestDetails"> -->
+          <textarea class="form-control" formControlName="RequestDetails" id="RequestDetails" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="row" *ngIf="hideKeywordField">
+        <div class="form-group col-12 col-md-8 legal-tags">
+          <label for="Label">Label</label>
+          <tag-input class="form-control" #labelInput
+            [ngClass]="{'disabled-tags':(legalFormGroup.controls['Keywords'].disabled || legalFormGroup.disabled)}"
+            [placeholder]="''" [secondaryPlaceholder]="'Enter Label'" formControlName="Keywords" [clearOnBlur]="true"
+            (onBlur)="onTextChange($event)" [addOnPaste]="true"
+            [disable]="legalFormGroup.controls['Keywords'].disabled || legalFormGroup.disabled"
+            (onRemove)="onTextChange($event)"></tag-input>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="row">
+            <div class="form-group col-12">
+              <label for="Attachments">Attachments</label>
+              <input type="file" multiple class="form-control attachment" name="Attachments"
+                formControlName="Attachments" #attachment (change)="Attachments($event)"
+                [disabled]="!submitBtn || isApiLoading" id="Attachments" placeholder="Select file" />
+            </div>
+            <div class="form-group col-11 col-md-12" *ngIf="uploadProcess">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                  aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+              </div>
+            </div>
+            <div class="col-11 mx-3 mb-2" *ngIf="attachements.length>0">
+              <label for="Keywords">Attachment List</label>
+              <div class="row border font-weight-bold">
+                <div class="col border">File Name</div>
+                <div class="col border text-center" *ngIf="submitBtn">Action</div>
+              </div>
+              <div *ngFor="let file of attachements; let i = index">
+                <div class="row">
+                  <div class="col-{{(isResubmit || mode!='view')?6:12}} attachment-width border">
+                    <a class="cursor"
+                      href="{{attachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}"
+                      target="_self" download>{{file.AttachmentsName}}</a>
+                  </div>
+                  <div class="col-6 border text-center" *ngIf="submitBtn">
+                    <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section [comments]="legalRequestComments" [commentType]="'Legal'"
+              [moduleId]="legalRequestModel.LegalID" [moduleNameID]="'LegalID'"></app-comment-section>
+            <div class="row legal-comment-section">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{empProfileImg}}" class="user-ProfileImg" />
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text">
+                <div class="comment-section-user-info">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea class="form-control vertical-resize" formControlName="Comments" id="NewCommentContent"
+                  placeholder="" rows="3"></textarea>
+                </div>      
+                <div class="comment-reply-section" *ngIf="mode == 'view'">
+                  <button class="rounded-btn" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> Add 
+                    Comment</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row px-3 justify-content-center btn-row">
+        <div *ngIf="assingBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}"
+            (click)="userAction('assign')">ASSIGN</button>
+        </div>
+        <div *ngIf="assignToMeBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}"
+            (click)="userAction('assigntome')">ASSIGN TO ME</button>
+        </div>
+        <div *ngIf="submitBtn" class="col-auto p-1">
+          <button class="rounded-btn"
+            [disabled]="!(legalFormGroup.controls['Subject'].valid && legalFormGroup.value.Subject.trim() != '' && legalFormGroup.controls['RequestDetails'].valid && legalFormGroup.value.RequestDetails.trim() != '') || (isResubmit && ((!legalFormGroup.value.Comments) || (legalFormGroup.value.Comments.trim() == ''))) || isApiLoading"
+            [ngClass]="{'disabled-btn':!(legalFormGroup.controls['Subject'].valid && legalFormGroup.value.Subject.trim() != '' && legalFormGroup.value.RequestDetails.trim() != '' && legalFormGroup.controls['RequestDetails'].valid )|| (isResubmit && ((!legalFormGroup.value.Comments) || (legalFormGroup.value.Comments.trim() == ''))) || isApiLoading}"
+            (click)="userAction('submit')">SUBMIT</button>
+        </div>
+        <div *ngIf="reopenBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}"
+            (click)="userAction('reopen')">REOPEN</button>
+        </div>
+        <div *ngIf="closeBtnShow" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}"
+            (click)="userAction('close')">CLOSE</button>
+        </div>
+        <div *ngIf="returnForInfoBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button"
+            [disabled]="!legalFormGroup.value.Comments || (legalFormGroup.value.Comments.trim() == '') || isApiLoading"
+            [ngClass]="{'disabled-btn':!legalFormGroup.value.Comments || (legalFormGroup.value.Comments.trim() == '') || isApiLoading}"
+            (click)="userAction('redirect')">RETURN FOR INFO</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

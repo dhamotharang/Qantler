@@ -1,0 +1,143 @@
+<div class="page-body-wrapper h-50" *ngIf="screenStatus !='View' && !fromManagement">
+    <div class="row pr-3 pl-3 pb-3 pt-0">
+        <div class="col p-4 shadow">
+            <div class="row">
+                <div class="plate-number"><label for="Plate Number">{{ lang=='en' ? 'Enter Plate Number': arabic('enterplatenumber') }}</label></div>
+                <div class="col-8">
+                    <input type="text" class="form-control" [(ngModel)]="PlateNumber" id="plate_number">
+                </div>
+                <div class="col-auto p-1">
+                    <button class="rounded-btn" (click)="search()" [disabled]="isApiLoading">{{ lang=='en' ? 'SEARCH': arabic('search') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-progress-bar *ngIf="progress"></app-progress-bar>
+<div class="page-form-wrapper my-3 d-md-block d-none" [ngClass]="{'ar-rtl': lang=='ar'}" *ngIf="showCarList">
+    <div class="table-responsive">
+        <ngx-datatable  [selected]="selected" (activate)='onActivate($event)' style="width: 100%;cursor:pointer;" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'">
+        </ngx-datatable>
+    </div>
+</div>
+<ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn" *ngIf="screenStatus !='View'">
+        <button class="table-view ml-1" (click)="selectCar(row)">
+            {{lang=='en'?'SELECT':arabic('select')}} 
+    </button>
+    </div>
+</ng-template>
+<div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3"  *ngFor="let row of rows; let i = index;"
+    (click)="setRow(i)" [ngClass]="{'highlight': selectedIndex === i}" > 
+        <div class="card-header">
+            <div class="row">
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b># :
+                    </b></span><span> {{row.sno}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row" >
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Vehicle Make':arabic('vehiclemake')}} :
+                </b></span><span> {{row.VehicleMake}}</span>
+                </div>
+                <!-- <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                        <span><b>{{lang=='en'?'Vehicle Name':arabic('vehiclename')}} : </b></span><span>
+                      {{row.VehicleName}}</span></div> -->
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Plate Colour':arabic('platecolour')}} :
+                    </b></span><span> {{row.PlateColour}}</span></div>
+            </div>
+            <div class="row">
+                
+                <div class="col-auto" *ngIf="screenStatus !='View'">
+                    <button class="list-btn ml-1" (click)="selectCar(row)">
+                        {{lang=='en'?'SELECT':arabic('select')}}
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="row mar-top" *ngIf="screenStatus !='View'">
+                <div class="col"></div>
+                <div class="col-auto">
+                    <button class="list-btn ml-1" (click)="selectCar(row)">
+                        {{lang=='en'?'SELECT':arabic('select')}}
+          </button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<div class="page-form-wrapper new_baby_addition" *ngIf="formModel.VehicleId && hideDetailView" id="trigger-scroll">
+    <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        {{ lang == 'en' ? 'FINE DETAIL' : arabic('finedetail') }}   
+    </div>
+    <div class="container-fluid py-2">
+        <div class="row">
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="Vehicle Model">{{ lang == 'en' ? 'Vehicle Model' : arabic('vehiclemodel') }}</label>
+                <input type="text" class="form-control" [(ngModel)]="VehicleModel" id="vehicle_model" [disabled]="true" placeholder="{{ lang == 'en' ? 'Vehicle Model' : arabic('vehiclemodel') }}">
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar','required':screenStatus !='View'}">
+                <label for="Fine Number">{{ lang == 'en' ? 'Fine Number' : arabic('finenumber') }}</label>
+                <input type="text" class="form-control" [(ngModel)]="fineNumber" id="Baby Name" [disabled]="screenStatus =='View'" (blur)="validate()" placeholder="{{ lang == 'en' ? 'Fine Number' : arabic('finenumber') }}">
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar','required':screenStatus !='View'}">
+                <label for="dateTo">{{ lang == 'en' ? 'Date' : arabic('date') }}</label>
+                <div class="position-relative">
+                    <input type="text" class="form-control" [maxDate]="maxDate()" [disabled]="screenStatus =='View'" bsDatepicker #dp2="bsDatepicker" [(ngModel)]="Date" [bsConfig]="bsConfig">
+                    <span (click)="(screenStatus !='View')?dp2.toggle():''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar','required':screenStatus !='View'}">
+                <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+                <ng-select class="status-ddown" [items]="timeList" [disabled]="screenStatus =='View'" [(ngModel)]="Time" [closeOnSelect]="true" bindLabel="label" bindValue="value" placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+                </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar','required':screenStatus !='View'}">
+                <label for="Location">{{ lang == 'en' ? 'Location' : arabic('location') }}</label>
+                <input type="text" class="form-control" [(ngModel)]="Location" id="location" [disabled]="screenStatus =='View'" placeholder="{{ lang == 'en' ? 'Location' : arabic('location') }}">
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="Black Points">{{ lang == 'en' ? 'Black Points' : arabic('blackpoints') }}</label>
+                <input type="number" class="form-control"  onkeydown="return event.keyCode == 69 ? false : true" [(ngModel)]="BlackPoints" id="black_points" [disabled]="screenStatus =='View'" placeholder="{{ lang == 'en' ? 'Black Points' : arabic('blackpoints') }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-md-4 required" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="Status">{{ lang == 'en' ? 'Status' : arabic('status') }}</label>
+                <ng-select class="status-ddown" [items]="StatusList" [(ngModel)]="Status" bindLabel="StatusName" bindValue="StatusID" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12" [ngClass]="{'ar-rtl': lang == 'ar','required':screenStatus !='View'}">
+                <label for="taskDescription">{{ lang == 'en' ? 'Fine Description' : arabic('finedescription') }}</label>
+                <textarea class="form-control vertical-resize" [disabled]="screenStatus =='View'" [(ngModel)]="FineDescription" id="fine_description" rows="5">
+        </textarea>
+            </div>
+        </div>
+        <div class="row action-btn">
+            <div class="col-auto p-1 log-fine-btn">
+                <button class="rounded-btn" *ngIf= "screenStatus !='View'" [ngClass]="{'disabled-btn':isApiLoading||!validate()}" (click)="fineSave()" [disabled]="isApiLoading || !validate()">
+          {{ lang == 'en' ? 'LOG FINE' : arabic('logafine') }} 
+        </button>
+        <button class="rounded-btn" *ngIf= "screenStatus =='View'" [ngClass]="{'disabled-btn':isApiLoading||!validate()}" (click)="fineSave()" [disabled]="isApiLoading || !validate()">
+             {{ lang == 'en' ? 'SUBMIT' : arabic('submit') }}
+          </button>
+                <button class="rounded-btn" [ngClass]="{'disabled-btn':isApiLoading}" [disabled]="isApiLoading" *ngIf="screenStatus =='View'" (click)="fineDelete()">
+                    {{ lang == 'en' ? 'DELETE' : arabic('delete') }} 
+        </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template>
+    <ng-container footer>
+        <ngb-pagination class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false" (pageChange)="onChangePage(page)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+</ng-template>

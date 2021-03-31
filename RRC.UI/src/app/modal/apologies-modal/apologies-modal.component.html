@@ -1,0 +1,36 @@
+<div dir="auto" class="modal-header modalclass">
+  <h5 class="modal-title pull-left">{{lang == 'en' ? 'APOLOGIES ALERT' : arabicfn('apologiesalert')}}</h5>
+  <!-- <button *ngIf="lang=='en'" type="button" class="close pull-right" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body text-center" [ngClass]="{'ar-rtl':lang=='ar'}">
+  <p class="messagebody"> {{lang == 'en' ? 'Do you want to sent an apologies letter?' : arabicfn('doyouwanttosentanaplologiesletter')}}</p>
+  <div class="row yn-buttons">
+    <div class="col-md-12 text-center">
+      <button type="button"
+      [disabled]="inProgress"
+      [ngClass]="{'disabled-btn': inProgress}"
+      class="rounded-btn"
+      (click)="Apology('Yes')">{{lang == 'en' ? 'Yes' : arabicfn('yes')}}</button>
+      <button type="button"
+      [disabled]="inProgress"
+      [ngClass]="{'disabled-btn': inProgress}"
+      class="rounded-btn"
+      (click)="Apology('No')">{{lang == 'en' ? 'No' : arabicfn('no')}}</button>
+    </div>
+  </div>
+</div>
+<!-- <div dir="auto" class="modal-footer">
+  <button type="button" class="rounded-btn" (click)="closemodal()">Yes</button>
+  <button type="button" class="rounded-btn" (click)="closemodal()">No</button>
+</div> -->

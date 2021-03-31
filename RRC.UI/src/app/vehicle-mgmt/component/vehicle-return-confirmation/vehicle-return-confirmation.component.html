@@ -1,0 +1,127 @@
+<div class="page-form-wrapper vehicle-request" id="trigger-scroll">
+    <div class="form-title" [ngClass]="{'ar-rtl': lang=='ar'}">
+      {{ lang=='en' ? 'Vehicle Return Confirmation' : arabic('vehiclereturnconfirmationtitle') }}
+    </div>
+    <div class="container-fluid page-form-content py-2" [ngClass]="{'ar-rtl': lang=='ar'}">
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Plate Number' : arabic('platenumber') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="vehicleDetails.PlateNumber"  id="Source OU" placeholder="Plate Number">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Plate Colour' : arabic('platecolour') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="vehicleDetails.PlateColour" id="Source OU" placeholder="">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Vehicle Make' : arabic('vehiclemake') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="vehicleDetails.VehicleMake" id="Source OU" placeholder="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Vehicle Model' : arabic('vehiclemodel') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="vehicleDetails.PlateNumber"  id="Source OU" placeholder="Plate Number">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Release Date' : arabic('releasedatetime') }}</label>
+          <input type="text" class="form-control" bsDatepicker #cedp="bsDatepicker"  [disabled]="true" id="Source OU" [(ngModel)]="releaseDate" placeholder="" [bsConfig]="bsConfig">
+          <div (click)="cedp.toggle()" hidden="true">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+            <ng-select class="approverDept-ddown" 
+            [items]="timeList" 
+            [disabled]="true" 
+            [(ngModel)]="releaseTime" 
+            [closeOnSelect]="true" 
+            bindLabel="label"
+            bindValue="value" 
+            placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+            </ng-select>
+          </div>
+        
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+            <label for="Source OU">{{ lang=='en' ? 'Return Date' : arabic('returndatetime') }}</label>
+            <input type="text" class="form-control" [disabled]="true" bsDatepicker #cedp="bsDatepicker" id="Source OU" [(ngModel)]="ReturnDate" placeholder="" [bsConfig]="bsConfig">
+            <div (click)="cedp.toggle()" hidden="true">
+              <i class="far fa-calendar date"></i>
+            </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+            <ng-select class="approverDept-ddown" 
+            [items]="timeList" 
+            [disabled]="true" 
+            [(ngModel)]="returnTime" 
+            [closeOnSelect]="true" 
+            bindLabel="label"
+            bindValue="value" 
+            placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+            </ng-select>
+          </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Current Mileage Reading' : arabic('currentmileagereading') }}</label>
+          <input type="text" class="form-control" [disabled]="true" id="Source OU" [(ngModel)]="currentMileageReading" placeholder="">
+        </div>
+        <div class="form-group col-12 col-md-4">
+            <label for="Source OU">{{ lang=='en' ? 'Last Mileage Reading' : arabic('lastmileagereading') }}</label>
+            <input type="text" class="form-control" [disabled]="true" id="Source OU" [(ngModel)]="lastMileageReading" placeholder="">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Return Location' : arabic('returnlocation') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="returnCityName" id="Source OU" placeholder="">
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label for="Source OU">{{ lang=='en' ? 'Personal belonging' : arabic('personalbelonging') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="HavePersonalBelongings" id="Source OU" placeholder="">
+        </div>
+        <div class="form-group col-12 col-md-4" *ngIf="HavePersonalBelongings== 'Yes'">
+          <label for="Source OU">{{ lang=='en' ? 'Please Specify (If Yes)' : arabic('plsspecifyyes') }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="PersonalBelongingsText" id="Source OU" placeholder="">
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="form-group col-12">
+          <label for="Source OU">{{ lang=='en' ? 'Vechile Issues' : arabic('vehicleissues') }}</label>
+          <textarea
+            class="form-control"
+            placeholder=""
+            [disabled]="true" 
+            [(ngModel)]="vehicleIssues"
+            id="Source OU"
+            rows="4"></textarea>
+          <!-- <input type="text" class="form-control" [disabled]="true" [(ngModel)]="vehicleIssues" id="Source OU" placeholder=""> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12">
+          <label for="notes">{{ lang=='en' ? 'Notes' : arabic('notes') }}</label>
+          <textarea
+            class="form-control"
+            placeholder="Enter Notes"
+            [disabled]="true" 
+            [(ngModel)]="notes"
+            id="notes"
+            rows="4"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+        <div class="col-auto p-1">
+          <button 
+            [ngClass]="{'disabled-btn': inProgress}" *ngIf="Status == 215 && Requestor == currentUser.id" class="rounded-btn" [disabled]="inProgress" (click)="updateActionReturn('ReturnConfirm')">
+            {{ lang=='en' ? 'CONFIRM' : arabic('confirm') }}
+          </button>
+        </div>
+      </div>
+  </div>

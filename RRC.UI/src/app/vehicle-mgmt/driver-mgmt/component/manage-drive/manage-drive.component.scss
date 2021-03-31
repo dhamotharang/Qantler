@@ -1,0 +1,99 @@
+.manage-driver-container {
+  min-height:  400px;
+  .ngselect {
+    padding-top: 10px;
+  }
+  .arrows-container {
+    padding-top: 40px;
+    @media screen and (max-width: 768px) {
+      padding-top: 0;
+    }
+    .rounded-btn {
+      margin-top: 10px;
+      @media screen and (min-width: 768px) and (max-width: 880px) {
+        width: 50px;
+      }
+    }
+  }
+}
+.modalclass{
+  background: #726236;
+  color : white;
+}
+
+.buttonSave {
+  .save-btn {
+    opacity: 1;
+    position: relative;
+    right: 30px;
+  }
+}
+.list-header{
+  padding: 10px 10px;
+  background-color: #a39160;
+  color: white;
+  margin-bottom: 0px;
+}
+
+.driver-list-container{
+  min-height: 350px;
+}
+
+
+.manage-driver-container {
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    cursor: pointer;
+    .card-body {
+      box-shadow: none !important;
+      .card-body-top{
+        min-height:100px;
+        max-height: 100px;
+      }
+
+      .name {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 16px;
+        display: contents;
+        word-break: break-word;
+      }
+      .txt-ct{
+        text-align: center;
+      }
+
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+      }
+    }
+  }
+  .card.mobile-cards{
+    max-height: none;
+    padding-bottom: 10px;
+  }
+
+  .shadow {
+    box-shadow: 0px 0px 2px -1px;
+  }
+
+
+  .line-separator{
+    padding:0px;
+  }
+}
+.list-btn{
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+
+.ar-rtl-view {
+  margin-left: 5px;
+}
+
+

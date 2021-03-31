@@ -1,0 +1,242 @@
+<div class="maintenance-home">
+  <div class="col-md-12 calendar-view">
+    <div class="row text-left">
+      <button class="rounded-btn" [routerLink]="['/app/meeting/my-calendar']">{{lang=='en'?'CALENDAR VIEW':arabic('calendarview')}}</button>
+    </div>
+  </div>
+  <div class="form-container" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        {{lang=='en'?'FILTER BY':arabic('filterby')}}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="status"> {{lang=='en'?'Meeting ID':arabic('meetingid')}}</label>
+            <input type="text" class="form-control" [(ngModel)]="meetingId" id="referenceId">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="status">{{lang=='en'?'Subject':arabic('subject')}}</label>
+            <input type="text" class="form-control" [(ngModel)]="Subject" id="Subject">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="subject">{{lang=='en'?'Location':arabic('location')}}</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="Location"
+              id="Location">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="dateFrom">{{lang=='en'?'Start Date / Time':arabic('startdatetime')}} </label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                #dp1="bsDatepicker"
+                [(ngModel)]="StartDatetime"
+                [bsConfig]="bsConfig">
+              <span (click)="dp1.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="dateTo">{{lang=='en'?'End Date / Time':arabic('enddatetime')}}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                #dp2="bsDatepicker"
+                [(ngModel)]="EndDatetime"
+                [bsConfig]="bsConfig">
+              <span (click)="dp2.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">{{lang=='en'?'Meeting Type':arabic('meetingtype')}}</label>
+            <div class="position-relative">
+              <ng-select
+                class="status-ddown"
+                [items]="MeetingTypes"
+                [closeOnSelect]="true"
+                bindLabel="label"
+                placeholder="{{lang == 'en' ? 'Meeting Type' : arabic('meetingtype')}}"
+                [(ngModel)]="MeetingType"
+                bindValue="value">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="dateValidation()" [ngClass]="{'ar-rtl': lang=='ar'}">
+          <p class="text-danger">
+            {{lang == 'en' ? 'Start Date should be less than End Date.' : arabic('pleaseselectvalidstarttime')}}
+          </p>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">{{lang=='en'?'Invitees':arabic('invitees')}}</label>
+            <div class="position-relative">
+              <ng-select
+                class="status-ddown"
+                [items]="Invitees"
+                [closeOnSelect]="true"
+                bindLabel="label"
+                [(ngModel)]="Invites"
+                bindValue="value"
+                placeholder="{{lang == 'en' ? 'All' : arabic('all')}}">
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="name">{{lang=='en'?'Smart Search':arabic('smartsearch')}}</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="smartSearch" id="name" >
+          </div>
+          <div class="search-container">
+            <button class="rounded-btn" (click)="loadList()">{{lang=='en'?'Search':arabic('search')}}</button>
+            <button class="rounded-btn availablereport" (click)="openReport()">{{lang=='en'?'Show Available Reports':arabic('showavailablereports')}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ng-container outsideBody>
+      <div class="table-responsive">
+          <ngx-datatable style="width: 100%" class="bootstrap" *ngIf="lang == 'en'" [rows]="rows" [columns]="columns" [headerHeight]="50"
+          [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+          </ngx-datatable>
+          <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" *ngIf="lang == 'ar'" [columns]="arabicColumns" [headerHeight]="50"
+          [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+          </ngx-datatable>
+        <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+          {{formatAMPM(value)}}
+        </ng-template>
+        <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+          <div class="table-action-btn">
+            <button class="table-view" (click)="viewData('',row)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+        <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+          [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+          (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+      </ng-container>
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Ref ID':arabic('refid')}} : </b></span><span>{{row.ReferenceNumber}}</span></div>
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Subject':arabic('subject')}} : </b></span><span>{{row.Subject}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Location':arabic('location')}} : </b></span><span> {{row.Location}}</span></div>
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Start Date/Time':arabic('startdatetime')}} : </b></span><span> {{row.StartDateTime | date:'dd/MM/yyyy'}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'End date /Time':arabic('enddatetime')}} : </b></span><span> {{row.EndDateTime | date:'dd/MM/yyyy'}}</span></div>
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Meeting Type':arabic('meetingtype')}} : </b></span><span> {{row.MeetingType}}</span></div>
+        </div>
+        <div class="row">
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Invitees':arabic('Invitees')}} : </b></span><span> {{row.Invitees}}</span></div>
+          </div>
+        <div class="row mar-top">
+          <div class="col"></div>
+          <div class="col-auto">
+            <button class="list-btn" (click)="viewData('', row)">
+              <i class="fas fa-eye"></i>
+            </button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+        (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+</div>
+  <!-- This is for Report Modal -->
+  <ng-template #template>
+    <div class="modal-header modalclass modal-lg" dir="auto" *ngIf="lang == 'en'">
+      <h4 class="modal-title pull-left">Report</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-header modalclass modal-lg" *ngIf="lang == 'ar'">
+      <button type="button" class="close p-0 m-0 text-left" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title">{{arabic('report')}}</h4>
+    </div>
+    <div class="modal-body" dir="auto">
+      <div class="row">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="status">{{lang=='en'?'Meeting ID':arabic('meetingid')}}</label>
+          <input type="text" class="form-control" [(ngModel)]="reportFilter.meetingId" id="referenceId">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="status">{{lang=='en'?'Subject':arabic('subject')}}</label>
+          <input type="text" class="form-control" [(ngModel)]="reportFilter.Subject" id="Subject">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="subject">{{lang=='en'?'Location':arabic('location')}}</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="reportFilter.Location"
+            id="Location">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="Date">{{lang=='en'?'Meeting Type':arabic('meetingtype')}}</label>
+          <div class="position-relative">
+            <ng-select
+              class="status-ddown"
+              [items]="MeetingTypes"
+              [closeOnSelect]="true"
+              bindLabel="label"
+              placeholder="{{lang=='en'?'Meeting Type':arabic('meetingtype')}}"
+              [(ngModel)]="reportFilter.MeetingType"
+              bindValue="value">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="Date">{{lang=='en'?'Invitees':arabic('invitees')}}</label>
+          <div class="position-relative">
+            <ng-select
+              class="status-ddown"
+              [items]="Invitees"
+              [closeOnSelect]="true"
+              bindLabel="label"
+              [(ngModel)]="reportFilter.Invites"
+              bindValue="value"
+              placeholder="{{lang=='en'?'All':arabic('all')}}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang != 'en'}">
+          <label for="name">{{lang=='en'?'Smart Search':arabic('smartsearch')}}</label>
+          <input type="text" class="form-control" autocomplete="off" [(ngModel)]="reportFilter.smartSearch" id="name" >
+        </div>
+      </div>
+      <div class="modal-footer" dir="auto" *ngIf="lang == 'en'">
+        <button type="button" class="rounded-btn" (click)="DownloadExcel()">{{lang=='en'?'Download Excel':arabic('downloadexcel')}}</button>
+      </div>
+      <div class="modal-footer" *ngIf="lang != 'en'" dir="auto">
+        <button type="button" class="rounded-btn" (click)="DownloadExcel()">{{lang=='en'?'Download Excel':arabic('downloadexcel')}}</button>
+      </div>
+    </div>
+  </ng-template>

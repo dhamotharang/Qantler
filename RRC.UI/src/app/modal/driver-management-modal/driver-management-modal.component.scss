@@ -1,0 +1,58 @@
+.modalclass{
+  background: #726236;
+  color : white;
+}
+
+.search-button-container {
+  padding-top: 31px;
+}
+
+
+.name-table{
+  width: 100%;
+}
+
+.name-table-row{
+  background: #fff;
+  color: #222;
+  font-weight: bold;
+}
+
+.name-table{
+  th{
+    vertical-align: bottom;
+    padding: 0.75rem;
+    border-bottom: 1px solid #d1d4d7;
+  }
+  th.user-name-cell{    
+    background: #A39161;
+    color: white;
+    border-right: 1px solid #d6d6d6; 
+  }
+}
+
+.m-l-0{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.name-col{
+  background: #A39161;
+  color: white;
+  border-right: 1px solid #efebeb;
+  max-width: 33.6%;
+  padding: 10px;
+  border-bottom: 1px solid;
+}
+
+@media screen and (max-width:996){
+  .name-col{
+    max-width: 32.3%;
+  }
+}
+
+
+.username-col{
+  padding: 10px;
+  font-weight: 500;
+}

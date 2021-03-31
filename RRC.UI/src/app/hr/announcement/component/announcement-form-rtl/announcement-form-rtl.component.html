@@ -1,0 +1,128 @@
+<div class="row announcement-container">
+  <div class="col-12" [ngClass]="{'ar-rtl': lang=='ar'}">
+    <div class="page-form-wrapper"  id="trigger-scroll">
+      <div class="form-title">
+        {{ arabic.words.announcementrequests }}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="!editMode">
+          <div class="form-group col-12 col-md-4">
+            <label for="sourceou">{{ arabic.words.referenceid }}</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="refId"
+              id="sourceou">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">{{ arabic.words.date }}</label>
+            <div class="position-relative">
+                <input type="text" class="form-control pr-4" [disabled]="true" bsDatepicker #dp="bsDatepicker"
+            [(ngModel)]="announcementDate" [bsConfig]="bsConfig">
+              <i class="far fa-calendar date" *ngIf="mode == 'create'" (click)="dp.toggle()"></i>
+              <i class="far fa-calendar date" *ngIf="!editMode"></i>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="sourceou">{{ arabic.words.newbabysourceou }}</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="sourceou"
+              id="sourceou">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="source-name">{{ arabic.words.newbabysourcename }}</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="sourceName"
+              id="sourceName">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar', 'required':editMode}">
+            <label for="Assignee-Department">{{arabic.words.announcementtype}}</label>
+            <ng-select
+              class="announce-type"
+              placeholder="{{arabic.words.announcementtype}}"
+              [disabled]="!editMode || inProgress"
+              [items]="announcementTypes"
+              [closeOnSelect]="true"
+              (change)="onTypeSelect()"
+              (clear)="onClear()"
+              bindLabel="AnnouncementTypeNameAr"
+              bindValue="AnnouncementTypeID"
+              [(ngModel)]="announcementType">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar', 'required':editMode}">
+            <label>{{arabic.words.announcementdescription}}</label>
+          </div>
+          <div class="col-12 d-md-block" [ngClass]="{'d-none':!editMode}">
+            <tinymce [config]="tinyConfig" [disabled]="!editMode" (ngModelChange)="validate()" [(ngModel)]="description"></tinymce>
+          </div>
+          <div class="col-12 d-md-none" [ngClass]="{'d-block':!editMode,'d-none':editMode }">
+            <div class="tiny" #tinyDetail></div>
+          </div>
+      </div>
+      <div class="row md-top">
+        <div class="col">
+          <div class="col-auto p-1 text-center">
+            <button
+              [ngClass]="{'disabled-btn': !valid || inProgress }"
+              [disabled]="!valid || inProgress"
+              *ngIf="editMode"
+              class="rounded-btn btn-close"
+              (click)="onSubmit()">
+              {{ arabic.words.submit }}
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && ifAssignedToMe"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onClose()">
+              {{ arabic.words.close }}
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && IsOrgHead && !ifAssignedToMe"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onAssigneTo()">
+              {{ arabic.words.assign }}
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && !IsOrgHead && !ifAssignedToMe"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onAssigneToMe()">
+              {{ arabic.words.assigntome }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper my-3 p-4 created-by-section" *ngIf="!editMode && historyLogs && (historyLogs.length > 0)">
+    <div class="row" *ngFor="let his of historyLogs">
+      <div class="col-auto" *ngIf="his.ActionDateTime">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+          {{his.ActionDateTime | date: 'dd/MM/yyyy'}} / {{his.ActionDateTime | date: 'hh:mm'}} {{(his.ActionDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}
+        </div>
+      </div>
+      <div class="col p-2"*ngIf="his.Action">
+        <div class="row">
+          <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+@import '../../../../../styles.scss';
+.profile-img {
+    width: 6em;
+    height: 6em;
+    margin: 0px 100px;
+    border-radius: 50%;
+}
+
+.profile-btn {
+    position: absolute;
+    left: 120px;
+    top: 60px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    background: $medium-color;
+    color: white;
+    cursor: pointer;
+}

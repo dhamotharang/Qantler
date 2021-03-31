@@ -1,0 +1,26 @@
+
+  <div dir="auto" class="modal-header modalclass">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">{{modalTitle}}</h4>
+    <button [ngClass]="{'p-0 m-0':lang=='ar'}" type="button" class="close pull-right" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <!-- <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div dir="auto" class="modal-body">
+    <span style="display: block;" [ngClass]="{'ar-rtl':lang=='ar'}" class="messagebody">{{ReferenceNumber}}</span><br /><br />
+    <span style="display: block;text-align: right;" class="subject" innerHTML = {{Subject}}>{{Subject}}</span><br /><br /><br />
+    <p class="content" innerHTML = {{Content}}>{{Content}}</p>
+    
+  </div>
+  <!-- <div class="modal-body">
+  <p class="content" innerHTML = {{htmlContent}}>{{htmlContent}}</p>
+  <div dir="rtl" lang="ar">السلام عليكم ورحمة الله وبركات</div>
+  </div> -->
+  <div dir="auto" class="footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{ (lang=='ar') ? 'حسنا' : 'Ok' }}</button>
+  </div>
+

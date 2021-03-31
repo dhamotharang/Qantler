@@ -1,0 +1,272 @@
+<div class="maintenance-home">
+    <div class="form-container">
+      <div class="page-form-wrapper">
+        <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          {{ lang == 'en' ? 'EVENT LIST' : 'قائمة الأحداث' }}
+        </div>
+        <div class="container-fluid page-form-body py-2">
+          <div class="row">
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <label for="status">{{ lang == 'en' ? 'Reference ID' : arabic.words.referenceid }}</label>
+              <input type="text" class="form-control" [(ngModel)]="ReferenceNumber" id="referenceId" disabled>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <label for="status">{{ lang == 'en' ? 'Status' : arabic.words.status }}</label>
+              <ng-select
+                class="status-ddown"
+                [items]="statusList"
+                disabled
+                [closeOnSelect]="true"
+                bindLabel="DisplayName"
+                bindValue="LookupsID"
+                placeholder="All"
+                [(ngModel)]="Status">
+              </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <label for="subject">{{ lang == 'en' ? 'Proposed By' : arabic.words.proposedby }}</label>
+              <ng-select
+                class="status-ddown"
+                disabled
+                [items]="approverList"
+                [closeOnSelect]="true"
+                bindLabel="EmployeeName"
+                bindValue="UserID"
+                [(ngModel)]="ProposedBy">
+              </ng-select>
+            </div>
+            <div class="col-md-12 event-list-table d-md-block d-none" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <ng-container outsideBody>
+                <div class="table-responsive">
+                  <ngx-datatable *ngIf="lang == 'en'"
+                    style="width: 100%"
+                    class="bootstrap"
+                    [rows]="rows"
+                    [columns]="columns"
+                    [headerHeight]="50"
+                    [columnMode]="'force'"
+                    [rowHeight]="'auto'"
+                    [selected]="selected"
+                    [selectionType]="'checkbox'"
+                    [selectAllRowsOnPage]="false"
+                    [displayCheck]="allowSelect"
+                    (select)='onSelect($event)'
+                    [messages]="tableMessages">
+                  </ngx-datatable>
+                  <ngx-datatable *ngIf="lang == 'ar'"
+                    style="width: 100%"
+                    class="bootstrap"
+                    [rows]="rows"
+                    [ngClass]="{'ar-rtl': lang =='ar'}"
+                    [columns]="arabicColumns"
+                    [headerHeight]="50"
+                    [columnMode]="'force'"
+                    [rowHeight]="'auto'"
+                    [selected]="selected"
+                    [selectionType]="'checkbox'"
+                    [selectAllRowsOnPage]="false"
+                    [displayCheck]="allowSelect"
+                    (select)='onSelect($event)'
+                    [messages]="tableMessages">
+                  </ngx-datatable>
+                  <!-- <ng-template #selectBoxTemplatlet-row="row" let-value="value" let-i="index">
+                    <input type="checkbox"
+                      name="select-all"
+                      class="child-select-all"
+                      (change)="eventSelectDeselect(row)"
+                      [(ngModel)]="row.isChecked"
+                      id="select-all" />
+                  </ng-template> -->
+                  <!-- <ngx-datatable-column name="Select All" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                      <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                      <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                    </ng-template>
+                </ngx-datatable-column> -->
+                <!-- <ngx-datatable-column
+                  [width]="30"
+                  [sortable]="false"
+                  [canAutoResize]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [headerCheckboxable]="true"
+                  [checkboxable]="true">
+                </ngx-datatable-column> -->
+                  <ng-template #startDateTemplate let-row="row" let-value="value" let-i="index">
+                    {{row.DateFrom | date:'dd/MM/yyyy'}}
+                  </ng-template>
+                  <ng-template #endDateTemplate let-row="row" let-value="value" let-i="index">
+                    {{row.DateTo | date:'dd/MM/yyyy'}}
+                  </ng-template>
+                  <ng-template #actionTemplate
+                    let-row="row"
+                    let-value="value"
+                    let-i="index">
+                    <div class="table-action-btn">
+                      <button *ngIf="ProposedBy == currentUser.id && row.Status == 122"
+                        class="table-view  edit-btn"
+                        (click)="viewData(row)">
+                        <i class="fas fa-edit"
+                          style="cursor: pointer;"></i>
+                      </button>
+                      <button *ngIf="!(ProposedBy == currentUser.id && row.Status == 122)"
+                        class="table-view"
+                        style="cursor: pointer;"
+                        (click)="viewData(row)">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+              </ng-container>
+              <ng-container footer *ngIf="config && config.totalItems>0">
+                <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+                [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+                (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="comment-reply-section buttons-container text-center d-md-block d-none" *ngIf="ShowButtons && ProposedBy != currentUser.id">
+          <button
+            (click)="action('Approve')"
+            [disabled]="isSelectedEmpty() || inProgress"
+            [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+            class="rounded-btn">
+            {{ lang == 'en' ? 'APPROVE' : arabic.words.approve }}
+          </button>
+          <button
+            (click)="openReturnForInfoModal('escalate')"
+            [disabled]="isSelectedEmpty() || inProgress"
+            [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+            class="rounded-btn">
+            {{ lang == 'en' ? 'ESCALATE' : arabic.words.escalate }}
+          </button>
+          <button
+            (click)="action('Reject')"
+            [disabled]="isSelectedEmpty() || inProgress"
+            [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+            class="rounded-btn">
+            {{ lang == 'en' ? 'REJECT' : arabic.words.reject }}
+          </button>
+          <button
+            (click)="openReturnForInfoModal('return')"
+            [disabled]="isSelectedEmpty() || inProgress"
+            [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+            class="rounded-btn">
+            {{ lang == 'en' ? 'RETURN FOR INFO' : arabic.words.returnforinfo }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-block d-md-none">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+              <div class="col-4" [ngClass]="{'padding-right-0': lang == 'en', 'padding-left-0': lang != 'en' } ">
+                  <span><b>{{lang == 'en' ? 'Select All' : arabic.words.selectall}} :  </b></span>
+              </div>
+              <div class="col-6" [ngClass]="{'padding-left-0': lang == 'en', 'padding-right-0': lang != 'en' } ">
+                  <input type="checkbox" class="margin-top-5" [(ngModel)]="isChecked" (change)="mobileViewSelectAll(isChecked ? 'checked' : 'unchecked')" />
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let eventRows of rows">
+        <div class="card-header">
+          <div class="row">
+            <!-- <div class="col"> -->
+            <div class="col-3" [ngClass]="{'padding-right-0': lang == 'en', 'padding-left-0': lang != 'en' } ">
+              <span><b>{{ lang == 'en' ? 'Select' : arabic.words.select }} : </b></span>
+            </div>
+            <div class="col-6" [ngClass]="{'padding-left-0': lang == 'en', 'padding-right-0': lang != 'en' } ">
+              <span *ngIf="eventRows.Status == 120">
+                <input class="margin-top-5" type="checkbox" id="selectAll" [(ngModel)]="eventRows.checked" (change)="onMobileSelect(eventRows)">
+              </span>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+              <div class="col"><span><b>{{ lang == 'en' ? 'Event Requestor' : arabic.words.eventrequestor }} : </b></span><span>{{eventRows.EventRequestor}}</span></div>
+              <div class="col"><span><b>{{ lang == 'en' ? 'Event Type' : arabic.words.eventtype }} : </b></span><span>{{eventRows.EventType}}</span></div>
+          </div>
+          <div class="row">
+              <div class="col"><span><b>{{ lang == 'en' ? 'Event Details' : arabic.words.eventdetails }} : </b></span><span>{{eventRows.EventDetails}}</span></div>
+              <div class="col"><span><b>{{ lang == 'en' ? 'Start Date' : arabic.words.startdate }} : </b></span><span>{{eventRows.DateFrom | date:'dd/MM/yyyy'}}</span></div>
+          </div>
+          <div class="row">
+              <div class="col"><span><b>{{ lang == 'en' ? 'End Date' : arabic.words.enddate }} : </b></span><span>{{eventRows.DateTo | date:'dd/MM/yyyy'}}</span></div>
+              <div class="col"><span><b>{{ lang == 'en' ? 'Location' : arabic.words.location }} : </b></span><span>{{eventRows.Location}}</span></div>
+          </div>
+          <div class="row">
+              <div class="col"><span><b>{{ lang == 'en' ? 'Status' : arabic.words.status }} : </b></span><span>{{eventRows.StatusName}}</span></div>
+          </div>
+          <div class="row mar-top">
+            <div class="col"></div>
+            <div class="col-auto table-action-btn">
+              <button *ngIf="ProposedBy == currentUser.id && eventRows.Status == 122"
+                class="edit-btn table-view list-btn mt-10"
+                (click)="viewData(eventRows)">
+                <i class="fas fa-edit"
+                  style="cursor: pointer;"></i>
+              </button>
+              <button *ngIf="!(ProposedBy == currentUser.id && eventRows.Status == 122)"
+                class="list-btn mt-10"
+                style="cursor: pointer;"
+                (click)="viewData(eventRows)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container footer>
+        <!-- <ngb-pagination
+          *ngIf="config.paging"
+          class="d-flex justify-content-center page-top"
+          [(page)]="page"
+          [maxSize]="maxSize"
+          [boundaryLinks]="true"
+          [collectionSize]="pageCount"
+          [rotate]="false"
+          (pageChange)="onChangePage(page)"
+          (numPages)="numPages = $event">
+        </ngb-pagination> -->
+        <div class="comment-reply-section buttons-container text-center d-block d-md-none" *ngIf="ShowButtons && ProposedBy != currentUser.id">
+            <button
+              (click)="action('Approve')"
+              [disabled]="isSelectedEmpty() || inProgress"
+              [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+              class="rounded-btn">
+              {{ lang == 'en' ? 'APPROVE' : arabic.words.approve }}
+            </button>
+            <button
+              (click)="openReturnForInfoModal('escalate')"
+              [disabled]="isSelectedEmpty() || inProgress"
+              [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+              class="rounded-btn">
+              {{ lang == 'en' ? 'ESCALATE' : arabic.words.escalate }}
+            </button>
+            <button
+              (click)="action('Reject')"
+              [disabled]="isSelectedEmpty() || inProgress"
+              [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+              class="rounded-btn">
+              {{ lang == 'en' ? 'REJECT' : arabic.words.reject }}
+            </button>
+            <button
+              (click)="openReturnForInfoModal('return')"
+              [disabled]="isSelectedEmpty() || inProgress"
+              [ngClass]="{'disabled-btn': isSelectedEmpty() || inProgress }"
+              class="rounded-btn">
+              {{ lang == 'en' ? 'RETURN FOR INFO' : arabic.words.returnforinfo }}
+            </button>
+          </div>
+      </ng-container>
+    </div>
+  </div>

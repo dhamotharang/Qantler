@@ -1,0 +1,27 @@
+.chat-btn-wrapper{
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 50;
+    cursor: pointer;
+    .chat-btn{
+        background: #726236;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        color: white;
+        text-align: center;
+    }
+}
+
+.custom-btn {
+    color: #ffffff;
+    background-color: #BEA76C;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    padding-bottom: 8px;
+    max-height: 40px;
+}

@@ -1,0 +1,201 @@
+<div class="page-form-wrapper training_request" id="trigger-scroll">
+  <div class="form-title" *ngIf="editMode">
+    TRAINING REQUEST CREATE
+  </div>
+  <div class="form-title" *ngIf="!editMode">
+    TRAINING REQUEST VIEW
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="!editMode">
+      <div class="form-group col-12 col-md-3" >
+        <label for="Ref ID">Ref ID</label>
+        <input type="text" class="form-control" [disabled]="true"
+          id="Ref_ID" [(ngModel)]="trainingRequest.RefNo">
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="Date">Date</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="trainingRequest.Date" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3" >
+        <label for="Source OU">Source Office/Department</label>
+        <input type="text" class="form-control" [disabled]="true"
+         id="Source OU" placeholder="Enter Source OU" [(ngModel)]="trainingRequest.SourceOU">
+      </div>
+      <div class="form-group col-12 col-md-3" >
+        <label for="Source Name">Source Name</label>
+        <input type="text" class="form-control" [disabled]="true"
+          id="Source Name" placeholder="Enter Source Name" [(ngModel)]="trainingRequest.SourceName">
+      </div>
+      <div class="col-12">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':submitBtn}">
+        <label for="Training For">Training For</label>
+        <div>
+          <input type="radio" name="training_for" [disabled]="!submitBtn"
+            value="myself" [(ngModel)]="trainingRequest.TrainingFor" (change)="resetTraineeName()"> Myself
+          <input class="ml-2" type="radio" [disabled]="!submitBtn" name="training_for"
+            value="other employee" [(ngModel)]="trainingRequest.TrainingFor" (change)="resetTraineeName()"> Other Employee
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="trainingRequest.TrainingFor=='other employee'">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':submitBtn}">
+        <label for="Trainee Name">Trainee Name</label>
+        <ng-select
+          id="trainee_name"
+          [closeOnSelect]="true"
+          [items]="userList"
+          bindLabel="EmployeeName"
+          bindValue="UserID"
+          placeholder="Select Trainee name"
+          [(ngModel)]="trainingRequest.TraineeName"
+          [disabled]="!submitBtn"
+          (change)="validate()">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':submitBtn}">
+        <label for="Workshop Name">Training/Workshop Name</label>
+        <input type="text" class="form-control"
+         id="workshop_name" [disabled]="!submitBtn" (blur)="validate()" placeholder="Enter Workshop Name" [(ngModel)]="trainingRequest.TrainingName">
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'required':submitBtn}">
+          <label for="Start Date">Start Date</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" [disabled]="!submitBtn"  bsDatepicker #dp1="bsDatepicker" (bsValueChange)="dateChange($event,'start')" [bsConfig]="bsConfig" [maxDate]="trainingRequest.EndDate" [(ngModel)]="trainingRequest.StartDate">
+            <span *ngIf="!submitBtn"><i class="far fa-calendar date" ></i></span>
+            <span *ngIf="submitBtn" (click)="dp1.toggle()"><i class="far fa-calendar date" ></i></span>
+          </div>
+        </div>
+      <div class="form-group col-sm-4" [ngClass]="{'required':submitBtn}">
+        <label for="End Date">End Date</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="!submitBtn" bsDatepicker #dp2="bsDatepicker" (bsValueChange)="dateChange($event,'end')" [bsConfig]="bsConfig" [minDate]="trainingRequest.StartDate" [(ngModel)]="trainingRequest.EndDate">
+          <span *ngIf="!submitBtn"><i class="far fa-calendar date" ></i></span>
+          <span *ngIf="submitBtn" (click)="dp2.toggle()"><i class="far fa-calendar date" ></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':submitBtn}">
+        <label for="country-of-birth">Approver Office/Department</label>
+        <ng-select
+          class="approver-department"
+          [closeOnSelect]="true"
+          (change)="onChangeApproverDepartment()"
+          [items]="approverDepartment"
+          bindLabel="OrganizationUnits"
+          bindValue="OrganizationID"
+          placeholder="Select Approver-Department"
+          [(ngModel)]="trainingRequest.ApproverDepartmentID"
+          [disabled]="!submitBtn">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':submitBtn}">
+        <label for="city-of-birth">Approver- Name</label>
+        <ng-select
+          class="city-of-birth"
+          [closeOnSelect]="true"
+          [items]="userApproverList"
+          bindLabel="EmployeeName"
+          bindValue="UserID"
+          placeholder="Select Approver-Name"
+          [(ngModel)]="trainingRequest.ApproverID"
+          [disabled]="!submitBtn"
+          (change)="validate()">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row" *ngIf="trainingRequest.Status == 45 && (trainingRequest.TraineeName==userId) && trainingRequest.IsNotificationReceived==true">
+      <div class="form-group col-12 col-md-4">
+        <label for="attachment">Attachments</label>
+        <input type="file" class="form-control attachment"
+          name="attachment" #variable [(ngModel)]="attachment" id="attachment"
+          (change) = "handleFileUpload($event)"
+          placeholder="Select file"/>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4" *ngIf="attachments.length>0 && trainingRequest.Status == 45 && (trainingRequest.TraineeName==userId || isHrHead == true) && trainingRequest.IsNotificationReceived">
+      <label for="Keywords">Attachment List</label>
+      <div class="row border font-weight-bold">
+        <div class="border" [ngClass]="isHrHead==false? 'col-6': 'col-12'">File Name</div>
+        <div class="col-6 border text-center" *ngIf="isHrHead==false">Action</div>
+      </div>
+      <div *ngFor="let file of attachments; let i = index">
+        <div class="row">
+          <div class="attachment-width border" [ngClass]="isHrHead==false? 'col-6': 'col-12'">
+            <a class="cursor"
+              href="{{attachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+          </div>
+          <div class="col-6 border text-center" *ngIf="isHrHead==false">
+            <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!editMode" class="page-form-wrapper my-3 p-4">
+      <div class="row ">
+        <div class="col-12 comment">
+          <app-comment-section [comments]="trainingRequestComments" [commentType]="'Training'" [moduleId]="id" [moduleNameID]="'TrainingID'"></app-comment-section>
+          <div class="row leave-comment-section">
+            <div class="col-2 com-md-2 profile">
+              <div class="comment-section-img">
+                <img src="{{currentUser.userProfileImg}}" class="user-ProfileImg"/>
+              </div>
+            </div>
+            <div class="col-10 col-md-10 comment-text">
+              <div class="comment-section-user-info">
+                <p class="comment-section-username">{{currentUser.userName}}</p>
+              </div>
+              <div class="comment-section-content">
+                <textarea class="form-control vertical-resize" [(ngModel)]="trainingRequest.Comments" id="NewCommentContent"
+                placeholder="" rows="3"></textarea>
+              </div>
+              <div class="comment-reply-section">
+                <button class="rounded-btn" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> Add Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row action-btn px-3 justify-content-center btn-row">
+      <div class="col-auto p-1" *ngIf="editMode || submitBtn">
+        <button class="rounded-btn" *ngIf="submitBtn" [disabled]="isApiLoading" (click)="userAction('submit')" [ngClass]="{'disabled-btn': isApiLoading}">SUBMIT</button>
+      </div>
+      <ng-container *ngIf="!submitBtn">
+        <div class="col-auto p-1" *ngIf="approveBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading" (click)="userAction('approve')">APPROVE</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="escalateBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading || !trainingRequest.Comments" [ngClass]="{'disabled-btn':((!trainingRequest.Comments) || (trainingRequest.Comments.trim() == '')) || isApiLoading}" (click)="userAction('escalate')">ESCALATE</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="rejectBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading || !trainingRequest.Comments" [ngClass]="{'disabled-btn':((!trainingRequest.Comments) || (trainingRequest.Comments.trim() == '')) || isApiLoading}" (click)="userAction('reject')">REJECT</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="returnForInfoBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading || !trainingRequest.Comments" [ngClass]="{'disabled-btn':((!trainingRequest.Comments) || (trainingRequest.Comments.trim() == '')) || isApiLoading}" (click)="userAction('returnforinfo')">RETURN FOR INFO</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="assingBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading" (click)="userAction('assign')" [ngClass]="{'disabled-btn': isApiLoading}">ASSIGN</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="assignToMeBtn">
+          <button class="rounded-btn" [disabled]="isApiLoading" (click)="userAction('assigntome')" [ngClass]="{'disabled-btn': isApiLoading}">ASSIGN TO ME</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="closeBtnShow">
+          <button class="rounded-btn" [disabled]="isApiLoading" (click)="userAction('close')" [ngClass]="{'disabled-btn': isApiLoading}">CLOSE</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="trainingRequest.Status == 45 && trainingRequest.TraineeName==userId && trainingRequest.IsNotificationReceived">
+          <button class="rounded-btn" [disabled]="isApiLoading || attachments.length<=0" (click)="userAction('SAVE')" [ngClass]="{'disabled-btn': isApiLoading|| attachments.length<=0}">SAVE</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

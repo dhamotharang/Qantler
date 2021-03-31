@@ -1,0 +1,50 @@
+@import '../../../../../styles.scss';
+
+.list-btn{
+    background: #b59647;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.edit-btn{
+    background: #3978e0;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.btn-align{
+	margin-top: 32px;
+    margin-left: 16px;
+}
+
+
+.bg-color{
+	background:  $light-color;
+	color: white;
+}
+.fol-rgt{
+	float: right;
+}
+.fol-lft{
+    float: left;
+}
+.mar-top{
+	    margin-top: 12px;
+}
+.al-ct{
+	text-align: center;
+}
+.priority-clr{
+	width: 12px;
+    height: 11px;
+    background: red;
+}
+.p-right {
+    padding-right: 35px !important;
+  }
+  
+  .p-left {
+    padding-left: 25px !important;
+  }

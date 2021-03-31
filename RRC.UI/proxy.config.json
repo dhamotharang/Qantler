@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+      "target": "http://qtsp2016.centralus.cloudapp.azure.com",
+      "secure": false,
+      "logLevel": "debug"
+    }
+  }

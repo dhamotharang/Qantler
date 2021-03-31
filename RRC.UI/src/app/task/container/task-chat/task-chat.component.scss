@@ -1,0 +1,158 @@
+@import '../../../../styles.scss';
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+.communication-board {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  &body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+}
+
+.chat-body {
+  min-height: 78vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 105%;
+  max-height: 78vh;
+
+  @media screen and (min-width:1020px) {
+    min-height: 50vh;
+  }
+}
+
+
+.attachFile {
+  background: #d9d9d9;
+  text-align: center;
+  height: 0px;
+  word-break: break-all;
+  position: relative;
+  transition: height 0.5s;
+
+  &.show {
+    height: 30px;
+    overflow: hidden;
+    padding: 10px;
+
+    .attachCancel {
+      position: absolute;
+      right: 5px;
+      top: 0px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.chat-foot {
+  position: relative;
+
+  .row {
+    background: #d9d9d9;
+
+    .smile {
+     // padding: 8px;
+      //width: 20px;
+      cursor: pointer;
+
+      svg {
+        width: 22px;
+        height: 22px;
+        color: gray;
+        cursor: pointer;
+      }
+    }
+    .emoji {
+      position: absolute;
+      bottom: 60px;
+      right: 0px;
+      width: 100%;
+      //display: none;
+      height: 0px;
+      overflow: hidden;
+      transition: height 0.5s;
+
+      &.showEmoji {
+        position: absolute;
+        bottom: 60px;
+        right: 0px;
+        width: 100%;
+        height: 210px;
+        overflow: hidden;
+      }
+    }
+    .attach {
+      //width: 20px;
+      cursor: pointer;
+      //margin-left: -15px;
+    }
+
+    .tagUser {
+      position: absolute;
+      z-index: -10;
+      height: 0px;
+      top: 0px;
+      overflow: hidden;
+      transition: height 0.5s, top 0.5s;
+
+      &.showTag {
+        z-index: 10;
+        position: absolute;
+        background: white;
+        width: 100%;
+        height: 100px;
+        top: -100px;
+        padding: 5px;
+        overflow-y: scroll;
+        box-shadow: 0px 0px 25px -10px;
+      }
+
+      .tagList {
+        padding: 5px;
+
+        &.tagList:hover {
+          background: $light-color;
+          color: white;
+        }
+      }
+    }
+
+    .send {
+      //width: 50px;
+      cursor: pointer;
+
+      &.send-rotate{
+        transform: rotate(180deg);
+      }
+    }
+
+    .chat-input {
+      background: transparent;
+      border: none;
+    }
+
+    .chat-input:focus {
+      background-color: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.curser-none{
+  cursor: no-drop !important;
+}

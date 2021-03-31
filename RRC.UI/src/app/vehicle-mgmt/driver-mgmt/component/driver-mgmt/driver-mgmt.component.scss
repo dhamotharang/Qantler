@@ -1,0 +1,205 @@
+
+
+
+// html, body {
+//     margin: 0;
+//     padding: 0;
+//     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+//     font-size: 14px;
+//   }
+  
+//   .driver-calendar {
+//     max-width: 900px;
+//     margin: 40px auto;
+//   }
+
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+  
+  #calendar {
+    max-width: 940px;
+  
+  }
+
+  // body::-webkit-scrollbar-track {
+  //   -webkit-box-shadow: inset 0 0 6px white;
+  //   box-shadow: inset 0 0 5px grey;
+  //   border-radius: 10px;
+  // }
+   
+  // body::-webkit-scrollbar-thumb {
+  //   background-color: #000;
+  //   outline: 1px solid #000;
+  //   border-radius: 10px;
+  // }
+   
+  // body::-webkit-scrollbar-thumb:hover {
+  //   background: #000;
+  // }
+
+  .popper,
+.tooltip {
+  position: absolute;
+  z-index: 9999;
+  background: #FFC107;
+  color: black;
+  width: 150px;
+  border-radius: 3px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  padding: 10px;
+  text-align: center;
+}
+.style5 .tooltip {
+  background: #1E252B;
+  color: #FFFFFF;
+  max-width: 200px;
+  width: auto;
+  font-size: .8rem;
+  padding: .5em 1em;
+}
+.popper .popper__arrow,
+.tooltip .tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+}
+
+.tooltip .tooltip-arrow,
+.popper .popper__arrow {
+  border-color: #FFC107;
+}
+.style5 .tooltip .tooltip-arrow {
+  border-color: #1E252B;
+}
+.popper[x-placement^="top"],
+.tooltip[x-placement^="top"] {
+  margin-bottom: 5px;
+}
+.popper[x-placement^="top"] .popper__arrow,
+.tooltip[x-placement^="top"] .tooltip-arrow {
+  border-width: 5px 5px 0 5px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  bottom: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.popper[x-placement^="bottom"],
+.tooltip[x-placement^="bottom"] {
+  margin-top: 5px;
+}
+.tooltip[x-placement^="bottom"] .tooltip-arrow,
+.popper[x-placement^="bottom"] .popper__arrow {
+  border-width: 0 5px 5px 5px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  top: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.tooltip[x-placement^="right"],
+.popper[x-placement^="right"] {
+  margin-left: 5px;
+}
+.popper[x-placement^="right"] .popper__arrow,
+.tooltip[x-placement^="right"] .tooltip-arrow {
+  border-width: 5px 5px 5px 0;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  left: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+.popper[x-placement^="left"],
+.tooltip[x-placement^="left"] {
+  margin-right: 5px;
+}
+.popper[x-placement^="left"] .popper__arrow,
+.tooltip[x-placement^="left"] .tooltip-arrow {
+  border-width: 5px 0 5px 5px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  right: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.modalclass {
+  background:  #a39161;
+  color: white;
+
+  .modal-title{
+      font-size: 16px;
+}
+
+.ar-rtl {
+  text-align: right;
+  }
+}
+
+.m-left {
+margin-left: 0 !important;
+}
+
+.popup-wrapper{
+  position: fixed;
+  right: 0px;
+  bottom: 300px;
+  z-index: 50;
+  .modalclass {
+    background:  #a39161;
+    color: white;
+    border: 3px solid;
+    border-radius: 30px;
+  .modal-title{
+      cursor: pointer;
+      border: none;
+      width: 320px;
+      height: auto;
+      color: white;
+      text-align: center;
+  }
+}
+}
+
+@media screen and (max-width: 768px) {
+.popup-wrapper-mob{
+  position: fixed;
+  left: 5px;
+  width: 320px;
+  /* box-shadow: 0px 0px 9px #444444; */
+  top: 120px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 200;
+  .modalclass {
+    background:  #a39161;
+    color: white;
+    border: 3px solid;
+    border-radius: 30px;
+  .modal-title{
+      cursor: pointer;
+      border: none;
+      width: 320px;
+      height: auto;
+      color: white;
+      text-align: center;
+  }
+}
+}
+}

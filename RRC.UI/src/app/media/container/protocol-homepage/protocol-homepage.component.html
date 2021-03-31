@@ -1,0 +1,31 @@
+<div class="dashboard mb-3">
+  <div class="row">
+    <ng-container>
+      <div class="col-12 mb-2 col-md-4" *ngFor="let details of protocolProgresscardDetails">
+        <div class="card" [routerLink]="details.pageLink">
+          <div class="card-body">
+            <div class="row card-body-top">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img class="md-image" src="{{details.image}}" />
+              </div>
+              <div class="col col-ls-12 col-xl" [ngClass]="{'ar-rtl':this.common.currentLang != 'en'}">
+                <div class="count">{{details.count}}</div>
+                <div class="name">{{details.requestType}}</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="progress my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="details.progress"
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+

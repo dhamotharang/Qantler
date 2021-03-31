@@ -1,0 +1,44 @@
+<div [dir]="(lang=='en')?'ltr':'rtl'" class="modal-header modalclass">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl': lang == 'ar'}">{{ lang == 'en' ? ApiTitleString : arabicfn('escalate') }}</h4>
+    <button type="button" class="close pull-right" *ngIf="lang == 'en'" aria-label="Close" (click)="closeCommentModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <!-- <h4 class="modal-title" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="lang == 'ar'">{{ arabicfn('escalate') }}</h4> -->
+    <button type="button" class="close pull-right p-0 m-0" *ngIf="lang == 'ar'" aria-label="Close" (click)="closeCommentModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div [dir]="(lang=='en')?'ltr':'rtl'" class="modal-body">
+    <div class="row">
+        <div class="form-group col-12 col-md-12" *ngIf="action == 'escalate'" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="Date" [ngClass]="{'ar-rtl': lang == 'ar'}">{{lang == 'en' ? 'Approver Name' : arabicfn('approvername')}}</label>
+          <div class="position-relative">
+            <ng-select
+              class="status-ddown"
+              [items]="approverList"
+              [(ngModel)]="ApproverID"
+              [closeOnSelect]="true"
+              bindLabel="EmployeeName"
+              bindValue="UserID"
+              placeholder="">
+            </ng-select>
+          </div>
+        </div>
+      <div class="form-group col-md-12" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="Date" *ngIf="action == 'escalate'" [ngClass]="{'ar-rtl': lang == 'ar'}">{{lang == 'en' ? 'Comment' : arabicfn('comment')}}</label>
+        <textarea class="form-control text-area" [(ngModel)]="comment"></textarea>
+      </div>
+    </div>
+  </div>
+  <div [dir]="(lang=='en')?'ltr':'rtl'" class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="closeCommentModal()">{{lang == 'en' ? 'Close' : arabicfn('close')}}</button>
+    <button type="button"
+      [disabled]="!comment || !ApproverID"
+      [ngClass]="{'disabled-btn': !comment || !ApproverID}"
+      class="rounded-btn"
+      (click)="submitData()">
+      <ng-container *ngIf="action != 'escalate'">{{lang == 'en' ? 'Submit' : arabicfn('submit')}}</ng-container>
+      <ng-container *ngIf="action == 'escalate'">{{lang == 'en' ? 'Escalate' : arabicfn('escalate')}}</ng-container>    
+    </button>
+  </div>

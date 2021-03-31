@@ -1,0 +1,226 @@
+<div class="row cv-bank-container">
+  <div class="col-12">
+    <div class="page-form-wrapper"  id="trigger-scroll">
+      <div class="form-title text-right">
+        <span *ngIf="editMode">{{ arWords.createcv}}</span>
+        <span *ngIf="!editMode">{{ arWords.viewcv }}</span>
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="!editMode">
+          <div class="form-group col-12 col-md-4 text-right">
+            <label for="refId">{{ arWords.refid }}</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="refId"
+              id="refId">
+          </div>
+          <div class="form-group col-12 col-md-4 text-right">
+            <label for="Date">{{ arWords.date }}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                disabled
+                class="form-control"
+                value="{{certificateDate | date:'dd/MM/yyyy'}}"/>
+              <i class="far fa-calendar date" (click)="dp.toggle()" [ngClass]="{'ar-rtl-icon' : lang=='ar'}"></i>
+            </div>
+          </div>
+        </div>
+        <hr *ngIf="!editMode"/>
+        <div class="row">
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="candidateName">{{ arWords.candidatename }}</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="candidateName"
+              id="candidateName">
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="emailID">{{ arWords.emailhipenid }}</label>
+            <input
+              [disabled]="!editMode"
+              (keyup)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="emailID"
+              id="emailID">
+            <small id="emailHelp" class="form-text text-danger">{{emailErr}}</small>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="jobTitle">{{ arWords.jobtitle }}</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="jobTitle"
+              id="jobTitle">
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="specializations">{{ arWords.specialization }}</label>
+            <ng-select
+              class="specializations-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="specializationsList"
+              [closeOnSelect]="true"
+              bindLabel="SpecializationName"
+              bindValue="SpecializationID"
+              placeholder="{{ arWords.specialization }}"
+              [(ngModel)]="specializations">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="qualification">{{ arWords.educationqualification }}</label>
+            <ng-select
+              class="qualification-ddown"
+              [disabled]="!editMode"
+              (change)="validate()"
+              [items]="qualificationList"
+              [closeOnSelect]="true"
+              bindLabel="EducationName"
+              bindValue="EducationID"
+              placeholder="{{ arWords.educationqualification }}"
+              [(ngModel)]="qualification">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="Gender">{{ arWords.gender }}</label>
+            <div>
+              <input
+                type="radio"
+                (change)="validate()"
+                name="gender"
+                [(ngModel)]="gender"
+                [disabled]="!editMode"
+                value="0"> {{ arWords.male }}
+              <input
+                class="ml-2"
+                (change)="validate()"
+                type="radio"
+                [(ngModel)]="gender"
+                [disabled]="!editMode"
+                name="gender"
+                value="1"> {{ arWords.female }}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="experience">{{ arWords.yeasofexperience }}</label>
+            <ng-select
+              class="experience-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="experienceList"
+              [closeOnSelect]="true"
+              bindLabel="ExperienceName"
+              bindValue="ExperienceID"
+              placeholder="{{ arWords.yeasofexperience }}"
+              [(ngModel)]="experience">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="expertice">{{ arWords.areaofexpertice }}</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="expertice"
+              id="expertice">
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="country">{{ arWords.countryofresidence }}</label>
+            <ng-select
+              class="country-ddown"
+              (change)="onCountrySelect()"
+              (clear)="onCountryClear()"
+              [disabled]="!editMode"
+              [items]="countryList"
+              [closeOnSelect]="true"
+              bindLabel="CountryName"
+              bindValue="CountryID"
+              placeholder="{{ arWords.countryofresidence }}"
+              [(ngModel)]="country">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="city">{{ arWords.cityofresidence }}</label>
+            <ng-select
+              class="city-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="cityList"
+              [closeOnSelect]="true"
+              bindLabel="CityName"
+              bindValue="CityID"
+              placeholder="{{ arWords.cityofresidence }}"
+              [(ngModel)]="city">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="address">{{ arWords.address }}</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="address"
+              id="address">
+          </div>
+          <div class="form-group col-12 col-md-4 text-right" [ngClass]="{required:editMode}">
+            <label for="certificate">{{arWords.uploadcv}}</label>
+            <input
+              #fileInput
+              [disabled]="!editMode"
+              multiple
+              type="file"
+              name="Attachments"
+              class="form-control attachment"
+              name="certificate"
+              id="certificate"
+              (change) = "handleFileUpload($event)"
+              placeholder="{{arWords.uploadcv}}" />
+          </div>
+          <div class="col-md-8 col-12 text-right" *ngIf="attachments.length>0">
+            <label for="Keywords">{{ arWords.attachmentlist }}</label>
+            <div class="row mx-auto border font-weight-bold">
+              <div class="{{editMode ? 'col-6 border':'col-12'}}">{{ arWords.filename }}</div>
+              <div class="col-6 border text-center" *ngIf="editMode">{{ arWords.action }}</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row mx-auto">
+                <div class="{{editMode ? 'col-6 border':'col-12 border'}}">
+                  <span class="cursor" (click)="handleFileDownload(file)">
+                    {{file.AttachmentsName}}
+                  </span>
+                </div>
+                <div class="col-6 border text-center action" *ngIf="editMode">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row md-top">
+          <div class="col">
+            <div class="col-auto p-1 text-center">
+              <button
+                [ngClass]="{'disabled-btn': !valid }"
+                [disabled]="!valid || inProgress"
+                *ngIf="editMode"
+                class="rounded-btn btn-close"
+                (click)="onSubmit()">
+                {{ arWords.submit }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

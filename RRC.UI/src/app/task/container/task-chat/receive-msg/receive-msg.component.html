@@ -1,0 +1,22 @@
+<div class="row left-cl mb-3" [dir]="(lang=='English')?'ltr':'rtl'" [ngClass]="{'left':lang=='English','right':lang!='English'}">
+  <div class="col-auto profile">
+    <!-- <img class="left-img" src="{{message.Photo}}"> -->
+    
+    <div *ngIf="lang!='English'" class="left-time">{{message.CreatedDateTime | date: 'hh:mm'}} {{(message.CreatedDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}</div>
+    <div *ngIf="lang=='English'" class="left-time">{{message.CreatedDateTime | date: 'hh:mm a'}}</div>
+  </div>
+  <div class="col-auto left-msg">
+    <div *ngIf="lang!='English'" class="right-indicator"></div>
+    <div *ngIf="lang=='English'" class="left-indicator"></div>
+    <div class="message">
+      <div class="msg" style="font-weight: bold; margin-right: 10px">{{message.Creator }}</div>
+      <div class="attachment" *ngIf="message.AttachmentName !=''">
+        <a class="mouse-point"
+          href="{{AttachmentDownloadUrl}}?filename={{message.AttachmentName}}&guid={{message.AttachmentGuid}}">{{message.AttachmentName}}</a>
+      </div>
+      <div class="msg" *ngIf="message.Message !=''" [ngClass]="{'historylog':history}">{{message.Message}}</div>
+      <!-- <div class="response" *ngIf="!message.status"><i class="far fa-clock clock"></i></div>
+      <div class="response" *ngIf="message.status"><i class="fas fa-check clock"></i></div> -->
+    </div>
+  </div>
+</div>

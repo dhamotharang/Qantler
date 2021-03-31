@@ -1,0 +1,43 @@
+<div class="modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">{{lang == 'en' ? 'Assign To' : arWords.assignto}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <div class="row">
+    <ng-container>
+      <div class="form-group col-12" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="dropdown">{{lang === 'ar' ? arWords.user : 'User'}}</label>
+          <ng-select
+            class="approverDept-ddown"
+            [items]="userList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            [placeholder]="placeholderdep"
+            (change)="onChangeUser()"
+            [(ngModel)]="AssigneId">
+          </ng-select>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <button type="button" class="btn btn-default" (click)="close()">{{ lang === 'ar' ? arWords.close: 'Close'}}</button>
+  <button class="rounded-btn" [disabled]="isAssigned || inProgress" [ngClass]="{'disabled-btn': !AssigneId || inProgress}"  (click)="saveStatus('AssignTo')">{{ lang === 'ar' ? arWords.assign: 'Assign'}}</button>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{ lang === 'ar' ? arWords.success: 'Success'}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{ lang === 'ar' ? arWords.ok: 'Ok'}}</button>
+  </div>
+</ng-template>

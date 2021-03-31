@@ -1,0 +1,226 @@
+<div class="row cv-bank-container" id="trigger-scroll">
+  <div class="col-12">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        <span *ngIf="editMode">CREATE CV</span>
+        <span *ngIf="!editMode">VIEW CV</span>
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="!editMode">
+          <div class="form-group col-12 col-md-4">
+            <label for="refId">Reference Id</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="refId"
+              id="refId">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">Date</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                disabled
+                class="form-control"
+                value="{{certificateDate | date:'dd/MM/yyyy'}}"/>
+              <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+            </div>
+          </div>
+        </div>
+        <hr *ngIf="!editMode"/>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="candidateName">Candidate Name</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="candidateName"
+              id="candidateName">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="emailID">Email-ID</label>
+            <input
+              [disabled]="!editMode"
+              (keyup)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="emailID"
+              id="emailID">
+            <small id="emailHelp" class="form-text text-danger">{{emailErr}}</small>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="jobTitle">Job Title</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="jobTitle"
+              id="jobTitle">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="specializations">Specializations</label>
+            <ng-select
+              class="specializations-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="specializationsList"
+              [closeOnSelect]="true"
+              bindLabel="SpecializationName"
+              bindValue="SpecializationID"
+              placeholder="Select specializations"
+              [(ngModel)]="specializations">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4"  [ngClass]="{required:editMode}">
+            <label for="qualification">Educational Qualification</label>
+            <ng-select
+              class="qualification-ddown"
+              [disabled]="!editMode"
+              (change)="validate()"
+              [items]="qualificationList"
+              [closeOnSelect]="true"
+              bindLabel="EducationName"
+              bindValue="EducationID"
+              placeholder="Select Educational Qualification"
+              [(ngModel)]="qualification">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="Gender">Gender</label>
+            <div>
+              <input
+                type="radio"
+                (change)="validate()"
+                name="gender"
+                [(ngModel)]="gender"
+                [disabled]="!editMode"
+                value="0"> Male
+              <input
+                class="ml-2"
+                (change)="validate()"
+                type="radio"
+                [(ngModel)]="gender"
+                [disabled]="!editMode"
+                name="gender"
+                value="1"> Female
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="experience">Years of Experience</label>
+            <ng-select
+              class="experience-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="experienceList"
+              [closeOnSelect]="true"
+              bindLabel="ExperienceName"
+              bindValue="ExperienceID"
+              placeholder="Select Years of Experience"
+              [(ngModel)]="experience">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="expertice">Area of Expertise</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="expertice"
+              id="expertice">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="country">Country of Residence</label>
+            <ng-select
+              class="country-ddown"
+              (change)="onCountrySelect()"
+              (clear)="onCountryClear()"
+              [disabled]="!editMode"
+              [items]="countryList"
+              [closeOnSelect]="true"
+              bindLabel="CountryName"
+              bindValue="CountryID"
+              placeholder="Select country of residence"
+              [(ngModel)]="country">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="city">City of Residence</label>
+            <ng-select
+              class="city-ddown"
+              (change)="validate()"
+              [disabled]="!editMode"
+              [items]="cityList"
+              [closeOnSelect]="true"
+              bindLabel="CityName"
+              bindValue="CityID"
+              placeholder="Select city of residence"
+              [(ngModel)]="city">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="address">Address</label>
+            <input
+              [disabled]="!editMode"
+              (blur)="validate()"
+              type="text"
+              class="form-control"
+              [(ngModel)]="address"
+              id="address">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{required:editMode}">
+            <label for="certificate">Upload CV</label>
+            <input
+              #fileInput
+              [disabled]="!editMode"
+              multiple
+              type="file"
+              name="Attachments"
+              class="form-control attachment"
+              name="certificate"
+              id="certificate"
+              (change) = "handleFileUpload($event)"
+              placeholder="Select file" />
+          </div>
+          <div class="col-md-8 col-12" *ngIf="attachments.length>0">
+            <label for="Keywords">Attachment List</label>
+            <div class="row mx-auto border font-weight-bold">
+              <div class="{{editMode ? 'col-6 border':'col-12'}}">File Name</div>
+              <div class="col-6 border text-center" *ngIf="editMode">Action</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row mx-auto">
+                <div class="{{editMode ? 'col-6 border':'col-12 border'}}">
+                  <span class="cursor" (click)="handleFileDownload(file)">
+                    {{file.AttachmentsName}}
+                  </span>
+                </div>
+                <div class="col-6 border text-center action" *ngIf="editMode">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row md-top">
+          <div class="col">
+            <div class="col-auto p-1 text-center">
+              <button
+                [ngClass]="{'disabled-btn': !valid }"
+                [disabled]="!valid || inProgress"
+                *ngIf="editMode"
+                class="rounded-btn btn-close"
+                (click)="onSubmit()">
+                SUBMIT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

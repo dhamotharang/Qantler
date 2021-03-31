@@ -1,0 +1,92 @@
+.container-fluid {
+    line-height: 30px; 
+}
+.form-title {
+    background: #a39161;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.carissue-list  {
+    display: flex;
+    flex-flow: wrap;
+    padding-left: 10px;
+    li {
+        margin-right: 10px;
+        min-width: 119px;
+    }
+}
+
+.car-issue-pic {
+  display: flex;
+  .second-pic {
+    margin-top: 40px;
+  }
+}
+.center-pic {
+  text-align: center;
+}
+.checkboxGroup {
+    display: flex;
+    margin-top: 6px;
+    .checkbox-box {
+        .form-field  {
+            width: 270px;
+            &.ar-rtl {
+                width: 200px;
+            }
+            display: flex;	
+            input {
+              display:none;
+              
+              &[type=checkbox]:checked {
+                
+                + label #checkmark {
+                  opacity:1;
+                //  @include transition(opacity 0.1s ease-in);
+                }
+              }
+            }
+            
+            label {
+              //width:35px;
+              height:25px;
+              display:block;
+              &::after {
+                content: "" !important;
+              }
+              svg {
+                display: inline-flex;
+                position: relative;
+                width: 20px;
+                height: 20px;
+                flex: 0 0 20px;
+                border: 2px solid #cccccc;
+                margin: 0 6px 0 6px;
+              }
+              
+              #checkmark {
+                opacity:0;
+                //@include transition(opacity 0.25s ease-out);
+              }
+            }
+          }
+        display: flex;
+        input {
+            opacity: 0;
+            position: absolute;
+            z-index: 0;
+        }
+    }
+}
+
+.m-left {
+  margin-left: 0 !important;
+}
+
+.modalclass{
+  background: #726236;
+  color : white;
+}

@@ -1,0 +1,398 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+    <div class="form-title ar-rtl">
+        {{citizenTitle}}
+    </div>
+    <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="screenStatus !='Create'">
+            <div class="form-group right col-12 col-md-4">
+                <label for="Date">{{arabic('date')}}</label>
+                <div class="position-relative">
+                    <input type="text" class="form-control pr-4" [disabled]="screenStatus !='Create'" [(ngModel)]="citizenModal.CreatedDateTime" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+                    <div>
+                        <i class="far fa-calendar date ar-rtl-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Source OU">{{arabic('sourceofficeSlashDepartment')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus!='Create'" [(ngModel)]="citizenModal.SourceOU" id="Source OU">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Source Name">{{arabic('sourcename')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus!='Create'" [(ngModel)]="citizenModal.SourceName" id="Source Name">
+
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Status">{{arabic('status')}}</label>
+
+                <ng-select [items]="statusList" [disabled]="screenStatus!='Create'" [multiple]="false" bindLabel="DisplayName" bindValue="LookupsID" [(ngModel)]="citizenModal.Status">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Reference Number">{{arabic('referencenumber')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus!='Create'" [(ngModel)]="citizenModal.ReferenceNumber" id="Reference Number">
+            </div>
+        </div>
+        <hr *ngIf="screenStatus !='Create'">
+        <div class="row">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Request Type">{{arabic('requesttype')}}</label>
+                <ng-select [items]="requestTypes" [disabled]="screenStatus =='View'" (change)="initPage()" [multiple]="false" bindLabel="name" bindValue="name" [(ngModel)]="citizenModal.RequestType">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.RequestType == fieldVisit">
+                <div class="form-group right col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Private">{{arabic('forwhom')}}</label>
+                    <div>
+                        <input type="radio" name="personal" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.ForWhom" value="forPersonal"> {{arabic('personal')}}
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="citizenModal.RequestType == fieldVisit && citizenModal.FieldVisit.ForWhom=='forPersonal'">
+                <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Task Title">{{arabic('emiratesid')}}</label>
+                    <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.EmiratesID" id="Task Title">
+                </div>
+                <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Task Title">{{arabic('name')}}</label>
+                    <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.Name" id="Task Title">
+                </div>
+                <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Task Title">{{arabic('phonenumber')}}</label>
+                    <input type="number" class="form-control" onkeydown="return event.keyCode == 69 ? false : true" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.PhoneNumber" id="Task Title">
+                </div>
+                <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Task Title">{{arabic('city')}}</label>
+                    <ng-select [items]="cityList" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="CityName" bindValue="CityID" [(ngModel)]="citizenModal.FieldVisit.City">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="row" *ngIf="citizenModal.RequestType == fieldVisit">
+            <div class="form-group right col-12 col-md-4">
+                <label for="Private"></label>
+                <div>
+                    <input type="radio" name="location" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.ForWhom" value="location"> {{arabic('location')}}
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.RequestType == fieldVisit && citizenModal.FieldVisit.ForWhom == 'location'">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Task Title">{{arabic('emirates')}}</label>
+                <ng-select [items]="emiratesList" (change)="getCity(citizenModal.FieldVisit.Emirates)" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="EmiratesName" bindValue="EmiratesID" [(ngModel)]="citizenModal.FieldVisit.Emirates">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('city')}}</label>
+                <ng-select [items]="cityListFiled" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="CityName" bindValue="CityID" [(ngModel)]="citizenModal.FieldVisit.CityID">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="location name">{{arabic('locationname')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.LocationName" id="Task Title">
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.RequestType == personal">
+            <div class="col-12 col-md-4 position-relative">
+                <img class="profile-img" src="{{(url)?url:'assets/home/user_male.png'}}">
+                <div class="profile-btn" (click)="clickProfile()">+</div>
+                <input type="file" [disabled]="screenStatus =='View'" (change)="profileLoad($event)" hidden #profile_upload>
+                <div class="col-12" *ngIf="uploadProfileProcess">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadProfilePercentage+'%'}" aria-valuenow="uploadProfilePercentage" aria-valuemin="0" aria-valuemax="100">{{uploadProfilePercentage}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Name">{{arabic('name')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.Name" id="Name">
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Employer">{{arabic('CAemployer')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'"  [(ngModel)]="citizenModal.PersonalReport.Employer " id="Employer">
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Destination">{{arabic('designation')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.Destination" id="Destination">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Monthly Salary">{{arabic('monthlysalary')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.MonthlySalary" id="Monthlysalary">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Emirates ID">{{arabic('emiratesid')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.EmiratesID" id="EmiratesID">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Martial status">{{arabic('martialstatus')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.MaritalStatus" id="Martialstatus">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="No of Childrens">{{arabic('noofchildren')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.NoOfChildrens" id="NoofChildrens">
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Phone Number">{{arabic('phonenumber')}}</label>
+                <input type="number" class="form-control" onkeydown="return event.keyCode == 69 ? false : true" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.PhoneNumber" id="PhoneNumber">
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Emirates">{{arabic('emirates')}}</label>
+                <ng-select [items]="emiratesList" (change)="getCity(citizenModal.PersonalReport.Emirates)" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="EmiratesName" bindValue="EmiratesID" [(ngModel)]="citizenModal.PersonalReport.Emirates">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="City">{{arabic('city')}}</label>
+                <ng-select [items]="cityListFiled" [disabled]="screenStatus =='View'" id="City" [multiple]="false" bindLabel="CityName" bindValue="CityID" [(ngModel)]="citizenModal.PersonalReport.City">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4">
+                <label for="Age">{{arabic('age')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.Age" id="Age">
+            </div>
+
+            <div class="form-group right col-12" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Report Objectives">{{arabic('reportobjectives')}}</label>
+                <textarea class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.ReportObjectives" id="comments" rows="3"></textarea>
+            </div>
+            <div class="form-group right col-12" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Finding & Notes">{{arabic('findingnotes')}}</label>
+                <textarea class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.FindingNotes" id="comments" rows="3"></textarea>
+            </div>
+            <div class="form-group right col-12" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Recommendation">{{arabic('recommendation')}}</label>
+                <textarea class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.PersonalReport.Recommendation" id="comments" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.RequestType == fieldVisit">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="request Date">{{arabic('date')}}</label>
+                <div class="position-relative">
+                    <input type="text" class="form-control pr-4" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.Date" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+                    <div (click)="(screenStatus =='View')?'':dp.toggle()">
+                        <i class="far fa-calendar date ar-rtl-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Location">{{arabic('location')}}</label>
+        <ng-select [items]="cityList" [disabled]="screenStatus =='View'" id="Location" [multiple]="false"
+          bindLabel="CityName" bindValue="CityID" [(ngModel)]="citizenModal.FieldVisit.Location">
+        </ng-select>
+      </div> -->
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('requestby')}}</label>
+                <input type="text" class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.RequetsedBy" id="Location">
+            </div>
+            <div class="form-group right col-12" [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Reference Id">{{arabic('visitobjectives')}}</label>
+                    <textarea class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.VisitObjective" id="comments" rows="3"></textarea>
+                </div>
+            <div class="form-group right col-12" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Reference Id">{{arabic('findingnotes')}}</label>
+                <textarea class="form-control" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.FieldVisit.FindingNotes" id="comments" rows="3"></textarea>
+            </div>
+            
+        </div>
+       
+        <hr *ngIf="citizenModal.RequestType == fieldVisit && citizenModal.FieldVisit.ForWhom=='forPersonal'">
+        
+        <div class="row">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('approverofficeSlashDepartment')}}</label>
+                <ng-select [items]="organizationList" [disabled]="true" (change)="approverDeptChange()" [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID" [(ngModel)]="citizenModal.ApproverDepartmentId">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('approvername')}}</label>
+                <ng-select [items]="approver_UserList" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="citizenModal.ApproverId">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group right col-12 col-md-6">
+                <div [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Attachments">{{arabic('attachdocument')}}</label>
+                    <input *ngIf="screenStatus!='View'" #documentFile type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'" name="Attachments" (change)="documentAttachments($event)" [(ngModel)]="citizenModal.documentAttachments" id="Attachments"
+                        placeholder="Select file" />
+                    <div class="col-12" *ngIf="uploadDocumentProcess">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadDocumentPercentage+'%'}" aria-valuenow="uploadDocumentPercentage" aria-valuemin="0" aria-valuemax="100">
+                                {{uploadDocumentPercentage}}%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-11 mx-3 mb-2" *ngIf="documentAttachmentsList.length>0">
+                    <label for="Keywords">{{arabic('attachmentlist')}}</label>
+                    <div class="row border font-weight-bold">
+                        <div class="col border">{{arabic('filename')}}</div>
+                        <div class="col border text-center" *ngIf="screenStatus!='View'">{{arabic('action')}}</div>
+                    </div>
+                    <div *ngFor="let file of documentAttachmentsList; let i = index">
+                        <div class="row">
+                            <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                                <a class="cursor" href="{{environment.AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                            </div>
+                            <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                                <span (click)="deleteDocumentAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group right col-12 col-md-6">
+                <div [ngClass]="{'required':screenStatus != 'View'}">
+                    <label for="Attachments">{{arabic('attachphoto')}}</label>
+                    <input *ngIf="screenStatus!='View'" #photoFile type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'" name="Attachments" (change)="photoAttachments($event)" [(ngModel)]="citizenModal.photoAttachments" id="Attachments" placeholder="Select file"
+                    />
+                    <div class="col-12" *ngIf="uploadPhotoProcess">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPhotoPercentage+'%'}" aria-valuenow="uploadPhotoPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPhotoPercentage}}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-11 mx-3 mb-2" *ngIf="photoAttachmentsList.length>0">
+                    <label for="Keywords">{{arabic('attachmentlist')}}</label>
+                    <div class="row border font-weight-bold">
+                        <div class="col border">{{arabic('filename')}}</div>
+                        <div class="col border text-center" *ngIf="screenStatus!='View'">{{arabic('action')}}</div>
+                    </div>
+                    <div *ngFor="let file of photoAttachmentsList; let i = index">
+                        <div class="row">
+                            <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                                <a class="cursor" href="{{environment.AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                            </div>
+                            <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                                <span (click)="deletePhotoAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Private">{{arabic('notifyuponapproval')}}</label>
+                <div>
+                    <input type="radio" name="requestor" [disabled]="screenStatus =='View'" (change)="ininotify('ex')" [(ngModel)]="citizenModal.NotifyUpon" value="1"> {{arabic('internalrequestor')}}
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.NotifyUpon == '1'">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('personoffice/department')}}</label>
+                <ng-select [items]="organizationList" [disabled]="screenStatus =='View'" (change)="personDeptChange()" [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID" [(ngModel)]="citizenModal.InternalRequestorDepartmentID">
+                </ng-select>
+            </div>
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Assignee-Department">{{arabic('person-name')}}</label>
+                <ng-select [items]="person_UserList" [disabled]="screenStatus =='View'" [multiple]="false" bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="citizenModal.InternalRequestorID">
+                </ng-select>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="form-group right col-12 col-md-4">
+                <label for="Private"></label>
+                <div>
+                    <input type="radio" name="requestor" [disabled]="screenStatus =='View'" (change)="ininotify('in')" [(ngModel)]="citizenModal.NotifyUpon" value="2"> {{arabic('externalrequestor')}}
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.NotifyUpon == '2'">
+            <div class="form-group right col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+                <label for="Task Title">{{arabic('emailid')}}</label>
+                <input type="email" class="form-control" (keyup)="validateEmail()" [disabled]="screenStatus =='View'" [(ngModel)]="citizenModal.ExternalRequestEmailID" id="Task Title">
+                <small *ngIf="emailFlag" id="emailHelp" class="form-text text-danger">{{emailErr}}</small>
+            </div>
+        </div>
+        <div class="row" *ngIf="citizenModal.Status == 59 && citizenModal.currentApprover == currentUser.id">
+            <div class="form-group right col">
+                <label for="Reference Id">{{arabic('comments')}}</label>
+                <textarea class="form-control" [(ngModel)]="citizenModal.Comments" id="comments" [placeholder]="arabic('entercomments')" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row px-3 justify-content-center">
+        <div class="col-auto p-1" *ngIf="submitBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': validateForm()}" [disabled]="validateForm()" (click)="saveForm('');btnLoad = true;btnLoadSubmit = true;">{{arabic('submit')}}
+        <app-btn-loader *ngIf="btnLoadSubmit" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="draftBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad}" [disabled]="btnLoad" (click)="saveForm('draft');btnLoad = true;btnLoadDraft = true;">{{arabic('saveasdraft')}}
+        <app-btn-loader *ngIf="btnLoadDraft" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="approveBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad}" [disabled]="btnLoad" (click)="patchCall('Approve');btnLoad = true;btnLoadApprove = true;">{{arabic('approve')}}
+        <app-btn-loader *ngIf="btnLoadApprove" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="escalateBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad || !citizenModal.Comments}" [disabled]="btnLoad || !citizenModal.Comments" (click)="popup('Citizen Affair Escalate')">{{arabic('escalate')}}</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="infoBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad || !citizenModal.Comments}" [disabled]="btnLoad || !citizenModal.Comments" (click)="patchCall('ReturnForInfo');btnLoad = true;btnLoadInfo = true;">{{arabic('returnforinfo')}}
+        <app-btn-loader *ngIf="btnLoadInfo" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="rejectBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad || !citizenModal.Comments}" [disabled]="btnLoad || !citizenModal.Comments" (click)="patchCall('Reject');btnLoad = true;btnLoadReject = true;">{{arabic('reject')}}
+        <app-btn-loader *ngIf="btnLoadReject" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="printBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad ||screenStatus =='Create'}" [disabled]="btnLoad || screenStatus =='Create'" (click)="print(printPDF)">{{arabic('print/preview')}}</button>
+        </div>
+        <div class="col-auto p-1" *ngIf="closeBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad}" [disabled]="btnLoad" (click)="patchCall('Close');btnLoad = true;btnLoadClose = true;">{{arabic('close')}}
+        <app-btn-loader *ngIf="btnLoadClose" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <div class="col-auto p-1" *ngIf="redirectBtn">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad}" [disabled]="btnLoad" (click)="popup('Redirect')">{{arabic('redirect')}}
+        <app-btn-loader *ngIf="btnLoadClose" class="btn-loader"></app-btn-loader>
+      </button>
+        </div>
+        <!-- <div class="col-auto p-1" *ngIf="deleteBtn">
+      <button class="rounded-btn" [ngClass]="{'disabled-btn': btnLoad}" [disabled]="btnLoad"
+        (click)="delete();btnLoadDelete=true;btnLoad=true">{{arabic('delete')}}
+        <app-btn-loader *ngIf="btnLoadDelete" class="btn-loader"></app-btn-loader>
+      </button>
+    </div> -->
+    </div>
+</div>
+
+<div *ngIf="this.screenStatus != 'Create'" class="page-form-wrapper my-3 p-4">
+    <div class="row" *ngFor="let his of citizenModal.HistoryLog">
+        <div class="col-auto">
+            <div class="rounded-btn">
+                <img class="clock" src="assets/home/Meeting-clock.png"> {{his.CreatedDateTime | date: 'dd/MM/yyyy'}} / {{his.CreatedDateTime | date: 'hh:mm'}} {{(his.CreatedDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}
+            </div>
+        </div>
+        <div class="col text-right p-2">
+            <div class="row">
+                <div class="col-12">{{hisLog(his.Action)}} : {{his.CreatedBy}}</div>
+                <div class="col-12 comment" *ngIf="his.Comments !=''">{{arabic('comments')}} : {{his.Comments}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #printPDF>
+    <div class="modal-header modalclass">
+        <h4 class="modal-title pull-left">{{arabic('printpreview')}}</h4>
+        <button type="button" class="close pull-right color-white" aria-label="Close" (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" #printContent>
+        <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="rounded-btn" (click)="printPdf(printContent);bsModalRef.hide()">{{arabic('print')}}</button>
+        <button type="button" class="rounded-btn" (click)="downloadPrint();bsModalRef.hide()">{{arabic('download')}}</button>
+    </div>
+</ng-template>

@@ -1,0 +1,143 @@
+<div dir="rtl" class="side-nav-wrapper">
+  <accordion [closeOthers]="true" [isAnimated]="true">
+    <accordion-group [panelClass]="'side-nav-collapse'" [(isOpen)]="isMemoOpen">
+      <div class="row side-nav" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon"
+              src="assets/home/notebook.png"></span>{{arabicNav('memos')}}</div>
+        <div class="col-auto">
+          {{(isMemoOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseMemo">
+        <div class="mouse-point" [class.selected]="'Pending Memo List'==data_type"
+          (click)="type_change('memo','Pending Memo List','ar/app/memo/memo-list')">{{arabicNav('Pending Memo List')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'Incoming Memos'==data_type"
+          (click)="type_change('memo','Incoming Memos','ar/app/memo/memo-list')">{{arabicNav('Incoming Memos')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'Outgoing Memos'==data_type"
+          (click)="type_change('memo','Outgoing Memos','ar/app/memo/memo-list')">{{arabicNav('Outgoing Memos')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'Draft Memos'==data_type"
+          (click)="type_change('memo','Draft Memos','ar/app/memo/memo-list')">{{arabicNav('Draft Memos')}}</div>
+        <div class="mouse-point" [class.selected]="'Historical Memos Incoming'==data_type"
+          (click)="type_change('memo','Historical Memos Incoming','ar/app/memo/memo-list')">
+          {{arabicNav('Historical Memos Incoming')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'Historical Memos Outgoing'==data_type"
+          (click)="type_change('memo','Historical Memos Outgoing','ar/app/memo/memo-list')">
+          {{arabicNav('Historical Memos Outgoing')}}
+        </div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isLetterOpen">
+      <div class="row side-nav" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon"
+              src="assets/home/e-mail-envelope.png"></span>{{arabicNav('letters')}}
+        </div>
+        <div class="col-auto">
+          {{(isLetterOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseLetters">
+        <div class="mouse-point" [class.selected]="'My Pending Actions Incoming'==data_type"
+          (click)="type_change('letter','My Pending Actions Incoming','ar/app/letter/letter-list')">
+          {{arabicNav('My Pending Actions Incoming')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'My Pending Actions Outgoing'==data_type"
+          (click)="type_change('letter','My Pending Actions Outgoing','ar/app/letter/letter-list')">
+          {{arabicNav('My Pending Actions Outgoing')}}
+        </div>
+        <div class="mouse-point" [class.selected]="'Incoming Letters'==data_type"
+          (click)="type_change('letter','Incoming Letters','ar/app/letter/letter-list')">
+          {{arabicNav('Incoming Letters')}}</div>
+        <div class="mouse-point" [class.selected]="'Outgoing Letters'==data_type"
+          (click)="type_change('letter','Outgoing Letters','ar/app/letter/letter-list')">
+          {{arabicNav('Outgoing Letters')}}</div>
+        <div class="mouse-point" [class.selected]="'Draft Letters'==data_type"
+          (click)="type_change('letter','Draft Letters','ar/app/letter/letter-list')">{{arabicNav('Draft
+          Letters')}}</div>
+        <div class="mouse-point" [class.selected]="'Historical Letters'==data_type"
+          (click)="type_change('letter','Historical Letters','ar/app/letter/letter-list')">
+          {{arabicNav('Historical Letters')}}
+        </div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isTaskOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon"
+              src="assets/home/list.png"></span>{{arabicNav('Duty Task')}}</div>
+        <div class="col-auto">
+          {{(isTaskOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseDuty">
+        <div class="mouse-point" [class.selected]="'Task Dashboard'==data_type"
+          (click)="type_change('task','Task Dashboard','ar/app/task/task-dashboard')">{{arabicNav('Dashboard')}}</div>
+        <div class="mouse-point" [class.selected]="'Create Task'==data_type"
+          (click)="type_change('task','Create Task','ar/app/task/task-create')">{{arabicNav('Create Task')}}</div>
+        <div class="mouse-point" [class.selected]="'My Task'==data_type" (click)="eventTypeSelect(1,'My Task')">
+          {{arabicNav('My Task')}}
+          ({{taskStatus.Mytask}})</div>
+        <div class="mouse-point" [class.selected]="'Assigned Task'==data_type"
+          (click)="eventTypeSelect(2,'Assigned Task')">{{arabicNav('Assigned Task')}} ({{taskStatus.Assignee}})</div>
+        <div class="mouse-point" [class.selected]="'Participants'==data_type"
+          (click)="eventTypeSelect(3,'Participants')">{{arabicNav('Participants')}} ({{taskStatus.Participants}})</div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isMeetingOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point">
+          <span><img class="icon" src="assets/home/meet.png"></span>{{arabicNav('Meetings')}}</div>
+        <div class="col-auto">
+          {{(isMeetingOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseMeeting">
+        <div
+          class="mouse-point"
+          [class.selected]="arabicNav('My Calendar')==data_type"
+          (click)="type_change('meeting', 'My Calendar', 'ar/app/meeting/my-calendar')">
+          {{arabicNav('My Calendar')}}
+        </div>
+        <div
+          class="mouse-point"
+          [class.selected]="arabicNav('Meeting List')==data_type"
+          (click)="type_change('meeting', 'Meeting List', 'ar/app/meeting/list')">
+          {{arabicNav('Meeting List')}}
+        </div>
+        <div
+          class="mouse-point"
+          [class.selected]="'Create Meeting'==data_type"
+          (click)="type_change('meeting', 'Create Meeting', 'ar/app/meeting/create')">
+          {{arabicNav('Create Meeting')}}
+        </div>
+      </div>
+    </accordion-group>
+    <accordion-group [(isOpen)]="isCircularOpen">
+      <div class="row side-nav mx-0" accordion-heading>
+        <div class="col mouse-point"><span><img class="icon"
+              src="assets/home/e-mail-envelope.png"></span>{{arabicNav('circular')}}
+        </div>
+        <div class="col-auto">
+          {{(isCircularOpen)?'-':'+'}}
+        </div>
+      </div>
+      <div class="accord-body overflow-hidden" id="collapseCirculars">
+        <div class="mouse-point" [class.selected]="'My Pending Circulars'==data_type"
+          (click)="type_change('circular','My Pending Circulars','ar/app/circular/circular-list')">
+          {{arabicNav('My Pending Circulars')}}</div>
+        <div class="mouse-point" [class.selected]="'Incoming Circulars'==data_type"
+          (click)="type_change('circular','Incoming Circulars','ar/app/circular/circular-list')">
+          {{arabicNav('Incoming Circulars')}}</div>
+        <div class="mouse-point" [class.selected]="'Outgoing Circulars'==data_type"
+          (click)="type_change('circular','Outgoing Circulars','ar/app/circular/circular-list')">
+          {{arabicNav('Outgoing Circulars')}}</div>
+        <div class="mouse-point" [class.selected]="'Draft Circulars'==data_type"
+          (click)="type_change('circular','Draft Circulars','ar/app/circular/circular-list')">
+          {{arabicNav('Draft Circulars')}}
+        </div>
+      </div>
+    </accordion-group>
+  </accordion>
+</div>

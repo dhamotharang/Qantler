@@ -1,0 +1,77 @@
+@import '../../../../styles.scss';
+
+.login-wrapper {
+  padding: 50px 30px;
+
+  .login-sidepanel-image {
+    background: url('../../../../assets/login/background.png');
+    transform: translateX(-300px);
+    background-size: 100% 100%;
+    background-position: center;
+    color: white;
+    justify-content: center;
+    min-height: 400px;
+
+    &.arabic{
+        transform: translateX(300px);
+    }
+
+    .login-siedpanel-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: -30px;
+    }
+
+  }
+
+  .login-sidepanel {
+    padding: 50px;
+
+    @media screen and (max-width:450px){
+      padding: 25px;
+    }
+    box-shadow: 1px 1px 5px #00000030;
+
+    .login-title {
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 2px solid $medium-color;
+      // width: fit-content;                  not working in edge
+      display: table;
+    }
+
+    .login-btn {
+      font-size: 12px;
+      font-weight: bold;
+      background: $medium-color;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      padding: 6px 20px;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.font-20 {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.font-18 {
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.border-b {
+  line-height: 0;
+  border-top: 1.5px solid rgba(236, 226, 226, 0.79);
+  width: 25%;
+
+  @media screen and (max-width:790px) {
+    border-top: 1.5px solid $medium-color;
+  }
+}

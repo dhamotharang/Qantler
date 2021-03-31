@@ -1,0 +1,91 @@
+.internalTab, .externalTab {
+    width: 50%;
+}
+.internalTab1, .externalTab1 {
+    background: #A39161;
+    color: white;
+    width: 50%;
+    cursor: pointer;
+}
+
+.internalTab11, .externalTab11 {
+    background: #ffffff;
+    color: #000000;
+    width: 50%;
+    cursor: pointer;
+}
+.titleTab{
+    display: flex;
+}
+.addButton {
+    text-align: right;
+}
+.list-btn{
+    background: #b59647;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.edit-btn{
+    background: #3978e0;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.btn-align{
+	margin-top: 32px;
+    margin-left: 16px;
+}
+.delete-btn{
+    background: #bf522d;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.listSec {
+    display: flex;
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        display: block;
+      }
+}
+.media-body {
+    line-height: 28px;
+}
+.media-section-container {
+    margin-top: 30px;
+    .contactBody {
+        padding: 25px;
+        box-shadow: 2px 2px 10px -5px grey;
+        // display: flex;
+    }
+    .user-ProfileImg{
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        @media (max-width: 1024px) {
+            height: 46px;
+            width: 46px;
+        }
+    }
+    .media {
+        background-color: #FCFCFC;
+        padding: 25px;
+        img {
+            width: 98px;
+            margin-top: 20px;
+        }
+    }
+}
+.emptyRow {
+    text-align: center;
+}
+.entityname {
+    word-break: break-all;
+}
+.checklength {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

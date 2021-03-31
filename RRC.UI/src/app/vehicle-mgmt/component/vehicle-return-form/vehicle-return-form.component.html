@@ -1,0 +1,266 @@
+
+<div class="container-fluid page-form-content py-2">
+    <div class="page-form-wrapper vehicle-request" id="trigger-scroll">
+      <div class="form-title" [ngClass]="{'ar-rtl': lang=='ar'}">
+        {{ lang=='en' ? 'VEHICLE RETURN FORM' : arabic('vehiclereturnform') }}
+      </div>
+      <div class="container-fluid page-form-content py-2" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <div class="page-form-wrapper my-3 d-md-block d-none">
+              <ng-container outsideBody>
+                <div class="table-responsive" [ngClass]="{'ar-rtl': lang=='ar'}">
+                    <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang=='ar'}" [messages]="tableMessages" [rows]="rows" [columns]="returnColumns" [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'">
+                    </ngx-datatable>
+                    <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+                      <div class="table-action-btn" *ngIf="!vehicleId">
+                        <button class="table-view" (click)="selectVechile(value)">{{ lang=='en' ? 'SELECT' : arabic('select') }}</button>
+                      </div>
+                    </ng-template>
+                </div>
+              </ng-container>
+            </div>
+            <div class="d-block d-md-none">
+                <div class="card shadow page-form-wrapper my-3" *ngFor="let row of rows">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Plate Number':arabic('platenumber')}} :
+                                </b></span><span> {{row.PlateNumber}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Vehicle Make':arabic('vehiclemake')}} :
+                            </b></span><span> {{row.VehicleMake}}</span>
+                            </div>
+                            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                                    <span><b>{{lang=='en'?'Vehicle Model':arabic('vehiclemodel')}} : </b></span><span>
+                                  {{row.ModelName}}</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Plate Colour':arabic('platecolour')}} :
+                                </b></span><span> {{row.PlateColour}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row" *ngIf="requestType == '1'">
+          <div class="form-group col-12 col-md-4">
+            <label for="Source OU">{{ lang=='en' ? "Driver's Name" : arabic('drivername') }}</label>
+            <input type="text" class="form-control" [disabled]="true" [(ngModel)]="DriverName" id="Source OU" placeholder="">  
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="Source OU">{{ lang=='en' ? 'Release Date' : arabic('releasedatetime') }}</label>
+            <div class="position-relative">
+                <input
+                  type="text"
+                  placeholder="{{ lang == 'en' ? 'Select Date' : arabic('selectdate') }}"
+                  class="form-control"
+                  bsDatepicker
+                  [disabled]="true" 
+                  #dpSD="bsDatepicker"
+                  [(ngModel)]="releaseDate"
+                  [bsConfig]="bsConfig">
+                  <span >
+                    <i class="far fa-calendar date"></i>
+                  </span>
+              </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+            <ng-select class="approverDept-ddown" 
+            [items]="timeList" 
+            [(ngModel)]="releaseTime" 
+            [closeOnSelect]="true" 
+            [disabled]="true" 
+            bindLabel="label"
+            bindValue="value" 
+            placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="Source OU">{{ lang=='en' ? 'Last Mileage Reading' : arabic('lastmileagereading') }}</label>
+            <input type="text" class="form-control" [disabled]="true"  [(ngModel)]="lastMileageReading" id="Source OU" placeholder="">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{ required: 'true' }">
+              <label for="Source OU">{{ lang=='en' ? 'Current Mileage Reading' : arabic('currentmileagereading') }}</label>
+              <input type="number" onkeydown="return event.keyCode == 69 ? false : true" [disabled]="Status == 213" class="form-control"  (ngModelChange)="validateMileage()" [(ngModel)]="currentMileageReading" id="Source OU" placeholder="">
+            <div class="row" *ngIf="validateMileage()">
+              <div class="col-12">
+                <span class="text-danger">
+                  {{ lang=='en' ? 'Sorry, please enter a valid value, Note: The current mileage should be greater than the last mileage reading.' : arabic('currentmileageshouldbehigherthanlastmileage') }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{ required: 'true' }">
+            <label for="Source OU">{{ lang=='en' ? 'Return Date' : arabic('returndatetime') }}</label>
+            <div class="position-relative">
+                <input
+                  type="text"
+                  placeholder="{{ lang == 'en' ? 'Select Date' : arabic('selectdate') }}"
+                  class="form-control"
+                  bsDatepicker
+                  #dpSD="bsDatepicker"
+                  [(ngModel)]="ReturnDate"
+                  [disabled]="Status == 213"
+                  [bsConfig]="bsConfig">
+                  <span (click)="dpSD.toggle()">
+                    <i class="far fa-calendar date"></i>
+                  </span>
+              </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar', required: 'true'}">
+            <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+            <ng-select class="approverDept-ddown" 
+            [items]="timeList" 
+            [(ngModel)]="returnTime" 
+            [closeOnSelect]="true" 
+            bindLabel="label"
+            bindValue="value" 
+            [disabled]="Status == 213"
+            placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{ required: 'true' }">
+            <label for="Source OU">{{ lang=='en' ? 'Return Location' : arabic('returnlocation') }}</label>
+            <div class="col-12 radioSec">
+              <input type="radio" name="RequestType" id="annual" value="1" [(ngModel)]="ReturnLocationID" [disabled]="Status == 213">
+                {{ lang == 'en' ? 'Abu Dhabi' : arabic('abhudabhi') }}
+              <input class="ml-2" type="radio" checked="checked" name="RequestType" id="other" [(ngModel)]="ReturnLocationID" [disabled]="Status == 213" value="2">
+                {{ lang == 'en' ? 'Madinat Zayed' : arabic('madinatzayed') }}
+            </div>
+          </div>
+        <!-- </div>
+        <div class="row"> -->
+          <div class="form-group col-12 col-md-4" [ngClass]="{ required: 'true' }">
+            <label for="Source OU">{{ lang=='en' ? 'Personal belonging' : arabic('personalbelonging') }}</label>
+            <div class="col-12 radioSec">
+              <input type="radio" name="personalbelonging" id="personalbelonging" value="1" [disabled]="Status == 213" [(ngModel)]="personalbelonging"> {{ lang=='en' ? 'Yes' : arabic('yes') }}
+              <input class="ml-2" type="radio" name="personalbelonging" id="personalbelonging1" [disabled]="Status == 213" [(ngModel)]="personalbelonging" value="2"> {{ lang=='en' ? 'No' : arabic('no') }}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" *ngIf="personalbelonging == '1'" [ngClass]="{ required: 'true' }">
+            <label for="Source OU">{{ lang=='en' ? 'Please Specify (If Yes)' : arabic('plsspecifyyes') }}</label>
+            <input type="text"[disabled]="Status == 213"  class="form-control" id="Source OU" [(ngModel)]="personalbelongingText" placeholder="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-12">
+            <label for="carissues">{{ lang=='en' ? 'Car Issues' : arabic('carissues') }}</label>
+          </div>
+          <div class="row my-3 d-md-block d-none">
+              <div class="form-group col-12 col-md-12 car-issue-pic">
+                <div class="col-md-4" style="display: table-caption;">
+                    <img class="icon-img" src="assets/vehicle-management/1.png">
+                    <img class="icon-img second-pic" src="assets/vehicle-management/2.png">
+                </div>
+                <div class="col-md-4 center-pic">
+                    <img class="icon-img" src="assets/vehicle-management/3.png">
+                </div>
+                <div class="col-md-4">
+                    <img class="icon-img" src="assets/vehicle-management/4.png">
+                    <img class="icon-img" src="assets/vehicle-management/5.png">
+                </div>
+              </div>
+          </div>
+          <div class="d-block d-md-none" style="margin: 0 auto;">
+            <div class="row car-issue-pic">
+              <img class="icon-img" style="width: 250px;" src="assets/vehicle-management/1.png">
+            </div>
+            <div class="row car-issue-pic">
+              <img class="icon-img" style="width: 250px;" src="assets/vehicle-management/2.png">
+            </div>
+            <div class="row car-issue-pic">
+              <img class="icon-img" style="margin: 0 auto;" src="assets/vehicle-management/3.png">
+            </div>
+            <div class="row car-issue-pic">
+              <img class="icon-img" style="margin: 0 auto;" src="assets/vehicle-management/4.png">
+            </div>
+            <div class="row car-issue-pic">
+              <img class="icon-img" style="margin: 0 auto;" src="assets/vehicle-management/5.png">
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-12">
+            <div class="checkboxGroup">
+              <ul class="carissue-list">
+                  <li style="list-style: none !important" *ngFor="let carissue of carissues let i=index;">
+                    <div class="checkbox-box">
+                      <div class="form-field" [ngClass]="{'ar-rtl': lang =='ar'}">
+                        <input type="checkbox" id="c-cb{{i}}" [checked]="carissue.checked" [disabled]="carissue.disabled" (change)="addIssues(i)" name="c-cb{{i}}"/>
+                        <label for="c-cb{{i}}" class="custom">
+                          <svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                            viewBox="209.667 9.667 589.37 540.667" [ngClass]="{'ar-rtl': lang =='ar'}">
+                          <rect id="" x="211.667" y="11.667" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" width="536.667" height="536.667"/>
+                          <polygon id="checkmark" stroke="#A39161" stroke-miterlimit="10" points="451.92,291.724 254.569,205.919 211.667,220.22
+                            451.92,463.333 798,28.589 737.937,28.589 "/>
+                          </svg>
+                        </label>
+                        <span class="checkbox-text" ><strong>{{ carissue.IssueID }}. </strong>{{ carissue.IssueName }}</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label for="notes">{{ lang=='en' ? 'Notes' : arabic('notes') }}</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="notes"
+              id="notes"
+              rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+      <div class="col-auto p-1">
+        <button 
+          [ngClass]="{'disabled-btn': inProgress || !validateReturn()  || validateMileage() || !validateReturnPersonalBelonging()}"  *ngIf="requestType != 1 && Status == 212" class="rounded-btn" [disabled]="inProgress || !validateReturn() || validateMileage() ||  !validateReturnPersonalBelonging()" (click)="sendVehicleIssues('Return')">
+          {{ lang=='en' ? 'SEND TO REQUESTOR FOR CONFIRMATION' : arabic('sendtorequestorconfirmation') }}
+        </button>
+      </div>
+      <div class="col-auto p-1">
+        <button 
+          [ngClass]="{'disabled-btn': inProgress || !validateReturn() || validateMileage() || !validateReturnPersonalBelonging()}"  *ngIf="requestType == 1 && Status == 212" class="rounded-btn" [disabled]="inProgress || !validateReturn() || validateMileage() ||  !validateReturnPersonalBelonging()" (click)="sendVehicleIssues('Return')">
+          {{ lang=='en' ? 'RETURN' : arabic('return') }}
+        </button>
+      </div>
+      <div class="col-auto p-1">
+        <button 
+          [ngClass]="{'disabled-btn': inProgress}" (click)="print(printPDF)" class="rounded-btn" [disabled]="inProgress">
+          {{ lang=='en' ? 'PRINT' : arabic('print') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #printPDF>
+    <div dir="auto" class="modal-header modalclass">
+      <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">{{ (lang=='ar') ? arabic('printpreview') : 'Print Preview' }}</h4>
+      <button *ngIf="lang=='en'" type="button" class="close pull-right color-white" aria-label="Close" (click)="closePrintPop()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+    (click)="closePrintPop()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div dir="auto" class="modal-body" #printContent [ngClass]="{'ar-rtl':lang=='ar'}">
+      <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+    </div>
+    <div dir="auto" class="modal-footer">
+      <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress" (click)="printPdf(printContent);bsModalRef.hide()">{{ (lang=='ar') ? arabic('print') : 'Print' }}</button>
+      <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress" (click)="downloadPrint();bsModalRef.hide()">{{ (lang=='ar') ? arabic('download') : 'Download' }}</button>
+    </div>
+  </ng-template>

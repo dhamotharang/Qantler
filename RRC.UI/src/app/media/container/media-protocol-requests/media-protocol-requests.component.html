@@ -1,0 +1,386 @@
+<div class="dashboard mb-3">
+    <div class="row">
+        <div class="col-sm-12 mb-2 col-md-4" *ngFor="let det of cardDetails">
+            <div class="card" (click)="reqSelect(det.reqtype,true)">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto col-ls-12 col-xl-auto">
+                            <img src="{{det.image}}">
+                        </div>
+                        <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': common.currentLang == 'ar'}">
+                            <div class="count">{{det.count}}</div>
+                            <div class="name">{{det.name}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="progress my-3">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="det.progress" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mb-2 col-md-4" *ngIf="pendingRequests.length>0">
+            <div class="card" (click)="reqSelect(pendingRequests[0].reqtype, false,true)">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto col-ls-12 col-xl-auto">
+                            <img src="{{pendingRequests[0].image}}">
+                        </div>
+                        <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': common.currentLang == 'ar'}">
+                            <div class="count">{{pendingRequests[0].count}}</div>
+                            <div class="name" style="font-weight: bold;">{{pendingRequests[0].name}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="progress my-3">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="pendingRequests[0].progress" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mb-2 col-md-4" *ngIf="ownRequestsList.length>0">
+            <div class="card" (click)="reqSelect(ownRequestsList[0].reqtype, false,true)">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto col-ls-12 col-xl-auto">
+                            <img src="{{ownRequestsList[0].image}}">
+                        </div>
+                        <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': common.currentLang == 'ar'}">
+                            <div class="count">{{ownRequestsList[0].count}}</div>
+                            <ng-container *ngIf="ownRequestsList[0].Reqname ==''">
+                                <div class="name">{{ownRequestsList[0].name}}</div>
+                            </ng-container>
+                            <ng-container *ngIf="ownRequestsList[0].Reqname =='DisplayChange'">
+                                <div class="name" style="font-weight: 400;">{{ownRequestsList[0].name}}</div>
+                            </ng-container>
+                            <!-- <div class="name">{{ownRequestsList[0].name}}</div> -->
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="progress my-3">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="ownRequestsList[0].progress" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mb-2 col-md-4" *ngIf="processedRequests.length>0">
+            <div class="card" (click)="reqSelect(processedRequests[0].reqtype, false,true)">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto col-ls-12 col-xl-auto">
+                            <img src="{{processedRequests[0].image}}">
+                        </div>
+                        <div class="col col-ls-12 col-xl" [ngClass]="{'text-right': common.currentLang == 'ar'}">
+                            <div class="count">{{processedRequests[0].count}}</div>
+                            <div class="name" style="font-weight: 400">{{processedRequests[0].name}}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="progress my-3">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="processedRequests[0].progress" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="dashboard mb-3">
+    <div class="row">
+        <div class="col-12 mb-2 col-md-4">
+            <div class="card" (click)="goToDocuments();">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-auto col-ls-12 col-xl-auto">
+                            <img src="assets/media/inbox.png">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 txt-ct">
+                            <div class="name">
+                                {{ lang == 'ar' ? arabic('mediadocuments') : 'Media Documents' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-form-wrapper" [ngClass]="{'text-right':common.currentLang == 'ar'}">
+    <div class="form-title">
+        <ng-container *ngIf="common.currentLang == 'en'"> FILTER BY </ng-container>
+        <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('filterby')}} </ng-container>
+    </div>
+    <div class="container page-form-body">
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="status">
+            <ng-container *ngIf="common.currentLang == 'en'"> Status </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('status')}} </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="statusOptions" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('status') }}" [(ngModel)]="status">
+                </ng-select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="SourceOU">
+            <ng-container *ngIf="common.currentLang == 'en'">  Source Office/Department </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('sourceofficeSlashDepartment')}}  </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="sourceouOptions" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationUnits" placeholder="{{ lang == 'en' ? 'Select SourceOU' : arabic('sourceofficeSlashDepartment') }}" [(ngModel)]="SourceOU">
+                </ng-select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="SourceOU">
+            <ng-container *ngIf="common.currentLang == 'en'">  Request Type </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requesttype')}} </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="cardDetailsList" [closeOnSelect]="true" bindLabel="name" bindValue="reqtype" placeholder="{{ lang == 'en' ? 'Select Request Type' : arabic('requesttype') }}" [(ngModel)]="reqtype">
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+              <label for="Date Range To">
+                <ng-container *ngIf="common.currentLang == 'en'">  Request Date From </ng-container>
+                <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requestdatefrom')}}  </ng-container>
+              </label>
+              <div class="position-relative">
+                <input type="text" class="form-control" bsDatepicker #dp1="bsDatepicker" [(ngModel)]="date_from" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'start')">
+                <span (click)="dp1.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+              </div>
+              <div class="col-12" class="text-danger">
+                <ng-container *ngIf="!validateStartEndDate.isValid">
+                  {{ validateStartEndDate.msg }}
+                </ng-container>
+              </div>
+          </div>
+            <div class="form-group col-sm-4">
+                <label for="Date Range From">
+            <ng-container *ngIf="common.currentLang == 'en'">  Request Date To </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requestdateto')}} </ng-container>
+          </label>
+                <div class="position-relative">
+                    <input type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [(ngModel)]="date_to" [bsConfig]="bsConfig" (bsValueChange)="dateChange($event,'end')">
+                    <span (click)="dp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="name">
+            <ng-container *ngIf="common.currentLang == 'en'">  Smart Search </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('smartsearch')}} </ng-container>
+          </label>
+                <input type="text" class="form-control" autocomplete="off" [(ngModel)]="smartSearch" id="name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-auto">
+                <button class="rounded-btn" *ngIf="ownRequests" (click)="commonRequestList(ownreqType, true)">
+            <ng-container *ngIf="common.currentLang == 'en'">  Search </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('search')}} </ng-container>
+          </button>
+                <button class="rounded-btn" *ngIf="!ownRequests" (click)="changeList(reqtype)">
+            <ng-container *ngIf="common.currentLang == 'en'">  Search </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('search')}} </ng-container>
+          </button>
+                <button class="rounded-btn availablereport" (click)="openReport()">
+            <ng-container *ngIf="common.currentLang == 'en'">  Show Available Reports </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('showavailablereports')}} </ng-container>
+          </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="destination"></div>
+<div class="page-form-wrapper my-3 d-md-block d-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ng-container outsideBody>
+        <div class="table-responsive" [ngClass]="{'ar-rtl': common.currentLang=='ar'}">
+            <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': common.currentLang=='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'">
+            </ngx-datatable>
+            <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+                {{value | date:'dd/MM/yyyy'}}
+            </ng-template>
+            <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+                <div class="table-action-btn">
+                    <ng-container *ngIf="(row.Status == 'Pending for Resubmission' || (row.Status == arabic('pendingforresubmission'))) && row.CreatorID != currentUser.id">
+                        <button class="table-view" (click)="viewData(row, 'view', reqtype)">
+                      <i class="fas fa-eye" style="cursor: pointer;"></i>
+                    </button>
+                    </ng-container>
+                    <button class="table-view" *ngIf="row.Status != 'Pending for Resubmission' && (row.Status != arabic('pendingforresubmission'))" (click)="viewData(row, 'view', reqtype)">
+                <i class="fas fa-eye" style="cursor: pointer;"></i>
+              </button>
+                    <button *ngIf="(row.Status == 'Pending for Resubmission' || (row.Status == arabic('pendingforresubmission')))  && row.CreatorID == currentUser.id" class="table-edit" name="edit" (click)="viewData(row, 'edit', reqtype)">
+                <i class="fas fa-edit" style="cursor: pointer;"></i>
+              </button>
+                </div>
+            </ng-template>
+        </div>
+    </ng-container>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+        <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+
+</div>
+<div class="d-block d-md-none">
+    <div class="card mobile-cards shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': common.currentLang=='ar'}" *ngFor="let row of rows">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-12"><span><b>
+              <ng-container *ngIf="common.currentLang == 'en'">  Ref ID : </ng-container>
+              <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('refid')}} : </ng-container>
+            </b></span><span>{{row.RefID}}</span></div>
+                <div class="col-12"><span><b>
+            <ng-container *ngIf="common.currentLang == 'en'">  Source : </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('source')}} : </ng-container>
+          </b></span><span>{{row.Source}}</span></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col"><span><b>
+            <ng-container *ngIf="common.currentLang == 'en'"> Request Type : </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requesttype')}} : </ng-container>
+          </b></span><span> {{row.RequestType}}</span></div>
+                <div class="col"><span><b>
+            <ng-container *ngIf="common.currentLang == 'en'"> Status :  </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('status')}} : </ng-container>
+          </b></span><span> {{row.Status}}</span></div>
+            </div>
+            <div class="row">
+                <div class="col" *ngIf="(isMediaDepartmentHeadUserID || isMediaDepartmentTeamUserID)"><span><b>
+            <ng-container *ngIf="common.currentLang == 'en'"> Assigned To : </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('assignedto')}} : </ng-container>
+          </b></span><span> {{row.AssignedTo}}</span></div>
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>
+            <ng-container *ngIf="common.currentLang == 'en'"> Request Date : </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requestdate')}} : </ng-container>
+          </b></span><span> {{row.RequestDate | date:'dd/MM/yyyy'}}</span></div>
+          <div class="col-auto" *ngIf="!(isMediaDepartmentHeadUserID || isMediaDepartmentTeamUserID)">
+            <ng-container *ngIf="(row.Status == 'Pending for Resubmission' || (row.Status == arabic('pendingforresubmission')))  && row.CreatorID != currentUser.id">
+              <button class="list-btn" (click)="viewData(row, 'view', reqtype)">
+                  <i class="fas fa-eye" style="cursor: pointer;"></i>
+                </button>
+            </ng-container>
+            <button class="list-btn" *ngIf="row.Status != 'Pending for Resubmission' && row.Status != arabic('pendingforresubmission')"  (click)="viewData(row, 'view', reqtype)">
+              <i class="fas fa-eye"></i>
+            </button>&nbsp;
+                    <button class="edit-btn" *ngIf="(row.Status == 'Pending for Resubmission' || row.Status == arabic('pendingforresubmission'))  && row.CreatorID == currentUser.id" (click)="viewData(row, 'edit', reqtype)">
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row mar-top" *ngIf="(isMediaDepartmentHeadUserID || isMediaDepartmentTeamUserID)">
+          <div class="col"></div>
+          <div class="col-auto">
+            <ng-container *ngIf="(row.Status == 'Pending for Resubmission' || (row.Status == arabic('pendingforresubmission')))  && row.CreatorID != currentUser.id">
+              <button class="list-btn" (click)="viewData(row, 'view', reqtype)">
+                  <i class="fas fa-eye" style="cursor: pointer;"></i>
+                </button>
+            </ng-container>
+            <button class="list-btn" *ngIf="row.Status != 'Pending for Resubmission' && row.Status != arabic('pendingforresubmission')"  (click)="viewData(row, 'view', reqtype)">
+              <i class="fas fa-eye"></i>
+            </button>&nbsp;
+            <button class="edit-btn" *ngIf="((row.Status == 'Pending for Resubmission') || (row.Status == arabic('pendingforresubmission')))  && row.CreatorID == currentUser.id"  (click)="viewData(row, 'edit', reqtype)">
+              <i class="fas fa-edit"></i>
+            </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+        <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+    <!-- <button name="edit" (click)="viewData('edit',$event)"></button>
+    <button name="view" (click)="viewData('',$event)"></button> -->
+
+</div>
+<!-- This is for Report Modal -->
+<ng-template #template>
+    <div class="modal-header modalclass modal-lg" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <h4 class="modal-title pull-left"> {{ lang=='ar' ? arabic('report') : 'Report' }} </h4>
+        <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0': lang=='ar'}" aria-label="Close" (click)="closemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="row">
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="status">
+            <ng-container *ngIf="common.currentLang == 'en'">  Status </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('status')}} </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="statusOptions" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" placeholder="{{ lang == 'ar' ? arabic('status') : 'Select Status' }}" [(ngModel)]="statusM">
+                </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="SourceOU">
+            <ng-container *ngIf="common.currentLang == 'en'"> Source OU </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('sourceou')}} </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="sourceouOptions" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationUnits" placeholder="{{ lang == 'ar' ? arabic('sourceou') : 'Select SourceOU' }}" [(ngModel)]="SourceOUM">
+                </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="SourceOU">
+            <ng-container *ngIf="common.currentLang == 'en'">  Request Type </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requesttype')}} </ng-container>
+          </label>
+                <ng-select class="approverDept-ddown" [items]="cardDetailsList" [closeOnSelect]="true" bindLabel="name" bindValue="reqtype" placeholder="{{ lang == 'ar' ? arabic('requesttype') : 'Select Request Type' }}" [(ngModel)]="reqtypeM">
+                </ng-select>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="Date Range To">
+                <ng-container *ngIf="common.currentLang == 'en'">  Request Date From </ng-container>
+                <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requestdatefrom')}} </ng-container>
+              </label>
+              <div class="position-relative">
+                  <input type="text" class="form-control" bsDatepicker #dp1="bsDatepicker" [(ngModel)]="date_fromM" [bsConfig]="bsConfig1" (bsValueChange)="modalDateChange($event,'start')">
+                  <span (click)="dp1.toggle()"><i class="far fa-calendar date"></i></span>
+              </div>
+              <div class="col-12" class="text-danger">
+                <ng-container *ngIf="!validateModalStartEndDate.isValid">
+                  {{ validateModalStartEndDate.msg }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <label for="Date Range From">
+                <ng-container *ngIf="common.currentLang == 'en'">  Request Date To </ng-container>
+                <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('requestdateto')}} </ng-container>
+              </label>
+              <div class="position-relative">
+                <input type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [(ngModel)]="date_toM" [bsConfig]="bsConfig1" (bsValueChange)="modalDateChange($event,'end')">
+                <span (click)="dp.toggle()"><i class="far fa-calendar date"></i></span>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <label for="name">
+            <ng-container *ngIf="common.currentLang == 'en'">  Smart Search </ng-container>
+            <ng-container *ngIf="common.currentLang == 'ar'"> {{arabic('smartsearch')}}  </ng-container>
+          </label>
+                <input type="text" class="form-control" autocomplete="off" [(ngModel)]="smartSearchM" id="name">
+            </div>
+        </div>
+        <div class="modal-footer" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <button type="button" class="rounded-btn" (click)="downloadDownload()"> {{ lang=='ar' ? arabic('downloadexcel') : 'Download Excel'}} </button>
+        </div>
+    </div>
+</ng-template>

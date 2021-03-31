@@ -1,0 +1,18 @@
+<div class="modal-header modalclass" [ngClass]="{'direction': lang=='ar'}">
+  <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">{{ (lang=='ar') ? 'نجاح' : 'Success' }}</h4>
+  <button *ngIf="lang=='en'" type="button" class="close pull-right" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body" [ngClass]="{'ar-rtl':lang=='ar'}">
+  <p class="messagebody">{{msg}}</p>
+
+</div>
+<div class="modal-footer" [ngClass]="{'direction': lang=='ar'}">
+  <button type="button" class="rounded-btn" (click)="closemodal()">{{ (lang=='ar') ? 'حسنا' : 'Ok' }}</button>
+</div>

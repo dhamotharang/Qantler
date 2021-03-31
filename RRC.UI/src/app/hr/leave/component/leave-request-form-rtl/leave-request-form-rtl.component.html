@@ -1,0 +1,283 @@
+<div class="page-form-wrapper"  id="trigger-scroll">
+  <div class="form-title">
+    {{ arabic('Leave Requests') }} {{ arabic(screenStatus) }}
+  </div>
+  <form [formGroup]="leaveFormGroup" autocomplete="off">
+    <div class="container-fluid page-form-content py-2">
+      <div class="row" *ngIf="mode=='view'">
+          <div class="form-group col-12 col-md-3">
+            <label for="ReferenceNumber">{{ arabic('Reference Id')}}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="ReferenceNumber"
+              id="ReferenceNumber">
+          </div>
+        <div class="form-group col-12 col-md-3">
+          <label for="Date">{{ arabic('Date')}}</label>
+          <div class="position-relative">
+            <div>
+              <i class="far fa-calendar date ar-rtl-date-right"></i>
+            </div>
+            <input type="text" class="form-control" formControlName="CreatedDateTime" >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-3" >
+          <label for="Source OU">{{ common.arabic.words['sourceofficeSlashDepartment'] }}
+          </label>
+          <input type="text" class="form-control"
+            formControlName="SourceOU" id="Source OU" placeholder="{{ arabic('Source OU')}}">
+        </div>
+        <div class="form-group col-12 col-md-3" >
+          <label for="Source Name">{{ arabic('Source Name')}}</label>
+          <input type="text" class="form-control"
+            formControlName="SourceName" id="Source Name" placeholder="{{ arabic('Source Name')}}">
+        </div>
+      </div>
+      <hr *ngIf="mode=='view'">
+      <div class="row">
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="Leave Type">{{ arabic('Leave Type')}}</label>
+          <div class="col-12 radioSec">
+              <input type="radio" name="LeaveType" formControlName="LeaveType" id="annual" value="0" (change)="checkLeaveType()">
+              {{ arabic('annualleave')}}
+              <input class="ml-2" type="radio" formControlName="LeaveType" name="LeaveType" id="other" value="1" (change)="checkLeaveType()">
+              {{ arabic('others')}}
+            </div>
+         </div>
+        <div class="form-group col-12 col-md-6" *ngIf="isOtherLeaveType" [ngClass]="{'required':submitBtn}">
+            <label for="Leave Type">{{ arabic('otherleavetype')}}</label>
+            <ng-select
+              class="approverDept-ddown"
+              [items]="otherLeaveTypes"
+              [closeOnSelect]="true"
+              bindLabel="DisplayName"
+              bindValue="LookupsID"
+              placeholder="{{ arabic('selectleavetype')}}"
+              formControlName="LeaveTypeOther">
+            </ng-select>
+          </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label for="Reason">{{ arabic('Reason')}}</label>
+          <textarea class="form-control vertical-resize" formControlName="Reason" id="Reason"
+            placeholder="" rows="5"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="Destination OU">{{ common.arabic.words['approverofficeSlashDepartment']}}</label>
+          <ng-select
+            [items]="department"
+            [closeOnSelect]="true"
+            (change)="onChangeApproverDepartment()"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder="{{ arabic('Approver Department')}}"
+            formControlName="ApproverDepartmentID">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="User Name">{{ arabic('Approver Name')}}</label>
+          <ng-select
+            [items]="userApproverList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="{{ arabic('Approver Name')}}"
+            formControlName="ApproverID">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="To be approved by-Department">{{ arabic('leavedoaofficedepartment')}}</label>
+          <ng-select
+            [items]="department"
+            [closeOnSelect]="true"
+            (change)="onChangeDOADepartment()"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder="{{ arabic('Approver Department')}}"
+            formControlName="DOADepartmentID">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="To be approved by-Name">{{ arabic('DOA Name')}}</label>
+          <ng-select
+            [items]="userDOAList"
+            [closeOnSelect]="true"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="{{ arabic('DOA Name')}}"
+            formControlName="DOANameID">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="Start Date">{{ arabic('Start Date')}}</label>
+          <div class="position-relative">
+            <div (click)="sdp.toggle()" *ngIf="mode == 'create'">
+              <i class="far fa-calendar date" ></i>
+            </div>
+            <div *ngIf="mode != 'create'">
+              <i class="far fa-calendar date" ></i>
+            </div>
+            <input type="text" class="form-control" formControlName="StartDate" placeholder="{{ arabic('Start Date')}}" [value]="leaveFormGroup.get('StartDate').value | date:'dd/MM/yyyy'" (change)="[checkPastDate(),checkStartEndDateDiff()]" bsDatepicker #sdp="bsDatepicker" [bsConfig]="bsConfig">
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':submitBtn}">
+          <label for="End Date">{{ arabic('End Date')}}</label>
+          <div class="position-relative">
+            <div (click)="endp.toggle()" *ngIf="mode == 'create'">
+              <i class="far fa-calendar date"></i>
+            </div>
+            <div *ngIf="mode != 'create'">
+              <i class="far fa-calendar date"></i>
+            </div>
+            <input type="text" class="form-control" formControlName="EndDate" placeholder="{{ arabic('End Date')}}" [value]="leaveFormGroup.get('EndDate').value | date:'dd/MM/yyyy'" (change)="checkStartEndDateDiff()"  bsDatepicker #endp="bsDatepicker" [bsConfig]="bsConfig">
+          </div>
+          <div class="row" *ngIf="submitBtn && checkStartEndDateDiff()">
+            <div class="col-12">
+              <span class="text-danger">
+                {{ arabic('Please enter a valid end date') }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="row">
+            <div class="form-group col-12" >
+              <label for="Attachments">{{ arabic('Attachments')}}</label>
+              <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+              <input type="file" multiple class="form-control attachment"
+                name="Attachments" #fileInput (change)="leaveAttachments($event)" [disabled]="!submitBtn || isApiLoading"  id="Attachments"
+                placeholder="Select file" />
+            </div>
+            <div class="col-11 col-md-6" *ngIf="uploadProcess">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                  aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+              </div>
+            </div>
+            <div class="form-group col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+              <label for="Keywords">{{ arabic('Attachment List')}}</label>
+              <div class="row border font-weight-bold">
+                <div class="col border">{{ arabic('File Name')}}</div>
+                <div class="col border text-center" *ngIf="submitBtn">{{ arabic('Action')}}</div>
+              </div>
+              <div *ngFor="let file of attachments; let i = index">
+                <div class="row">
+                  <div class="col border">
+                    <a class="cursor break-word"
+                    href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+                  </div>
+                  <div class="col border text-center" *ngIf="submitBtn" >
+                    <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6" >
+          <label for="Balance Leave">{{ arabic('Balance Leave')}}</label>
+          <input type="text" class="form-control"
+            formControlName="BalanceLeave" id="Source OU" placeholder="{{ arabic('newbalanceleave')}}">
+        </div>
+      </div>
+      <div *ngIf="this.mode == 'view'" class="page-form-wrapper my-3 p-4">
+        <!-- <div class="row">
+          <div class="col-auto">
+            <div class="rounded-btn">
+              <img class="clock" src="../../assets/home/Meeting-clock.png">
+              {{actionDateTime | date: 'hh:mm a'}} / {{actionDateTime | date: 'dd-MM-yyyy'}}
+            </div>
+          </div>
+          <div class="col p-2">
+            <div class="row">
+              <div class="col-12">{{hisLog('Created')}} By : {{actionBy}}</div>
+            </div>
+          </div>
+        </div> -->
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section [comments]="leaveRequestComments" [commentType]="'Leave'" [moduleId]="leaveRequestModel.LeaveID" [moduleNameID]="'LeaveID'"></app-comment-section>
+            <div class="row leave-comment-section" *ngIf="leaveFormGroup.controls['Comments'].enabled">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                    <img src="{{empProfileImg}}" class="user-ProfileImg"/>
+                  </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text pull-right text-right">
+                <div class="comment-section-user-info text-right">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea class="form-control vertical-resize" formControlName="Comments" id="NewCommentContent"
+                  placeholder="" rows="3"></textarea>
+                </div>
+                <div class="comment-reply-section pull-right">
+                  <button class="rounded-btn" type="button" [disabled]="isApiLoading" *ngIf="leaveFormGroup.controls['Comments'].enabled" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> {{arabic('Add Comment')}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row px-3 justify-content-center btn-row">
+        <div *ngIf="assingBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button" [disabled]="isApiLoading" (click)="userAction('assign')">{{ arabic('ASSIGN')}}</button>
+        </div>
+        <div *ngIf="assignToMeBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button" [disabled]="isApiLoading" (click)="userAction('assigntome')">{{ arabic('ASSIGN TO ME')}}</button>
+        </div>
+        <div *ngIf="approveBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button" [disabled]="isApiLoading"  (click)="userAction('approve')">{{ arabic('APPROVE')}}</button>
+        </div>
+        <div *ngIf="rejectBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button" [disabled]="!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('reject')">{{ arabic('REJECT')}}</button>
+        </div>
+        <div *ngIf="escalateBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button" [disabled]="!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('escalate')">{{ arabic('ESCALATE')}}</button>
+        </div>
+        <div *ngIf="returnForInfoBtn" class="col-auto p-1">
+          <button class="rounded-btn" type="button"  [disabled]="!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!leaveFormGroup.valid || ((!leaveFormGroup.value.Comments) || (leaveFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('redirect')">{{ arabic('RETURN FOR INFO')}}</button>
+        </div>
+        <div *ngIf="submitBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="!leaveFormGroup.valid || isApiLoading || checkStartEndDateDiff() || !checklOtherLeaveValid()" [ngClass]="{'disabled-btn':!leaveFormGroup.valid || isApiLoading || checkStartEndDateDiff() || !checklOtherLeaveValid()}" (click)="userAction('submit')">
+            <app-btn-loader *ngIf="isApiLoading" class="btn-loader"></app-btn-loader>{{ arabic('SUBMIT') }}</button>
+        </div>
+        <div *ngIf="closeBtnShow" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading"  (click)="userAction('close')">
+            <app-btn-loader *ngIf="isApiLoading" class="btn-loader"></app-btn-loader>{{ arabic('CLOSE')}}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header modalclass" dir="auto">
+    <h4 class="modal-title pull-right">{{leaveReqModal.modalTitle}}</h4>
+    <button type="button" class="close pull-left p-0 m-0" aria-label="Close" (click)="noLeave ? closemodal() : pastDateNo()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body ar-rtl">
+    <p class="messagebody ar-rtl">{{leaveReqModal.message}}</p>
+  </div>
+  <div class="modal-footer" dir="auto" *ngIf="!noLeave">
+    <button type="button" class="rounded-btn" (click)="pastDateYes()">{{ arabic('Yes')}}</button>
+    <button type="button" class="rounded-btn" (click)="pastDateNo()">{{ arabic('No')}}</button>
+  </div>
+  <div class="modal-footer" *ngIf="noLeave">
+      <button type="button" class="rounded-btn" (click)="closemodal()">{{ arabic('close')}}</button>
+    </div>
+</ng-template>

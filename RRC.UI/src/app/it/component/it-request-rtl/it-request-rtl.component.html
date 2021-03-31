@@ -1,0 +1,159 @@
+<div class="container-fluid py-2 ar-rtl">
+    <div class="row" *ngIf="!editMode">
+        <div class="col p-2">
+          <div class="row">
+            <div class="col-12 refresh-div">
+                {{arabic.words.laststatusupdateat}} {{ currDate ? (currDate | date: 'hh:mm') : ''}} {{currDate ? (arabic.words[(currDate | date: 'a').toLowerCase()]): ''}} / {{currDate ? (currDate | date: 'dd/MM/yyyy') : '' }}
+                <div class="refresh-btn"><img class="refresh" (click)="syncDate()" src="assets/home/refresh.png"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="page-form-wrapper"  id="trigger-scroll">
+  <div class="form-title ar-rtl" *ngIf="mode === 'create'">
+    {{arabic.words.requestcreation}}
+  </div>
+  <div class="form-title ar-rtl" *ngIf="mode === 'view'">
+    {{arabic.words.requestview}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="!editMode">
+      <div class="form-group right col-12 col-md-4" >
+          <label for="Ref ID"> {{ arabic.words.refid }} </label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="refId" id="Ref_ID">
+      </div>
+      <div class="form-group right col-12 col-md-4" >
+          <label for="Ref ID">{{ arabic.words.status }}</label>
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="status">
+      </div>
+      <div class="form-group right col-12 col-md-3">
+        <label for="Date">{{ arabic.words.date }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="true" bsDatepicker #dp="bsDatepicker" [(ngModel)]="date" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date ar-rtl-icon" *ngIf="mode == 'create'" (click)="dp.toggle()"></i>
+          <i class="far fa-calendar date ar-rtl-icon" *ngIf="mode == 'view'"></i>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!editMode">
+      <div class="form-group right col-12 col-md-4">
+        <label for="Ref ID">{{ arabic.words.sourceofficeSlashDepartment }}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="sourceOU">
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="Ref ID">{{ arabic.words.sourcename }}</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="sourceName">
+      </div>
+    </div>
+    <hr *ngIf="!editMode"/>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{required:editMode}">
+        <label for="Ref ID">{{ arabic.words.subject }}</label>
+        <input type="text" class="form-control" placeholder="{{ arabic.words.subject }}" [(ngModel)]="subject" [disabled]="!editMode" id="Ref_ID">
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="country-of-birth">{{arabic.words.requestorofficeSlashDepartment}}</label>
+        <ng-select
+          class="status-ddown"
+          [closeOnSelect]="true"
+          (change)="onChangeRequstorDepartment()"
+          [items]="departmentList"
+          bindLabel="OrganizationUnits"
+          bindValue="OrganizationID"
+          placeholder="{{arabic.words.selectrequesterdepartment}}"
+          [(ngModel)]="RequestorDepartment"
+          [disabled]="!editMode || !(isItDepartmentHeadUserID || isItDepartmentTeamUserID)">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="country-of-birth">{{arabic.words.requestorname}}</label>
+        <ng-select
+          [disabled]="!editMode || !(isItDepartmentHeadUserID || isItDepartmentTeamUserID)"
+          class="status-ddown"
+          [items]="requestorList"
+          [closeOnSelect]="true"
+          bindLabel="EmployeeName"
+          bindValue="UserID"
+          placeholder="{{arabic.words.selectrequestername}}"
+          [(ngModel)]="RequestorName">
+        </ng-select>
+      </div>
+    </div>
+    <div class=row>
+      <div class="form-group right col-12 col-md-8" [ngClass]="{required:editMode}">
+          <label for="Gender">{{ arabic.words.requesttype }}</label>
+          <div>
+            <p><input type="radio" (change)="validate()" [disabled]="!editMode" name="request_type" value="1" [(ngModel)]="RequestType"> {{arabic.words.itsupport}} <span class="it-support-desription">({{arabic.words.printnotworkingemailissueetc}})</span></p>
+            <p><input type="radio" (change)="validate()" [disabled]="!editMode" name="request_type" value="2" [(ngModel)]="RequestType"> {{arabic.words.itservice}} <span class="it-support-desription">({{arabic.words.supportanypresentationdeskshifting}})</span></p>
+            <p><input type="radio" (change)="validate()" [disabled]="!editMode" name="request_type" value="3" [(ngModel)]="RequestType"> {{arabic.words.itcomponents}} </p>
+          </div>
+      </div>
+    </div>
+    <div class=row>
+      <div class="form-group right col-12 col-md-12" [ngClass]="{required:editMode}">
+        <label for="Gender">{{arabic.words.requestdetails}}</label>
+          <textarea
+          [disabled]="!editMode"
+          class="form-control"
+          placeholder="{{arabic.words.requestdetails}}"
+          id="notes"
+          (ngModelChange)="validate()"
+          [(ngModel)]="RequestDetails"></textarea>
+      </div>
+    </div>
+    <div class=row>
+      <div class="form-group right col-12 col-md-4" [ngClass]="{required:editMode}">
+        <label for="Gender">{{ arabic.words.priority }}</label>
+        <div>
+          <input type="radio" (change)="validate()" [disabled]="!editMode" name="priority" id="priority-high" [(ngModel)]="Priority" value="high"> {{ arabic.words.high }}
+          <input type="radio" (change)="validate()" [disabled]="!editMode" name="priority" id="priority-low" [(ngModel)]="Priority" value='low'> {{ arabic.words.low }}
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-6">
+        <label for="certificate">{{ arabic.words.attachments }}</label>
+        <input #fileInput type="file" [disabled]="!editMode" class="form-control attachment" name="attachment" id="certificate"
+          placeholder="Select file" (change) = "handleFileUpload($event)" multiple/>
+      </div>
+    </div>
+    <div class="form-group right col-12 col-md-6" *ngIf="attachments.length>0">
+      <label for="Keywords">{{ arabic.words.attachmentlist }}</label>
+      <div class="row border font-weight-bold">
+        <div class="border" [ngClass]="mode=='create' ? 'col-6': 'col-12'">{{ arabic.words.filename }}</div>
+        <div class="col-6 border text-center" *ngIf="mode == 'create'">{{ arabic.words.action }}</div>
+      </div>
+      <div *ngFor="let file of attachments; let i = index">
+        <div class="row">
+          <div class="attachment-width border" [ngClass]="mode=='create' ? 'col-6': 'col-12'">
+            <a class="cursor"
+              href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+          </div>
+          <div class="col-6 border text-center" *ngIf="mode == 'create'">
+            <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="editMode">
+      <div class="col-12 text-center it-request-submit">
+        <button class="rounded-btn" (click)="onSubmit()" [ngClass]="{'disabled-btn': validate() || inProgress}" [disabled]="validate() || inProgress">{{ arabic.words.submit }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-form-wrapper my-3 p-4" *ngIf="!editMode && historyLogs && (historyLogs.length > 0)">
+  <div class="row" *ngFor="let his of historyLogs">
+    <div class="col-auto"  *ngIf="his.ActionDateTime">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'hh:mm'}} {{ arabic.words[(his.ActionDateTime | date: 'a')]}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+      </div>
+    </div>
+    <div class="col p-2" [ngClass]= "{'text-right': lang !='en'}" *ngIf="his.Action">
+      <div class="row">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+      </div>
+    </div>
+  </div>
+</div>

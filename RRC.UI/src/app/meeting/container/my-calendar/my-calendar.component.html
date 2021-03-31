@@ -1,0 +1,32 @@
+<div class="maintenance-home py-3">
+  <div class="col-md-12 calendar-view">
+    <div class="row text-left">
+      <button class="rounded-btn" [routerLink]="['/app/meeting/list']"> {{lang == 'en' ? 'SHOW LIST VIEW' : arabic('showlistview')}} </button>
+    </div>
+  </div>
+  <div class="col-md-12" [ngClass]="{'ar-rtl': lang !='en'}">
+    <full-calendar
+      #ucCalendar
+      defaultView="dayGridMonth"
+      [plugins]="calendarPlugins"
+      [navLinks]= "true"
+      [eventTimeFormat]="eventTimeOptions"
+      [columnHeaderFormat]="columnHeaderOptions"
+      (eventRender)="eventRender($event)"
+      (eventClick)="handleEventClick($event)"
+      [events]="calendarEvents"
+      (dayRender)="dayRender($event)"
+      [views]="calenderViewOptions"
+      [header] = "calendarHeaderOptions"
+      [locale] = "calendarLocale"
+      [buttonText] = "buttonTextOptions"
+      [allDayText]="allDayText">
+    </full-calendar>
+    <!-- <ng-fullcalendar #ucCalendar
+      [options]="calendarOptions"
+      (eventClick)="eventClick($event.detail,EditTimeContent)"
+      (eventRender)="eventRender($event.detail)"
+    >
+  </ng-fullcalendar> -->
+  </div>
+</div>

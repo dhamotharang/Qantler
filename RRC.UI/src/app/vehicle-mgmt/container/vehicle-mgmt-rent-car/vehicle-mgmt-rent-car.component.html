@@ -1,0 +1,147 @@
+<div class="page-form-wrapper">
+  <div class="form-title" [ngClass]="{'ar-rtl':lang=='ar'}">
+    {{formLabels.title}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <ng-container *ngTemplateOutlet="filter"></ng-container>
+    </div>
+    <div class="row">
+      <div class="col-auto mr-0 mt-2">
+        <button class="rounded-btn mt-2" [disabled]="disableBtn" (click)="getVehicleList()">{{formLabels.search}}</button>
+        <button class="rounded-btn mt-2" [disabled]="disableBtn" (click)="showReport(report)">{{formLabels.report}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-form-wrapper">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <div class="d-md-block d-none">
+    <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang == 'ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50"
+      [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+    </ngx-datatable>
+    <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+      <div class="table-action-btn">
+        <button class="table-view mr-1" (click)="viewData('View',value)">
+          <i class="fas fa-eye" style="cursor: pointer;"></i>
+        </button>
+        <!-- <button class="table-edit ml-1" name="edit" (click)="viewData('Edit',value)">
+          <i class="fas fa-edit" style="cursor: pointer;"></i>
+        </button> -->
+      </div>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+  </div>
+
+  <div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <!-- <div class="col"><span><b>{{gridLabel.carcompanyid}} : </b></span>
+            <span>{{row.CarCompanyID}}</span>
+          </div> -->
+          <!-- <div class="col"><span><b>Title : </b></span>
+            <span>title</span>
+          </div> -->
+          <div class="col"><span><b>{{gridLabel.companyname}} : </b></span>
+            <span>{{row.CompanyName}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col"><span><b>{{gridLabel.date}} : </b></span>
+            <span>{{row.CreatedDateTime | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <div class="col"><span><b>{{gridLabel.conatactname}} : </b></span>
+            <span>{{row.ContactName}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"><span><b>{{gridLabel.contactnumber}} : </b></span>
+            <span>{{row.ContactNumber}}</span>
+          </div>
+          <div class="col" [ngClass]="{'viewleft': lang == 'ar', 'viewright': lang == 'en'}">
+            <button class="list-btn mr-1" (click)="viewData('View',row)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </button>
+          </div>
+        </div>
+        <!-- <div class="row justify-content-end">
+          <div class="col-auto">
+            <button class="list-btn mr-1" (click)="viewData('View',row)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+  </div>
+</div>
+
+<ng-template #pagination>
+  <div *ngIf="length > 0">
+    <ngb-pagination class="d-flex justify-content-center page-top" [(page)]="page" [maxSize]="maxSize"
+      [boundaryLinks]="true" [collectionSize]="length" [rotate]="false" (pageChange)="onChangePage(page)"
+      (numPages)="numPages = $event">
+    </ngb-pagination>
+  </div>
+</ng-template>
+
+<ng-template #filter>
+  <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <label for="From">{{formLabels.from}}</label>
+    <div class="position-relative">
+      <input type="text" class="form-control" [maxDate]="maxDate(to)" [disabled]="false" [(ngModel)]="from" bsDatepicker
+        #dpf="bsDatepicker" [bsConfig]="bsConfig">
+      <span (click)="dpf.toggle()">
+        <i class="far fa-calendar date"></i>
+      </span>
+    </div>
+    <div class="col-12" class="text-danger">
+      <ng-container *ngIf="dateValidation()">
+        {{ dateMsg }}
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <label for="To">{{formLabels.to}}</label>
+    <div class="position-relative">
+      <input type="text" class="form-control" [minDate]="maxDate(from)" [disabled]="false" [(ngModel)]="to" bsDatepicker
+        #dpt="bsDatepicker" [bsConfig]="bsConfig">
+      <span (click)="dpt.toggle()">
+        <i class="far fa-calendar date"></i>
+      </span>
+    </div>
+  </div>
+  <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <label for="To">{{formLabels.smartSearch}}</label>
+    <div class="position-relative">
+      <input type="text" class="form-control" [(ngModel)]="smartSearch">
+    </div>
+  </div>
+</ng-template>
+
+
+<!-- show available reportemplate -->
+<ng-template #report>
+  <div dir="auto" class="modal-header modalclass">
+    <h6 class="modal-title pull-left">{{formLabels.reportTitle}}</h6>
+    <button type="button" [ngClass]="{'p-0 m-0':lang=='ar'}" class="close pull-right" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <ng-container *ngTemplateOutlet="filter"></ng-container>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto search-container">
+        <button class="rounded-btn"
+          (click)="downloadReport()">{{ lang=='en' ? 'Download excel' : arabic('downloadexcel') }}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- ------ -->

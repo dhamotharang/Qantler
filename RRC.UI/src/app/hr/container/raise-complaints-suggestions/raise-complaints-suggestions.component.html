@@ -1,0 +1,115 @@
+<div class="page-form-wrapper"  id="trigger-scroll">
+  <div class="form-title">
+    COMPLAINTS / SUGGESTIONS {{displayStatus}}
+  </div>
+  <div class="container-fluid page-form-body py-2">
+    <div class="row" *ngIf="screenStatus == 'View'">
+      <div class="form-group col-12 col-md-4">
+        <label for="Date">Date</label>
+        <div class="position-relative">
+          <input name="date" type="text" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+            class="form-control" [(ngModel)]="complaint.CreationDate" bsDatepicker #dp="bsDatepicker"
+            [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Reference Number">Reference Number</label>
+        <input name="refnumber" [disabled]="screenStatus!='Create' || screenStatus=='View'" type="text"
+          class="form-control" [(ngModel)]="complaint.ReferenceNumber" id="Reference Number">
+      </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="source">Source</label>
+        <input name="source" type="text" name="source" class="form-control" [(ngModel)]="complaint.Source" id="source" [disabled]="screenStatus!='Create' || screenStatus=='View'">
+      </div>
+    </div>
+    <hr  *ngIf="screenStatus == 'View'">
+    <div class="row">
+
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="type">Type</label>
+        <div class="mt-2">
+          <input type="radio" name="type" value="0" [(ngModel)]="complaint.Type" [disabled]="screenStatus=='View'"> Complaint
+          <input class="ml-2" type="radio" name="type" value="1" [(ngModel)]="complaint.Type" [disabled]="screenStatus=='View'"> Suggestions
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    	 <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="subject">Subject</label>
+        <input name="subject" type="text" name="subject" class="form-control" [(ngModel)]="complaint.Subject"
+          id="subject" [disabled]="screenStatus=='View'">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="details">Details</label>
+        <textarea name="details" class="form-control" [(ngModel)]="complaint.Details" id="details" placeholder=""
+          rows="3" [disabled]="screenStatus=='View'"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-8" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="createdby">Created By</label>
+        <div class="mt-2">
+          <input class="ml-2" type="radio" name="createdby" [(ngModel)]="complaint.RequestCreatedBy" value="0" [disabled]="screenStatus=='View'">
+          Anonymous (Don't show my name)
+           <input type="radio" name="createdby" [(ngModel)]="complaint.RequestCreatedBy" value="1" [disabled]="screenStatus=='View'"> Myself
+        </div>
+      </div>
+    </div>
+
+   <!--  <div class="row" *ngIf="complaint.RequestCreatedBy == 'Myself'">
+      <div class="form-group col-12 col-md-4">
+        <label for="mailid">Mail Id</label>
+        <input type="text" name="mailid" class="form-control" [(ngModel)]="complaint.MailID" id="mailid" [disabled]="screenStatus=='View'">
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="subject">Phone number</label>
+        <input type="text" name="phone" class="form-control" [(ngModel)]="complaint.PhoneNumber" id="phone" [disabled]="screenStatus=='View'">
+      </div>
+    </div> -->
+    <div class="row" *ngIf="screenStatus == 'View' &&(closeBtn || assignBtn || assigntomeBtn)">
+      <div class="form-group col">
+        <label for="details">Action Taken</label>
+        <textarea class="form-control" [(ngModel)]="complaint.ActionTaken" id="status" placeholder="" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row px-3 justify-content-center">
+
+    <div class="col-auto p-1" *ngIf="submitBtn">
+      <button class="rounded-btn" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}"
+        (click)="btnLoad = true;submit()"><app-btn-loader *ngIf="submitBtnLd" class="btn-loader"></app-btn-loader>SUBMIT</button>
+    </div>
+    <div class="col-auto p-1"  *ngIf="assignBtn">
+      <button class="rounded-btn" (click)="btnLoad=true;assignpopup('AssignTo')" [disabled]="btnLoad"  [ngClass]="{'disabled-btn': btnLoad}"><app-btn-loader *ngIf="assignBtnLd" class="btn-loader"></app-btn-loader>ASSIGN</button>
+    </div>
+    <div class="col-auto p-1"  *ngIf="assigntomeBtn">
+      <button class="rounded-btn" (click)="btnLoad=true;assign('AssignToMe')" [disabled]="btnLoad"  [ngClass]="{'disabled-btn': btnLoad}">
+      <app-btn-loader *ngIf="assigntomeBtnLd" class="btn-loader"></app-btn-loader>ASSIGN TO ME</button>
+    </div>
+    <div class="col-auto p-1"  *ngIf="closeBtn">
+      <button class="rounded-btn" (click)="btnLoad=true;assign('Close')"  [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}">
+      <app-btn-loader *ngIf="closeBtnLd" class="btn-loader"></app-btn-loader>CLOSE</button>
+    </div>
+
+  </div>
+</div>
+  <div *ngIf="screenStatus == 'View' && complaint.HistoryLog.length != 0" class="page-form-wrapper my-3 p-4">
+    <div class="row" *ngFor="let his of complaint.HistoryLog">
+      <div class="col-auto">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+          {{his.ActionDateTime | date: 'hh:mm a'}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}     
+        </div>
+      </div>
+      <div class="col p-2">
+        <div class="row">
+          <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+          <div class="col-12 comment" *ngIf="his.Comments !='' && his.Comments != null">Comments : {{his.Comments}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

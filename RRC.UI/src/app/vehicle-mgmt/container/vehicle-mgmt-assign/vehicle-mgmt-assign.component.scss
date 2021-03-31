@@ -1,0 +1,15 @@
+.description {
+    padding-bottom: 8px;
+}
+
+// /deep/ .row-color {
+//     background-color: green;
+// }
+
+::ng-deep .row-color{
+    background-color:#f99f9f !important;
+  }
+
+  .card-body.row-color{
+    background-color:#f99f9f !important;
+  }

@@ -1,0 +1,102 @@
+<div class="page-body-wrapper h-50">
+  <div class="row p-3">
+    <div class="col p-4 shadow">
+      <div class="row">
+        <div class="col title-sy">{{(lang=='en')?'Documents':arabic('documents')}}</div>
+        <div class="col-auto">
+          <button class="rounded-btn" (click)="uploadNewFile()"
+            *ngIf="isLegalDepartmentHeadUserID || isLegalDepartmentTeamUserID"><i class="fa fa-plus"></i>{{(lang=='en')?'Upload':arabic('upload')}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-form-wrapper mb-3">
+  <div class="form-title">
+    {{(lang=='en')?'FILTER BY':arabic('filterby')}}
+  </div>
+  <div class="container-fluid page-form-body py-2">
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="name">{{(lang=='en')?'Created By':arabic('createdby')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="filterBy.Creator" id="creator">
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="power">{{(lang=='en')?'Smart Search':arabic('smartsearch')}}</label>
+        <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder=""
+          [(ngModel)]="filterBy.SmartSearch">
+      </div>
+      <div class="form-group col-sm-2 p-md-4 pl-3">
+        <button class="rounded-btn" (click)="onSearch()">{{(lang=='en')?'Search':arabic('search')}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper mb-3 d-md-block d-none">
+  <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50"
+    [columnMode]="'force'" [rowHeight]="'auto'">
+  </ngx-datatable>
+  <ng-template #creationDateTemplate let-row="row" let-value="value" let-i="index">
+    {{row.CreatedDateTime | date:'dd/MM/yyyy'}}
+  </ng-template>
+  <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn">
+      <button class="table-view" (click)="downloadFile(row)"><i class="fas fa-download"
+          style="cursor: pointer;"></i></button>
+      <button *ngIf="isLegalDepartmentHeadUserID || isLegalDepartmentTeamUserID" (click)="openDeleteDocumentDialog(row)"
+        class="attachment-delete-icon" name="Delete"><i class="fas fa-trash-alt" style="cursor: pointer;"></i></button>
+    </div>
+  </ng-template>
+  <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+    [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true"
+    [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)"
+    (numPages)="numPages = $event"></ngb-pagination>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let legalDocsrow of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>{{(lang=='en')?'Filename':arabic('filename')}} :
+            </b></span><span>{{legalDocsrow.AttachmentsName}}</span></div>
+        <div class="col-12"><span><b>{{(lang=='en')?'Created By':arabic('createdby')}} :
+            </b></span><span>{{legalDocsrow.CreatedBy}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- <div class="row">
+          <div class="col"><span><b>Request Type : </b></span><span> {{legalReqrow.RequestType}}</span></div>
+          <div class="col"><span><b>Status : </b></span><span> {{legalReqrow.Status}}</span></div>
+        </div>   -->
+      <div class="row mar-top">
+        <div class="col">
+          <span><b>{{(lang=='en')?'Uploaded Date':arabic('updateddate')}} : </b></span><span>
+            {{legalDocsrow.CreatedDateTime | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="col-auto">
+          <button class="table-view" (click)="downloadFile(legalDocsrow)"><i class="fas fa-download"
+              style="cursor: pointer;"></i></button>
+          <button *ngIf="isLegalDepartmentHeadUserID || isLegalDepartmentTeamUserID"
+            (click)="openDeleteDocumentDialog(legalDocsrow)" class="attachment-delete-icon" name="Delete"><i
+              class="fas fa-trash-alt" style="cursor: pointer;"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #fileDeletetemplate>
+  <div class="create-request-modal modal-header modalclass">
+    <h4 class="modal-title pull-left">{{(lang=='en')?'Delete File':arabic('deletefile')}}</h4>
+    <button type="button" class="close pull-right" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">{{(lang=='en')?'Do you really want to delete this file?':arabic('deletemessage')}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn"
+      (click)="deleteLegalDocument()">{{(lang=='en')?'Yes':arabic('yes')}}</button>
+    <button type="button" class="rounded-btn" (click)="closeDialog()">{{(lang=='en')?'No':arabic('no')}}</button>
+  </div>
+</ng-template>

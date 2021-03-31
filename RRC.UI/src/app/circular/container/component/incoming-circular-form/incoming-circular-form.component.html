@@ -1,0 +1,312 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title">
+    CIRCULAR {{displayStatus}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Reference Id">Reference Id</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+          [(ngModel)]="incomingcircular.ReferenceNumber" id="Reference Id" placeholder="Enter Ref">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="status">Status</label>
+        <!-- <ngx-select-dropdown [config]="config" [disabled]="screenStatus=='Create'||screenStatus=='View'"
+          [options]="status" [(ngModel)]="memoModel.Status" [multiple]="false">
+        </ngx-select-dropdown> -->
+        <!-- <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [data]="status" [(ngModel)]="memoModel.Status"
+          [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown> -->
+        <!-- <app-multi-select [data]="status" [multiple]="'false'" (ngModal)="status($event)" [idField]="'id'"
+          [textField]="'name'"></app-multi-select> -->
+        <select [disabled]="screenStatus!='Create' || screenStatus=='View'" class="form-control"
+          [(ngModel)]="incomingcircular.Status" id="exampleFormControlSelect1">
+          <option *ngFor="let us of status" [value]="us.LookupsID">{{us.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Creation Date">Creation Date</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+            [(ngModel)]="incomingcircular.CreatedDateTime" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <div (click)="(screenStatus=='Create') ? dp.toggle():''">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source OU">Source Office/Department</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+          [(ngModel)]="incomingcircular.SourceOU" id="Source OU" placeholder="Enter Source OU">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source Name">Source Name</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+          [(ngModel)]="incomingcircular.SourceName" id="Source Name" placeholder="Enter Source Name">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus!='Create'">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Circular Title">Circular Title</label>
+        <input type="text" class="form-control" [disabled]="screenStatus=='View'" name="title"
+          [(ngModel)]="incomingcircular.Title" id="Circular Title" placeholder="Enter Circular Title">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Destination OU">Destination Office/Department</label>
+        <ng-select [items]="destinationDepartment" [closeOnSelect]="false" [disabled]="screenStatus=='View'"
+          (change)="Destination($event)" [multiple]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="incomingcircular.DestinationOU">
+        </ng-select>
+      </div>
+      <!-- <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Department">Approver Office/Department</label>
+        <ng-select [disabled]="screenStatus=='View'" class="form-control" (change)="onChangeDepartment()"
+          [(ngModel)]="incomingcircular.ApproverDepartment" id="exampleFormControlSelect1">
+          <option *ngFor="let dept of approverDepartment" [value]="dept.OrganizationID">{{dept.OrganizationUnits}}</option>
+        </ng-select>
+      </div> -->
+
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Department">Approver Office/Department</label>
+        <!-- <select [disabled]="screenStatus=='View'" class="form-control" (change)="onChangeDepartment()"
+          [(ngModel)]="memoModel.ApproverDepartment" id="exampleFormControlSelect1">
+          <option *ngFor="let dept of department" [value]="dept.OrganizationID">{{dept.OrganizationUnits}}</option>
+        </select> -->
+        <ng-select [items]="approverDepartment" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="onChangeDepartment()" [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="incomingcircular.ApproverDepartment">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Name">Approver Name</label>
+        <select [disabled]="screenStatus=='View'" class="form-control" [(ngModel)]="incomingcircular.ApproverName"
+          id="exampleFormControlSelect1">
+         //  <option selected="true" value="">Select user</option> 
+          // <option value="" disabled selected>Select user</option> 
+          <option *ngFor="let us of userDestination" [value]="us.UserID">{{us.EmployeeName}}</option>
+        </select>
+      </div> -->
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Name">Approver Name</label>
+        <ng-select [items]="userDestination" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="incomingcircular.ApproverName">
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="row py-3">
+      <div class="col-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label>Details</label>
+      </div>
+      <!-- <div class="col-12">
+        <tinymce [disabled]="screenStatus=='View'" [(ngModel)]="incomingcircular.Details"></tinymce>
+      </div> -->
+      <div class="col-12 d-md-block"  [ngClass]="{'d-none':screenStatus=='View'}">
+        <tinymce [config]="tinyConfig" [disabled]="screenStatus=='View'" [(ngModel)]="incomingcircular.Details"></tinymce>
+      </div>
+      <div class="col-12 d-md-none" [ngClass]="{'d-block':screenStatus=='View','d-none':screenStatus!='View' }">
+        <div class="tiny" #tinyDetail></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Priority">Priority</label>
+        <!-- <ngx-select-dropdown [config]="config" [disabled]="screenStatus=='View'" [options]="priorityList"
+              [(ngModel)]="memoModel.Priority" [multiple]="false">
+            </ngx-select-dropdown> -->
+        <!-- <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [data]="priorityList"
+            [(ngModel)]="memoModel.Priority" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown> -->
+        <!-- <app-multi-select [data]="priorityList" (ngModal)="priority($event)" [idField]="''" [textField]="''">
+            </app-multi-select> -->
+        <!-- <select [disabled]="screenStatus=='View'" class="form-control" [(ngModel)]="memoModel.Priority"
+              id="exampleFormControlSelect1">
+              <option *ngFor="let us of priorityList" [value]="us"><span>beer</span>{{us}}</option>
+            </select> -->
+        <ng-select [items]="priorityList" [disabled]="screenStatus=='View'" (change)="Destination($event)"
+          bindLabel="name" bindValue="name" [(ngModel)]="incomingcircular.Priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="form-group col-12" *ngIf="screenStatus!='View'">
+            <label for="Attachments">Attachments</label>
+            <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+            <input #variable type="file" multiple class="form-control attachment d-none d-md-block" [disabled]="screenStatus=='View'"
+              name="Attachments" (change)="uploadFiles($event)" [(ngModel)]="incomingcircular.Attachments"
+              id="Attachments" placeholder="Select file" />
+              <div class="form-control attachment d-block d-md-none" id="Attachments"
+              (click)="variable.click()">
+              Choose file
+            </div>
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+            <label for="Keywords">Attachment List</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">File Name</div>
+              <div class="col border text-center" *ngIf="screenStatus!='View'">Action</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                  <a class="cursor"
+                    href="{{AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col" *ngIf="screenStatus=='View' && approverBtn">
+        <label for="Reference Id">Approver Comments</label>
+        <textarea class="form-control" [(ngModel)]="incomingcircular.Comments" id="comments" placeholder=""
+          rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center">
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;statusChange('Approve',template);approveBtnLoad=true">
+          <app-btn-loader *ngIf="approveBtnLoad" class="btn-loader"></app-btn-loader>
+          APPROVE
+        </button>
+      </div>
+      <div *ngIf="draftBtn || createBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="validateForm() || sendBtnLoad" [ngClass]="{'disabled-btn': validateForm() || sendBtnLoad}"
+          (click)="btnLoad = true;saveCircular();sendBtnLoad=true">
+          <app-btn-loader *ngIf="sendBtnLoad" class="btn-loader"></app-btn-loader>
+          SEND
+        </button>
+      </div>
+      <div *ngIf="savedraftBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;saveCircular('draft');sendDraftBtnLoad=true">
+
+          <app-btn-loader *ngIf="sendDraftBtnLoad" class="btn-loader"></app-btn-loader>
+          SAVE AS DRAFT
+        </button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="incomingcircular.Comments=='' || btnLoad"
+          [ngClass]="{'disabled-btn': incomingcircular.Comments =='' || btnLoad}"
+          (click)="btnLoad = true;statusChange('Reject',template);;rejectBtnLoad=true">
+          <app-btn-loader *ngIf="rejectBtnLoad" class="btn-loader"></app-btn-loader>
+          REJECT
+        </button>
+      </div>
+      <!-- <div *ngIf="approverBtn" class="col-auto p-1">
+            <button class="rounded-btn" (click)="statusChange('Waiting for Approval')">ESCALATE</button>
+          </div> -->
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="incomingcircular.Comments ==''  || btnLoad"
+          [ngClass]="{'disabled-btn': incomingcircular.Comments ==''  || btnLoad}"
+          (click)="btnLoad = true;popup('Circular Escalate')">ESCALATE</button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="incomingcircular.Comments ==''  ||btnLoad"
+          [ngClass]="{'disabled-btn': incomingcircular.Comments ==''  ||btnLoad}"
+          (click)="btnLoad = true;statusChange('ReturnForInfo');returnInfoBtnLoad = true">
+          <app-btn-loader *ngIf="returnInfoBtnLoad" class="btn-loader"></app-btn-loader>
+          RETURN FOR INFO
+        </button>
+      </div>
+      <div *ngIf="creatorBtn && incomingcircular.Status != 12" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;clone('Clone');cloneBtnLoad=true">
+          <app-btn-loader *ngIf="cloneBtnLoad" class="btn-loader"></app-btn-loader>
+          CLONE
+        </button>
+      </div>
+      <!--
+          <div *ngIf="receiverBtn" class="col-auto p-1">
+            <button class="rounded-btn" (click)="shareMemo()">SHARE MEMO</button>
+          </div>
+     -->
+      <div class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad || printbtn" [ngClass]="{'disabled-btn': btnLoad || printbtn}"
+          (click)="btnLoad = true;print(printPDF);printBtnLoad=true">
+          <app-btn-loader *ngIf="printBtnLoad" class="btn-loader"></app-btn-loader>
+          PREVIEW / PRINT
+        </button>
+      </div>
+      <div *ngIf="deleteBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;delete();deleteBtnLoad = true">
+          <app-btn-loader *ngIf="deleteBtnLoad" class="btn-loader"></app-btn-loader>
+          DELETE
+        </button>
+      </div>
+      <!-- <div *ngIf="receiverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="submitted" (click)="statusChange('Close')">CLOSE</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div *ngIf="this.screenStatus != 'Create' || this.incomingcircular.Status == 16" class="page-form-wrapper my-3 p-4">
+  <div class="row" *ngFor="let his of incomingcircular.HistoryLog">
+    <div class="col-auto">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'hh:mm a'}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+      </div>
+    </div>
+    <div class="col p-2">
+      <div class="row">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+        <div class="col-12 comment" *ngIf="his.Comments !='' && his.Comments != null">Comments : {{his.Comments}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Success</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">{{message}}</p>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #printPDF>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Print Preview</h4>
+    <button type="button" class="close pull-right color-white" aria-label="Close" (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" #printContent>
+    <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="printPdf(printContent);bsModalRef.hide()">Print</button>
+    <button type="button" class="rounded-btn" (click)="downloadPrint();bsModalRef.hide()">Download</button>
+  </div>
+</ng-template>

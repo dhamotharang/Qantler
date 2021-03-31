@@ -1,0 +1,349 @@
+<div class="row">
+  <div class="col-sm-12 col-lg-8">
+    <div class="page-form-wrapper" id="trigger-scroll">
+      <div class="form-title">
+        TASK {{screenTitle}}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="screenStatus!='Task Create'">
+          <div class="form-group col-12 col-md-6">
+            <label for="Task Id">Task Id</label>
+            <input type="text" [disabled]="screenStatus!='Task Create'" class="form-control" [disabled]="canEdit"
+              [(ngModel)]="createTask.TaskReferenceNumber" id="Task Id">
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Status">Status</label>
+            <ng-select [items]="statusList" [disabled]="screenStatus!='Task Create'" [multiple]="false"
+              bindLabel="DisplayName" bindValue="LookupsID" [disabled]="canEdit" [(ngModel)]="createTask.Action">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Creation Date">Creation Date</label>
+            <div class="position-relative">
+              <input type="text" [disabled]="screenStatus!='Task Create'" class="form-control" [disabled]="canEdit"
+                [(ngModel)]="createTask.CreatedDateTime" bsDatepicker #dpc="bsDatepicker" [bsConfig]="bsConfig">
+              <i class="far fa-calendar date"></i>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Source OU">Source Office/Department</label>
+            <input type="text" [disabled]="screenStatus!='Task Create'" class="form-control" [disabled]="canEdit"
+              [(ngModel)]="createTask.SourceOU" id="Source OU">
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Source Name">Source Name</label>
+            <input type="text" [disabled]="screenStatus!='Task Create'" class="form-control" [disabled]="canEdit"
+              [(ngModel)]="createTask.SourceName" id="Source Name">
+          </div>
+        </div>
+        <hr *ngIf="screenStatus!='Task Create'">
+        <div class="row">
+          <div class="form-group col-12 col-md-12">
+            <label for="Task Title">Task Title</label>
+            <input type="text" class="form-control" [disabled]="canEdit" [(ngModel)]="createTask.Title" id="Task Title">
+          </div>
+          <div class="form-group col-12 col-md-6 " [ngClass]="{'required':!canEdit}">
+            <label for="Start Date">Start Date</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [disabled]="canEdit" [maxDate]="minDate(createTask.EndDate)"
+                [(ngModel)]="createTask.StartDate" bsDatepicker #dps="bsDatepicker" [bsConfig]="bsConfig">
+              <div (click)="(canEdit)?'':dps.toggle()">
+                <i class="far fa-calendar date"></i>
+              </div>
+            </div>
+            <div class="col-12" class="text-danger">
+              <ng-container *ngIf="dateValidation()">
+                {{ validateStartEndDate.msg }}
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Due Date">Due Date</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [disabled]="canEdit" [minDate]="minDate(createTask.StartDate)"
+                [(ngModel)]="createTask.EndDate" bsDatepicker #dpd="bsDatepicker" [bsConfig]="bsConfig">
+              <div (click)="(canEdit)?'':dpd.toggle()">
+                <i class="far fa-calendar date"></i>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6" [ngClass]="{'required':!canEdit}">
+            <label for="Assignee-Department">Assignee Office/Department</label>
+            <ng-select [items]="department" (change)="Ass_dept_change()" [multiple]="false"
+              bindLabel="OrganizationUnits" bindValue="OrganizationID" [disabled]="canEdit"
+              [(ngModel)]="createTask.AssigneeDepartmentId">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6" [ngClass]="{'required':!canEdit}">
+            <label for="Assignee-Name">Assignee-Name</label>
+            <ng-select [items]="assUserList" [multiple]="false" bindLabel="EmployeeName" bindValue="UserID"
+              [disabled]="canEdit" [(ngModel)]="createTask.AssigneeUserId">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Responsible-Department">Participant Office/Department</label>
+            <ng-select [items]="department" [closeOnSelect]="false" (clear)="createTask.ResponsibleUserId = []"
+              (remove)="checkDepartmentUser($event)" (change)="Res_dept_change()" [multiple]="true"
+              bindLabel="OrganizationUnits" bindValue="OrganizationID"
+              [disabled]="canEdit && !assigneeEdit && curStatus" [(ngModel)]="createTask.ResponsibleDepartmentId">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Responsible-Name">Participant-Name</label>
+            <ng-select [items]="resUserList" [closeOnSelect]="false" (change)="Res_user_change($event)"
+              [multiple]="true" bindLabel="EmployeeName" bindValue="UserID"
+              [disabled]="canEdit && !assigneeEdit && curStatus" [(ngModel)]="createTask.ResponsibleUserId">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-12">
+            <label>Details</label>
+          </div>
+          <div class="col-12 d-md-block" [ngClass]="{'d-none':screenStatus=='Task View'}">
+            <tinymce [config]="tinyConfig" [disabled]="canEdit" [(ngModel)]="createTask.TaskDetails"></tinymce>
+          </div>
+          <div class="col-12 d-md-none"
+            [ngClass]="{'d-block':screenStatus=='Task View','d-none':screenStatus!='Task View' }">
+            <div class="tiny" #tinyDetail></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-6" [ngClass]="{'required':!canEdit}">
+            <label for="country">Country</label>
+            <ng-select [disabled]="canEdit" [items]="countryList" [closeOnSelect]="true" (change)="onCountrySelected()"
+              bindLabel="CountryName" bindValue="CountryID" [(ngModel)]="createTask.Country">
+            </ng-select>
+          </div>
+          <div *ngIf="defaultCountry && createTask.Country == defaultCountry" class="form-group col-12 col-md-6"
+            [ngClass]="{'required':!canEdit}">
+            <label for="country">Emirates</label>
+            <ng-select [disabled]="canEdit" [items]="emiratesList" [closeOnSelect]="true"
+              (change)="onEmiratesSelected()" bindLabel="EmiratesName" bindValue="EmiratesID"
+              [(ngModel)]="createTask.Emirates">
+            </ng-select>
+          </div>
+          <div *ngIf="emiratesList && emiratesList.length" class="form-group col-12 col-md-6"
+            [ngClass]="{'required':!canEdit}">
+            <label for="country">City</label>
+            <ng-select *ngIf="defaultCountry && createTask.Country == defaultCountry" [disabled]="canEdit"
+              [items]="cityList" [closeOnSelect]="true" bindLabel="CityName" bindValue="CityID"
+              [(ngModel)]="createTask.City">
+            </ng-select>
+            <input *ngIf="defaultCountry && createTask.Country != defaultCountry" type="text" class="form-control"
+              [disabled]="canEdit" [(ngModel)]="createTask.City" id="city">
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Priority">Priority</label>
+            <ng-select [items]="priorityList" bindLabel="name" bindValue="value" [disabled]="canEdit"
+              [(ngModel)]="createTask.Priority">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <div class="select-priority mr-1" [ngClass]="item"></div>
+                <div class="d-inline">{{item}}</div>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Due Date">Remind me on</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [maxDate]="minDate(createTask.EndDate)"
+                [minDate]="minDate(createTask.StartDate)" [disabled]="canEdit" [(ngModel)]="createTask.RemindMeAt"
+                bsDatepicker #dpr="bsDatepicker" [bsConfig]="bsConfig">
+              <div (click)="(canEdit)?'':dpr.toggle()">
+                <i class="far fa-calendar date"></i>
+              </div>
+            </div>
+            <!-- <div class="col-12" class="text-danger">
+              <ng-container *ngIf="dateValidationRemind()">
+                {{ validateStartEndDate.msg }}
+              </ng-container>
+            </div> -->
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <div class="row">
+              <div class="col-12">
+                <label for="Link to - Memo">Link to - Memo</label>
+                <div class="d-flex flex-row">
+                  <tag-input class="form-control" (onAdd)="onAddChangeMemo($event)"
+                    (onRemove)="onRemoveChangeMemo($event)" [placeholder]="' +Enter Memo'"
+                    [secondaryPlaceholder]="'Enter Memo'" [disable]="canEdit" [(ngModel)]='createTask.LinkToMemo'>
+                  </tag-input>
+                  <button class="custom-btn" [disabled]="canEdit" (click)="openLinkToModal('memo')">...</button>
+                </div>
+                <div *ngIf="Ismemolink" class="alert alert-danger alert-dismissible fade"
+                  [ngClass]="{'show':Ismemolink}" role="alert">
+                  Invalid ref id or access to this ref id is denied.
+                  <button type="button" class="close" (click)="Ismemolink = !Ismemolink" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-auto" *ngFor="let link of linkMemos_list">
+                    <a [href]="getRefLink(link,'memo')" target="_blank">{{link.MemoReferenceNumber}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <div class="row">
+              <div class="col-12">
+                <label for="Link to - Letter">Link to - Letter</label>
+                <div class="d-flex flex-row">
+                  <tag-input class="form-control" (onAdd)="onAddChangeLetter($event)"
+                    (onRemove)="onRemoveChangeLetter($event)" [placeholder]="' +Enter Letter'"
+                    [secondaryPlaceholder]="'Enter Letter'" [disable]="canEdit" [(ngModel)]='createTask.LinkToLetter'>
+                  </tag-input>
+                  <button class="custom-btn" [disabled]="canEdit" (click)="openLinkToModal('letter')">...</button>
+                </div>
+                <div *ngIf="Isletterlink" class="alert alert-danger alert-dismissible fade"
+                  [ngClass]="{'show':Isletterlink}" role="alert">
+                  Invalid ref id or access to this ref id is denied.
+                  <button type="button" class="close" (click)="Isletterlink = !Isletterlink" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-auto" *ngFor="let link of linkLetter_list">
+                    <a [href]="getRefLink(link,'letter')" target="_blank">{{link.LetterReferenceNumber}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <div class="row">
+              <div class="col-12">
+                <label for="Meeting">Link to - Meeting</label>
+                <div class="d-flex flex-row">
+                  <tag-input class="form-control" (onAdd)="onAddChangeMeeting($event)"
+                    (onRemove)="onRemoveChangeMeeting($event)" [placeholder]="' +Enter Meeting'"
+                    [secondaryPlaceholder]="'Enter Meeting'" [disable]="canEdit" [(ngModel)]='createTask.LinkToMeeting'>
+                  </tag-input>
+                  <button class="custom-btn" [disabled]="canEdit" (click)="openLinkToModal('meeting')">...</button>
+                </div>
+                <div *ngIf="IsMeetinglink" class="alert alert-danger alert-dismissible fade"
+                  [ngClass]="{'show':IsMeetinglink}" role="alert">
+                  Invalid ref id or access to this ref id is denied.
+                  <button type="button" class="close" (click)="IsMeetinglink = !IsMeetinglink" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-auto" *ngFor="let link of linkMeeting_list">
+                    <a [href]="getRefLink(link,'meeting')" target="_blank">{{link.MeetingReferenceNumber}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="row">
+              <div class="form-group col-12" *ngIf="!canEdit">
+                <label for="Attachments">Attachments</label>
+                <input #attachment type="file" multiple (change)="Attachments($event)"
+                  class="form-control attachment d-none d-md-block" name="Attachments" id="Attachments" />
+                <div class="form-control attachment d-block d-md-none" id="Attachments" (click)="attachment.click()">
+                  Choose file
+                </div>
+              </div>
+              <div class="col-11 mx-3 mb-2" *ngIf="createTask.Attachments.length>0">
+                <label for="Keywords">Attachment List</label>
+                <div class="row border font-weight-bold">
+                  <div class="col border">File Name</div>
+                  <div class="col border text-center" *ngIf="!canEdit">Action</div>
+                </div>
+                <div *ngFor="let file of createTask.Attachments; let i = index">
+                  <div class="row">
+                    <div class="col-{{(!canEdit)?'6':12}} attachment-width border">
+                      <a class="cursor"
+                        href="{{AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                    </div>
+                    <div class="col-6 border text-center" *ngIf="!canEdit">
+                      <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="Labels">Labels</label>
+            <tag-input class="form-control" [placeholder]="''" [secondaryPlaceholder]="'Enter Label'"
+              [clearOnBlur]="true" (onBlur)="onTextChange($event)" [disable]="canEdit" [(ngModel)]='createTask.Labels'>
+            </tag-input>
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row px-3 justify-content-center">
+          <!-- <div class="col-auto p-1"
+            *ngIf="screenStatus!='Task Create' && createTask.CreatedBy == currentUser.id && createTask.Status == 31">
+            <button class="rounded-btn" [disabled]="deleteBtnLoad || closeBtnLoad"
+              [ngClass]="{'disabled-btn': closeBtnLoad,'disabled-btn': deleteBtnLoad}"
+              (click)="deleteBtnLoad = true;closeBtnLoad = true;assignBtnLoad = true;assignTask()">ASSIGN
+              <app-btn-loader *ngIf="assignBtnLoad" class="btn-loader"></app-btn-loader>
+            </button>
+          </div> -->
+          <div class="col-auto p-1"
+            *ngIf="screenStatus!='Task Create' && createTask.CreatedBy == currentUser.id && createTask.Status == 31">
+            <button class="rounded-btn" [disabled]="deleteBtnLoad || closeBtnLoad"
+              [ngClass]="{'disabled-btn': closeBtnLoad,'disabled-btn': deleteBtnLoad}"
+              (click)="closeBtnLoad = true;closeTask()">CLOSE
+              <app-btn-loader *ngIf="closeBtnLoad" class="btn-loader"></app-btn-loader>
+            </button>
+          </div>
+          <div class="col-auto p-1"
+            *ngIf="screenStatus!='Task Create' && assigneeEdit && createTask.Status != 32 && createTask.Status!=31 && !DeleteFlag">
+            <button class="rounded-btn" [disabled]="completeBtnLoad" [ngClass]="{'disabled-btn': completeBtnLoad}"
+              (click)="completeBtnLoad = true;completeTask()">COMPLETE
+              <app-btn-loader *ngIf="completeBtnLoad" class="btn-loader"></app-btn-loader>
+            </button>
+          </div>
+          <div class="col-auto p-1"
+            *ngIf="screenStatus!='Task Create' && createTask.CreatedBy == currentUser.id && createTask.Status != 32">
+            <button class="rounded-btn" [disabled]="deleteBtnLoad || closeBtnLoad"
+              [ngClass]="{'disabled-btn': closeBtnLoad,'disabled-btn': deleteBtnLoad}"
+              (click)="deleteBtnLoad = true;deleteTask()">DELETE
+              <app-btn-loader *ngIf="deleteBtnLoad" class="btn-loader"></app-btn-loader>
+            </button>
+          </div>
+          <div class="col-auto p-1"
+            *ngIf="(screenStatus=='Task Create' || !canEdit || assigneeEdit) && createTask.Status!=32 && createTask.Status!=31 && !DeleteFlag">
+            <button class="rounded-btn" [ngClass]="{'disabled-btn': validateForm() || dateValidation()}"
+              [disabled]="validateForm() || dateValidation()" [ngClass]="{'disabled-btn': submitBtnLoad}"
+              (click)="saveTask();submitBtnLoad = true">SUBMIT
+              <app-btn-loader *ngIf="submitBtnLoad" class="btn-loader"></app-btn-loader>
+            </button>
+          </div>
+        </div>
+        <div class="row justify-content-center"
+          *ngIf="screenStatus!='Task Create' && assigneeEdit && createTask.Status != 32 && createTask.Status!=31 && !DeleteFlag">
+          <div class="col-auto text-danger">
+            Note: Before clicking Complete button, please make sure to communicate the creator with your intention to
+            mark this task as completed.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-lg-block col-lg-4">
+    <app-task-chat [screen]="visibleChat"></app-task-chat>
+  </div>
+  <div class="d-block d-lg-none chat-btn-wrapper" *ngIf="visibleChat && chatIconShow">
+    <button class="chat-btn" (click)="chatOpen()"><i class="far fa-comment-dots" style="font-size: 30px;"></i></button>
+  </div>
+</div>

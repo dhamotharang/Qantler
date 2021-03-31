@@ -1,0 +1,385 @@
+<div class="official-request-container" id="trigger-scroll" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+  <div class="page-form-wrapper"  id="trigger-scroll">
+    <div class="form-title" *ngIf="!this.type || this.type === 'official' && editMode">
+      {{ lang === 'ar' ? arabic('createofficialtask') : 'CREATE OFFICIAL TASK REQUEST'}}
+    </div>
+    <div class="form-title" *ngIf="this.type === 'official' && !editMode">
+      {{ lang === 'ar' ? arabic('officialtaskrequestview') : 'OFFICIAL TASK REQUEST VIEW'}}
+    </div>
+    <div class="form-title" *ngIf="this.type==='create-compensation'">
+      {{ lang === 'ar' ? arabic('createcompensationrequest') : 'CREATE COMPENSATION REQUEST'}}
+    </div>
+    <div class="form-title" *ngIf="this.type==='compensation'">
+      {{ lang === 'ar' ? arabic('viewcompensationrequest') : 'COMPENSATION REQUEST VIEW'}}
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row" *ngIf="!editMode">
+        <div class="form-group col-12 col-md-4">
+          <label for="refId">{{ lang === 'ar' ? arabic('refid') : 'Reference Id'}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="refId"
+            id="refId">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Date">{{ lang === 'ar' ? arabic('date') : 'Date'}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              disabled
+              bsDatepicker
+              #dp="bsDatepicker"
+              [(ngModel)]="date"
+              [bsConfig]="bsConfig">
+            <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="sourceou">{{ lang === 'ar' ? arabic('sourceofficedepartment') : 'Source Office/Department '}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceOU"
+            id="sourceou">
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="source-name">{{ lang === 'ar' ? arabic('sourcename') : 'Source Name'}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="sourceName"
+            id="sourceName">
+        </div>
+      </div>
+      <hr *ngIf="!editMode"/>
+      <div class="row" *ngIf="showEmpDropDown">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="Employee-Department">{{ lang === 'ar' ? arWords.employeeofficeSlashDepartment : 'Employee Office/Department'}}</label>
+          <ng-select
+            class="employee-dept"
+            [disabled]="!editMode"
+            [items]="employeeDepartments"
+            [closeOnSelect]="true"
+            (change)="onDepartmentSelect('employee')"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder=""
+            [(ngModel)]="employeeDepartment">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="Employee-Name">{{ lang === 'ar' ? arabic('employeename') : 'Employee Name'}}</label>
+          <ng-select
+            class="employee-name"
+            [disabled]="!editMode"
+            [items]="employeeList"
+            [closeOnSelect]="true"
+            (change)="onEmployeeSelect()"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder=""
+            [(ngModel)]="employee">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row" *ngFor="let emp of addedEmployeeList">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="employeeCode">
+            {{ lang === 'ar' ? arabic('employeecode') : 'Employee Code'}}
+            <span (click)="removeEmp(emp)" *ngIf="editMode" class="d-md-none">
+              <i class="fa fa-trash-alt"></i>
+            </span>
+          </label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="emp.EmployeeCode"
+            id="employeeCode">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label for="employeePosition">{{ lang === 'ar' ? arWords.empPosition : 'Employee Position'}}</label>
+          <input
+            type="text"
+            disabled
+            class="form-control"
+            [(ngModel)]="emp.EmployeePosition"
+            id="employeePosition">
+        </div>
+        <div class="col-12 col-md-4 d-none d-md-block emp-remove-holder" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <span *ngIf="editMode" (click)="removeEmp(emp)"><i class="fa fa-trash-alt"></i></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <label class="add-emp-label" *ngIf="editMode" (click)="addEmployee()">+ {{ lang === 'ar' ? arWords.addEmp : 'Add Employee'}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="officialTaskType">{{ lang === 'ar' ? arabic('officialtasktype') : 'Official Task Type'}}</label>
+          <ng-select
+            class="official-task-type"
+            [disabled]="!editMode"
+            [items]="officialTaskTypes"
+            [closeOnSelect]="true"
+            bindLabel="OfficialTaskRequestName"
+            bindValue="OfficialTaskRequestID"
+            placeholder=""
+            (change)="validate()"
+            [(ngModel)]="officialTaskType">
+          </ng-select>
+        </div>
+        <div *ngIf="editMode" class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="Date">{{ lang === 'ar' ? arabic('startdate') : 'Start Date'}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              (bsValueChange)="validateDates($event, 'start')"
+              bsDatepicker
+              #dpsd="bsDatepicker"
+              [maxDate]="endDate"
+              [bsConfig]="bsConfig">
+            <span (click)="dpsd.toggle()" *ngIf="editMode"><i class="far fa-calendar date"></i></span>
+          </div>
+          <small id="dateHelp" class="form-text text-danger">{{dateFromErr}}</small>
+        </div>
+        <!-- start date in view mode -->
+        <div class="form-group col-12 col-md-4" *ngIf="!editMode">
+          <label for="Date">{{ lang === 'ar' ? arabic('startdate') : 'Start Date'}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              disabled
+              bsDatepicker
+              #dp="bsDatepicker"
+              [(ngModel)]="startDate"
+              [bsConfig]="bsConfig">
+            <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+          </div>
+        </div>
+        <div *ngIf="editMode" class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="Date">{{ lang === 'ar' ? arabic('enddate') : 'End Date'}}</label>
+          <div class="position-relative">
+            <input
+              [disabled]="!editMode"
+              type="text"
+              class="form-control"
+              (bsValueChange)="validateDates($event, 'end')"
+              bsDatepicker
+              #dped="bsDatepicker"
+              [minDate]="startDate"
+              [bsConfig]="bsConfig">
+            <span (click)="dped.toggle()" *ngIf="editMode"><i class="far fa-calendar date"></i></span>
+            <span *ngIf="!editMode"><i class="far fa-calendar date"></i></span>
+          </div>
+          <small id="dateHelp" class="form-text text-danger">{{dateToErr}}</small>
+        </div>
+        <!-- Enddate in view mode -->
+        <div class="form-group col-12 col-md-4" *ngIf="!editMode">
+          <label for="Date">{{ lang === 'ar' ? arabic('enddate') : 'End Date'}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              disabled
+              bsDatepicker
+              #dp="bsDatepicker"
+              [(ngModel)]="endDate"
+              [bsConfig]="bsConfig">
+            <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="noOfDays">{{ lang === 'ar' ? arabic('numberofdays') : 'Number of Days'}}</label>
+          <input
+            [disabled]="!editMode"
+            type="number"
+            class="form-control"
+            numbersOnly
+            (ngModelChange)="validate()"
+            [(ngModel)]="noOfDays"
+            id="noOfDays">
+        </div>
+      </div>
+      <div class="row" *ngIf="showHospitalityOption">
+        <div class="form-group col-12"
+          [ngClass]="{'required':editMode || type == 'create-compensation' || !hospitalityDisabled, 'ar-rtl': lang == 'ar'}">
+          <label for="hospitality">{{ lang === 'ar' ? arabic('doyouneedhospitalitycompensation') : 'Do you need Hospitality / Compensation ?'}}</label>
+          <div>
+            <input
+              type="radio"
+              [disabled]="hospitalityDisabled"
+              name="hospitality"
+              (click)="validate()"
+              [(ngModel)]="hospitality"
+              value="yes"> {{ lang === 'ar' ? arabic('yes') : 'Yes'}}
+            <input
+              class="ml-2"
+              type="radio"
+              [disabled]="hospitalityDisabled"
+              name="hospitality"
+              (click)="validate()"
+              [(ngModel)]="hospitality"
+              value="no"> {{ lang === 'ar' ? arabic('no') : 'No'}}
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!hideOfficial">
+        <div class="form-group col-12" [ngClass]="{'required':editMode, 'ar-rtl': lang == 'ar'}">
+          <label for="taskDescription">{{ lang === 'ar' ? arabic('officialtaskdescription') : 'Official Task Description'}}</label>
+          <textarea
+            [disabled]="!editMode"
+            class="form-control vertical-resize"
+            [(ngModel)]="taskDescription"
+            (ngModelChange)="validate()"
+            id="taskDescription"
+            placeholder=""
+            rows="5">
+          </textarea>
+        </div>
+      </div>
+      <div class="row" *ngIf="hideOfficial">
+        <div class="form-group col-12" [ngClass]="{'required':editMode || type == 'create-compensation' || !disableCompDescription, 'ar-rtl': lang == 'ar'}">
+          <label for="compensationDescription">{{ lang == 'ar' ? arabic('compdesc') : 'Compensation Description'}}</label>
+          <textarea
+            [disabled]="disableCompDescription"
+            class="form-control vertical-resize"
+            [(ngModel)]="compensationDescription"
+            (ngModelChange)="validate()"
+            id="compensationDescription"
+            placeholder=""
+            rows="5">
+          </textarea>
+        </div>
+      </div>
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section
+              [comments]="RequestComments"
+              [commentType]="commentsModuleInfo.commentType"
+              [moduleId]="commentsModuleInfo.moduleId"
+              [moduleNameID]="commentsModuleInfo.moduleNameID">
+            </app-comment-section>
+            <div class="row comment-section" *ngIf="showCommentBox">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{empProfileImg}}" class="user-ProfileImg"/>
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text">
+                <div class="comment-section-user-info">
+                  <p class="comment-section-username">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea
+                    class="form-control vertical-resize"
+                    (ngModelChange)="validate()"
+                    [(ngModel)]="Comments"
+                    id="NewCommentContent"
+                    placeholder=""
+                    rows="3">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="comment-reply-section text-center">
+              <button
+                [ngClass]="{'disabled-btn': !valid || inProgress }"
+                *ngIf="showSubmitBtn && isCreator"
+                class="rounded-btn"
+                [disabled]="!valid || inProgress"
+                (click)="onSubmit()">
+                {{ lang === 'ar' ? arabic('submit') : 'SUBMIT'}}
+              </button>
+              <button
+                *ngIf="!editMode && showApproveBtn"
+                class="rounded-btn custom-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="updateAction('Approve')">
+                {{ lang === 'ar' ? arabic('approve') : 'APPROVE'}}
+              </button>
+              <button
+                *ngIf="!editMode && showEscalateBtn"
+                class="rounded-btn custom-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="onEscalate()">
+                {{ lang === 'ar' ? arabic('escalate') : 'ESCALATE'}}
+              </button>
+              <button
+                *ngIf="!editMode && showRejectBtn"
+                class="rounded-btn custom-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="updateAction('Reject')">
+                {{ lang === 'ar' ? arabic('reject') : 'REJECT'}}
+              </button>
+              <button
+                *ngIf="!editMode && showReturnBtn"
+                class="rounded-btn custom-btn"
+                [ngClass]="{'disabled-btn': isCommentEmpty() || inProgress }"
+                [disabled]="isCommentEmpty() || inProgress"
+                (click)="updateAction('ReturnForInfo')">
+                {{ lang === 'ar' ? arabic('returnforinfo') : 'RETURN FOR INFO'}}
+              </button>
+              <button
+                *ngIf="!editMode && showAssignBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="onAssignTo()">
+                {{ lang === 'ar' ? arabic('assign') : 'ASSIGN'}}
+              </button>
+              <button
+                *ngIf="!editMode && showAssignToMeBtn"
+                class="rounded-btn"
+                [ngClass]="{'disabled-btn': inProgress }"
+                [disabled]="inProgress"
+                (click)="updateAction('AssignToMe')">
+                {{ lang === 'ar' ? arabic('assigntome') : 'ASSIGN TO ME'}}
+              </button>
+              <button
+                *ngIf="!editMode && showCloseBtn"
+                class="rounded-btn custom-btn"
+                [disabled]="inProgress"
+                (click)="updateAction('Close')">
+                {{ lang === 'ar' ? arabic('close') : 'CLOSE'}}
+              </button>
+              <button
+                *ngIf="!editMode && showGenerateBtn"
+                class="rounded-btn custom-btn"
+                [disabled]="inProgress"
+                (click)="administrationDecision()">
+                {{ lang === 'ar' ? arabic('generateadministartivedecision') : 'GENERATE ADMINISTRATIVE DECISION'}}
+              </button>
+              <button
+                *ngIf="!editMode && showMarkAsCompleteBtn"
+                class="rounded-btn custom-btn"
+                [disabled]="inProgress"
+                (click)="openCompensationModal()">
+                {{ lang === 'ar' ? arabic('closeraisecompensation') : 'Close/Raise Compensation'}}
+              </button>
+              <button
+                *ngIf="!editMode && showCloseOffBtn"
+                class="rounded-btn custom-btn"
+                [disabled]="inProgress"
+                (click)="updateAction('MarkasComplete')">
+                {{ lang === 'ar' ? arabic('close') : 'CLOSE'}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

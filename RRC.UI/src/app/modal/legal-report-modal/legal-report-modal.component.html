@@ -1,0 +1,83 @@
+<div dir="auto" class="modal-header modalclass">
+  <h4 class="modal-title pull-left">{{(lang=='en')?'Report':arabic('report')}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body">
+  <div class="row">
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}">
+      <label for="status">{{(lang=='en')?'Status':arabic('status')}}</label>
+      <ng-select
+            [items]="statusList"
+            [closeOnSelect]="true"
+            bindLabel="DisplayName"
+            bindValue="DisplayName"
+            placeholder="{{ lang == 'en' ? 'Status' : arabic('status') }}"
+            [(ngModel)]="reportFilter.Status">
+          </ng-select>
+      <!-- <select class="form-control" [(ngModel)]="reportFilter.Status" id="LookupsID">
+        <option value=''>{{(lang=='en')?'All':arabic('all')}}</option>
+        <option *ngFor="let st of statusList" value="{{st.DisplayName}}">{{st.DisplayName}}</option>
+      </select> -->
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}">
+      <label for="SourceOU">{{(lang=='en')?'Source Office/Department':arabic('sourceofficeSlashDepartment')}}</label>
+      <ng-select
+            [items]="departmentList"
+            [closeOnSelect]="true"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder="{{ lang == 'en' ? 'Source' : arabic('source') }}"
+            [(ngModel)]="reportFilter.SourceOU">
+          </ng-select>
+      <!-- <select class="form-control" [(ngModel)]="reportFilter.SourceOU" id="Source">
+        <option value=''>{{(lang=='en')?'All':arabic('all')}}</option>
+        <option *ngFor="let rt of departmentList" value="{{rt.OrganizationID}}">{{rt.OrganizationUnits}}</option>
+      </select> -->
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'ar-rtl right': lang == 'ar'}">
+      <label for="Date Range From">{{(lang=='en')?'Request Date From':arabic('requestdatefrom')}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [ngClass]="{'pr-4':lang=='ar'}" [(ngModel)]="reportFilter.ReqDateFrom" bsDatepicker #fdp="bsDatepicker"
+          [bsConfig]="bsConfig">
+        <span (click)="fdp.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+      <div class="col-12" class="text-danger">
+          <ng-container *ngIf="dateValidation()">
+            {{ validateStartEndDate.msg }}
+          </ng-container>
+        </div>
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'ar-rtl right': lang == 'ar'}">
+      <label for="Date Range From">{{(lang=='en')?'Request Date To':arabic('requestdateto')}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [ngClass]="{'pr-4':lang=='ar'}" bsDatepicker #tdp="bsDatepicker" [(ngModel)]="reportFilter.ReqDateTo"
+          [bsConfig]="bsConfig">
+        <span (click)="tdp.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}">
+      <label for="name">{{(lang=='en')?'Subject':arabic('subject')}}</label>
+      <input type="text" class="form-control" id="subject" [(ngModel)]="reportFilter.Subject">
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}"> 
+      <label for="name">{{(lang=='en')?'Label':arabic('label')}}</label>
+      <input type="text" class="form-control" id="creator" [(ngModel)]="reportFilter.Label">
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}">
+      <label for="name">{{(lang=='en')?'Submitted by':arabic('legalsubmittedby')}}</label>
+      <input type="text" class="form-control" id="attended" [(ngModel)]="reportFilter.AttendedBy">
+    </div>
+    <div class="form-group col-sm-4" [ngClass]="{'right': lang == 'ar'}">
+      <label for="power">{{(lang=='en')?'Smart Search':arabic('smartsearch')}}</label>
+      <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder=""
+        [(ngModel)]="reportFilter.SmartSearch">
+    </div>
+  </div>
+</div>
+<div dir="auto" class="modal-footer" [ngClass]="{'right': lang == 'ar'}">
+  <button type="button" class="rounded-btn"
+    (click)="Download()">{{(lang=='en')?'Download Excel':arabic('downloadexcel')}}</button>
+</div>

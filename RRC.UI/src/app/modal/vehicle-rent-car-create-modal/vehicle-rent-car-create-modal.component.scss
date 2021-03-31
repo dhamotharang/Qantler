@@ -1,0 +1,14 @@
+@import '../../../styles.scss';
+
+.modalclass {
+  background: $medium-color;
+  color: white;
+
+  .modal-title{
+      font-size: 16px;
+  }
+}
+
+.ar-rtl{
+  text-align: right;
+}

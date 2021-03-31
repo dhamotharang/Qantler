@@ -1,0 +1,14 @@
+<div class="nav-list">
+  <div class="container">
+    <ng-container>
+      <a class="breadcrumb-url" [routerLink]="" (click)="clickFirstLink()">{{firstUrl}}</a>
+      <span class="separator"><i class="fa fa-angle-double-right"></i></span>
+      <a [routerLink]="" class="breadcrumb-url" *ngIf="thirdUrl !=''" (click)="clickSecondLink()">{{secondUrl}}</a>
+      <span *ngIf="thirdUrl ==''">{{secondUrl}}</span>
+      <span *ngIf="thirdUrl !=''" class="separator"><i class="fa fa-angle-double-right"></i></span>
+      <span *ngIf="thirdUrl !=''">{{thirdUrl}}</span>
+    </ng-container>
+  </div>
+</div>
+
+<!-- routerLink="/en/app{{secondLink == '' ? currentLocation : secondLink}}" -->

@@ -1,0 +1,401 @@
+<div class="page-form-wrapper meeting-form">
+  <div class="form-title" *ngIf="screenStatus === 'create'" [ngClass]="{'ar-rtl': lang=='ar'}">
+    {{arabicfn('createmeeting')}}
+  </div>
+  <div class="form-title" *ngIf="screenStatus === 'view'" [ngClass]="{'ar-rtl': lang=='ar'}">
+    {{arabicfn('viewmeeting')}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="screenStatus === 'view'">
+      <div class="form-group right col-12 col-md-4" >
+        <label for="Ref ID">{{arabicfn('meetingid')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="Meeting.ReferenceNumber" [disabled]="true" id="Meeting_ID">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus === 'view'">
+    <div class="row">
+      <div class="form-group right col-12 col-md-4">
+        <label for="Organizer De">{{arabicfn('organizeroffice/department')}}</label>
+        <ng-select
+          class="status-ddown"
+          [items]="organizerDeptList"
+          [closeOnSelect]="true"
+          [(ngModel)]= "Meeting.OrganizerDepartmentID"
+          bindLabel="OrganizationUnits"
+          bindValue="OrganizationID"
+          (change)="onOrganizerSelect()"
+          [disabled]="true"
+          placeholder="{{arabicfn('organizerdepartment')}}">
+        </ng-select>
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="Organizer Name">{{arabicfn('organizername')}}</label>
+        <ng-select
+          class="status-ddown"
+          [items]="organizerList"
+          [closeOnSelect]="true"
+          [(ngModel)]="Meeting.OrganizerUserID"
+          bindLabel="EmployeeName"
+          [disabled]="true"
+          bindValue="UserID"
+          placeholder="{{arabicfn('organizername')}}">
+        </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode}">
+          <label for="Subject">{{arabicfn('subject')}}</label>
+          <input type="text" class="form-control" [disabled]="!editMode" placeholder="{{arabicfn('subject')}}" [(ngModel)]="Meeting.Subject" id="Subject">
+        </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode}">
+        <label for="location">{{arabicfn('location')}}</label>
+        <input type="text" class="form-control" [disabled]="!editMode" placeholder="{{arabicfn('location')}}" [(ngModel)]="Meeting.Location" id="location">
+      </div>
+      <div class="form-group right col-12 col-md-4" >
+        <label for="type">{{arabicfn('meetingtype')}}</label>
+        <ng-select
+          class="status-ddown"
+          [items]="MeetingList"
+          [closeOnSelect]="true"
+          [(ngModel)]="Meeting.MeetingType"
+          bindLabel="MeetingTypeName"
+          [disabled]="!editMode"
+          bindValue="MeetingID"
+          placeholder="{{arabicfn('meetingtype')}}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode}">
+        <label for="Date">{{arabicfn('startdatetime')}}</label>
+        <div class="position-relative">
+          <input
+            type="text"
+            class="form-control"
+            [disabled]="!editMode"
+            [maxDate]="maxDate(0)"
+            [(ngModel)]="Meeting.StartDateTime"
+            placeholder="{{arabicfn('startdatetime')}}"
+            bsDatepicker
+            #dp1="bsDatepicker"
+            [bsConfig]="bsConfig">
+          <span (click)="editMode ? dp1.toggle(): ''"><i class="far fa-calendar date ar-rtl-icon"></i></span>
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4">
+        <label for="time"></label>
+        <ng-select
+          class="status-ddown time-field"
+          [items]="timeList"
+          [(ngModel)]="Meeting.StartTime"
+          (change)="onStartTimeSelect()"
+          [closeOnSelect]="true"
+          placeholder="{{arabicfn('selecttime')}}"
+          [disabled]="!editMode"
+          bindLabel="label"
+          bindValue="value">
+        </ng-select>
+        <div class="row">
+          <div class="col-12">
+            <span class="text-danger" *ngIf="showValidTimeAlert">
+              {{arabicfn('pleaseselectvalidstarttime')}}
+            </span>
+            <!-- <span class="text-danger">
+              Start Date should be less than End Date and Time
+            </span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode}">
+        <label for="Date">{{arabicfn('enddatetime')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control"
+          [disabled]="!editMode"
+          [(ngModel)]="Meeting.EndDateTime"
+          placeholder="{{arabicfn('enddatetime')}}"
+          bsDatepicker
+          [minDate]="minDate(0)"
+          #dp2="bsDatepicker"
+          [bsConfig]="bsConfig">
+          <span (click)="editMode ? dp2.toggle(): ''"><i class="far fa-calendar date ar-rtl-icon"></i></span>
+        </div>
+        <div class="row" *ngIf="Meeting.EndDateTime && checkStartTime()">
+          <div class="col-12">
+            <span class="text-danger">
+              {{arabicfn('pleaseselectvalidstarttime')}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4" >
+        <label for="time"></label>
+        <ng-select
+          class="status-ddown time-field"
+          [items]="timeList"
+          [closeOnSelect]="true"
+          placeholder="{{arabicfn('selecttime')}}"
+          [disabled]="!editMode"
+          (change)="onEndTimeSelect();"
+          [(ngModel)]="Meeting.EndTime"
+          bindLabel="label"
+          bindValue="value">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode}">
+        <label for="Source Name">{{arabicfn('invitees')}}</label>
+        <div class="checkboxGroup">
+          <div class="checkbox-box">
+            <div class="form-field">
+              <input type="checkbox" [disabled]="!editMode" id="c-cb" [(ngModel)]="Meeting.IsInternalInvitees" name="c-cb"/>
+              <label for="c-cb" class="custom">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                  viewBox="209.667 9.667 589.37 540.667">
+                <rect id="" x="211.667" y="11.667" fill="#FFFFFF" stroke="#FFF" stroke-width="4" stroke-miterlimit="10" width="536.667" height="536.667"/>
+                <polygon id="checkmark" stroke="#A39161" stroke-miterlimit="10" points="451.92,291.724 254.569,205.919 211.667,220.22
+                  451.92,463.333 798,28.589 737.937,28.589 "/>
+                </svg>
+              </label>
+              <span class="checkbox-text" >{{arabicfn('internal')}}</span>
+            </div>
+          </div>
+          <div class="checkbox-box smsBox">
+            <div class="form-field external-checkbox">
+              <input type="checkbox" id="c-cb1" [disabled]="!editMode" [(ngModel)]="Meeting.IsExternalInvitees" name="c-cb2"/>
+              <label for="c-cb1" class="custom">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                  viewBox="209.667 9.667 589.37 540.667">
+                <rect id="" x="211.667" y="11.667" fill="#FFFFFF" stroke="#FFF" stroke-width="4" stroke-miterlimit="10" width="536.667" height="536.667"/>
+                <polygon id="checkmark" stroke="#A39161" stroke-miterlimit="10" points="451.92,291.724 254.569,205.919 211.667,220.22
+                  451.92,463.333 798,28.589 737.937,28.589 "/>
+                </svg>
+              </label>
+              <span class="checkbox-text" >{{arabicfn('external')}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr *ngIf="Meeting.IsInternalInvitees">
+    <div *ngIf="Meeting.IsInternalInvitees">
+      <div  class="row" *ngFor="let internal of Meeting.InternalInvitees; let ii = index;">
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode && ii == 0}">
+          <label for="Organizer De">{{arabicfn('office/department')}}</label>
+          <ng-select
+            class="status-ddown"
+            [items]="departmentList"
+            [closeOnSelect]="true"
+            [disabled]="!editMode"
+            [(ngModel)]="internal.DepartmentID"
+            placeholder="{{arabicfn('department')}}"
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            (change)="onDepartmentSelect()"
+            placeholder="Select Department">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode && ii == 0}" >
+          <label for="Organizer Name">{{arabicfn('name')}}</label>
+          <ng-select
+            class="status-ddown"
+            [items]="userList"
+            [(ngModel)]="internal.UserID"
+            [closeOnSelect]="true"
+            [disabled]="!editMode"
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="{{arabicfn('name')}}">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group right col-12 col-md-4">
+          <a class="addMore" (click)="editMode ? addMore('Internal'):''">+ {{arabicfn('addmoreinternalinvitees')}}</a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div *ngIf="Meeting.IsExternalInvitees">
+      <div class="row" *ngFor="let external of Meeting.ExternalInvitees; let ei = index;">
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode && ei == 0}">
+          <label for="Organization">{{arabicfn('organization')}}</label>
+          <input type="text" class="form-control" [disabled]="!editMode" placeholder="{{arabicfn('organization')}}" [(ngModel)]="external.Organization" id="Organization">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{'required': editMode && ei == 0}">
+          <label for="Contact Person">{{arabicfn('contactperson')}}</label>
+          <input type="text" class="form-control" [disabled]="!editMode" placeholder="{{arabicfn('contactperson')}}" [(ngModel)]="external.ContactPerson" id="contact">
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="EMail">{{arabicfn('emailid')}}</label>
+          <input type="text" class="form-control" placeholder="{{arabicfn('emailid')}}" [disabled]="!editMode" [(ngModel)]="external.EmailID" id="email_ID">
+          <div class="row" *ngIf="external.validMail">
+            <div class="col-12">
+              <span class="text-danger">
+                {{arabicfn('Pleaseentervalidemail')}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group right col-12 col-md-4">
+          <a class="addMore" (click)="editMode ? addMore('External'):''">+ {{arabicfn('addmoreexternalinvitees')}}</a>
+        </div>
+      </div>
+    </div>
+    <hr *ngIf="Meeting.IsExternalInvitees">
+    <div class="row" *ngFor="let field of Meeting.RemindMeAt; let ind = index;">
+      <div class="form-group right col-12 col-md-3">
+        <label for="Date">{{arabicfn('remindmeat')}}</label>
+        <div class="position-relative">
+          <input
+          type="text"
+          class="form-control"
+          [maxDate]="Meeting.StartDateTime"
+          placeholder="{{arabicfn('remindmeat')}}"
+          [disabled]="!editMode"
+          bsDatepicker
+          #dp="bsDatepicker"
+          [(ngModel)]="field.RemindMeDateTime"
+          [bsConfig]="bsConfig">
+          <span (click)="editMode ? dp.toggle(): ''"><i class="far fa-calendar date ar-rtl-icon"></i></span>
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-4" >
+        <label for="Date"></label>
+        <div class="position-relative">
+          <ng-select
+            class="status-ddown time-field"
+            [items]="timeList"
+            [closeOnSelect]="true"
+            placeholder="{{arabicfn('selecttime')}}"
+            [disabled]="!editMode"
+            [(ngModel)]="field.remindTime"
+            (change)="checkMeetingStart(ind)"
+            bindLabel="label"
+            bindValue="value">
+          </ng-select>
+        </div>
+      </div>
+      <div class="form-group right col-12 col-md-12" >
+        <div class="row" *ngIf="field.isValidDate">
+          <div class="col-12">
+            <span class="text-danger">
+              {{arabicfn('remaindershouldbelessthanmeetingstartdate')}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr *ngIf="Meeting.IsExternalInvitees">
+    <div class="row">
+      <div class="form-group right col-12 col-md-4">
+        <a class="addMore" (click)="editMode ? addMore('Reminder'):''">+ {{arabicfn('addmorereminder')}}</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.screenStatus != 'create'" class="page-form-wrapper my-3 mx-3 p-4">
+    <!-- <div class="row" *ngFor="let his of Meeting.MeetingCommunicationHistory"> -->
+      <!-- <div class="col-auto" *ngIf="his.CreatedDateTime">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+        </div>
+      </div>
+      <div class="col p-2" *ngIf="his.Action">
+        <div class="row">
+          <div class="col-12">{{hisLog(his.Action)}} : {{his.CreatedBy}}</div>
+        </div>
+      </div> -->
+      <div class="col-12 comment">
+        <app-comment-section [comments]="Meeting.MeetingCommunicationHistory" [commentType]="'Meeting'" [moduleId]="MeetingID" [moduleNameID]="'MeetingID'"></app-comment-section>
+        <div class="row leave-comment-section">
+          <div class="col-2 com-md-2 profile">
+            <div class="comment-section-img">
+              <img src="assets/home/user_male.png" class="user-ProfileImg"/>
+            </div>
+          </div>
+          <div class="col-10 col-md-10 comment-text">
+            <div class="comment-section-user-info">
+              <p class="comment-section-username">{{currentUser.userName}}</p>
+            </div>
+            <div class="comment-section-content">
+              <textarea class="form-control vertical-resize" [(ngModel)]="Meeting.Comments" id="NewCommentContent"
+              placeholder="" rows="3"></textarea>
+            </div>
+            <div class="comment-reply-section form-group right">
+              <button
+                class="rounded-btn"
+                [disabled]="canComment()"
+                [ngClass]="{'disabled-btn': canComment()}"
+                (click)="sendMessage()"><i class="fa fa-paper-plane"></i> {{arabicfn('addcomment')}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+  <div class="row px-3 justify-content-center">
+    <div class="col-auto p-1" *ngIf="editMode && MOMid">
+      <button
+        (click)="navigateToViewMOM()"
+        [disabled]="inProgress"
+        [ngClass]="{'disabled-btn': inProgress}"
+        class="rounded-btn">
+        {{arabicfn('viewmom')}}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="screenStatus == 'view' && editMode && !MOMid">
+      <button
+        (click)="navigateToMOM()"
+        [disabled]="inProgress || activateCreateMOM"
+        [ngClass]="{'disabled-btn': inProgress || activateCreateMOM}"
+        class="rounded-btn">
+        {{arabicfn('createmom')}}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="hideCancelBtn">
+      <button
+        (click)="cancelMeeting()"
+        [disabled]="cancelProgress || canComment()"
+        [ngClass]="{'disabled-btn': cancelProgress || canComment()}"
+        class="rounded-btn">
+        {{arabicfn('cancelmeeting')}}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="screenStatus === 'create'">
+      <button
+        (click)="CreateMeetingRequest('Submit')"
+        class="rounded-btn"
+        [disabled]="validateForm() || validateExternal() || validateInternal() || validateReminder() || inProgress || isRemiderTime"
+        [ngClass]="{'disabled-btn': validateForm() || validateExternal() || validateInternal() || validateReminder() || inProgress || isRemiderTime}">
+        {{arabicfn('sendtoinvitees')}}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="screenStatus == 'view' && editMode">
+      <button
+        (click)="CreateMeetingRequest('ReSchedule')"
+        class="rounded-btn"
+        [disabled]="validateForm() || validateInternal() || validateExternal() || validateReminder() || inProgress || isRemiderTime || !hideCancelBtn || disableReschedule || canComment()"
+        [ngClass]="{'disabled-btn': validateForm() || validateExternal() || validateInternal() || validateReminder() || inProgress || isRemiderTime || !hideCancelBtn || disableReschedule || canComment()}">
+        {{arabicfn('reschedule')}}
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass" style="background: #726236; color: white;">
+    <button type="button" class="close p-0 m-0 text-left" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">{{arabicfn('success')}}</h4>
+  </div>
+  <div class="modal-body ar-rtl">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div class="modal-footer" dir="auto">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{arabicfn('ok')}}</button>
+  </div>
+</ng-template>

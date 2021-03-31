@@ -1,0 +1,17 @@
+@import '../../../../../styles.scss';
+.nav-list{
+    padding: 12px 50px;
+    background: $medium-color;
+    color: white;
+    font-size: 16px;
+}
+span.separator {
+    padding: 0px 10px;
+}
+.breadcrumb-url {
+    color: white;
+    &:hover {
+        color: white;
+        text-decoration: none;
+    }
+}

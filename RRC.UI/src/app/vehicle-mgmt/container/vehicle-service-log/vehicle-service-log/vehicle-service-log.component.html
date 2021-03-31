@@ -1,0 +1,133 @@
+<div class="page-body-wrapper h-50">
+  <div class="row pr-3 pl-3 pb-3 pt-0">
+      <div class="col p-4 shadow">
+          <div class="row">
+              <div class="plate-number"><label for="Plate Number">{{ lang=='en' ? 'Enter Plate Number': arabic('enterplatenumber') }}</label></div>
+              <div class="col-8">
+                  <input type="text" class="form-control" [(ngModel)]="PlateNumber" id="plate_number">
+              </div>
+              <div class="col-auto p-1">
+                  <button class="rounded-btn" (click)="search()" [disabled]="isApiLoading">{{ lang=='en' ? 'SEARCH': arabic('search') }}</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<app-progress-bar *ngIf="progress"></app-progress-bar> 
+<div class="page-form-wrapper my-3 d-md-block d-none" [ngClass]="{'ar-rtl': lang=='ar'}">
+  <div class="table-responsive">
+      <ngx-datatable 
+       [selected]="selected" (activate)='onActivate($event)' style="width: 100%;cursor:pointer;"  class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'">
+      </ngx-datatable 
+      >
+  </div>
+</div>
+<ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+  <div class="table-action-btn">
+      <button class="table-view ml-1" (click)="selectCar(row.VehicleID)">
+          {{lang=='en'?'SELECT':arabic('select')}} 
+  </button>
+  </div>
+</ng-template>
+<ng-template #requestType let-row="row" let-value="value" let-i="index">
+    {{getRequestListName(value)}}
+</ng-template>
+<ng-template #Mileage let-row="row" let-value="value" let-i="index">
+  {{value}} {{ lang=='en' ? 'Km': arabic('km') }}
+</ng-template>
+
+<ng-template #Date let-row="row" let-value="value" let-i="index">
+  {{row.CreatedDateTime | date:'dd/MM/yyyy'}}
+</ng-template>
+
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3" *ngFor="let row of rows let i = index;"
+  (click)="setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">
+      <div class="card-header">
+          <div class="row">
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b># :
+                  </b></span><span> {{row.sno}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="row">
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Vehicle Make':arabic('vehiclemake')}} :
+              </b></span><span> {{row.VehicleMake}}</span>
+              </div>
+              <!-- <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                      <span><b>{{lang=='en'?'Vehicle Name':arabic('vehiclename')}} : </b></span><span>
+                    {{row.VehicleName}}</span></div> -->
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Plate Colour':arabic('platecolour')}} :
+                </b></span><span> {{row.PlateColour}}</span></div>
+          </div>
+          <div class="row">
+              
+              <div class="col-auto">
+                  <button class="list-btn ml-1" (click)="selectCar(row.VehicleID)">
+                      {{lang=='en'?'SELECT':arabic('select')}}
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="page-form-wrapper  vehicle-request d-block" id="trigger-scroll" *ngIf="rows.length >0 && VehicleID" >
+    <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        {{lang=='en'?'SERVICE HISTORY':arabic('servicehistory')}}
+    </div>
+<div  [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="container-fluid py-2">
+      <div class="form-group col-12 col-md-4">
+        <label for="city">{{lang=='en'?'Service Type':arabic('servicetype')}}</label>
+        <ng-select 
+        [items]="ServiceTypeList"
+        [closeOnSelect]="true"
+        bindLabel="ServiceTypeName"
+        bindValue="ServicTypeID"
+        [(ngModel)]="ServicTypeID"
+        (change)="selectType()">
+        </ng-select>
+        
+      </div>
+      <div class="page-form-wrapper my-3 d-md-block d-none">
+        <!-- <app-progress-bar *ngIf="progress"></app-progress-bar> -->
+        <ng-container outsideBody>
+          <div class="table-responsive">
+            <ngx-datatable style="width: 100%" class="bootstrap"  [rows]="Servicerows" [columns]="Servicecolumns" [messages]="tableMessages"
+              [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'">
+            </ngx-datatable>
+          </div>
+          
+        </ng-container>
+      </div>
+      <div class="d-block d-md-none">
+          <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of Servicerows">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Type':arabic('type')}} :
+                    </b></span><span>{{getRequestListName(row.LogType)}}</span></div>
+                <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Date':arabic('date')}} :
+                    </b></span><span>{{row.CreatedDateTime| date:'dd/MM/yyyy'}}</span></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                  <span><b>{{lang=='en'?'Current Mileage':arabic('currentmileage')}} : </b></span>
+                  <span><label>{{row.CurrentMileage}} {{ lang=='en' ? 'Km': arabic('km') }}</label></span>
+                </div>
+                <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                  <span><b>{{lang=='en'?'Next Mileage':arabic('nextmileage')}} : </b></span>
+                  <span><label>{{row.NextMileage}} {{ lang=='en' ? 'km': arabic('km') }}</label></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer justify-content-center" dir="{{lang!='en' ? 'rtl' : 'ltr'}}">
+        <button type="button" class="rounded-btn" (click)="ReportDownload()">{{ lang == 'en' ? 'Download Excel' : arabic('downloadexcel')}}</button>
+      </div>
+    </div>

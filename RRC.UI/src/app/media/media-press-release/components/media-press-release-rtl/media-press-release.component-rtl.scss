@@ -1,0 +1,77 @@
+@import '../../../../../styles.scss';
+
+.comment-box{
+    margin-top: 13px;
+    margin-bottom: 13px;
+    width: 1000px;
+    margin-left: 2px;
+}
+.comment-body{
+    flex: 2 1 auto;
+    padding: 1.25rem;
+    box-shadow: 1px 3px 12px 1px #bdbbae;
+}
+.im-size{
+    width: 75px;
+    height: 75px;
+    margin-left: 33px;
+}
+textarea {
+    resize: none;
+ }
+
+ .comment-section {
+    .profile {
+      max-width: 94px;
+    }
+    .comment-section-img {        
+      .user-ProfileImg{            
+        width: 65px;            
+        height: 65px;
+        border-radius: 50%;
+        @media (max-width: 1024px) {
+          height: 46px;
+          width: 46px;
+        }
+      }
+    }
+    .comment-text {
+      @media (max-width: 1024px) {
+        max-width: 75%;
+        padding-left: 10px; 
+      }
+    }
+    .comment-section-user-info {
+      .comment-section-username {
+        font-weight: bold;
+        margin-bottom:2px;
+      }        
+      .comment-section-timeline {
+        color:lightgray;
+      }
+    }    
+    .vertical-resize{
+      resize: vertical;
+    }    
+    .btn-row {
+      margin-top: 1rem;
+    }
+    .comment-section-content {
+      margin-bottom: 10px;
+    }
+    .comment-reply-section {
+      button {
+        margin: 5px 5px 0px 5px;
+      }
+    }    
+    .comment-line-separator {
+      margin:1rem;
+    }
+    .disabled-btn {
+      opacity: 0.5;
+      cursor: no-drop;    
+    }
+  }
+  .form-title {
+    text-transform: uppercase;
+  }

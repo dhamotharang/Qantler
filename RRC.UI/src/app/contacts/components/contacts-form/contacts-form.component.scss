@@ -1,0 +1,58 @@
+.contacts-part {
+	.screenStatus {
+		text-transform: uppercase;
+	}
+	label {
+		margin-bottom: 0.8rem !important;
+	}
+	.user-pic-div {
+		text-align: center;
+		.user-pic {
+			width: 100px;
+			height: 100px;
+			background: white;
+			border-radius: 50%;
+		  }
+		  #fileInput {
+			display: none;
+		  }
+		  .profile-picure {
+			width: 100px;
+			height: 100px;
+			position: relative;
+		  }
+		  .profileImg{
+			width: 36px;
+			text-align: center;
+			height: 36px;
+			border-radius: 50%;
+			background: #A39161;
+			position: absolute;
+			bottom: 0;
+		  }
+		  .photo-camera {
+			position: absolute;
+			z-index: 5;
+			width: 18px;
+			height: 18px;
+			border-radius: 55px;
+			text-align: center;
+			left: 8px;
+			bottom: 8px;
+		  }
+	}
+    .pt-2, .py-2 {
+		padding-top: 1rem !important;
+		padding-right: 24px !important;
+		padding-left: 24px !important;
+	}
+	.screenStatus {
+		text-transform: uppercase;
+	}
+	.modalclass {
+		background: #726236;
+		color: white;
+	  }
+	  
+
+}

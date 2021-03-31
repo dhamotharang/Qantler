@@ -1,0 +1,16 @@
+@import '../../../styles.scss';
+
+.error {
+  background: $dark-color;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+
+  .error-main{
+      padding-top: 45vh;
+      .error-main-header{
+          font-size: 30px;
+      }
+  }
+}

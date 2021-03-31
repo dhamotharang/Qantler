@@ -1,0 +1,59 @@
+<div dir="auto" class="modal-header modalclass">
+    <h4 class="modal-title pull-left">{{(lang=='en')?'Report':arabic('report')}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body">
+    <div class="row">
+        <div class="form-group col-sm-4 {{(lang!='en')?'text-right':''}}">
+            <label for="name">
+        <ng-container *ngIf="lang == 'en'">
+          Received from / Purchased by
+        </ng-container>
+        <ng-container *ngIf="lang == 'ar'" class="text-right">
+          {{arabicService.words.receivedfrompurchasedby}}
+        </ng-container>
+      </label>
+            <input type="text" class="form-control" [(ngModel)]="reportFilter.RecievedPurchasedBy" id="creator">
+        </div>
+        <div class="form-group col-sm-4 {{(lang!='en')?'text-right':''}}">
+            <label for="status">
+        <ng-container *ngIf="lang == 'en'">
+          Status
+        </ng-container>
+        <ng-container *ngIf="lang == 'ar'" class="text-right">
+          {{arabicService.words.status}}
+        </ng-container>
+      </label>
+            <ng-select [items]="statusList" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="LookupsID" [placeholder]="selectstatus" [(ngModel)]="reportFilter.Status">
+            </ng-select>
+        </div>
+        <div class="form-group col-sm-4 {{(lang!='en')?'text-right':''}}">
+            <label for="status">
+        <ng-container *ngIf="lang == 'en'">
+            Gift Type
+        </ng-container>
+        <ng-container *ngIf="lang == 'ar'" class="text-right">
+          {{arabicService.words.gifttype}}
+        </ng-container>
+      </label>
+            <ng-select [items]="giftTypeList" bindLabel="label" bindValue="value" [closeOnSelect]="true" placeholder="{{lang == 'en' ? 'Select Gift Type' : arabicService.words.selectgifttype}}" [(ngModel)]="reportFilter.GiftType">
+            </ng-select>
+        </div>
+        <div class="form-group col-sm-4 {{(lang!='en')?'text-right':''}}">
+            <label for="power">
+        <ng-container *ngIf="lang == 'en'">
+          Smart Search
+        </ng-container>
+        <ng-container *ngIf="lang == 'ar'" class="text-right">
+          {{arabicService.words.smartsearch}}
+        </ng-container>
+      </label>
+            <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder="" [(ngModel)]="reportFilter.SmartSearch">
+        </div>
+    </div>
+</div>
+<div dir="auto" class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="Download()">{{(lang=='en')?'Download Excel':arabic('downloadexcel')}}</button>
+</div>

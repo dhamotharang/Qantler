@@ -1,0 +1,32 @@
+
+.comment{
+    word-break: break-all;
+}
+
+.select-priority{
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    &.High{
+        background: red;
+    }
+    &.Medium{
+        background: green;
+    }
+    &.Low{
+        background: yellow;
+    }
+    &.Very{
+        background: gray;
+    }
+    &.VeryLow{
+        background: gray;
+    }
+}
+.modalclass{
+    background: #726236;
+    color : white;
+}
+.messagebody{
+    font-size: 23px;
+  }

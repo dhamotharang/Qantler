@@ -1,0 +1,270 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title">
+    {{screenStatus == 'Create Gifts' ? 'CREATE GIFTS' : screenStatus }}
+  </div>
+  <form [formGroup]="giftFormGroup" autocomplete="off">
+    <div class="container-fluid page-form-content py-2">
+      <div class="row" *ngIf="mode=='view'">
+        <div class="form-group col-12 col-md-3" >
+          <label for="Creator">Creator</label>
+          <input type="text" class="form-control"
+            formControlName="SourceName" id="Creator" placeholder="">
+        </div>
+      </div>
+      <hr *ngIf="mode=='view'">
+      <div class="row">
+        <div class="form-group col-12 col-md-6" *ngIf="mode=='view'">
+          <label for="ReferenceNumber">Gift Reference Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="ReferenceNumber"
+            id="ReferenceNumber">
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="row">
+            <div class="form-group col-12" [ngClass]="{'required':mode == 'create'}" >
+              <label for="Attachments">Gift Photo(s)</label>
+              <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+              <input type="file" multiple class="form-control attachment"
+                name="Attachments" #fileInput (change)="giftAttachments($event)" [disabled]="!submitBtn || isApiLoading"  id="Attachments"
+                placeholder="Select file" />
+            </div>
+            <div class="col-11 col-md-6" *ngIf="uploadProcess">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                  aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+              </div>
+            </div>
+            <div class="col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+              <label for="Keywords">Attachment List</label>
+              <div class="row border font-weight-bold">
+                <div class="col border">File Name</div>
+                <div class="col border text-center" *ngIf="submitBtn">Action</div>
+              </div>
+              <div *ngFor="let file of attachments; let i = index">
+                <div class="row">
+                  <div class="col border">
+                    <a class="cursor break-word"
+                    href="http://qtsp2016.centralus.cloudapp.azure.com/rrc/api/attachment/download?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+                  </div>
+                  <div class="col border text-center" *ngIf="submitBtn && file.currentUpload" >
+                    <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':mode == 'create'}">
+          <label for="GiftType">Gift Types</label>
+          <div>
+            <input type="radio" name="GiftType"
+              value="1" formControlName="GiftType"> Gifts Received
+            <input class="ml-2" type="radio" name="GiftType"
+              value="2" formControlName="GiftType"> Gifts Purchased
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row" *ngIf="giftFormGroup.value.GiftType == 1">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+          <label for="RecievedFromOrganization">Received From - Organization</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="RecievedFromOrganization"
+            placeholder="Received From - Organization"
+            id="RecievedFromOrganization">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+            <label for="RecievedFromName">Received From - Name</label>
+            <input
+              type="text"
+              placeholder="Received From - Name"
+              class="form-control"
+              formControlName="RecievedFromName"
+              id="RecievedFromName">
+          </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+          <label for="DateReceiving">Date of Receiving</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" placeholder="Date of Receiving" formControlName="RecievedDate" bsDatepicker #rdp="bsDatepicker" [bsConfig]="bsConfig">
+            <div (click)="rdp.toggle()" *ngIf="mode == 'create'">
+              <i class="far fa-calendar date" ></i>
+            </div>
+            <div *ngIf="mode != 'create'">
+              <i class="far fa-calendar date" ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="giftFormGroup.value.GiftType == 2">
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+          <label for="Purchased By">Purchased By</label>
+          <ng-select
+          [items]="allUserList$ | async"
+          [closeOnSelect]="true"
+          [loading]="userListLoading"
+          [typeahead] = "userFilterInput$"
+          bindLabel="EmployeeName"
+          bindValue="UserID"
+          placeholder="Purchased By"
+          formControlName="PurchasedBy">
+          </ng-select>
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+          <label for="PurchasedToName">Purchased To - Name</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Purchased To - Name"
+            formControlName="PurchasedToName"
+            id="PurchasedToName">
+        </div>
+        <div class="form-group col-12 col-md-4" [ngClass]="{'required':mode == 'create'}">
+          <label for="PurchasedToOrganization">Purchased To - Organization</label>
+          <input
+            type="text"
+            placeholder="Purchased To - Organization"
+            class="form-control"
+            formControlName="PurchasedToOrganization"
+            id="PurchasedToOrganization">
+        </div>
+      </div>
+      <div class="page-form-wrapper my-3 p-4" *ngIf="mode == 'view' && giftRequestModel.HistoryLog && (giftRequestModel.HistoryLog.length > 0)">
+        <ng-container *ngFor="let his of giftRequestModel.HistoryLog; let hind = index">
+          <div class="row">
+            <div class="col-auto" *ngIf="his.CreatedDateTime">
+              <div class="rounded-btn">
+                <img class="clock" src="assets/home/Meeting-clock.png">
+                {{his.CreatedDateTime | date: 'hh:mm a'}} / {{his.CreatedDateTime | date: 'dd/MM/yyyy'}}
+              </div>
+            </div>
+            <div class="col p-2"*ngIf="his.Action">
+              <div class="row">
+                <div class="col-12">{{hisLog(his.Action)}} : {{his.CreatedBy}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="hind != (giftRequestModel.HistoryLog.length - 1)">
+            <div class="col-12">
+              <hr>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="row px-3 justify-content-center btn-row">
+        <div *ngIf="submitBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="!giftFormGroup.valid || isApiLoading" [ngClass]="{'disabled-btn':!giftFormGroup.valid || isApiLoading}" (click)="userAction('submit')">SUBMIT</button>
+        </div>
+        <div *ngIf="sendBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn':isApiLoading}" (click)="userAction('send')">SEND FOR DELIVERY</button>
+        </div>
+        <div *ngIf="confirmBtn" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn':isApiLoading}" (click)="deliveryConfirmationDialog()">CONFIRM DELIVERY</button>
+        </div>
+        <!-- <div *ngIf="closeBtnShow" class="col-auto p-1">
+          <button class="rounded-btn" [disabled]="isApiLoading"  (click)="userAction('close')">CLOSE</button>
+        </div> -->
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">{{giftReqModal.modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cancelConfirmation()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="confirmModalFormGroup" autocomplete="off">
+      <div class="row" >
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':true}">
+          <label for="HandedOverTo">Handed Over To</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="HandedOverTo"
+            id="HandedOverTo">
+        </div>
+        <div class="form-group col-12 col-md-6" [ngClass]="{'required':true}">
+          <label for="HandedOverDate">Handed Over Date</label>
+          <div class="position-relative">
+            <input type="text" class="form-control" placeholder="Handed Over Date" formControlName="HandedOverDate" bsDatepicker #rdp="bsDatepicker" [bsConfig]="bsConfig">
+            <div (click)="rdp.toggle()">
+              <i class="far fa-calendar date" ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="row">
+            <div class="form-group col-12">
+              <!-- <label for="Attachments">Gift Photo(s)</label> -->
+              <!-- <input multiple type="file" class="form-control attachment" id="Attachments"> -->
+              <input type="file" multiple class="form-control attachment gift-confirm-dialog-upload"
+                name="Attachments" #confirmationFileInput (change)="addconfirmationAttachments($event)" [disabled]="isApiLoading"  id="Attachments"
+                placeholder="Select file" />
+            </div>
+            <div class="col-11 col-md-6" *ngIf="confirmationUploadProcess">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':confirmationUploadPercentage+'%'}"
+                  aria-valuenow="confirmationUploadPercentage" aria-valuemin="0" aria-valuemax="100">{{confirmationUploadPercentage}}%</div>
+              </div>
+            </div>
+            <div class="col-11 mx-3 mb-2" *ngIf="confirmationAttachments.length>0">
+              <label for="Keywords">Attachment List</label>
+              <div class="row border font-weight-bold">
+                <div class="col border">File Name</div>
+                <div class="col border text-center" >Action</div>
+              </div>
+              <div *ngFor="let file of confirmationAttachments; let i = index">
+                <div class="row">
+                  <div class="col border">
+                    <a class="cursor break-word"
+                    href="http://qtsp2016.centralus.cloudapp.azure.com/rrc/api/attachment/download?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+                  </div>
+                  <div class="col border text-center" *ngIf="file.currentUpload" >
+                    <span (click)="deleteConfirmationAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" [disabled]="!confirmModalFormGroup.valid || isApiLoading" [ngClass]="{'disabled-btn':!confirmModalFormGroup.valid || isApiLoading}" (click)="confirmDeliveryRequest()">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #templateConfirm>
+  <div class="modal-header modalclass" [ngClass]="{'direction': lang=='ar'}">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">{{ (lang=='ar') ? 'نجاح' : 'Success' }}</h4>
+    <button *ngIf="lang=='en'" type="button" class="close pull-right" aria-label="Close"
+      (click)="closemodalconfirm()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+      (click)="closemodalconfirm()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <p class="messagebody">{{message}}</p>
+  
+  </div>
+  <div class="modal-footer" [ngClass]="{'direction': lang=='ar'}">
+    <button type="button" class="rounded-btn" (click)="closemodalconfirm()">{{ (lang=='ar') ? 'حسنا' : 'Ok' }}</button>
+  </div>
+  
+</ng-template>

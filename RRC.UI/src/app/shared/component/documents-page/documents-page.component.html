@@ -1,0 +1,180 @@
+<div class="page-body-wrapper h-50">
+  <div class="row p-3" >
+    <div class="col p-4 shadow">
+      <div class="row">
+        <ng-container>
+          <div class="col title-sy"
+            [ngClass]="{'text-right':lang=='ar'}">
+            {{(lang=='en')?'Documents':arabic('documents')}}
+          </div>
+        </ng-container>
+        <div class="col-auto">
+          <button class="rounded-btn"
+            (click)="uploadNewFile()"
+            *ngIf="isDepartmentHeadUserID || isDepartmentTeamUserID">
+            <i class="fa fa-plus"></i>{{(lang=='en')?'Upload':arabic('upload')}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper mb-3">
+  <div class="form-title" [ngClass]="{'ar-rtl':lang!='en'}">
+    {{(lang=='en')?'FILTER BY':arabic('filterby')}}
+  </div>
+  <div class="container-fluid page-form-body py-2">
+    <div class="row">
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="name">{{(lang=='en')?'Created By':arabic('createdby')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="filterBy.Creator" id="creator">
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="power">{{(lang=='en')?'Smart Search':arabic('smartsearch')}}</label>
+        <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder="" [(ngModel)]="filterBy.SmartSearch">
+      </div>
+      <div class="form-group col-sm-2 p-md-4 pl-3">
+        <button class="rounded-btn search-btn" (click)="onSearch()">{{(lang=='en')?'Search':arabic('search')}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper mb-3 d-md-block d-none" [ngClass]="{'ar-rtl': lang == 'ar'}">
+  <ngx-datatable style="width: 100%"
+    class="bootstrap"
+    [ngClass]="{'ar-rtl': lang =='ar'}"
+    [rows]="rows"
+    [columns]="columns"
+    [headerHeight]="50"
+    [columnMode]="'force'"
+    [messages]="tableMessages"
+    [rowHeight]="'auto'">
+  </ngx-datatable>
+  <ng-template #creationDateTemplate let-row="row" let-value="value" let-i="index">
+    {{row.CreatedDateTime | date:'dd/MM/yyyy'}}
+  </ng-template>
+  <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn">
+      <button class="table-view" (click)="downloadFile(row)"><i class="fas fa-download" style="cursor: pointer;"></i></button>
+      <button *ngIf="isDepartmentHeadUserID || isDepartmentTeamUserID"
+        (click)="openDeleteDocumentDialog(row)"
+          class="attachment-delete-icon"
+          name="Delete" ><i
+          class="fas fa-trash-alt" style="cursor: pointer;"></i></button>
+    </div>
+  </ng-template>
+  <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+      [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let hrDocsrow of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>{{(lang=='en')?'Filename':arabic('filename')}} : </b></span><span>{{hrDocsrow.AttachmentsName}}</span></div>
+        <div class="col-12"><span><b>{{(lang=='en')?'Created By':arabic('createdby')}} : </b></span><span>{{hrDocsrow.CreatedBy}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row mar-top">
+        <div class = "col">
+            <span><b>{{(lang=='en')?'Uploaded Date':arabic('uploadedDate')}} : </b></span><span> {{hrDocsrow.CreatedDateTime | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div class = "col-auto table-action-btn">
+          <button class="table-view" (click)="downloadFile(hrDocsrow)"><i class="fas fa-download" style="cursor: pointer;"></i></button>
+          <button *ngIf="isDepartmentHeadUserID || isDepartmentTeamUserID" (click)="openDeleteDocumentDialog(hrDocsrow)" class="attachment-delete-icon" name="Delete" ><i
+              class="fas fa-trash-alt" style="cursor: pointer;"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #fileUploadTemplate>
+  <div class="modal-header modalclass" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{uploadheader}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="form-group col-12" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="Attachments">{{(lang=='en')?'Attachments':arabic('attachments')}}</label>
+            <input #modalFileInput type="file" class="form-control attachment"
+              name="Attachments" (change)="moduleAttachments($event)" [disabled]="requestType || isApiLoading"  id="Attachments"
+              placeholder="Select file" />
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+            <label for="Keywords">{{(lang=='en')?'Attachment List':arabic('attachmentlist')}}</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">{{(lang=='en')?'File Name':arabic('filename')}}</div>
+              <div class="col border text-center">{{(lang=='en')?'Action':arabic('action')}}</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col border">
+                  <a class="cursor break-word"
+                  href="{{endpointService.fileDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}" target="_self" download>{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col border text-center" >
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="btn btn-default" (click)="close()">
+      {{(lang=='en')?'Close':arabic('close')}}
+    </button>
+    <button class="rounded-btn"
+      [disabled]="attachments.length < 0 || isApiLoading"
+      [ngClass]="{'disabled-btn': attachments.length < 0 ||attachments.length == 0}"
+      (click)="saveModuleAttachments()">
+      {{(lang=='en')?'Upload':arabic('upload')}}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #fileDeleteTemplate>
+  <div class="create-request-modal modal-header modalclass" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{(lang=='en')?'Delete File':arabic('deleteFile')}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true" >&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <p class="messagebody">{{(lang=='en')?'Do You Really Want To Delete This File?':arabic('delConfMsg')}}</p>
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="rounded-btn" (click)="deleteModuleDocument()">{{(lang=='en')?'Yes':arabic('yes')}}</button>
+    <button type="button" class="rounded-btn" (click)="closeDialog()">{{(lang=='en')?'No':arabic('no')}}</button>
+  </div>
+</ng-template>
+
+<ng-template #template>
+  <div class="modal-header modalclass" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{(lang=='en')?'Success':arabic('success')}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{(lang=='en')?'Ok':arabic('ok')}}</button>
+  </div>
+</ng-template>

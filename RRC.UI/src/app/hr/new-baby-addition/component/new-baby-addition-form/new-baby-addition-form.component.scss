@@ -1,0 +1,14 @@
+.new_baby_addition {
+  .col-auto {
+    margin: auto;
+  }
+  .action-btn {
+    margin: 24px 0;
+    .rounded-btn {
+      margin-right: 20px;
+      @media screen and (max-width: 1024px) {
+        margin-right: 4px;
+      }
+    }
+  }
+}

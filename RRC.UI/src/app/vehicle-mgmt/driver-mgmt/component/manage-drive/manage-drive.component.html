@@ -1,0 +1,217 @@
+<div class="page-form-wrapper vehicle-request manage-driver-container" id="trigger-scroll">
+  <div class="form-title" [ngClass]="{'ar-rtl': lang=='ar'}">
+    {{lang == 'en' ? 'MANAGE DRIVER' : arabicfn('managedriver')}}
+  </div>
+  <div class="container-fluid page-form-content py-2">
+    <div class="row row-separator approver-dropdown " [ngClass]="{'driver-list-container': (departmentUserList.length > 0) || (driverList.length > 0)}">
+      <div class="col-md-5 ngselect driver-dropdown" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <h6 class="list-header">{{lang == 'en' ? 'LIST OF ALL RRC EMPLOYEES' : arabicfn('listofallrrcemployees')}}</h6>
+        <ng-select
+          [items]="departmentUserList"
+          bindLabel="EmployeeName"
+          placeholder=""
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [isOpen]="isUserListSet"
+          dropdownPosition="bottom"
+          [virtualScroll]="false"
+          [(ngModel)]="toBeApprovers"
+          class="app-multiselect-dropdown"
+        >
+        </ng-select>
+      </div>
+      <div class="col-md-2 text-center" [ngClass]="{'approver-exchange-margin':isUserListSet}" *ngIf="lang!='ar'">
+        <div class="row arrows-container">
+          <div class="col-6 col-md-12 row-separator">
+            <button class="rounded-btn" (click)="moveToDriverList()">
+              <i class="fa fa-chevron-right d-none d-md-inline"></i>
+              <i class="fa fa-chevron-right d-none d-md-inline"></i>
+              <i class="fa fa-chevron-down d-block d-md-none"></i>
+              <i class="fa fa-chevron-down d-block d-md-none"></i>
+            </button>
+          </div>
+          <div class="col-6 col-md-12">
+            <button class="rounded-btn" (click)="moveToAllUserList()">
+              <i class="fa fa-chevron-left d-none d-md-inline"></i>
+              <i class="fa fa-chevron-left d-none d-md-inline"></i>
+              <i class="fa fa-chevron-up d-block d-md-none"></i>
+              <i class="fa fa-chevron-up d-block d-md-none"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 text-center" [ngClass]="{'approver-exchange-margin':isUserListSet}" *ngIf="lang=='ar'">
+        <div class="row arrows-container">
+          <div class="col-6 col-md-12 row-separator">
+            <button class="rounded-btn" (click)="moveToDriverList()">
+              <i class="fa fa-chevron-left d-none d-md-inline"></i>
+              <i class="fa fa-chevron-left d-none d-md-inline"></i>
+              <i class="fa fa-chevron-down d-block d-sm-none"></i>
+              <i class="fa fa-chevron-down d-block d-sm-none"></i>
+            </button>
+          </div>
+          <div class="col-6 col-md-12">
+            <button class="rounded-btn" (click)="moveToAllUserList()">
+              <i class="fa fa-chevron-right d-none d-md-inline"></i>
+              <i class="fa fa-chevron-right d-none d-md-inline"></i>
+              <i class="fa fa-chevron-up d-block d-sm-none"></i>
+              <i class="fa fa-chevron-up d-block d-sm-none"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 ngselect driver-dropdown" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <h6 class="list-header" >{{ lang == 'en' ? 'DRIVERS' : arabicfn('drivers') }}</h6>
+        <ng-select
+          [items]="driverList"
+          bindLabel="EmployeeName"
+          placeholder=""
+          [closeOnSelect]="false"
+          [multiple]="true"
+          [isOpen]="isUserListSet"
+          dropdownPosition="bottom"
+          [virtualScroll]="false"
+          class="app-multiselect-dropdown"
+          [(ngModel)]="driverArr">
+        </ng-select>
+      </div >
+    </div>
+    <div class="row row-separator" [ngClass]="{'tright': lang=='en', 'tleft': lang=='ar'}">
+      <div class="col-12">
+        <button class="rounded-btn save-btn"
+          [disabled]="(driverList && driverList.length <= 0) || !isModified"
+          [ngClass]="{'disabled-btn': (driverList.length <= 0) || !isModified}"
+          (click)="saveDriverList()">
+          {{ lang == 'en' ? 'Save' : arabicfn('save') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper my-3 d-md-block d-none">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <!-- <ng-container outsideBody> -->
+    <div class="table-responsive" [ngClass]="{'ar-rtl': lang=='ar'}">
+      <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang=='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'">
+          <ng-template #actionTemplate let-row="row" [ngStyle]="{'width': '10px'}" let-value="value" let-i="index">
+            <div class="table-action-btn">
+                <button class="table-view" [ngClass]="{'ar-rtl-view': lang=='ar'}" (click)="viewData(row)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+                <button type="button" class="rounded-btn" (click)="openAddExtraHours(row)">+</button>
+                <button type="button" class="rounded-btn" (click)="openAddCompensiateHours(row)">-</button>
+            </div>
+          </ng-template>
+      </ngx-datatable>
+      <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+          [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+          (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </div>
+  <!-- </ng-container> -->
+</div>
+
+<div class="d-block d-md-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en' ? 'Driver Name' : arabic('drivername')}} : </b></span><span>{{row.DriverName}}</span></div>
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en' ? 'Mobile Number' : arabic('mobilenumber')}} : </b></span><span>{{row.MobileNumber}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en' ? 'Balance Extra Hours' : arabic('balanceextrahours')}} : </b></span><span> {{row.TotalHour}}</span></div>
+        </div><br>
+        <!-- <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en' ? 'Extra Hours Report' : arabic('extrahoursreport')}} : </b></span><span> {{row.BalanceExtraHours}}</span></div>
+        </div><br> -->
+        <div class="row mar-top">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"></div>
+          <div class="col-auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <button class="list-btn" (click)="viewData(row)"><i class="fas fa-eye"></i></button>&nbsp;
+            <button class="list-btn" (click)="openAddExtraHours(row)">+</button>&nbsp;
+            <button class="list-btn" (click)="openAddCompensiateHours(row)">-</button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="length > 0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+        (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+
+<ng-template #addExtraHourstemplate>
+  <div class="modal-header modalclass" dir="auto">
+    <h4 class="modal-title pull-left">{{ lang == 'en' ? 'Add Extra Hours' : arabicfn('addextrahours') }}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date">{{ lang == 'ar' ? arabicfn('date') : 'Date' }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control"
+          bsDatepicker
+          #dp1="bsDatepicker"
+          [bsConfig]="bsConfig"
+          [(ngModel)]="addExtraHoursModel.logDate">
+          <span (click)="dp1.toggle()"><i class="far fa-calendar date"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date">{{ lang == 'ar' ? arabicfn('numberofhourstobeadded') : 'Number of hours to be added'}}</label>
+        <div class="position-relative">
+          <input type="number" onkeydown="return event.keyCode == 69 ? false : true" class="form-control" [(ngModel)]="addExtraHoursModel.extraHour">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div dir="auto" class="modal-footer">
+    <!-- <div class="search-container" [ngClass]="{'ar-rtl': lang=='ar'}"> -->
+      <button class="rounded-btn"
+        (click)="addExtraHours()" [disabled]="validateExtraHour()" [ngClass]="{'disabled-btn': validateExtraHour()}">{{ lang=='en' ? 'ADD' : arabic('add') }}</button>
+    <!-- </div> -->
+  </div>
+  
+</ng-template>
+<ng-template #addCompensiateHourstemplate>
+  <div class="modal-header modalclass" dir="auto">
+    <h4 class="modal-title pull-left">{{ lang == 'en' ? 'Compensate Extra Hours' : arabicfn('compensateextrahours') }}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body" [ngClass]="{'ar-rtl': lang=='ar'}">
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date">{{ lang == 'ar' ? arabicfn('date') : 'Date' }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control"
+          bsDatepicker
+          #dp2="bsDatepicker"
+          [bsConfig]="bsConfig"
+          [(ngModel)]="addCompensateHoursModel.logDate">
+          <span (click)="dp2.toggle()"><i class="far fa-calendar date"></i></span>
+        </div>
+      </div>
+    <!-- </div>
+    <div class="row"> -->
+      <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date">{{ lang == 'ar' ? arabicfn('numberofhourstobededucted') : 'Number of hours to be deducted'}}</label>
+        <div class="position-relative">
+          <input type="number" class="form-control" onkeydown="return event.keyCode == 69 ? false : true" [(ngModel)]="addCompensateHoursModel.compensateHour">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div dir="auto" class="modal-footer">
+    <!-- <div class="search-container" [ngClass]="{'ar-rtl': lang=='ar'}"> -->
+    <button class="rounded-btn"
+      (click)="addCompensateHours()" [disabled]="validateCompensateHour()" [ngClass]="{'disabled-btn': validateCompensateHour()}">{{ lang=='en' ? 'COMPENSATE' : arabic('compensate') }}</button>
+  </div>
+  <!-- </div> -->
+  
+</ng-template>

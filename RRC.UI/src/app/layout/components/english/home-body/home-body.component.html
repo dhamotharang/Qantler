@@ -1,0 +1,139 @@
+<div class="container-fluid py-4 card-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md col-12 px-0 py-2 py-md-4" routerLink="/en/app/task/task-dashboard">
+        <div class="card-menu first mx-auto my-0">
+          <div class="row p-2">
+            <div class="col-6 count base">{{dutyTaskCount}}</div>
+            <div class="col-6 p-3"><img src="assets/home/duty-task.png"></div>
+            <div class="col-12 title">Duty Task</div>
+            <div class="col-12 pt-3">
+              <div class="main-line">
+                <div class="sub-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md col-12 px-0 py-2 py-md-4" routerLink="/en/app/memo/memo-list">
+        <div class="card-menu second mx-auto my-0">
+          <div class="img1">
+          </div>
+          <div class="row p-2">
+            <div class="col-6 count white">{{memosCount}}</div>
+            <div class="col-6 p-3"><img src="assets/home/memos.png"></div>
+            <div class="col-12 title white">Memos</div>
+            <div class="col-12 pt-3">
+              <div class="main-line mwhite">
+                <div class="sub-line swhite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md col-12 px-0 py-2 py-md-4" routerLink="/en/app/letter/letter-list">
+        <div class="card-menu first mx-auto my-0">
+          <div class="row p-2">
+            <div class="col-6 count base">{{letterCount}}</div>
+            <div class="col-6 p-3"><img src="assets/home/letter.png"></div>
+            <div class="col-12 title">Letters</div>
+            <div class="col-12 pt-3">
+              <div class="main-line">
+                <div class="sub-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md col-12 px-0 py-2 py-md-4" routerLink="/en/app/meeting/my-calendar">
+        <div class="card-menu second mx-auto my-0">
+          <div class="img2"></div>
+          <div class="row p-2">
+            <div class="col-6 count white">{{meetingCount}}</div>
+            <div class="col-6 p-3"><img src="assets/home/metting.png"></div>
+            <div class="col-12 title white">Meeting</div>
+            <div class="col-12 pt-3">
+              <div class="main-line mwhite">
+                <div class="sub-line swhite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md col-12 px-0 py-2 py-md-4" routerLink="/en/app/circular/circular-list">
+        <div class="card-menu first mx-auto my-0">
+          <div class="row p-2">
+            <div class="col-6 count base">{{circularCount}}</div>
+            <div class="col-6 p-3"><img src="assets/home/circular.png"></div>
+            <div class="col-12 title">Circulars</div>
+            <div class="col-12 pt-3">
+              <div class="main-line">
+                <div class="sub-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid py-4 meeting">
+  <div class="container">
+    <div class="row justify-content-center text-md-left text-center py-4">
+      <div class="col-12 col-md m-md-0 p-0 mb-2">
+        <div class="meeting-title">YOUR NEXT MEETING <img src="assets/home/Meeting-clock.png"></div>
+        <div class="meeting-description">Rulers Court monthly meeting</div>
+        <div class="meeting-time" *ngIf="nextMeeting">{{NextMeetingDateTime}}</div>
+      </div>
+      <div class="col-12 col-md-auto timer-data">
+        <div class="row">
+          <div class="col-auto time px-4">
+            <div class="time-desc">Days</div>
+            <div class="time-count">{{nextMeeting ? nextEventDays : 0}}</div>
+          </div>
+          <div class="col-auto px-4">
+            <div class="time-desc">Hours</div>
+            <div class="time-count">{{nextMeeting ? nextEventhours : 0}}</div>
+          </div>
+        </div>
+        <div class="read-more" *ngIf="nextMeeting" (click)="meetingView(MeetingID)">READ MORE</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid py-4 gallery">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col">
+        <div class="row py-3">
+          <div class="col-auto photo pr-0 active" (click)="showPhotoGallery()">
+            Photo Gallery
+            <div class="line"></div>
+          </div>
+          <div class="col-auto ph-gallery mr-auto" (click)="photoType('gallery')"
+            [ngClass]="{'active':type=='gallery'}">
+            <div class="line"></div>
+          </div>
+          <div *ngIf="albums.length > 0" class="col-auto border pt-1 owlBtn" (click)="prevNext('prev')"><i class="fas fa-chevron-left"></i></div>
+          <div *ngIf="albums.length > 0" class="col-auto border pt-1 mr-3 ml-1 owlBtn" (click)="prevNext('next')"><i class="fas fa-chevron-right"></i></div>
+          <div class="col-auto pt-1 size" *ngIf="CanManageNews" (click)="showPhoto()"><i class="fas fa-cog" title="Manage Photo"></i></div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-12 carousel-container" *ngIf="albums.length > 0">
+            <owl-carousel-o [options]="carouselOptions" #owlCar>
+                <ng-container *ngFor="let image of albums; let i=index;">
+                  <ng-template carouselSlide [id]="i" [width]="250">
+                      <!-- <div class="gallery-image-container"> -->
+                          <img class="gallery-image" [src]="image.src" [alt]="image.caption" [title]="image.caption">
+                          <!-- <span class="carousel-image-caption">{{ image.caption }}</span> -->
+                      <!-- </div> -->
+                  </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+          </div>
+          <div *ngIf="albums.length == 0" class="emptyRow"> <span>{{lang=='en' ? 'No data to display' : arabicfn('noItemsFound')}}</span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

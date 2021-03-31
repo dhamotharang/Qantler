@@ -1,0 +1,102 @@
+<div class="modal-header modalclass modal-lg" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">{{lang === 'ar' ? arWords.report : 'Report'}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <div class="row">
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="status">{{lang === 'ar' ? arWords.status : 'Status'}}</label>
+      <ng-select
+        class="status-ddown"
+        [items]="statusList"
+        [closeOnSelect]="true"
+        bindLabel="DisplayName"
+        bindValue="LookupsID"
+        placeholder="All"
+        [(ngModel)]="status">
+      </ng-select>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="status">
+        {{lang === 'ar' ? arWords.sourceofficeSlashDepartment : 'Source Office/Department'}}
+      </label>
+      <ng-select
+        class="status-ddown"
+        [items]="sourceOUList"
+        [closeOnSelect]="true"
+        bindLabel="OrganizationUnits"
+        bindValue="OrganizationID"
+        placeholder="All"
+        [(ngModel)]="sourceOU">
+      </ng-select>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="subject">{{lang === 'ar' ? arWords.subject : 'Subject'}}</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="subject"
+        id="subject">
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="dateFrom">{{lang === 'ar' ? arWords.requestdatefrom : 'Request Date From'}}</label>
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          #dp1="bsDatepicker"
+          [maxDate]="dateTo"
+          [(ngModel)]="dateFrom"
+          [bsConfig]="bsConfig">
+        <span (click)="dp1.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="dateTo">{{lang === 'ar' ? arWords.requestdateto : 'Request Date To'}}</label>
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          #dp2="bsDatepicker"
+          [minDate]="dateFrom"
+          [(ngModel)]="dateTo"
+          [bsConfig]="bsConfig">
+        <span (click)="dp2.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="attendedBy">{{lang === 'ar' ? arWords.legalsubmittedby : 'Submitted By'}}</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="attendedBy"
+        id="attendedBy">
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="priority">{{lang === 'ar' ? arWords.priority : 'Priority'}}</label>
+      <ng-select
+        class="status-ddown"
+        [items]="priorityList"
+        [closeOnSelect]="true"
+        bindLabel="name"
+        bindValue="value"
+        placeholder=""
+        [(ngModel)]="priority">
+      </ng-select>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <label for="smartSearch">{{lang === 'ar' ? arWords.smartsearch : 'Smart Search'}}</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="smartSearch"
+        id="smartSearch">
+    </div>
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="rounded-btn" (click)="downloadReport()">{{lang === 'ar' ? arWords.downloadexcel : 'Download Excel'}}</button>
+  </div>

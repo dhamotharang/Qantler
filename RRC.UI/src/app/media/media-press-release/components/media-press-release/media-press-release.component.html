@@ -1,0 +1,170 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title">
+    {{screenTitle}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="screenStatus == 'View'">
+      <div class="form-group col-12 col-md-4">
+        <label for="Creation Date">Date</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.CreatedDateTime"
+            bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source OU">Source Office/Department</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.SourceOU"
+          id="Source OU" placeholder="Enter Source OU">
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">Source Name</label>
+        <input type="text" class="form-control" [disabled]="true" [(ngModel)]="formData && formData.SourceName"
+          id="Source Name" placeholder="Enter Source Name">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus == 'View'">
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="approverDept">Approver Office/Department</label>
+        <ng-select class="approverDept-ddown" [items]="approverDeptList" [closeOnSelect]="true"
+          bindLabel="OrganizationUnits" (change)="onDepartmentSelect()" bindValue="OrganizationID"
+          [disabled]="!editMode" placeholder="Select Approver Department" [(ngModel)]="formData.ApproverDepartmentID">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="approvers">Approver Name</label>
+        <ng-select class="approvers-ddown" [items]="approverList" [closeOnSelect]="true" bindLabel="EmployeeName"
+          [disabled]="!editMode" bindValue="UserID" placeholder="Select Approver Name"
+          [(ngModel)]="formData.ApproverID">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">Subject</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Subject" id="Source Name" placeholder="Enter Subject Name">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="status">Type</label>
+        <ng-select class="approvers-ddown" [items]="typeList" [closeOnSelect]="true" bindLabel="label" bindValue="value"
+          (change)="validate()" [disabled]="!editMode" placeholder="Select Type" [(ngModel)]="formData.Type">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Eventname">Event Name</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.EventName" id="eventname" placeholder="Enter Event name">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">Location</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Location" id="Source Name" placeholder="Enter Location">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Source Name">Attended By</label>
+        <input type="text" class="form-control" (change)="validate()" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.AttendedBy" id="Source Name" placeholder="Enter Attened By">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Eventname">Partners</label>
+        <input type="text" class="form-control" (change)="validate()" id="eventname" [disabled]="!editMode"
+          [(ngModel)]="formData && formData.Partners" placeholder="Enter Partners">
+      </div>
+    </div>
+    <div class="page-form-wrapper my-3 p-4">
+      <div class="row ">
+        <div class="col-12 comment">
+          <app-comment-section [comments]="RequestComments" [commentType]="'PressRelease'" [moduleId]="PressReleaseID"
+            [moduleNameID]="'PressReleaseID'">
+          </app-comment-section>
+          <div class="row comment-section">
+            <div class="col-2 com-md-2 profile">
+              <div class="comment-section-img">
+                <img src="{{userProfileImg}}" class="user-ProfileImg" />
+              </div>
+            </div>
+            <div class="col-10 col-md-10 comment-text">
+              <div class="comment-section-user-info">
+                <p class="comment-section-username">{{currentUser.username}}</p>
+              </div>
+              <div class="comment-section-content">
+                <textarea class="form-control vertical-resize" [(ngModel)]="formData.Comments" id="NewCommentContent"
+                  placeholder="" [disabled]="!canComment" (ngModelChange)="commentValid()" rows="3">
+                  </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+      <div class="col-auto p-1" *ngIf="editMode && !reSubmit && screenStatus == 'Create'" >
+        <button 
+          [ngClass]="{'disabled-btn': !validate() || inProgress }"
+          [disabled]="!validate() || inProgress" class="rounded-btn" (click)="sendRequest()">
+          SUBMIT
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="editMode && reSubmit" >
+        <button 
+          [ngClass]="{'disabled-btn': !validate() || inProgress }"
+          [disabled]="!validate() || inProgress" class="rounded-btn" (click)="ReSubmit()">
+          SUBMIT
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover" >
+        <button 
+          [ngClass]="{'disabled-btn': inProgress }" class="rounded-btn" [disabled]="inProgress" (click)="updateAction('Approve')">
+          APPROVE
+        </button>
+        </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover" >
+        <button 
+          [ngClass]="{'disabled-btn': inProgress || !isComment }" class="rounded-btn" [disabled]="inProgress || !isComment"
+          (click)="onEscalate('Escalate')">
+          ESCALATE
+        </button>
+        </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+        <button 
+          [ngClass]="{'disabled-btn': inProgress || !isComment }" class="rounded-btn" [disabled]="inProgress || !isComment"
+          (click)="updateAction('Reject')">
+          REJECT
+        </button>
+        </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 80 && isApprover">
+        <button
+          class="rounded-btn"
+          [ngClass]="{'disabled-btn': inProgress || !isComment }" [disabled]="inProgress || !isComment"
+          (click)="updateAction('ReturnForInfo')">
+          RETURN FOR INFO
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 76 && (OrgUnitID == 17) && IsOrgHead && !isAssignedToMe">
+        <button 
+          class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+          (click)="onAssignTo()">
+          ASSIGN
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="!editMode && formData.Status == 76 && (OrgUnitID == 17) && !IsOrgHead && !isAssignedToMe">
+        <button 
+          class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+          (click)="updateAction('AssignToMe')">
+          ASSIGN TO ME
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="!editMode  && formData.Status == 76 && (OrgUnitID == 17) && isAssignedToMe">
+        <button 
+          class="rounded-btn" [ngClass]="{'disabled-btn': inProgress }" [disabled]="inProgress"
+          (click)="updateAction('Close')">
+          CLOSE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="page-form-wrapper">
+  <div class="form-title">
+    FILTER BY
+  </div>
+  <div class="container page-form-body">
+    <div class="row">
+      <!-- <div class="form-group col-sm-4">
+        <label for="power">Status</label>
+        <ngx-select-dropdown [config]="statusConfig" [options]="statusOptions" [(ngModel)]="status" [multiple]="false">
+        </ngx-select-dropdown>
+      </div> -->
+      <div class="form-group col-sm-4">
+        <label for="status">Status</label>
+        <ng-select [items]="statusOptions" id="LookupsID" [disabled]="statusDisable" [closeOnSelect]="true" [multiple]="false" bindLabel="DisplayName"
+            bindValue="DisplayName" [(ngModel)]="status">
+        </ng-select>
+        <!-- <select class="form-control" [disabled]="statusDisable" [(ngModel)]="status" id="LookupsID">
+          <option value="">All</option>
+          <option *ngFor="let us of statusOptions" [value]="us.DisplayName">{{us.DisplayName}}</option>
+        </select> -->
+      </div>
+      <!-- <div class="form-group col-sm-4">
+        <label for="SourceOU">Source OU</label>
+        <app-multi-select [data]="sourceouOptions" [multiple]="'true'" (ngModal)="Source($event)" [idField]="'OrganizationID'" [textField]="'OrganizationUnits'" ></app-multi-select>
+      </div> -->
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">Source Office/Department</label>
+        <ng-select [items]="sourceouOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationUnits" [(ngModel)]="source">
+        </ng-select>
+      </div>
+      <!-- <div class="form-group col-sm-4">
+        <label for="power">Destination OU</label>
+        <ngx-select-dropdown [config]="sourceConfig" [options]="destinationOptions" [(ngModel)]="destination" [multiple]="true">
+        </ngx-select-dropdown>
+      </div> -->
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">Destination Office/Department</label>
+        <ng-select [items]="destinationOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationUnits" [(ngModel)]="destination">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="Date Range From">Date Range From</label>
+        <div class="position-relative">
+          <input type="text" class="form-control"  bsDatepicker #dpFrom="bsDatepicker" [(ngModel)]="date_from"
+            [bsConfig]="bsConfig">
+          <div (click)="dpFrom.toggle()">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="Date Range To">Date Range To</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="utill.minDate(0,date_from)" bsDatepicker #dpTo="bsDatepicker" [(ngModel)]="date_to"
+            [bsConfig]="bsConfig">
+          <div (click)="dpTo.toggle()">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="Priority">Priority</label>
+        <ng-select [items]="priorityOptions" bindLabel="name" bindValue="name" [(ngModel)]="priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="power">Smart Search</label>
+        <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder=""
+          [(ngModel)]="smartSearch">
+      </div>
+
+      <div class="row justify-content-center justify-content-md-end filter-Btn-width pt-4">
+        <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2 p-left">
+          <button class="rounded-btn" (click)="changeList()">Search</button>
+        </div>
+        <div class="form-group col-auto col-md-auto p-0 p-md-2">
+          <button class="rounded-btn" (click)="openReport()">Show Available Reports</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper my-3 d-md-block d-none">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <ng-container outsideBody>
+    <div class="table-responsive">
+      <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns" [headerHeight]="50"
+        [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+      </ngx-datatable>
+      <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+        <div class="table-action-btn">
+          <ng-container *ngIf="(row.StatusCode == 16 && row.SourceName != currentUser)">
+              <button class="table-view" (click)="viewData('',value)"><i class="fas fa-eye"
+                  style="cursor: pointer;"></i></button>
+          </ng-container>
+          <button *ngIf="row.StatusCode != 16 && memo_type != 'Draft Circulars' "
+            class="table-view" (click)="viewData('', value)"><i class="fas fa-eye"
+              style="cursor: pointer;"></i></button>
+          <button *ngIf="(memo_type == 'Draft Circulars') || (row.StatusCode == 16 && row.SourceName == currentUser)"
+            class="table-edit" name="edit" (click)="viewData('edit', value)"><i class="fas fa-edit" 
+              style="cursor: pointer;"></i></button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+</div>
+
+<div class="d-block d-md-none">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let cirrow of rows">
+    <div class="card-header">
+
+      <div class="row">
+        <div class="col-12"><span><b>Ref Id : </b></span><span>{{cirrow.ReferenceNumber}}</span></div>
+        <div class="col-12"><span><b>Title : </b></span><span>{{cirrow.Title}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col"><span><b>Source : </b></span><span> {{cirrow.SourceOU}}</span></div>
+        <div class="col"><span><b>Destination : </b></span><span> {{cirrow.Destination}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col"><span><b>Status : </b></span><span> {{cirrow.Status}}</span></div>
+        <div class="col"><span><b>Date : </b></span><span> {{cirrow.Date}}</span></div>
+      </div>
+      <div class="row">
+        <div *ngIf="cirrow.Priority=='High'" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-red-clr"></span><span> {{cirrow.Priority}}</span></div>
+        <div *ngIf="cirrow.Priority=='Medium'" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-gl-clr"></span><span> {{cirrow.Priority}}</span></div>
+        <div *ngIf="cirrow.Priority=='Low'" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-ylw-clr"></span><span> {{cirrow.Priority}}</span></div>
+        <div *ngIf="cirrow.Priority=='VeryLow'" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-gry-clr"></span><span> {{cirrow.Priority}}</span></div>
+      </div>
+      <div class="row mar-top">
+        <div class="col"></div>
+        <div class="col-auto">
+          <button *ngIf="cirrow.StatusCode == 16 && cirrow.SourceName != currentUser"
+            class="list-btn" (click)="viewData('', cirrow)"><i class="fas fa-eye"></i></button>&nbsp;
+          <button *ngIf="cirrow.StatusCode != 16 && memo_type != 'Draft Circulars' "
+            class="list-btn" (click)="viewData('', cirrow)"><i class="fas fa-eye"></i></button>&nbsp;
+          <button *ngIf="(memo_type == 'Draft Circulars') || (cirrow.StatusCode == 16 && cirrow.SourceName == currentUser)" class="edit-btn"
+            (click)="viewData('edit', cirrow)"><i class="fas fa-edit"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+  <button name="edit" (click)="viewData('edit', '')"></button>
+  <button name="view" (click)="viewData('','')"></button>
+
+</div>
+

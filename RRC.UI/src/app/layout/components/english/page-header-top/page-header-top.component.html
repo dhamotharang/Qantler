@@ -1,0 +1,186 @@
+<div class="page-top-wrapper" [ngClass]="{'home': home_banner , 'memo':!home_banner}" [ngStyle]="{'background-image': 'url(' + bgImage +')'}">
+  <!-- <img class="image-banner" src="../../assets/home/banner.jpg"> -->
+  <div class="d-block d-md-none mobile-topcard mb-2">
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-6 position-relative" (click)="down=!down" data-toggle="collapse" role="button"
+          aria-expanded="false" href="#collapseDepartment" aria-controls="collapseDepartment">
+          DEPARTMENTS
+          <span class="icon">
+            <span *ngIf="down" data-toggle="collapse" href="#collapseDepartment" aria-controls="collapseDepartment"><i
+                class="fas fa-sort-down"></i></span>
+            <span *ngIf="!down" data-toggle="collapse" href="#collapseDepartment" aria-controls="collapseDepartment"><i
+                class="fas fa-sort-up"></i></span>
+          </span>
+        </div>
+        <div class="col-6 text-right {{(home_banner)?'d-none':'d-block'}}">
+          <span data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+            aria-controls="collapseExample" #mobileMenu>MENU</span>
+          <span data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+            aria-controls="collapseExample"><i class="fas fa-bars"></i></span>
+        </div>
+        <div class="col-6 text-right {{(home_banner)?'d-block':'d-none'}}">
+          <!-- <span>LANGUAGE</span> -->
+          <span data-toggle="collapse" (click)="downLang=!downLang" href="#collapseLanguage" role="button"
+            aria-expanded="false" aria-controls="collapseLanguage">
+            <span class="icon">
+              <span *ngIf="downLang" data-toggle="collapse" href="#collapseLanguage" aria-controls="collapseLanguage"><i
+                  class="fas fa-sort-down"></i></span>
+              <span *ngIf="!downLang" data-toggle="collapse" href="#collapseLanguage"
+                aria-controls="collapseLanguage"><i class="fas fa-sort-up"></i></span>
+            </span>
+            LANGUAGE
+          </span>
+        </div>
+      </div>
+      <div class="collapse" id="collapseExample">
+        <div class="container overflow-hidden p-0 mt-3">
+          <app-side-nav (NavClick)="changePage($event)"></app-side-nav>
+        </div>
+      </div>
+      <div class="collapse pt-3" id="collapseDepartment">
+        <div class="py-2 mouse-point" [class.selected]="dept.name==department" *ngFor="let dept of departments"
+          (click)="departmentSelect(dept)">{{dept.name}}</div>
+      </div>
+      <div class="collapse pt-3" id="collapseLanguage">
+        <div class="py-2 mouse-point" [class.selected]="lang==language" *ngFor="let lang of languageList"
+          (click)="languageChange(lang)">{{lang}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <button class="btn-plus" type="button" data-toggle="collapse"
+          data-target="#collapseMemo" aria-expanded="false" aria-controls="collapseMemo">
+          +
+        </button> -->
+  <div class="container-fluid d-none d-md-block page-top-body">
+    <!-- <div class="title" [ngClass]="{'': home_banner , 'd-none':!home_banner}">
+      <div class="title-head">A Special celebration is near</div>
+      <div class="line"></div>
+      <div class="title-body">IFTAR WEEK</div>
+      <div class="line"></div>
+      <div class="title-foot">JOIN THE CELEBRATION</div>
+    </div> -->
+    <div class="title" [ngClass]="{'non-home-banner-title d-none':!home_banner}">
+      <div class="title-head"></div>
+      <div class="title-body"></div>
+      <div class="title-foot"></div>
+    </div>
+    <div class="container py-5 departments-container" [ngClass]="{'inner-departments-container':!home_banner}">
+        <!-- [ngClass]="{'pt-md-5 pb-md-5':!home_banner}" -->
+      <div class="row my-3 d-none d-md-flex">
+        <div class="col" routerLink="/en/app/citizen-affair/citizen-affair-list">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/newcitizen-affair.png">
+            </div>
+            <div class="card-txt">
+              CITIZEN AFFAIR SERVICES
+            </div>
+          </div>
+        </div>
+        <div class="col" routerLink="/en/app/maintenance/home">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/maintenance.png">
+            </div>
+            <div class="card-txt">
+              MAINTENANCE SERVICES
+            </div>
+          </div>
+        </div>
+        <div class="col" routerLink="/en/app/legal/dashboard">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/legal.png">
+            </div>
+            <div class="card-txt">
+              <div>LEGAL</div>
+              <div>SERVICES</div>
+            </div>
+          </div>
+        </div>
+        <div class="col" routerLink="/en/app/hr/dashboard">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/newhuman-resource.png">
+            </div>
+            <div class="card-txt">
+              <div>H.R</div>
+              <div>SERVICES</div>
+            </div>
+          </div>
+        </div>
+        <div class="col" [routerLink]="protocolServicePageLink">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/protocol.png">
+            </div>
+            <div class="card-txt">
+              PROTOCOL SERVICES
+            </div>
+          </div>
+        </div>
+        <div class="col" routerLink="/en/app/it/">
+          <div class="page-card">
+            <div class="card-img">
+              <img class="image" src="assets/home/inforamtion-technology.png">
+            </div>
+            <div class="card-txt">
+              <div>I.T</div>
+              <div>SERVICES</div>
+            </div>
+          </div>
+        </div>
+        <div class="col" routerLink="/en/app/vehicle-management/">
+          <!-- <div> -->
+            <div class="page-card">
+              <div class="card-img">
+                <img class="image" src="assets/home/vehicle-management.png">
+              </div>
+              <div class="card-txt">
+                <div>VEHICLE</div>
+                <div>MANAGEMENT</div>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="manage-settings">
+        <div *ngIf="CanManageNews && home_banner" class="col-md-auto pr-0 size settings" (click)="showBanner()" ><i class="fas fa-cog" title="Manage Banner"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-breadcrumb class="d-none {{(home_banner)?'d-md-none':'d-md-block'}}"></app-breadcrumb>
+<div class="home-note {{(home_banner)?'d-block':'d-none'}}">
+  <div class="container">
+    <div class="row justify-content-center text-md-left text-center py-3 mx-0">
+      <div class="col-md-auto pl-0 col-auto">
+        <img src="assets/home/memos.png">
+      </div>
+      <div class="col-md-auto col-auto news-title">LATEST NEWS:&nbsp;&nbsp;&nbsp;</div>
+      <div class="col-md col-12 mr-auto p-md-0 px-2 news-body">
+          <owl-carousel-o [options]="carouselOptions" #owlCar>
+              <ng-container *ngFor="let image of newsList; let i=index;">
+                <ng-template carouselSlide [id]="i">
+                  <div class="news-content">
+                      <div [innerHTML]="image.News"></div>
+                    </div>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+        </div>
+
+      <div *ngIf="newsList.length > 0" class="d-md-block d-none col-md-auto size p-0 pl-3" (click)="owlCar.prev()"><i class="fas fa-caret-left"></i></div>
+      <div *ngIf="newsList.length > 0" class="d-md-block d-none col-md-auto pr-0 size" (click)="owlCar.next()"><i class="fas fa-caret-right"></i></div>
+      <div *ngIf="CanManageNews" class="col-md-auto pr-0 size settings" (click)="showNews()"><i class="fas fa-cog" title="Manage News"></i></div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #card>
+  <div class="default-tab-buttons">
+    ...
+  </div>
+</ng-template> -->

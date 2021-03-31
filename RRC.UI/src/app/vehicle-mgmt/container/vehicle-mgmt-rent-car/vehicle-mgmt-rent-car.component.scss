@@ -1,0 +1,44 @@
+@import '../../../../styles.scss';
+
+.modalclass {
+  background: $medium-color;
+  color: white;
+
+  .modal-title {
+    font-size: 16px;
+  }
+}
+.list-btn{
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+
+.viewleft{
+  text-align: left;
+}
+.viewright{
+  text-align: right;
+}
+
+.rtl-mode {
+  .bootstrap.ngx-datatable {
+    .datatable-header{
+      text-align: right;
+    }
+    .datatable-body-cell{
+      text-align: right;
+    }
+    text-align: right;
+  }
+  .form-title{
+    text-align: right;
+  }
+  .container-fluid {
+    .form-group{
+      text-align: right;
+    }
+  }
+}

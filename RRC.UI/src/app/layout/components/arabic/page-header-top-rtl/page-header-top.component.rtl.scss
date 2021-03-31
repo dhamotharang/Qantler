@@ -1,0 +1,206 @@
+@import '../../../../../styles.scss';
+
+.page-top-wrapper {
+  .mobile-topcard {
+    background: $black-color;
+    color: white;
+
+    // .icon {
+    //   position: absolute;
+    //   top: 0;
+    //   left: 60px;
+    // }
+
+    .selected {
+      background: $dark-color;
+    }
+  }
+
+  @media screen and (min-width:768px) {
+    &.home {
+      background-image: url('../../../../../assets/home/banner-new-arabic.jpg');
+      position: relative;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      height: max-content;
+    }
+
+    &.memo {
+      background-image: url('../../../../../assets/home/inner-banner.png');
+      background-position: top;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      height: max-content;
+    }
+  }
+
+  div>span {
+    padding: 5px;
+  }
+
+
+  .image-banner {
+    width: 100%;
+    height: 100%;
+    /* padding: 4px; */
+    -o-object-fit: contain;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+    object-fit: contain;
+  }
+
+  .page-top-body {
+
+    // position: absolute;
+    // top: 0px;
+    // right: 0px;
+    // left: 0px;
+    .title {
+      color: white;
+      text-align: center;
+      padding: 5rem 0rem 5rem 0rem;
+
+      .line {
+        border-bottom: 2px solid white;
+        margin: 0 auto;
+        width: 370px;
+      }
+
+      .title-head {
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      .title-body {
+        font-size: 59px;
+        font-weight: bold;
+        text-shadow: 0px 2px, 2px 0px, 2px 2px;
+        letter-spacing: 2.5px;
+      }
+
+      .title-foot {
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-shadow: 0px 0.5px, 0.5px 0px, 0.5px 0.5px;
+      }
+    }
+  }
+
+  .page-cards-div {
+
+    width: max-content;
+    margin: 0 auto;
+  }
+
+
+  .page-card-div {
+    width: 20%;
+  }
+
+  .page-card {
+    background: rgba(51, 53, 56, 0.72);
+    width: 100%;
+    height: 130px;
+    padding: 10px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+
+    &:hover {
+      /* box-shadow: 0px 0px 15px black; */
+    }
+
+    .card-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto;
+      background: $medium-color;
+    }
+
+    .card-txt {
+      text-align: center;
+      color: white;
+      font-weight: 600;
+      padding-top: 5px;
+    }
+  }
+}
+
+.home-note {
+  background: $medium-color;
+  color: white;
+
+  img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0);
+  }
+
+  .news-title {
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0;
+    margin: auto 0;
+    letter-spacing: 1.5px;
+  }
+
+  .news-body {
+    font-size: 13px;
+    padding: 0;
+    margin: auto 0;
+    text-align: center;
+    letter-spacing: 1.5px;
+    width: 70%;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .size {
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width:992px) {
+  .page-cards-div {
+    transform: scale(0.86) translateX(-8.01%);
+  }
+}
+
+.page-top-body {
+  position: relative;
+}
+.size {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.department-container {
+  padding-top: 11rem !important;
+}
+.inner-departments-container {
+  padding-top: 3rem !important;
+}
+.manage-settings {
+  position: relative;
+  .settings {
+    left: 0;
+    padding-right: 5px !important;
+  }
+}
+
+.image-style{
+  // position: absolute;
+  // top: 345px;
+  // width: 70px;
+  // left: 250px;
+  // padding-top: 1px;
+  // padding-left: 5px;
+  float: right;
+  margin-top: -136px;
+  margin-right: -8px;
+}

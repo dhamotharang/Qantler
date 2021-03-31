@@ -1,0 +1,228 @@
+@import '../../../../styles.scss';
+
+.dashboard {
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    cursor: pointer;
+    min-height: 190px;
+    max-height: 190px;
+    .card-body {
+      box-shadow: none !important;
+      .card-body-top{
+        min-height:100px;
+        max-height: 100px;
+      }
+
+      .count {
+        color: $medium-color;
+        font-size: 45px;
+        font-weight: 900;
+        text-shadow: 2px 0px 0px;
+      }
+
+      .name {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+        display: contents;
+        word-break: break-word;
+      }
+      .txt-ct{
+        text-align: center;
+      }
+
+      @media screen and (max-width:1200px) and(min-width:945px) {
+        .count {
+          color: $medium-color;
+          font-size: 30px;
+          font-weight: 900;
+        }
+
+        .name {
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 5px;
+          word-break: break-word;
+        }
+
+      }
+
+      @media screen and (max-width:945px) and(min-width:767px) {
+        .count {
+          color: $medium-color;
+          font-size: 14px;
+          font-weight: 900;
+        }
+
+        .name {
+          font-size: 9px;
+          font-weight: 600;
+          line-height: 5px;
+          word-break: break-word;
+        }
+
+        .md-image{
+          height: 30px;
+          width:30px;
+        }
+
+      }
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+
+        .progress-bar{
+            background: $medium-color !important;
+        }
+      }
+    }
+  }
+  .card.mobile-cards{
+    max-height: none;
+    padding-bottom: 10px;
+  }
+
+  .shadow {
+    box-shadow: 0px 0px 2px -1px;
+  }
+
+  .dashboard-user-cards{
+    margin-bottom: 15px;
+    .user-card{
+      background: #f8f9fa;
+      border-radius: inherit;
+      margin-top: 10px;
+      cursor: pointer;
+      .user-card-content{
+        box-shadow: none !important;
+        margin: 0 auto;
+        .user-card-icon{
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0;
+        }
+        .user-card-icon.profile{
+            width: 40%;
+        }
+        .user-card-icon.docs{
+          min-height: 82px;
+        }
+        .user-card-title{
+          font-size: 16px;
+          font-weight: bold;
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+
+  .line-separator{
+    padding:0px;
+  }
+}
+
+.rounded-btn .fa-plus{
+    margin: 5px;
+}
+
+.page-body-wrapper .title-sy{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.request-modal-body{
+    .request-modal-icon{
+        width:35%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        display: block;
+    }
+    .request-modal-content{
+        font-size: 18px;
+        margin: auto;
+        cursor: pointer;
+    }
+
+    .line-separator{
+        padding:0px;
+    }
+}
+
+.create-request-modal.modal-header{
+    padding: 0.5rem 1rem;
+    background: #726236;
+    color: white;
+    border-bottom: 1px solid #726236;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+    font-size: 12px;
+    .modal-title{
+        font-size: 1rem;
+    }
+    .close{
+        color: #fff;
+        opacity: 1;
+    }
+}
+
+.list-btn{
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+.edit-btn{
+  background: #06cfff;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+.compensation-btn {
+  background: #3978e0;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  margin: 2px;
+  padding: 0px 8px;
+}
+
+@media only screen and (max-width : 320px){
+  .availablereport {
+    margin-top: 10px;
+  }
+}
+
+.rtl-mode {
+  .bootstrap.ngx-datatable {
+    .datatable-header{
+      text-align: right;
+    }
+    .datatable-body-cell{
+      text-align: right;
+    }
+    text-align: right;
+  }
+  .form-title{
+    text-align: right;
+  }
+  .container-fluid {
+    .form-group{
+      text-align: right;
+    }
+  }
+}
+
+// @media screen and (max-width: 367px) {
+//  .dashboard .card {
+//   //  min-height: 210px;
+//   //  min-height: 250px;
+//  }
+
+// }

@@ -1,0 +1,28 @@
+<div dir="auto" class="modal-header modalclass">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">{{Title}}</h4>
+    <button *ngIf="lang=='en'" type="button" class="close pull-right" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body" [ngClass]="{'ar-rtl':lang=='ar'}">
+    <div class="row" [ngClass]="{'ar-rtl':lang=='ar'}" >
+      <div class="form-group col-md-6" [ngClass]="{'ar-rtl':lang=='ar'}" >
+        <label for="Plate Number">{{lang == 'en' ? 'Current Mileage' : arabic('currentmileage') }}</label>
+        <input type="number" min="0" step="1" class="form-control" [ngClass]="{'ar-rtl':lang=='ar'}"
+        [(ngModel)]="currentMileage" id="currentMileage" disabled>
+      </div>
+      <div class="form-group col-md-6 required" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="Plate Number" [ngClass]="{'ar-rtl':lang=='ar'}">{{lang == 'en' ? 'Next Mileage' : arabic('nextmileage') }}</label>
+        <input type="text" (keypress)="numberOnly($event)" min="0" step="1" class="form-control"
+          [(ngModel)]="nextMileage" id="nextMileage" [ngClass]="{'ar-rtl':lang=='ar'}">
+      </div>
+    </div>
+  </div>
+  <div dir="auto" class="modal-footer text-center">
+    <button type="button" class="rounded-btn" [disabled]="isApiLoading || !allowSubmit()" [ngClass]="{'disabled-btn':isApiLoading || !allowSubmit()}" (click)="saveLogDetails()">{{lang == 'en' ? 'SUBMIT' : arabic('submit') }}</button>
+  </div>

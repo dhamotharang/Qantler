@@ -1,0 +1,17 @@
+.home-search-section {
+  margin: 20px;
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 0px;
+  }
+  .smart-search-section {
+    padding-top: 10px;
+    .search-label {
+      font-weight: 600;
+      color: #726236;
+    }
+  }
+  .create-btn-container {
+    padding-top: 15px;
+  }
+}

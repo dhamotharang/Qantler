@@ -1,0 +1,207 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+    <div class="form-title" [ngClass]="{'ar-rtl': lang !='en'}">
+      <ng-container *ngIf="mode == 'create'">
+        {{ lang == 'en' ? 'VEHICLE CREATION' : arabic('vehiclecreation') }}
+      </ng-container>
+      <ng-container *ngIf="mode == 'view'">
+          {{ lang == 'en' ? 'VEHICLE VIEW' : arabic('VehicleView') }}
+      </ng-container>
+    </div>
+    <form [formGroup]="vehicleFormGroup" autocomplete="off">
+      <div class="container-fluid page-form-content py-2">
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group col-12 col-md-4" *ngIf="mode=='view'">
+            <label for="Department"> {{ lang == 'en' ? 'Office/ Department' : arabic('departmentslashoffice') }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="Department"
+              id="Department">
+          </div>
+          <div class="form-group col-12 col-md-4" *ngIf="mode=='view'">
+            <label for="CreatedBy">{{ lang == 'en' ? 'Name of the User' : arabic('nameoftheuser')}}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="CreatedBy" >
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'required':!vehicleFormGroup.get('PlateNumber').disabled}">
+            <label for="Plate Number">{{ lang == 'en' ? 'Plate Number' : arabic('platenumber') }}</label>
+            <input type="text" class="form-control"
+              formControlName="PlateNumber" id="PlateNumber">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'required':!vehicleFormGroup.get('PlateNumber').disabled}">
+            <label for="Plate Color">{{ lang == 'en' ? 'Plate Colour' : arabic('platecolour') }}</label>
+            <input type="text" class="form-control"
+              formControlName="PlateColor" id="Plate Color">
+          </div>
+          
+        </div>
+        <hr *ngIf="mode=='view'">
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+        <!-- <div class="form-group col-md-4 col-12 required">
+          <label for="Vehicle Name">{{ lang == 'en' ? 'Vehicle Name' : arabic('vehiclename') }}</label>
+          <input type="text" class="form-control"
+            formControlName="VehicleName" id="Vehicle Name">
+        </div> -->
+        <div class="form-group col-12 col-md-4" [ngClass]="{ required: 'true' }">
+          <label for="Source OU">{{ lang=='en' ? 'Is it Alternative Vehicle?' : arabic('isitalternativevehicle?') }}</label>
+          <div class="col-12 radioSec">
+            <input type="radio" name="IsAlternativeVehicle" id="annual" (change)="radioChange($event)" value="true" formControlName="IsAlternativeVehicle">
+              {{ lang == 'en' ? 'Yes' : arabic('yes') }}
+            <input class="ml-2" type="radio" checked="checked" (change)="radioChange($event)" name="IsAlternativeVehicle" id="other" formControlName="IsAlternativeVehicle" value="false">
+              {{ lang == 'en' ? 'No' : arabic('no') }}
+          </div>
+        </div>
+        </div>
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group col-md-4 col-12 required">
+            <label for="Vehicle Make">{{ lang == 'en' ? 'Vehicle Make' : arabic('vehiclemake') }}</label>
+            <input type="text" class="form-control"
+              formControlName="VehicleMake" id="Vehicle Make">
+          </div>
+          <div class="form-group col-md-4 col-12 required">
+            <label for="VehicleModel">{{ lang == 'en' ? 'Vehicle Model' : arabic('vehiclemodel') }}</label>
+            <input type="text" class="form-control"
+              formControlName="VehicleModel" id="VehicleModel">
+          </div>
+          <div class="form-group col-md-4 col-12 required">
+            <label for="YearOfManufacture">{{ lang == 'en' ? 'Year of Manufacture' : arabic('yearofmanufacture') }}</label>
+            <input type="number"  (keypress)="numberOnly($event)" min="0" step="1" class="form-control"
+              formControlName="YearOfManufacture" id="YearOfManufacture">
+          </div>
+        </div>
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group col-md-4 col-12 required">
+            <label for="CarCompanyID">{{ lang == 'en' ? 'Rent a Car Company' : arabic('rentacarcompany') }}</label>
+            <ng-select [items]="carCompanyList"
+              [closeOnSelect]="true"
+              bindLabel="CompanyName"
+              bindValue="CarCompanyID"
+              formControlName="CarCompanyID"
+              id="CarCompanyID">
+            </ng-select>
+          </div>
+          <div class="form-group col-md-4 col-12 required" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="Contract Number">{{ lang == 'en' ? 'Contract Number' : arabic('contractnumber') }}</label>
+            <input  class="form-control" type="text"
+              formControlName="ContractNumber" id="ContractNumber">
+          </div>
+          <div class="form-group col-md-4 col-12" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="Contract Duration">{{ lang == 'en' ? 'Contract Duration(In years)' : arabic('contractduration') }}</label>
+            <input type="text" class="form-control"
+              formControlName="ContractDuration" min="0" step="1" id="ContractDuration">
+          </div>
+        </div>
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group col-md-4 col-12 required" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="ContractStartDate">{{ lang == 'en' ? 'Contract Start Date' : arabic('contractstartdate') }}</label>
+            <input type="text"
+              class="form-control"
+              formControlName="ContractStartDate"
+              id="ContractStartDate"
+              [maxDate]='maxDate(0)'
+              bsDatepicker
+              #csdp="bsDatepicker"
+              [bsConfig]="bsConfig"
+              (bsValueChange)="dateChange($event,'start')">
+              <div (click)="csdp.toggle()">
+                <i class="far fa-calendar date start"></i>
+              </div>              
+              <div class="col-12" class="text-danger">
+                <ng-container *ngIf="!checkStartEndDiff()">
+                  {{ validateStartEndDate.msg }}
+                </ng-container>
+              </div>
+          </div>
+          <div class="form-group col-md-4  col-12 required" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="ContractEndDate">{{ lang == 'en' ? 'Contract End Date' : arabic('contractenddate') }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [minDate]="minDate(0)"
+                formControlName="ContractEndDate" id="ContractEndDate"
+                bsDatepicker #cedp="bsDatepicker" 
+                [bsConfig]="bsConfig" 
+                (bsValueChange)="dateChange($event,'end')">
+              <div (click)="cedp.toggle()" >
+                <i class="far fa-calendar date"></i>
+              </div>
+              <!-- <div *ngIf="mode != 'create'">
+                <i class="far fa-calendar date"></i>
+              </div> -->
+              <div class="col-12" class="text-danger">
+                <ng-container *ngIf="!checkStartEndDiff()">
+                  {{ validateStartEndDate.msg }}
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-12 required">
+            <label for="VehicleRegistrationNumber">{{ lang == 'en' ? 'Vehicle Registration Number' : arabic('vehivleregistrationnumber') }}</label>
+            <input type="text" class="form-control"
+              formControlName="VehicleRegistrationNumber" id="VehicleRegistrationNumber">
+          </div>
+        </div>
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group required col-md-4 col-12">
+            <label for="VehicleRegistrationExpiry">{{ lang == 'en' ? 'Vehicle Registration Expiry' : arabic('vehicleregistrationexpiry') }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control"
+              formControlName="VehicleRegistrationExpiry" id="VehicleRegistrationExpiry"  bsDatepicker #vrdp="bsDatepicker" [bsConfig]="bsConfig">
+              <div (click)="vrdp.toggle()">
+                <i class="far fa-calendar date"></i>
+              </div>
+              <!-- <div *ngIf="mode != 'create'">
+                <i class="far fa-calendar date"></i>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-12 required" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="Next Service">{{ lang == 'en' ? 'Next Service' : arabic('nextservice') }}</label>
+            <input class="form-control"
+              formControlName="NextService" id="Next Service" type="number" (keypress)="numberOnly($event)" min="0" step="1">
+          </div>
+          <div class="form-group col-md-4 col-12 required" *ngIf="(vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <label for="Tyre Change">{{ lang == 'en' ? 'Tyre Change' : arabic('tyrechange') }}</label>
+            <input class="form-control"
+              formControlName="TyreChange" id="Tyre Change" type="number" (keypress)="numberOnly($event)" min="0" step="1">
+          </div>
+        </div>
+        <div class="row" [ngClass]="{'ar-rtl': lang !='en'}">
+          <div class="form-group col-12 required">
+            <div class="comment-section-content">
+              <label for="Notes">{{ lang == 'en' ? 'Notes' : arabic('notes') }}</label>
+              <textarea class="form-control vertical-resize" formControlName="Notes" id="Notes"
+              placeholder="" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row px-3 justify-content-center btn-row">
+          <div class="col-auto p-1" *ngIf="mode == 'create'">
+              <button class="rounded-btn" type="button" [disabled]="isApiLoading || !vehicleFormGroup.valid || !checkStartEndDiff()" [ngClass]="{'disabled-btn':!vehicleFormGroup.valid || isApiLoading || !checkStartEndDiff()}"  (click)="modifyVehicleDetails()">
+                  {{ lang == 'en' ? 'SUBMIT' : arabic('submit') }}
+              </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="mode == 'view' && (vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading || !vehicleFormGroup.valid || !checkStartEndDiff()" [ngClass]="{'disabled-btn':!vehicleFormGroup.valid || isApiLoading || !checkStartEndDiff()}"  (click)="openLogModal('service')">
+                {{ lang == 'en' ? 'LOG A SERVICE' : arabic('logaservice') }}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="mode == 'view' && (vehicleFormGroup.value.IsAlternativeVehicle == 'false' || vehicleFormGroup.value.IsAlternativeVehicle == false)">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading || !vehicleFormGroup.valid || !checkStartEndDiff()" [ngClass]="{'disabled-btn':!vehicleFormGroup.valid || isApiLoading || !checkStartEndDiff()}"  (click)="openLogModal('tyre')">
+                {{ lang == 'en' ? 'LOG A TYRE CHANGE' : arabic('logatyrechange') }}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="mode == 'view'">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading || !vehicleFormGroup.valid || !checkStartEndDiff()" [ngClass]="{'disabled-btn':!vehicleFormGroup.valid || isApiLoading || !checkStartEndDiff()}"   (click)="openLogModal('fine')">
+                {{ lang == 'en' ? 'LOG A FINE' : arabic('logafine') }}
+            </button>
+          </div>
+          <div class="col-auto p-1" *ngIf="mode == 'view'">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading || !vehicleFormGroup.valid || !checkStartEndDiff()" [ngClass]="{'disabled-btn':!vehicleFormGroup.valid || isApiLoading || !checkStartEndDiff()}"  (click)="modifyVehicleDetails()">
+                {{ lang == 'en' ? 'UPDATE' : arabic('update') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+

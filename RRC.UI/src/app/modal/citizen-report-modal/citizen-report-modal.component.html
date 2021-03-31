@@ -1,0 +1,74 @@
+<div dir="auto" class="modal-header modalclass modal-lg">
+  <h4 class="modal-title pull-left">{{(language=='ar')?arabic('report'):'Report'}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':language=='ar'}" aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body">
+  <div class="row">
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="status">{{(language=='ar')?arabic('status'):'Status'}}</label>
+      <ng-select [items]="statusOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="DisplayName"
+        bindValue="DisplayName" [(ngModel)]="report.status">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="SourceOU">{{(language=='ar')?arabic('referencenumber'):'Reference Number'}}</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="report.referenceNumber">
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="status">{{(language=='ar')?arabic('requesttype'):'Request Type'}}</label>
+      <ng-select [items]="requestList" [closeOnSelect]="true" [multiple]="false" bindLabel="name" bindValue="name"
+        [(ngModel)]="report.requestType">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="Date Range From">{{(language=='ar')?arabic('requestdatefrom'):'Request Date From'}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [maxDate]="maxDate(report.requestDateRangeTo)" bsDatepicker
+          #dpFrom="bsDatepicker" [bsConfig]="bsConfig" [(ngModel)]="report.requestDateRangeFrom">
+        <div (click)="dpFrom.toggle()">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+      <div class="col-12" class="text-danger">
+        <ng-container *ngIf="dateValidation()">
+          {{ validateStartEndDate.msg }}
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="Date Range From">{{(language=='ar')?arabic('requestdateto'):'Request Date To'}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control" [minDate]="minDate(report.requestDateRangeFrom)" bsDatepicker
+          #dpTo="bsDatepicker" [bsConfig]="bsConfig" [(ngModel)]="report.requestDateRangeTo">
+        <div (click)="dpTo.toggle()">
+          <i class="far fa-calendar date"></i>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="source">{{(language=='ar')?arabic('sourcename'):'Source Name'}}</label>
+      <ng-select [items]="userList" [closeOnSelect]="true" [multiple]="false" bindLabel="EmployeeName"
+        bindValue="EmployeeName" [(ngModel)]="report.sourcename">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="name">{{(language=='ar')?arabic('personal/locationname'):'Personal/Location Name'}}</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="report.personalLocationName">
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="name">{{(language=='ar')?arabic('phonenumber'):'Phone Number'}}</label>
+      <input type="number" class="form-control" id="name" [(ngModel)]="report.phoneNumber">
+    </div>
+    <div class="form-group col-sm-6 col-md-4 col-12" [ngClass]="(language=='ar')?'ar-rtl':''">
+      <label for="name">{{(language=='ar')?arabic('smartsearch'):'Smart Search'}}</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="report.smartSearch">
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn"
+      (click)="Download()">{{(language=='ar')?arabic('downloadexcel'):'Download Excel'}}</button>
+  </div>

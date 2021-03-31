@@ -1,0 +1,18 @@
+<div class="" *ngIf="albums.length>0">
+  <div class="row">
+    <div class="col-12 col-md-3 pb-3 pb-md-0 padding-top-container" *ngFor="let image of albums; let i=index">
+        <img class="gallery-card each-image" [src]="image.src" (click)="open(i)" />
+        <div class="image-caption">{{image.caption}}</div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <ng-container>
+        <ngb-pagination *ngIf="config.paging" class="justify-content-right page-top paging" [(page)]="page"
+          [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="totalItems" [rotate]="false"
+          (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event">
+        </ngb-pagination>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div *ngIf="albums.length == 0" class="emptyRow"> <span>{{lang=='en' ? 'No data to display' : arabic('noItemsFound')}}</span> </div>
+

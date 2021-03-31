@@ -1,0 +1,100 @@
+<div class="comment-section-container">
+  <ng-container *ngFor="let comment of commentSectionArr; let commInd = index">
+    <div class="row" *ngIf="comment.CreatedDateTime && comment.Action && comment.CreatedBy">
+      <div class="col-auto" *ngIf="lang == 'en'">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+          {{comment.CreatedDateTime | date: 'hh:mm a'}} / {{comment.CreatedDateTime | date: 'dd/MM/yyyy'}}
+        </div>
+      </div>
+      <div class="col-auto" *ngIf="lang == 'ar'">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+          {{comment.CreatedDateTime | date: 'dd/MM/yyyy'}} / {{comment.CreatedDateTime | date: 'hh:mm'}} {{(comment.CreatedDateTime | date: 'a')=='AM'?commonService.arabic.words['am']:commonService.arabic.words['pm']}}
+        </div>
+      </div>
+      <div class="col p-2" [ngClass]="{'text-right': lang == 'ar'}">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'text-right': lang == 'ar'}">{{hisLog(comment.Action)}} : {{comment.CreatedBy}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row comment-section-area" *ngIf="comment.Message">
+      <div class="col-2 com-md-2 profile" >
+        <div class="comment-section-img">
+          <img src="{{comment.Photo}}" class="user-ProfileImg"/>
+        </div>
+      </div>
+      <div class="col-10 col-md-10 comment-text" [ngClass]="{'text-right': lang == 'ar'}">
+        <div class="comment-section-user-info">
+          <p class="comment-section-username">{{comment.CreatedBy}}</p>
+          <p class="comment-section-timeline">
+            <ng-container *ngIf="(parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) > sevenDayDuration">
+              {{comment.CreatedDateTime | date: 'hh:mm a'}} - {{comment.CreatedDateTime | date: 'dd/MM/yyyy'}}
+            </ng-container>
+            <ng-container *ngIf="(parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) < sevenDayDuration">
+              <ng-container *ngIf="(parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) < oneDayDuration">
+                {{comment.CreatedDateTime | date: 'hh:mm a'}} - {{ lang == 'en' ? 'Today' : commonService.arabic.words['today']}}
+              </ng-container>
+              <ng-container *ngIf="((parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) < twoDayDuration) && (parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) > oneDayDuration">
+                {{comment.CreatedDateTime | date: 'hh:mm a'}} - {{ lang == 'en' ? 'Yesterday' : commonService.arabic.words['yesterday']}}
+              </ng-container>
+              <ng-container *ngIf="(parseDate().getTime() - parseDate(comment.CreatedDateTime).getTime()) > twoDayDuration">
+                {{comment.CreatedDateTime | date: 'hh:mm a'}} - {{ lang == 'en' ? (comment.CreatedDateTime | date: 'EEEE') : commonService.arabic.words[(comment.CreatedDateTime | date: 'EEEE').trim().toLowerCase()]}}
+              </ng-container>
+            </ng-container>
+          </p>
+        </div>
+        <div class="comment-section-content">
+          {{comment.Message}}
+        </div>
+        <div class="comment-reply-section">
+          <app-comment-section
+            [comments]="comment.Replies"
+            [commentType]="commentType"
+            [moduleId]="moduleId"
+            [moduleNameID]="moduleNameID"
+            *ngIf="comment.Replies">
+          </app-comment-section>
+          <span class="reply-text-label"
+            (click)="comment.showReplyContent = true"
+            *ngIf="!comment.showReplyContent && !comment.hideReply && !readOnly">
+            {{ lang !='ar' ? 'Reply' : commonService.arabic.words['reply'] }}
+          </span>
+          <div class="comment-section-content" *ngIf="comment.showReplyContent && !readOnly">
+            <div class="row">
+              <div class="col-12 col-md-12">
+                <textarea class="form-control vertical-resize"
+                  [(ngModel)]="comment.replyContent"
+                  placeholder=""
+                  rows="2">
+                </textarea>
+              </div>
+              <div class="col-12 col-md-12">
+                <button
+                  class="rounded-btn comment-reply-btn"
+                  [disabled]="InProgress"
+                  [ngClass]="{'disabled-btn': InProgress}"
+                  (click)="sendReply(comment)">
+                  <i class="fa fa-paper-plane"></i>
+                  {{ lang !='ar' ? 'ADD COMMENT' : commonService.arabic.words['addcomment'] }}
+                </button>
+                <button class="rounded-btn comment-reply-btn"
+                  (click)="clearReplySection(comment)">
+                  <i class="fa fa-times"></i>
+                  {{ lang !='ar' ? 'CANCEL' : commonService.arabic.words['cancel'] }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <hr
+          class="comment-line-separator " *ngIf="!(comment.hideReply && (commInd == (commentSectionArr.length -1) || readOnly))">
+      </div>
+    </div>
+  </ng-container>
+</div>

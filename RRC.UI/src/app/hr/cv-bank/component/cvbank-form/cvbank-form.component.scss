@@ -1,0 +1,21 @@
+.cv-bank-container {
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 0px;
+  }
+  .btn-close {
+    margin: 30px;
+  }
+  .cursor {
+    cursor: pointer;
+    color: #bea76c;
+    text-decoration: underline;
+    word-wrap: break-word;
+  }
+  .action {
+    span {
+      cursor: pointer;
+      vertical-align: middle;
+    }
+  }
+}

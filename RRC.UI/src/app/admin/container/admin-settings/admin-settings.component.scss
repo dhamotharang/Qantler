@@ -1,0 +1,111 @@
+@import '../../../../styles.scss';
+
+.admin-page-accordions{
+    .notification-group{
+        .mail-reminder{
+            .hours-input{
+                width: 75px;
+                display: inline-block;
+                margin: 0 10px;
+            }
+
+            .holidays-input{
+                width:70%;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.row-separator{
+    margin-bottom: 15px;
+}
+.page-form-wrapper{
+    padding-bottom:0px;
+}
+
+.approver-list-container{
+    min-height: 275px;
+}
+
+.approver-exchange-margin{
+    margin-top:30px;
+}
+
+.form-title-header{
+    font-size:16px;
+    .admin-accordion-toggle-icon{
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.col-btn{
+  margin-top: 30px;
+  @media (max-width: 767px) {
+    margin-top: 8px;
+  }
+}
+
+.disabled-btn{
+    opacity: 0.5;
+    cursor: no-drop;
+}
+
+.modalclass{
+    background: #726236;
+    color : white;
+}
+
+.break-word{
+    word-break: break-all;
+}
+
+.attachment-delete-icon{
+    border: none;
+    border-radius: 10%;
+    background: transparent;
+    // color:red;
+    cursor: pointer;
+}
+
+
+.col-left-0{
+    padding-left: 0px;
+}
+
+.col-right-0{
+    padding-right: 0px;
+}
+
+.m-t-5{
+    margin-top: 5px;
+}
+
+.table-edit {
+    border: none;
+    border-radius: 10%;
+    background: #06cfff;
+    color: white;
+}
+
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 2.25rem;
+}
+
+.allow-dropdown-overflow{
+    .panel-collapse.collapse.in.show{
+        overflow: visible;
+    }
+}
+
+.approver-list-container {
+  ng-select ng-dropdown-panel {
+    position: relative !important;
+    opacity: 0 !important;
+    @media screen and (max-width: 768px) {
+    }
+  }
+}

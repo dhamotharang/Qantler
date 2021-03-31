@@ -1,0 +1,57 @@
+<div dir="auto" class="modal-header modalclass modal-lg">
+  <h4 class="modal-title pull-left">{{ lang == 'en' ? 'Report' : arabic('report')}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'m-0 p-0': lang == 'ar'}" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+  <div dir="auto" class="modal-body">
+    <div class="row" [ngClass]="{'text-right':lang == 'ar'}">
+      <div class="form-group col-sm-4">
+        <label for="status">
+          <ng-container *ngIf="lang == 'en'"> Plate Number </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('platenumber')}} </ng-container>
+        </label>
+        <ng-select class="approverDept-ddown" [items]="plateNumberList" [(ngModel)]="reportFilter.PlateNumber"  [closeOnSelect]="true" bindLabel="DisplayName" bindValue="DisplayName" bindValue="DisplayName">
+        </ng-select>
+      </div>
+
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">
+          <ng-container *ngIf="lang == 'en'">  Plate Colour </ng-container>
+          <ng-container *ngIf="lang == 'ar'"> {{arabic('platecolour')}} </ng-container>
+        </label>
+        <ng-select class="approverDept-ddown" [items]="plateColourList" [(ngModel)]="reportFilter.PlateColor" [closeOnSelect]="true" bindLabel="name" bindValue="reqtype">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+          <label for="SourceOU">
+            <ng-container *ngIf="lang == 'en'">Department/Office</ng-container>
+            <ng-container *ngIf="lang == 'ar'"> {{arabic('departmentslashoffice')}}  </ng-container>
+          </label>
+          <ng-select class="approverDept-ddown" [items]="departmentList" [(ngModel)]="reportFilter.DepartmentOffice" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID" placeholder="{{ lang == 'en' ? 'Select Requestor' : arabic('requestorname') }}">
+          </ng-select>
+      </div>
+  </div>
+  <div class="row" [ngClass]="{'text-right':lang == 'ar'}">
+    <div class="form-group col-sm-4">
+      <label for="name">
+        <ng-container *ngIf="lang == 'en'"> Alternative Vehicle </ng-container>
+        <ng-container *ngIf="lang == 'ar'"> {{arabic('alternativevehicle')}} </ng-container>
+      </label>
+      <ng-select class="approverDept-ddown" [items]="alternativeVehicleList" [(ngModel)]="reportFilter.AlternativeVehicle" [closeOnSelect]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID">
+      </ng-select>
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="name">
+        <ng-container *ngIf="lang == 'en'">  Smart Search </ng-container>
+        <ng-container *ngIf="lang == 'ar'"> {{arabic('smartsearch')}} </ng-container>
+      </label>
+        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="reportFilter.SmartSearch" id="name">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn"
+      (click)="downloadExcel()">{{(lang!='en')?arabic('downloadexcel'):'Download Excel'}}</button>
+  </div>
+</div>
+    

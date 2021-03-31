@@ -1,0 +1,102 @@
+@import '../../../../styles.scss';
+
+.admin-page-accordions{
+    .notification-group{
+        .mail-reminder{
+            .hours-input{
+                width: 75px;
+                display: inline-block;
+                margin: 0 10px;
+            }
+
+            .holidays-input{
+                width:70%;
+                display: inline-block;
+            }
+        }
+    }  
+}
+
+.row-separator{
+    margin-bottom: 15px;
+}
+.page-form-wrapper{
+    padding-bottom:0px;
+}
+
+.approver-list-container{
+    min-height: 275px;
+}
+
+.approver-exchange-margin{
+    margin-top:30px;
+}
+
+.form-title-header{
+    font-size:16px;
+    text-align: right;
+    .admin-accordion-toggle-icon{
+        font-weight: bold;
+        cursor: pointer;    
+    }
+}
+
+.col-btn{    
+    margin-top: 30px;
+    @media (max-width: 767px) {
+      margin-top: 8px;
+    }
+}
+
+.disabled-btn{
+    opacity: 0.5;
+    cursor: no-drop;
+}
+
+.modalclass{
+    background: #726236;
+    color : white;
+}
+
+.break-word{
+    word-break: break-all;
+}
+
+.attachment-delete-icon{
+    border: none;
+    border-radius: 10%;
+    background: transparent;
+    // color:red;
+    cursor: pointer;
+}
+
+.label-right{
+    text-align: right;
+}
+
+.rounded-btn{
+    margin-right:5px;
+}
+
+.table-edit {
+    border: none;
+    border-radius: 10%;
+    background: #06cfff;
+    color: white;
+}
+
+.employee-edit-form {
+  .form-check {
+    .form-check-label {
+      margin-right: 1.5rem !important;
+    }
+  }
+}
+
+.tright {
+  text-align: right !important;
+}
+
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  text-align: right !important;
+}

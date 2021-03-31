@@ -1,0 +1,28 @@
+.request-details {
+  height: 100px !important;
+}
+#priority-low {
+  margin-left: 15px;
+}
+.it-request-submit {
+  padding: 30px 0 20px 0;
+}
+.it-support-desription {
+  color: gray;
+}
+.status-update-text {
+  font-weight: 600;
+}
+.refresh-div{
+  display: flex;
+  .refresh-btn {
+    position: relative;
+    background: #A39161;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 6px 7px;
+    margin-left: 5px;
+    margin-top: -5px;
+  }
+}

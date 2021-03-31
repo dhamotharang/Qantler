@@ -1,0 +1,892 @@
+<accordion class="admin-page-accordions " [closeOthers]="false" [isAnimated]="false">
+  <accordion-group class="notification-group page-form-wrapper mb-3"  [isOpen]="notificationSection" (isOpenChange)="notificationToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">Mail Notification</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{notificationSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="form-group mail-reminder col-sm-6">
+          <span for="hours">Mail Reminder Frequency</span>
+          <input type="number" name="hours" class="form-control inputwidth hours-input" id="hours" placeholder="" min="1" step="0.5" [(ngModel)]="notification.hours"> hours
+          <button class="rounded-btn" [disabled]="!notification.hours || isApiLoading" [ngClass]="{'disabled-btn': (!notification.hours) || isApiLoading}" (click)="saveMailReminderHours()">
+            <ng-container *ngIf="lang == 'en'">
+              Save
+            </ng-container>
+            <ng-container *ngIf="lang == 'ar'">
+              {{arabicService.words[removeWordSpaces(('Save').trim().toLowerCase())]}}
+            </ng-container>
+          </button>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="approver-group allow-dropdown-overflow page-form-wrapper mb-3" [ngClass]="{'user-list-available':(departmentUserList.length > 0) && departmentSelect}" [isOpen]="approverSection" (isOpenChange)="approverToggle($event)">
+    <div class="form-title" accordion-heading >
+      <div class="row form-title-header">
+        <div class="col mouse-point">Approvers</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{approverSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-md-6 col-12">
+              <span>Office/Department</span>
+              <ng-select
+                [items]="departmentList"
+                bindLabel="DepartmentName"
+                bindValue="DepartmentID"
+                placeholder=""
+                [closeOnSelect]="true"
+                (change)="getAllUsersByDepartment()"
+                [(ngModel)]="departmentSelect"
+                class="department-select">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator approver-dropdown" 
+            *ngIf="departmentSelect"
+            [ngClass]="{'approver-list-container':(departmentList.length > 0) || (departmentUserList.length > 0) && departmentSelect}">
+            <div class="col-md-5 ngselect">
+              <ng-select
+                [items]="departmentUserList"
+                bindLabel="EmployeeName"
+                placeholder=""
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [isOpen]="isUserListSet"
+                dropdownPosition="bottom"
+                [virtualScroll]="false"
+                [(ngModel)]="toBeApprovers"
+                class="app-multiselect-dropdown"
+                (search) = "onUserListSearch($event)">
+              </ng-select>
+            </div>
+            <div class="col-md-2 text-center" [ngClass]="{'approver-exchange-margin':isUserListSet && departmentSelect}">
+              <div class="row">
+                <div class="col-6 col-md-12 row-separator">
+                  <button class="rounded-btn" (click)="moveToApproverList()">
+                    <i class="fa fa-chevron-right d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-right d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-down d-block d-sm-none"></i>
+                    <i class="fa fa-chevron-down d-block d-sm-none"></i>
+                  </button>
+                </div>
+                <div class="col-6 col-md-12">
+                  <button class="rounded-btn" (click)="moveToAllUserList()">
+                    <i class="fa fa-chevron-left d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-left d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-up d-block d-sm-none"></i>
+                    <i class="fa fa-chevron-up d-block d-sm-none"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 ngselect">
+              <ng-select
+                [items]="approverList"
+                bindLabel="EmployeeName"
+                placeholder=""
+                [closeOnSelect]="false"
+                [multiple]="true"
+                [isOpen]="isUserListSet"
+                dropdownPosition="bottom"
+                [virtualScroll]="false"
+                class="app-multiselect-dropdown"
+                [(ngModel)]="approvedUsers">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator" *ngIf="departmentSelect">
+            <div class="col-12 text-right">
+              <button class="rounded-btn"
+                [disabled]="(approverList && approverList.length <= 0) || !isModified || isApiLoading"
+                [ngClass]="{'disabled-btn': (approverList.length <= 0) || !isModified || isApiLoading}"
+                (click)="saveApproversList()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="page-form-wrapper mb-3" [isOpen]="dropDownTypeSection" (isOpenChange)="dropDownToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header" >
+        <div class="col mouse-point">Master Data</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{dropDownTypeSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-12 col-md-6">
+              <label>Type</label>
+              <ng-select
+                [items]="dropDownTypeList"
+                bindLabel="label"
+                placeholder=""
+                [closeOnSelect]="true"
+                dropdownPosition="bottom"
+                [(ngModel)]="dropDownType"
+                (change)="getDropDownTypeList('typeChange')">
+              </ng-select>
+            </div>
+            <div class="col-auto col-btn">
+              <button class="rounded-btn"
+                [disabled]="(!dropDownType) || isApiLoading"
+                [ngClass]="{'disabled-btn': (!dropDownType) || isApiLoading}"
+                (click)="openAddEditDropDownValueModal('add')">
+                <ng-container *ngIf="lang == 'en'">
+                  Add
+                </ng-container>
+                <ng-container *ngIf="lang == 'ar'">
+                  {{arabicService.words[removeWordSpaces(('Add').trim().toLowerCase())]}}
+                </ng-container>
+              </button>
+            </div>
+          </div>
+          <div class="row row-separator">
+            <div class="col-12">
+              <div class="page-form-wrapper mb-3">
+                <div class="form-title">
+                  <ng-container *ngIf="lang == 'en'">
+                      FILTER BY
+                  </ng-container>
+                  <ng-container *ngIf="lang == 'ar'">
+                      {{arabicService.words[removeWordSpaces(('Filter By').trim().toLowerCase())]}}
+                  </ng-container>
+                </div>
+                <div class="container-fluid page-form-body py-2">
+                  <div class="row">
+                    <div class="form-group col-sm-4">
+                      <label for="power">
+                        <ng-container *ngIf="lang == 'en'">
+                          Value
+                        </ng-container>
+                        <ng-container *ngIf="lang == 'ar'">
+                          {{arabicService.words[removeWordSpaces(('Value').trim().toLowerCase())]}}
+                        </ng-container>
+                      </label>
+                      <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder="" [(ngModel)]="filterBy.Value">
+                    </div>
+                    <div class="form-group col-auto col-btn">
+                      <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}" (click)="getDropDownTypeList()">
+                        <ng-container *ngIf="lang == 'en'">
+                          Search
+                        </ng-container>
+                        <ng-container *ngIf="lang == 'ar'">
+                          {{arabicService.words[removeWordSpaces(('Search').trim().toLowerCase())]}}
+                        </ng-container>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="page-form-wrapper mb-3 d-md-block d-none">
+                <ngx-datatable style="width: 100%"
+                  class="bootstrap"
+                  [rows]="rows"
+                  [columns]="columns"
+                  [headerHeight]="50"
+                  [messages]="noItemsMessage"
+                  [columnMode]="'force'"
+                  [rowHeight]="'auto'">
+                </ngx-datatable>
+                <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+                  <div class="table-action-btn" *ngIf="!(selectedType == 13 && (row.LookupsID == 4 || row.LookupsID == 5))">
+                    <button class="table-edit" name="edit" (click)="openAddEditDropDownValueModal('edit',row)">
+                      <i class="fas fa-edit" style="cursor: pointer;"></i></button>
+                      <button (click)="openDeleteDropDownValueModal(row)" class="attachment-delete-icon" name="Delete" ><i
+                        class="fas fa-trash-alt" ></i></button>
+                  </div>
+                </ng-template>
+                <!-- <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+                    [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+                    (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination> -->
+              </div>
+              <div class="d-block d-md-none">
+                <div class="card shadow page-form-wrapper my-3 d-block d-md-none"
+                  *ngFor="let dropDownrow of rows">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-12">
+                        <span><b>Type : </b></span>
+                        <span>{{dropDownrow.Type}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row mar-top">
+                      <div class="col-6">
+                        <span><b>English Value : </b></span>
+                        <span>{{dropDownrow.DisplayName}}</span>
+                      </div>
+                      <div class="col-6">
+                        <span><b>Arabic Value : </b></span>
+                        <span>{{dropDownrow.ArDisplayName}}</span>
+                      </div>
+                    </div>
+                    <div class="row mar-top py-2">
+                      <div class="col-12 text-right"
+                        *ngIf="!(selectedType == 13 && (dropDownrow.LookupsID == 4 || dropDownrow.LookupsID == 5))"
+                        >
+                        <button
+                          class="table-view edit-btn table-edit"
+                          (click)="openAddEditDropDownValueModal('edit',dropDownrow)"
+                          name="edit" >
+                          <i class="fas fa-edit" style="cursor: pointer;"></i>
+                        </button>
+                        <button
+                          (click)="openDeleteDropDownValueModal(dropDownrow)"
+                          class="attachment-delete-icon"
+                          name="Delete" >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container footer *ngIf="config.totalItems > 0">
+                  <ngb-pagination *ngIf="config.totalItems > 0" (pageChange)="onChangePage(config, $event)" class="d-flex justify-content-center page-top" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [maxSize]="config.maxSize" (numPages)="numPages = $event"></ngb-pagination>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group
+    class="page-form-wrapper mb-3"
+    [isOpen]="userManagementSection"
+    (isOpenChange)="userManagementToggle($event)">
+    <div class="form-title" accordion-heading >
+      <div class="row form-title-header">
+        <div class="col mouse-point">User Management</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{userManagementSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-12 col-md-6">
+              <span>Search</span>
+              <ng-select
+              [items]="allUserList"
+              bindLabel="EmployeeName"
+              bindValue="EmployeeName"
+              placeholder=""
+              [closeOnSelect]="true"
+              dropdownPosition="bottom"
+              [(ngModel)]="userSearch"
+              (change)="getUserManagementListData()">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator">
+            <div class="col-12">
+              <div class="page-form-wrapper mb-3 d-md-block d-none">
+                <ngx-datatable  style="width: 100%" class="bootstrap" [rows]="userManagementRows" [columns]="userManagementColumns" [headerHeight]="50"
+                  [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true">
+                  <ngx-datatable-column name="User Logon Name" >
+                    <ng-template
+                      let-row="row"
+                      let-value="value"
+                      ngx-datatable-cell-template>
+                      {{ row.EmployeeName }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Office/Department" >
+                    <ng-template
+                      let-row="row"
+                      let-value="value"
+                      ngx-datatable-cell-template>
+                      {{ row.Department }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Section" >
+                    <ng-template
+                      let-row="row"
+                      let-value="value"
+                      ngx-datatable-cell-template>
+                      {{row.Section}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Unit" >
+                    <ng-template
+                      let-row="row"
+                      let-value="value"
+                      ngx-datatable-cell-template>
+                      {{row.Unit}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Head Of Department" >
+                    <ng-template
+                      let-row="row"
+                      let-value="value"
+                      ngx-datatable-cell-template>
+                      {{row.HOD ? 'Yes': 'No'}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Head Of Section" >
+                    <ng-template
+                      let-rowIndex="rowIndex"
+                      let-row="row"
+                      ngx-datatable-cell-template
+                    >
+                      {{ row.HOS ? 'Yes':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Head Of Unit" >
+                    <ng-template
+                      let-rowIndex="rowIndex"
+                      let-row="row"
+                      ngx-datatable-cell-template
+                    >
+                      {{ row.HOU ? 'Yes':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Can Raise Official Request" >
+                    <ng-template
+                      let-rowIndex="rowIndex"
+                      let-row="row"
+                      ngx-datatable-cell-template>
+                      {{ row.CanRaiseOfficalRequest ? 'Yes':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Can Manage News / Photos / Banner" >
+                    <ng-template
+                      let-rowIndex="rowIndex"
+                      let-row="row"
+                      ngx-datatable-cell-template
+                    >
+                      {{ row.CanManageNews ? 'Yes':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Can Manage Contacts">
+                    <ng-template
+                      let-rowIndex="rowIndex"
+                      let-row="row"
+                      ngx-datatable-cell-template
+                    >
+                      {{ row.CanEditContact ? 'Yes':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Action">
+                    <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                      <div class="table-action-btn">
+                        <button class="table-edit" name="edit" (click)="openUserManagementEditModal(row)">
+                          <i class="fas fa-edit" style="cursor: pointer;"></i></button>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+                <ngb-pagination
+                  *ngIf="userManagementTableconfig.totalItems > 0"
+                  class="d-flex justify-content-center page-top"
+                  [(page)]="userManagementTableconfig.page"
+                  [maxSize]="userManagementTableconfig.maxSize"
+                  [pageSize]="userManagementTableconfig.itemsPerPage"
+                  [boundaryLinks]="true"
+                  [collectionSize]="userManagementTableconfig.totalItems"
+                  [rotate]="false"
+                  (pageChange)="onChangeUserPage()"
+                  (numPages)="numPages = $event">
+                </ngb-pagination>
+              </div>
+              <div class="d-block d-md-none">
+                <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let usrManRow of userManagementRows">
+                  <div class="card-header">
+                    <div class="row row-separator">
+                      <div class="col-12">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">User Logon Name : </ng-container>
+                          </b>
+                        </span>
+                        <span>{{usrManRow.EmployeeName}}</span></div>
+                      <div class="col-12"><span><b>
+                        <ng-container *ngIf="lang == 'en'">Department : </ng-container>
+                      </b></span><span>{{usrManRow.Department}}</span></div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Section :  </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.Section}}</span></div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Unit : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.Unit}}</span></div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Head Of Department :  </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOD ? 'Yes':'No'}}</span></div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Head Of Section : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOS ? 'Yes':'No'}}</span></div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Head Of Unit :  </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOU ? 'Yes':'No'}}</span>
+                      </div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Can Raise Official Request : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.CanRaiseOfficalRequest ? 'Yes':'No'}}</span></div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class = "col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Can Manage News / Photos / Banner : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.CanManageNews ? 'Yes':'No'}}</span>
+                      </div>
+                      <div class = "col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Can Manage Contacts : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.CanEditContact ? 'Yes':'No'}}</span>
+                      </div>
+                    </div>
+                    <div class = "col text-right">
+                      <button class="table-view edit-btn"  class="table-edit" (click)="openUserManagementEditModal(usrManRow)" name="edit" >
+                        <i class="fas fa-edit" style="cursor: pointer;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <ng-container footer *ngIf="userManagementTableconfig.totalItems > 0">
+                  <ngb-pagination
+                    *ngIf="userManagementTableconfig.totalItems > 0"
+                    [(page)]="userManagementTableconfig.page"
+                    (pageChange)="onChangeUserPage()"
+                    class="d-flex justify-content-center page-top"
+                    [pageSize]="userManagementTableconfig.itemsPerPage"
+                    [boundaryLinks]="true"
+                    [collectionSize]="userManagementTableconfig.totalItems"
+                    [maxSize]="userManagementTableconfig.maxSize"
+                    (numPages)="numPages = $event">
+                  </ngb-pagination>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="notification-group page-form-wrapper mb-3"  [isOpen]="holidaysSection" (isOpenChange)="holidaysToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">Holidays</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{holidaysSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label for="Attachments">Import Holidays List</label>
+          <input type="file" multiple class="form-control attachment"
+            name="Attachments" #fileInput accept=".xls,.xlsx,.csv" (change)="holidayAttachments($event)"  id="Attachments"
+            placeholder="Select file" />
+            <span class="text-danger" *ngIf="!isExcelImport">
+              Please upload an excel file.
+            </span>
+        </div>
+        <div class="form-group col-12 col-md-6 float-left">
+          <button class="rounded-btn col-btn"
+            [disabled]="(attachments && attachments.length <= 0) || isApiLoading"
+            [ngClass]="{'disabled-btn': (attachments.length <= 0) || isApiLoading}"
+            (click)="importHolidayAttachments()" >
+            Import
+          </button>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="uploadProcess">
+          <div class="progress">
+            <div class="progress-bar"
+              role="progressbar"
+              [ngStyle]="{'width':uploadPercentage+'%'}"
+              aria-valuenow="uploadPercentage"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              {{uploadPercentage}}%
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mb-2" *ngIf="attachments.length>0">
+          <label for="Keywords">Attachment List</label>
+          <div class="row mx-auto border font-weight-bold">
+            <div class="col border">File Name</div>
+            <div class="col border text-center">Action</div>
+          </div>
+          <div *ngFor="let file of attachments; let i = index">
+            <div class="row mx-auto">
+              <div class="col border">
+                <a class="cursor break-word"
+                href={{prepareDownloadUrl(file)}} target="_self" download>{{file.AttachmentsName}}</a>
+              </div>
+              <div class="col border text-center" *ngIf="file.currentUpload" >
+                <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mb-2" *ngIf="latestAttachment.length>0">
+          <div *ngFor="let file of latestAttachment; let i = index">
+            <div class="row mx-auto">
+              <div class="col">
+                <a class="cursor break-word"
+                href={{prepareDownloadUrl(file)}} target="_self" download>{{file.AttachmentsName}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-separator">
+        <div class="col-12 text-right">
+          <a [routerLink]="'/app/media/calendar-management/homepage'">Click to view holidays</a>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+</accordion>
+
+<ng-template #typeValueFormTemplate>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">{{typeFormTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="typeFormDataModel.Type.trim().toLowerCase() != 'Announcement Description'.trim().toLowerCase()">
+      <div class="form-group col-12 col-md-6">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'en'">
+            Type
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('Type').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder="" [(ngModel)]="typeFormDataModel.Type" [disabled]="true">
+      </div>
+
+      <div class="form-group col-12 col-md-6" *ngIf="typeFormDataModel.Type.trim().toLowerCase() == 'city'">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'en'">
+            Country
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('Country').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <ng-select
+          [items]="countryList"
+          bindLabel="CountryName"
+          bindValue="CountryID"
+          (change)="onChangeCountry()"
+          placeholder=""
+          [closeOnSelect]="true"
+          [(ngModel)]="typeFormDataModel.Country"
+        >
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6" *ngIf="typeFormDataModel.Type.trim().toLowerCase() == 'city'">
+        <label for="Type">
+          <ng-container>
+            Emirates
+          </ng-container>
+        </label>
+        <ng-select
+          [items]="emiratesList"
+          bindLabel="DisplayName"
+          bindValue="LookupsID"
+          (change)="onChangeEmirates()"
+          placeholder=""
+          [closeOnSelect]="true"
+          [(ngModel)]="typeFormDataModel.Emirates"
+        >
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6" *ngIf="typeFormDataModel.Type.trim().toLowerCase() != 'city'">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'en'">
+            English Value
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('English Value').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder="" [(ngModel)]="typeFormDataModel.Value">
+      </div>
+      <div class="form-group col-12 col-md-6" *ngIf="typeFormDataModel.Type.trim().toLowerCase() == 'city'">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'en'">
+            English Value
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('English Value').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder="" [(ngModel)]="typeFormDataModel.Value">
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'en'">
+            Arabic Value
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('Arabic Value').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <input type="text" name="arValue" class="form-control inputwidth" id="arValue" placeholder="" [(ngModel)]="typeFormDataModel.arValue">
+      </div>
+    </div>
+ <div class="row" *ngIf="typeFormDataModel.Type.trim().toLowerCase() == 'Announcement Description'.trim().toLowerCase()">
+  <div class="form-group col-12 col-md-6">
+    <label for="Type">
+      <ng-container *ngIf="lang == 'en'">
+        Type
+      </ng-container>
+      <ng-container *ngIf="lang == 'ar'">
+        {{arabicService.words[removeWordSpaces(('Type').trim().toLowerCase())]}}
+      </ng-container>
+    </label>
+    <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder="" [(ngModel)]="typeFormDataModel.Type" [disabled]="true">
+  </div>
+  
+  <div class="form-group col-12 col-md-6">
+    <label for="Type">
+      <ng-container>
+        Announcement Type
+      </ng-container>
+    </label>
+    <ng-select
+      [disabled] = "typeFormTitle == 'Edit Value'"
+      [items]="AnnouncementTypeNameList"
+      bindLabel="AnnouncementTypeName"
+      bindValue="AnnouncementTypeID"
+      (change)="onChangeAnnouncement()"
+      placeholder=""
+      [closeOnSelect]="true"
+      [(ngModel)]="typeFormDataModel.LookupsID">
+    </ng-select>
+  </div>
+
+  <div class="row py-3" style="padding: 10px;">
+    <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar'}">
+      <label> English Value</label>
+    </div>
+    <div class="col-12 d-md-block">
+      <tinymce [config]="tinyConfig" [(ngModel)]="typeFormDataModel.Value"></tinymce>
+    </div>
+    <div class="col-12 d-md-none">
+      <div class="tiny" #tinyDetail></div>
+    </div>
+</div>
+
+<div class="row py-3" style="padding: 10px;">
+  <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar'}">
+    <label> Arabic Value</label>
+  </div>
+  <div class="col-12 d-md-block">
+    <tinymce [config]="tinyConfig" [(ngModel)]="typeFormDataModel.arValue"></tinymce>
+  </div>
+  <div class="col-12 d-md-none">
+    <div class="tiny" #tinyDetail></div>
+  </div>
+</div>
+
+ </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" [disabled]="validateTypeDialog() || isApiLoading" [ngClass]="{'disabled-btn': validateTypeDialog() || isApiLoading}" (click)="saveDropDownValueData()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteTypeValue>
+  <div class="create-request-modal modal-header modalclass">
+    <h4 class="modal-title pull-left">Delete Value</h4>
+    <button type="button" class="close pull-right" (click)="closemodal()" aria-label="Close">
+      <span aria-hidden="true" >&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">Do You Really Want To Delete This Value?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="deleteDropDownValueData(toDeleteValue)">Yes</button>
+    <button type="button" class="rounded-btn" (click)="closemodal()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #editUserDataTemplate>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Edit User Details</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row row-separator">
+      <div class="form-group col-12 col-md-6">
+        <label for="Type">
+          User Logon Name
+        </label>
+        <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder="" [(ngModel)]="userManagementModel.EmployeeName" [disabled]="true">
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label>Office/Department</label>
+        <ng-select
+          [items]="departmentList"
+          bindLabel="DepartmentName"
+          bindValue="DepartmentID"
+          placeholder=""
+          [closeOnSelect]="true"
+          [(ngModel)]="userManagementModel.DepartmentID"
+          class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label>Section</label>
+        <ng-select
+          [items]="sectionList"
+          bindLabel="SectionName"
+          bindValue="SectionID"
+          placeholder=""
+          [closeOnSelect]="true"
+          [(ngModel)]="userManagementModel.SectionID"
+          class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label>Unit</label>
+        <ng-select
+          [items]="unitList"
+          bindLabel="UnitName"
+          bindValue="UnitID"
+          placeholder=""
+          [closeOnSelect]="true"
+          [(ngModel)]="userManagementModel.UnitID"
+          class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="HOD"
+          [(ngModel)]="userManagementModel.HOD" >
+          <label class="form-check-label" for="HOD">
+            Head Of Department
+          </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="HOS"
+          [(ngModel)]="userManagementModel.HOS">
+        <label class="form-check-label" for="HOS">
+          Head Of Section
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="HOU"
+          [(ngModel)]="userManagementModel.HOU" >
+        <label class="form-check-label" for="HOU">
+          Head Of Unit
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="CanRaiseOfficalRequest"
+          [(ngModel)]="userManagementModel.CanRaiseOfficalRequest">
+        <label class="form-check-label" for="CanRaiseOfficalRequest">
+          Can Raise Official Request
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="CanManageNews"
+          [(ngModel)]="userManagementModel.CanManageNews">
+        <label class="form-check-label" for="CanManageNews">
+          Can Manage News / Photos
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6">
+        <input type="checkbox"
+          class="form-check-input"
+          id="CanEditContact"
+          [(ngModel)]="userManagementModel.CanEditContact">
+        <label class="form-check-label" for="CanEditContact">
+          Can Manage Contacts
+        </label>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="balLeave">Balance Leave</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="userManagementModel.balanceLeave"
+          id="balLeave">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="saveUserManagementData()">Save</button>
+  </div>
+</ng-template>

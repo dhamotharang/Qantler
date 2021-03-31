@@ -1,0 +1,53 @@
+<div class="search-container">
+  <div class="page-form-wrapper mt-3 p-4">
+    <div class="search-input-holder">
+      <div class="form-group">
+        <label for="name">{{isEngLang ?'Search':arabic('search')}}</label>
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="searchKey" id="searchkey" placeholder="{{isEngLang ?'Enter Keyword...':arabic('enterkeyword')}}" />
+          <div class="input-group-append">
+            <span class="input-group-text" (click)="getSearchData('')"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-result-holder">
+      <span class="result-total">{{TotalCount}} {{isEngLang ?'result in all':arabic('resultinall')}}</span>
+      <hr/>
+      <div class="search-results row">
+        <div class="col-12 col-md-3">
+          <div class="result-categories" *ngFor="let data of Title">
+            <div class="category-item" (click)="getSearchData(data.type)">
+              <span>{{data.title}} ({{data.Count}})</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <div class="all-results">
+            <span class="results-title">{{isEngLang ?'All Search Results':arabic('allsearchresult')}}</span>
+            <hr/>
+            <app-progress-bar *ngIf="progress"></app-progress-bar>
+            <div class="result-items" *ngFor="let det of searchresult">
+              <div class="result-item">
+                <div class="result-title">{{isEngLang ?'Title':arabic('title')}} : {{det.Title}}</div>
+                <div class="result-description">{{isEngLang ?'Reference Number' :arabic('referencenumber')}} :
+                    <a href="/{{det.link}}" target="_blank">{{det.ReferenceNumber}}</a>
+                    </div >
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container footer *ngIf="config && config.totalItems>0 &&isEngLang">
+          <ngb-pagination style="padding-left: 40%" *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+            [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+            (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+        </ng-container>
+        <ng-container footer *ngIf="config && config.totalItems>0 && !isEngLang">
+          <ngb-pagination style="padding-right: 40%;" *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+            [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+            (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+@import '../../../../../styles.scss';
+
+.dashboard {
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    cursor: pointer;
+    .card-body {
+      box-shadow: none !important;
+      .count {
+        color: $medium-color;
+        font-size: 40px;
+        font-weight: 900;
+      }
+      .name {
+        font-size: 16px;
+        /* font-weight: 600; */
+        line-height: 16px;
+        display: contents;
+        
+      }
+
+      @media screen and (max-width:1200px) and(min-width:760px) {
+        .count {
+          color: $medium-color;
+          font-size: 30px;
+          font-weight: 900;
+        }
+  
+        .name {
+          font-size: 9px;
+          /* font-weight: 600; */
+          line-height: 5px;
+        }
+  
+      }
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+
+        .progress-bar{
+            background: $medium-color !important;
+        }
+      }
+    }
+  }
+
+  .shadow {
+    box-shadow: 0px 0px 2px -1px;
+  }
+}
+
+.dashboard {
+  .card {
+    background: #f8f9fa;
+    border-radius: inherit;
+    cursor: pointer;
+    min-height: 190px;
+    max-height: 190px;
+    .card-body {
+      box-shadow: none !important;
+      .card-body-top{
+        min-height:100px;
+        max-height: 100px;
+      }
+
+      .count {
+        color: $medium-color;
+        font-size: 40px;
+        font-weight: 900;
+      }
+
+      .name {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 5px;
+        display: contents;
+        word-break: break-word;
+      }
+      .txt-ct{
+        text-align: center;
+      }
+
+      @media screen and (max-width:1200px) and(min-width:945px) {
+        .count {
+          color: $medium-color;
+          font-size: 30px;
+          font-weight: 900;
+        }
+
+        .name {
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 5px;
+          word-break: break-all;
+        }
+
+      }
+
+      @media screen and (max-width:945px) and(min-width:768px) {
+        .count {
+          color: $medium-color;
+          font-size: 18px;
+          font-weight: 900;
+        }
+
+        .name {
+          font-size: 10px;
+          font-weight: 600;
+          line-height: 5px;
+          word-break: break-all;
+        }
+
+        .md-image{
+          height: 50px;
+        }
+
+      }
+
+      .progress {
+        height: 8px !important;
+        border-radius: 0 !important;
+
+        .progress-bar{
+            background: $medium-color !important;
+        }
+      }
+    }
+  }
+
+  .shadow {
+    box-shadow: 0px 0px 2px -1px;
+  }
+
+}
+
+.list-btn{
+    background: #b59647;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.edit-btn{
+    background: #3978e0;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 20px;
+}
+.btn-align{
+	margin-top: 32px;
+    margin-left: 16px;
+}
+
+
+.bg-color{
+	background:  $light-color;
+	color: white;
+}
+.fol-rgt{
+	float: right;
+}
+.fol-lft{
+    float: left;
+}
+.mar-top{
+	    margin-top: 12px;
+}
+.al-ct{
+	text-align: center;
+}
+.priority-clr{
+	width: 12px;
+    height: 11px;
+    background: red;
+}
+
+.edit-btn {
+  margin: 0 6px 0 5px;
+}
+
+.container-fluid {
+  .rounded-btn {
+    margin-top: 10px;
+  }
+}

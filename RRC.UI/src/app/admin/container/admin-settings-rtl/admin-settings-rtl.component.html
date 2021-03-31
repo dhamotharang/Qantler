@@ -1,0 +1,749 @@
+<accordion class="admin-page-accordions " [closeOthers]="false" [isAnimated]="false">
+  <accordion-group class="notification-group page-form-wrapper mb-3" [isOpen]="notificationSection"
+    (isOpenChange)="notificationToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">{{arabicService.words.mailnotification}}</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{notificationSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="form-group mail-reminder text-right col-sm-12">
+          <span for="hours text-right">{{arabicService.words.mailremainderfrequency}}</span>
+          <input type="number" name="hours" class="form-control inputwidth hours-input" id="hours" placeholder=""
+            [(ngModel)]="notification.hours">
+          {{arabicService.words['hours']}}
+          <button class="rounded-btn" [disabled]="!notification.hours || isApiLoading"
+            [ngClass]="{'disabled-btn': (!notification.hours) || isApiLoading}" (click)="saveMailReminderHours()">
+            <ng-container *ngIf="lang == 'en'">
+              Save
+            </ng-container>
+            <ng-container *ngIf="lang == 'ar'">
+              {{arabicService.words[removeWordSpaces(('Save').trim().toLowerCase())]}}
+            </ng-container>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="approver-group allow-dropdown-overflow page-form-wrapper mb-3"
+    [ngClass]="{'user-list-available':(departmentUserList.length > 0) && departmentSelect}" [isOpen]="approverSection"
+    (isOpenChange)="approverToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">{{arabicService.words.approvers}}</div>
+        <div class="col-auto ">
+          <span class="admin-accordion-toggle-icon">{{approverSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-md-6 col-12 text-right">
+              <span class="text-right">{{arabicService.words.officedepartments}}</span>
+              <ng-select [items]="departmentList" bindLabel="DepartmentName" bindValue="DepartmentID" placeholder=""
+                [closeOnSelect]="true" (change)="getAllUsersByDepartment()" [(ngModel)]="departmentSelect"
+                class="department-select">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator approver-dropdown" *ngIf="departmentSelect"
+            [ngClass]="{'approver-list-container':(departmentList.length > 0) || (departmentUserList.length > 0) && departmentSelect}">
+            <div class="col-md-5">
+              <ng-select [items]="departmentUserList" bindLabel="EmployeeName" placeholder="" [multiple]="true"
+                [closeOnSelect]="false" [isOpen]="isUserListSet" dropdownPosition="bottom" [virtualScroll]="false"
+                [(ngModel)]="toBeApprovers" (search)="onUserListSearch($event)">
+              </ng-select>
+            </div>
+            <div class="col-md-2 text-center  ar-approver-exchange-margin"
+              [ngClass]="{'approver-exchange-margin':isUserListSet && departmentSelect}">
+              <div class="row">
+                <div class="col-6 col-md-12 row-separator">
+                  <button class="rounded-btn" (click)="moveToApproverList()">
+                    <i class="fa fa-chevron-left d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-left d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-down d-block d-sm-none"></i>
+                    <i class="fa fa-chevron-down d-block d-sm-none"></i>
+                  </button>
+                </div>
+                <div class="col-6 col-md-12 row-separator">
+                  <button class="rounded-btn" (click)="moveToAllUserList()">
+                    <i class="fa fa-chevron-right d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-right d-none d-md-inline"></i>
+                    <i class="fa fa-chevron-up d-block d-sm-none"></i>
+                    <i class="fa fa-chevron-up d-block d-sm-none"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <ng-select [items]="approverList" bindLabel="EmployeeName" placeholder="" [closeOnSelect]="false"
+                [multiple]="true" [isOpen]="isUserListSet" dropdownPosition="bottom" [virtualScroll]="false"
+                [(ngModel)]="approvedUsers">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator" *ngIf="departmentSelect">
+            <div class="col-12 text-left">
+              <button class="rounded-btn"
+                [disabled]="(approverList && approverList.length <= 0) || !isModified || isApiLoading"
+                [ngClass]="{'disabled-btn': (approverList.length <= 0) || !isModified || isApiLoading}"
+                (click)="saveApproversList()">
+                <ng-container>
+                  {{arabicService.words[removeWordSpaces(('Save').trim().toLowerCase())]}}
+                </ng-container>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="page-form-wrapper mb-3" [isOpen]="dropDownTypeSection"
+    (isOpenChange)="dropDownToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">{{arabicService.words.masterdata}}</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{dropDownTypeSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-12 col-md-6 text-right">
+              <label class="label-right">{{arabicService.words.type}}</label>
+              <ng-select [items]="dropDownTypeList" bindLabel="label" placeholder="" [closeOnSelect]="true"
+                dropdownPosition="bottom" [(ngModel)]="dropDownType" (change)="getDropDownTypeList('typeChange')">
+              </ng-select>
+            </div>
+            <div class="col-auto col-btn">
+              <button class="rounded-btn" [disabled]="(!dropDownType) || isApiLoading"
+                [ngClass]="{'disabled-btn': (!dropDownType) || isApiLoading}"
+                (click)="openAddEditDropDownValueModal('add')">
+                <ng-container *ngIf="lang == 'ar'">
+                  {{arabicService.words[removeWordSpaces(('Add').trim().toLowerCase())]}}
+                </ng-container>
+              </button>
+            </div>
+          </div>
+          <div class="row row-separator">
+            <div class="col-12">
+              <div class="page-form-wrapper mb-3">
+                <div class="form-title text-right">
+                  <ng-container>
+                    {{arabicService.words[removeWordSpaces(('Filter By').trim().toLowerCase())]}}
+                  </ng-container>
+                </div>
+                <div class="container-fluid page-form-body py-2">
+                  <div class="row">
+                    <div class="form-group col-sm-4 text-right">
+                      <label class="label-right" for="power">
+                        <ng-container>
+                          {{arabicService.words[removeWordSpaces(('Value').trim().toLowerCase())]}}
+                        </ng-container>
+                      </label>
+                      <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder=""
+                        [(ngModel)]="filterBy.Value">
+                    </div>
+                    <div class="form-group col-auto col-btn text-right">
+                      <button class="rounded-btn" [disabled]="isApiLoading" [ngClass]="{'disabled-btn': isApiLoading}"
+                        (click)="getDropDownTypeList()">
+                        <ng-container *ngIf="lang == 'ar'">
+                          {{arabicService.words[removeWordSpaces(('Search').trim().toLowerCase())]}}
+                        </ng-container>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="page-form-wrapper master-data-table mb-3 d-md-block d-none">
+                <ngx-datatable style="width: 100%" class="bootstrap ar-rtl" [rows]="rows" [columns]="columns"
+                  [headerHeight]="50" [messages]="noItemsMessage" [columnMode]="'force'" [rowHeight]="'auto'">
+                </ngx-datatable>
+                <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+                  <div class="table-action-btn"
+                    *ngIf="!(selectedType == 13 && (row.LookupsID == 4 || row.LookupsID == 5))">
+                    <button class="table-edit" name="edit" (click)="openAddEditDropDownValueModal('edit',row)">
+                      <i class="fas fa-edit" style="cursor: pointer;"></i></button>
+                    <button (click)="openDeleteDropDownValueModal(row)" class="attachment-delete-icon" name="Delete"><i
+                        class="fas fa-trash-alt"></i></button>
+                  </div>
+                </ng-template>
+                <!-- <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+                      [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+                      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination> -->
+              </div>
+              <div class="d-block d-md-none">
+                <div class="card shadow page-form-wrapper my-3 d-block d-md-none ar-rtl"
+                  *ngFor="let dropDownrow of rows">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-12">
+                        <span><b>{{arabicService.words.type}} : </b></span>
+                        <span> {{dropDownrow.Type}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row mar-top">
+                      <div class="col-6">
+                        <span><b>{{arabicService.words.englishvalue}} : </b></span>
+                        <span>{{dropDownrow.DisplayName}}</span>
+                      </div>
+                      <div class="col-6">
+                        <span><b>{{arabicService.words.arabicvalue}} : </b></span>
+                        <span>{{dropDownrow.ArDisplayName}}</span>
+                      </div>
+                    </div>
+                    <div class="row mar-top">
+                      <div class="col-12 text-left"
+                        *ngIf="!(selectedType == 13 && (dropDownrow.LookupsID == 4 || dropDownrow.LookupsID == 5))">
+                        <button class="table-view edit-btn" class="table-edit"
+                          (click)="openAddEditDropDownValueModal('edit',dropDownrow)" name="edit">
+                          <i class="fas fa-edit" style="cursor: pointer;"></i>
+                        </button>
+                        <button (click)="openDeleteDropDownValueModal(dropDownrow)" class="attachment-delete-icon"
+                          name="Delete">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container footer *ngIf="config.totalItems > 0">
+                  <ngb-pagination *ngIf="config.totalItems > 0" (pageChange)="onChangePage(config, $event)"
+                    class="d-flex justify-content-center page-top" [pageSize]="config.itemsPerPage"
+                    [boundaryLinks]="true" [collectionSize]="config.totalItems" [maxSize]="config.maxSize"
+                    (numPages)="numPages = $event"></ngb-pagination>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="page-form-wrapper mb-3" [isOpen]="userManagementSection"
+    (isOpenChange)="userManagementToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">{{arabicService.words.usermanagement}}</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{userManagementSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="row row-separator">
+            <div class="col-12 col-md-6 text-right">
+              <span class="text-right">{{arabicService.words.search}}</span>
+              <ng-select [items]="allUserList" bindLabel="EmployeeName" bindValue="EmployeeName" placeholder=""
+                [closeOnSelect]="true" dropdownPosition="bottom" [(ngModel)]="userSearch"
+                (change)="getUserManagementListData()">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row row-separator">
+            <div class="col-12">
+              <div class="page-form-wrapper mb-3 d-md-block d-none" dir="ltr">
+                <ngx-datatable style="width: 100%; text-align: right;" class="bootstrap" [rows]="userManagementRows"
+                  [columns]="userManagementColumns" [headerHeight]="50" [columnMode]="'standard'" [rowHeight]="'auto'"
+                  [scrollbarH]="true">
+                  <ngx-datatable-column name="{{arabicfn('action')}}">
+                    <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                      <div class="table-action-btn">
+                        <button class="table-edit" name="edit" (click)="openUserManagementEditModal(row)">
+                          <i class="fas fa-edit" style="cursor: pointer;"></i></button>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('caneditcontacts')}}" [cellClass]="'tright'">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                      {{ row.CanEditContact ? arabicService.words['yes']:arabicService.words['no'] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('canmanagenewsphotos')}}" [cellClass]="'tright'">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                      {{ row.CanManageNews ? arabicService.words['yes']:arabicService.words['no'] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('canraiseofficialrequest')}}" [cellClass]="'tright'">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                      {{ row.CanRaiseOfficalRequest ? arabicService.words['yes']:arabicService.words['no'] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('headofunit')}}" [cellClass]="'tright'">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                      {{ row.HOU ? arabicService.words['yes']:arabicService.words['no'] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('headofsection')}}" [cellClass]="'tright'">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                      {{ row.HOS ? arabicService.words['yes']:arabicService.words['no']}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('headofdepartment')}}" [cellClass]="'tright'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      {{row.HOD ? arabicService.words['yes']: arabicService.words['no']}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('unit')}}" [cellClass]="'tright'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      {{row.Unit}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('section')}}" [cellClass]="'tright'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      {{row.Section}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('office/departments')}}" [cellClass]="'tright'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      {{ row.Department }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{arabicfn('userlogonname')}}" [cellClass]="'tright'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      {{ row.EmployeeName }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+                <div dir="rtl">
+                  <ngb-pagination *ngIf="userManagementTableconfig.totalItems > 0"
+                    class="d-flex justify-content-center page-top" [(page)]="userManagementTableconfig.page"
+                    [maxSize]="userManagementTableconfig.maxSize" [pageSize]="userManagementTableconfig.itemsPerPage"
+                    [boundaryLinks]="true" [collectionSize]="userManagementTableconfig.totalItems" [rotate]="false"
+                    (pageChange)="onChangeUserPage()" (numPages)="numPages = $event">
+                  </ngb-pagination>
+                </div>
+              </div>
+              <div class="d-block d-md-none">
+                <div class="card shadow page-form-wrapper my-3 d-block d-md-none"
+                  *ngFor="let usrManRow of userManagementRows">
+                  <div class="card-header ar-rtl">
+                    <div class="row row-separator">
+                      <div class="col-12">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.userlogonname}} : </ng-container>
+                          </b>
+                        </span>
+                        <span>{{usrManRow.EmployeeName}}</span></div>
+                      <div class="col-12"><span><b>
+                            <ng-container>{{arabicService.words.department}} : </ng-container>
+                          </b></span><span>{{usrManRow.Department}}</span></div>
+                    </div>
+                  </div>
+                  <div class="card-body ar-rtl">
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.section}} : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.Section}}</span></div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.unit}} : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.Unit}}</span></div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.headofdepartment}} : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOD ? arabicService.words['yes']:arabicService.words['no']}}</span></div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.headofsection}} : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOS ? arabicService.words['yes']:arabicService.words['no']}}</span></div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.headofunit}} : </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.HOU ? arabicService.words['yes']:arabicService.words['no']}}</span>
+                      </div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container>{{arabicService.words.canraiseofficialrequest}} : </ng-container>
+                          </b>
+                        </span>
+                        <span>
+                          {{usrManRow.CanRaiseOfficalRequest ? arabicService.words['yes']:arabicService.words['no']}}</span>
+                      </div>
+                    </div>
+                    <div class="row row-separator">
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container> {{arabicService.words.canmanagenewsphotos}}: </ng-container>
+                          </b>
+                        </span>
+                        <span> {{usrManRow.CanManageNews ? arabicService.words['yes']:arabicService.words['no']}}</span>
+                      </div>
+                      <div class="col">
+                        <span>
+                          <b>
+                            <ng-container *ngIf="lang == 'en'">Can Manage Contacts : </ng-container>
+                            <ng-container *ngIf="lang == 'ar'">{{arabicService.words.caneditcontacts}}: </ng-container>
+                          </b>
+                        </span>
+                        <span>
+                          {{usrManRow.CanEditContact ? arabicService.words['yes']:arabicService.words['no']}}</span>
+                      </div>
+                    </div>
+                    <div class="col text-left">
+                      <button class="table-view edit-btn" class="table-edit"
+                        (click)="openUserManagementEditModal(usrManRow)" name="edit">
+                        <i class="fas fa-edit" style="cursor: pointer;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <ng-container footer *ngIf="userManagementTableconfig.totalItems > 0">
+                  <ngb-pagination *ngIf="userManagementTableconfig.totalItems > 0"
+                    (pageChange)="onChangeUserPage(userManagementTableconfig, $event)"
+                    class="d-flex justify-content-center page-top" [pageSize]="userManagementTableconfig.itemsPerPage"
+                    [boundaryLinks]="true" [collectionSize]="userManagementTableconfig.totalItems"
+                    [maxSize]="userManagementTableconfig.maxSize" (numPages)="numPages = $event"></ngb-pagination>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+  <accordion-group class="notification-group page-form-wrapper mb-3" [isOpen]="holidaysSection"
+    (isOpenChange)="holidaysToggle($event)">
+    <div class="form-title" accordion-heading>
+      <div class="row form-title-header">
+        <div class="col mouse-point">{{arabicService.words.holidays}}</div>
+        <div class="col-auto">
+          <span class="admin-accordion-toggle-icon">{{holidaysSection ? '-' : '+'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid page-form-body">
+      <div class="row">
+        <div class="form-group col-md-6 col-12 text-right">
+          <label class="label-right" for="Attachments">{{arabicService.words.importholidayslist}}</label>
+          <input type="file" multiple class="form-control attachment" name="Attachments" #fileInput
+            accept=".xls,.xlsx,.csv" (change)="holidayAttachments($event)" id="Attachments" placeholder="Select file" />
+          <span class="text-danger" *ngIf="!isExcelImport">
+            يرجى تحميل ملف اكسل
+          </span>
+        </div>
+        <div class="form-group col-md-6 text-right">
+          <button class="rounded-btn col-btn" [disabled]="(attachments && attachments.length <= 0) || isApiLoading"
+            [ngClass]="{'disabled-btn': (attachments.length <= 0) || isApiLoading}"
+            (click)="importHolidayAttachments()">
+            <ng-container *ngIf="lang == 'en'">
+              {{arabicService.words.import}}
+            </ng-container>
+            <ng-container *ngIf="lang == 'ar'">
+              {{arabicService.words[removeWordSpaces(('Import').trim().toLowerCase())]}}
+            </ng-container>
+          </button>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="uploadProcess">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+              aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-2" *ngIf="attachments.length>0">
+          <div class="label-right">
+            <label for="Keywords">{{arabicService.words.attachmentlist}}</label>
+          </div>
+          <div class="row mx-auto border font-weight-bold">
+            <div class="col border text-right">{{arabicService.words.filename}}</div>
+            <div class="col border text-center">{{arabicService.words.action}}</div>
+          </div>
+          <div *ngFor="let file of attachments; let i = index">
+            <div class="row mx-auto">
+              <div class="col border">
+                <a class="cursor break-word" href={{prepareDownloadUrl(file)}} target="_self"
+                  download>{{file.AttachmentsName}}</a>
+              </div>
+              <div class="col border text-center" *ngIf="file.currentUpload">
+                <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mx-3 mb-2" *ngIf="latestAttachment.length>0">
+          <div *ngFor="let file of latestAttachment; let i = index">
+            <div class="row">
+              <div class="col ar-rtl">
+                <a class="cursor break-word" href={{prepareDownloadUrl(file)}} target="_self"
+                  download>{{file.AttachmentsName}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-separator">
+        <div class="col-12">
+          <a [routerLink]="'/app/media/calendar-management/homepage'">{{arabicService.words.clicktoviewholidays}}</a>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+</accordion>
+
+<ng-template #typeValueFormTemplate>
+  <div class="modal-header modalclass" dir="rtl">
+    <h4 class="modal-title pull-left">{{typeFormTitle}} {{arabicService.words.value}}</h4>
+    <button type="button" class="close pull-right p-0 m-0" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="rtl" *ngIf="typeFormDataModel.Type != arabicService.words['announcementdescription']">
+    <div class="row">
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="label-right" for="Type">
+          <ng-container>
+            <!-- {{arabicService.words[removeWordSpaces(('Type').trim().toLowerCase())]}} -->
+            {{arabicService.words.type}}
+          </ng-container>
+        </label>
+        <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder=""
+          [(ngModel)]="typeFormDataModel.Type" [disabled]="true">
+      </div>
+      <div class="form-group col-6 col-md-6 ar-rtl" *ngIf="typeFormDataModel.Type == arabicService.words['city']">
+        <label for="Type">
+          <ng-container>
+            {{arabicService.words[removeWordSpaces(('Country').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <ng-select [items]="countryList" bindLabel="CountryName" bindValue="CountryID" placeholder=""
+          [closeOnSelect]="true" [(ngModel)]="typeFormDataModel.Country">
+        </ng-select>
+      </div>
+      <div class="form-group col-6 col-md-6 ar-rtl" *ngIf="typeFormDataModel.Type == arabicService.words['city']">
+        <label for="Type">
+          <ng-container>
+            {{ arabicService.words.emirates }}
+          </ng-container>
+        </label>
+        <ng-select [items]="emiratesList" bindLabel="ArDisplayName" bindValue="LookupsID" placeholder=""
+          [closeOnSelect]="true" [(ngModel)]="typeFormDataModel.Emirates">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl" *ngIf="typeFormDataModel.Type != arabicService.words['city']">
+        <label class="label-right" for="Type">
+          <ng-container>
+            <!-- {{arabicService.words[removeWordSpaces(('Value').trim().toLowerCase())]}} -->
+            {{arabicService.words.englishvalue}}
+          </ng-container>
+        </label>
+        <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder=""
+          [(ngModel)]="typeFormDataModel.Value">
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl" *ngIf="typeFormDataModel.Type == arabicService.words['city']">
+        <label class="label-right" for="Type">
+          <ng-container>
+            <!-- {{arabicService.words[removeWordSpaces(('Value').trim().toLowerCase())]}} -->
+            {{arabicService.words.englishvalue}}
+          </ng-container>
+        </label>
+        <input type="text" name="Value" class="form-control inputwidth" id="Value" placeholder=""
+          [(ngModel)]="typeFormDataModel.Value">
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="label-right" for="arType">
+          <ng-container>
+            <!-- {{arabicService.words[removeWordSpaces(('Value').trim().toLowerCase())]}} -->
+            {{arabicService.words.arabicvalue}}
+          </ng-container>
+        </label>
+        <input type="text" name="arValue" class="form-control inputwidth" id="arValue" placeholder=""
+          [(ngModel)]="typeFormDataModel.arValue">
+      </div>
+    </div>
+  </div>
+  <div class="modal-body" dir="rtl" *ngIf="typeFormDataModel.Type == arabicService.words['announcementdescription']">
+    <div class="row">
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label for="Type">
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words[removeWordSpaces(('Type').trim().toLowerCase())]}}
+          </ng-container>
+        </label>
+        <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder=""
+          [(ngModel)]="typeFormDataModel.Type" [disabled]="true">
+      </div>
+
+      <div class="form-group col-6 col-md-6 ar-rtl">
+        <label for="Type">
+          <ng-container>
+            {{arabicService.words['announcementtype']}}
+          </ng-container>
+        </label>
+        <ng-select  [disabled]="typeFormTitle == arabicService.words['editvalue']" [items]="AnnouncementTypeNameList" bindLabel="AnnouncementTypeNameAr" bindValue="AnnouncementTypeID"
+          (change)="onChangeAnnouncement()" placeholder="" [closeOnSelect]="true"
+          [(ngModel)]="typeFormDataModel.LookupsID">
+        </ng-select>
+      </div>
+
+      <div class="row ar-rtl" style="padding: 10px;">
+        <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar'}">
+          <label>{{arabicService.words.englishvalue}}</label>
+        </div>
+        <div class="col-12 d-md-block">
+          <tinymce [config]="tinyConfig" [(ngModel)]="typeFormDataModel.Value"></tinymce>
+        </div>
+        <div class="col-12 d-md-none">
+          <div class="tiny" #tinyDetail></div>
+        </div>
+      </div>
+
+      <div class="row ar-rtl" style="padding: 10px;">
+        <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar'}">
+          <label>{{arabicService.words.arabicvalue}}</label>
+        </div>
+        <div class="col-12 d-md-block">
+          <tinymce [config]="tinyConfig" [(ngModel)]="typeFormDataModel.arValue"></tinymce>
+        </div>
+        <div class="col-12 d-md-none">
+          <div class="tiny" #tinyDetail></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" dir="rtl">
+    <button type="button" class="rounded-btn" [disabled]="validateTypeDialog() || isApiLoading"
+      (click)="saveDropDownValueData()"
+      [ngClass]="{'disabled-btn': validateTypeDialog() || isApiLoading}">{{arabicService.words[removeWordSpaces(('Save').trim().toLowerCase())]}}</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteTypeValue>
+  <div class="create-request-modal modal-header modalclass" dir="rtl">
+    <h4 class="modal-title pull-left">{{arabicService.words.deletevalue}}</h4>
+    <button type="button" class="close pull-right p-0 m-0" (click)="closemodal()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="rtl">
+    <p class="messagebody text-right">{{arabicService.words.dropdowndeletedialogmsg}}</p>
+  </div>
+  <div class="modal-footer" dir="rtl">
+    <button type="button" class="rounded-btn"
+      (click)="deleteDropDownValueData(toDeleteValue)">{{arabicService.words.yes}}</button>
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{arabicService.words.no}}</button>
+  </div>
+</ng-template>
+
+<ng-template #editUserDataTemplate>
+  <div class="modal-header modalclass" dir="rtl">
+    <h4 class="modal-title pull-left">{{arabicService.words.edituserdetailsdialogtitle}}</h4>
+    <button type="button" class="close pull-right p-0 m-0" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="rtl">
+    <div class="row row-separator employee-edit-form">
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="label-right" for="Type">
+          <ng-container>
+            {{arabicService.words.userlogonname}}
+          </ng-container>
+        </label>
+        <input type="text" name="Type" class="form-control inputwidth" id="Type" placeholder=""
+          [(ngModel)]="userManagementModel.EmployeeName" [disabled]="true">
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="text-right">{{arabicService.words.officedepartments}}</label>
+        <ng-select [items]="departmentList" bindLabel="DepartmentName" bindValue="DepartmentID" placeholder=""
+          [closeOnSelect]="true" [(ngModel)]="userManagementModel.DepartmentID" class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="text-right">{{arabicService.words.section}}</label>
+        <ng-select [items]="sectionList" bindLabel="SectionName" bindValue="SectionID" placeholder=""
+          [closeOnSelect]="true" [(ngModel)]="userManagementModel.SectionID" class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label class="text-right">{{arabicService.words.unit}}</label>
+        <ng-select [items]="unitList" bindLabel="UnitName" bindValue="UnitID" placeholder="" [closeOnSelect]="true"
+          [(ngModel)]="userManagementModel.UnitID" class="department-select">
+        </ng-select>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="headofdepartment" [(ngModel)]="userManagementModel.HOD">
+        <label class="form-check-label" for="headofdepartment">
+          {{arabicService.words.headofdepartment}}
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="HOS" [(ngModel)]="userManagementModel.HOS">
+        <label class="form-check-label" for="HOS">
+          {{arabicService.words.headofsection}}
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="headofunit" [(ngModel)]="userManagementModel.HOU">
+        <label class="form-check-label" for="headofunit">
+          {{arabicService.words.headofunit}}
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="canraiseofficialrequest"
+          [(ngModel)]="userManagementModel.CanRaiseOfficalRequest">
+        <label class="form-check-label" for="canraiseofficialrequest">
+          {{arabicService.words.canraiseofficialrequest}}
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="CanManageNews"
+          [(ngModel)]="userManagementModel.CanManageNews" />
+        <label class="form-check-label" for="CanManageNews">
+          {{arabicService.words.canmanagenewsphotos}}
+        </label>
+      </div>
+      <div class="form-group form-check col-12 col-md-6 ar-rtl">
+        <input type="checkbox" class="form-check-input" id="CanEditContact"
+          [(ngModel)]="userManagementModel.CanEditContact" />
+        <label class="form-check-label" for="CanEditContact">
+          {{arabicService.words.caneditcontacts}}
+        </label>
+      </div>
+      <div class="form-group col-12 col-md-6 ar-rtl">
+        <label for="balLeave">{{arabicService.words.balanceleave}}</label>
+        <input type="text" class="form-control" [(ngModel)]="userManagementModel.balanceLeave" id="balLeave">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" dir="rtl">
+    <button type="button" class="rounded-btn"
+      (click)="saveUserManagementData()">{{arabicService.words[removeWordSpaces(('Save').trim().toLowerCase())]}}</button>
+  </div>
+</ng-template>

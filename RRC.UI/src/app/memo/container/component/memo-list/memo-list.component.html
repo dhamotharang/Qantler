@@ -1,0 +1,165 @@
+<div class="page-form-wrapper">
+  <div class="form-title">
+    FILTER BY
+  </div>
+  <div class="container page-form-body">
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="status">Status</label>
+        <!-- <select class="form-control" [disabled]="statusDisable" [(ngModel)]="status" id="LookupsID">
+          <option value="">All</option>
+          <option *ngFor="let us of statusOptions" [value]="us.DisplayName">{{us.DisplayName}}</option>
+        </select> -->
+        <ng-select [items]="statusOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="DisplayName"
+          bindValue="DisplayName" [(ngModel)]="status" [disabled]="statusDisable">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">Source Office/Department</label>
+        <ng-select [items]="sourceouOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationUnits" [(ngModel)]="source">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="SourceOU">Destination Office/Department</label>
+        <ng-select [items]="destinationOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationUnits" [(ngModel)]="destination">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="Date Range From">Date Range From</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" bsDatepicker #dpFrom="bsDatepicker" [(ngModel)]="date_from"
+            [bsConfig]="bsConfig">
+          <div (click)="dpFrom.toggle()">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="Date Range To">Date Range To</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="utill.minDate(0,date_from)" bsDatepicker
+            #dpTo="bsDatepicker" [(ngModel)]="date_to" [bsConfig]="bsConfig">
+          <div (click)="dpTo.toggle()">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="power">Is Private?</label>
+        <ng-select [items]="privateOptions" [closeOnSelect]="true" [multiple]="false" bindLabel="name" bindValue="name"
+          [(ngModel)]="private">
+        </ng-select>
+        <!-- <select class="form-control" [(ngModel)]="private">
+          <option *ngFor="let us of privateOptions">{{us}}</option>
+        </select> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="Priority">Priority</label>
+        <ng-select [items]="priorityOptions" bindLabel="name" bindValue="name" [(ngModel)]="priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="name">Smart Search</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="smartSearch">
+      </div>
+      <div class="row justify-content-center justify-content-md-end filter-Btn-width pt-4">
+        <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2">
+          <button class="rounded-btn" (click)="changeList()">Search</button>
+        </div>
+        <div class="form-group col-auto col-md-auto p-0 p-md-2">
+          <button class="rounded-btn" (click)="openReport()">Show Available Reports</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper mb-3 d-none d-md-block">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <!-- <ng-container outsideBody>
+    <div class="table-responsive"> -->
+  <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns" [headerHeight]="50"
+    [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+  </ngx-datatable>
+  <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn">
+      <ng-container *ngIf="(row.StatusCode == 5 && row.SourceName != currentUser)">
+        <button class="table-view" (click)="viewData('',value)"><i class="fas fa-eye"
+            style="cursor: pointer;"></i></button>
+      </ng-container>
+      <button class="table-view" *ngIf="row.StatusCode != 5 && memo_type != 'Draft Memos'"
+        (click)="viewData('',value)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+      <button
+        *ngIf="(memo_type == 'Draft Memos' && row.SourceName == currentUser ) || (row.StatusCode == 5 && row.SourceName == currentUser)"
+        class="table-edit" name="edit" (click)="viewData('edit',value)"><i class="fas fa-edit"
+          style="cursor: pointer;"></i></button>
+    </div>
+  </ng-template>
+  <!-- </div>
+  </ng-container> -->
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+</div>
+<div class="d-block d-md-none">
+  <app-progress-bar *ngIf="progress"></app-progress-bar>
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12"><span><b>Ref ID : </b></span><span>{{row.ReferenceNumber}}</span></div>
+        <div class="col-12"><span><b>Title : </b></span><span>{{row.Title}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col"><span><b>Source : </b></span><span> {{row.SourceOU}}</span></div>
+        <div class="col"><span><b>Destination : </b></span><span> {{row.Destination}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col"><span><b>Status : </b></span><span> {{row.Status}}</span></div>
+        <div class="col"><span><b>Date : </b></span><span> {{row.CreatedDateTime}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col"><span><b>Is Private : </b></span><span> {{row.Private}}</span></div>
+        <div *ngIf="row.Priority==high" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-red-clr"></span><span> {{row.Priority}}</span></div>
+        <div *ngIf="row.Priority==medium" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-gl-clr"></span><span> {{row.Priority}}</span></div>
+        <div *ngIf="row.Priority==low" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-ylw-clr"></span><span> {{row.Priority}}</span></div>
+        <div *ngIf="row.Priority==verylow" class="col"><span class="fol-lft"><b>Priority : </b></span><span
+            class="priority-gry-clr"></span><span> {{row.Priority}}</span></div>
+      </div>
+      <div class="row mar-top">
+        <div class="col"></div>
+        <div class="col-auto">
+          <button class="list-btn" *ngIf="row.StatusCode == 5 && row.SourceName != currentUser"
+            (click)="viewData('',row)"><i class="fas fa-eye"></i></button>&nbsp;
+          <button class="list-btn" *ngIf="row.StatusCode != 5 && memo_type != 'Draft Memos'"
+            (click)="viewData('',row)"><i class="fas fa-eye"></i></button>&nbsp;
+          <button *ngIf="(memo_type == 'Draft Memos') || (row.StatusCode == 5 && row.SourceName == currentUser)" class="edit-btn"
+            (click)="viewData('edit',row)"><i class="fas fa-edit"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="length" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+  </ng-container>
+  <!-- <button name="edit" (click)="viewData('edit')"></button>
+  <button name="view" (click)="viewData('')"></button> -->
+
+</div>

@@ -1,0 +1,16 @@
+<div dir="auto" class="modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">{{ lang === 'ar' ? arWords.error : 'Error' }}</h4>
+  <button type="button"
+    class="close pull-right"
+    [ngClass]="{'p-0 m-0':lang=='ar'}"
+    aria-label="Close"
+    (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="auto" class="modal-body" [ngClass]="{'ar-rtl':lang=='ar'}">
+  <p class="messagebody">{{message}}</p>
+</div>
+<div dir="auto" class="modal-footer">
+  <button type="button" class="rounded-btn" (click)="bsModalRef.hide()">{{ (lang=='ar') ? arWords.ok : 'Ok' }}</button>
+</div>

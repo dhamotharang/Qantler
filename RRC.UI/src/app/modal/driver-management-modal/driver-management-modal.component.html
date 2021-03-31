@@ -1,0 +1,72 @@
+<div class="modal-header modalclass modal-lg" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">{{lang === 'ar' ? arabicfn('filterby') : 'FILTER BY'}}</h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <div class="row">
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <label for="Date">{{ lang == 'ar' ? arabicfn('daterangefrom') : 'Date Range From' }}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control"
+        bsDatepicker
+        #dp1="bsDatepicker"
+        [bsConfig]="bsConfig"
+        [(ngModel)]="ExtraCompensateModel.StartDate">
+        <span (click)="dp1.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <label for="Date">{{ lang == 'ar' ? arabicfn('daterangeto') : 'Date Range To'}}</label>
+      <div class="position-relative">
+        <input type="text" class="form-control"
+        bsDatepicker
+        #dp2="bsDatepicker"
+        [bsConfig]="bsConfig"
+        [(ngModel)]="ExtraCompensateModel.EndDate">
+        <span (click)="dp2.toggle()"><i class="far fa-calendar date"></i></span>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4 search-button-container" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <button type="button" (click)="getDriverView(id)" [disabled]="validateDateFilter()" [ngClass]="{'disabled-btn': validateDateFilter()}" class="rounded-btn">{{lang === 'ar' ? arabicfn('search') : 'SEARCH'}}</button>
+    </div>
+  </div>
+  <hr>
+  <div class="page-form-wrapper my-3 d-md-block d-none" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="row m-l-0">
+      <div class="col-4 name-col">
+        <span class="">{{lang === 'ar' ? arabicfn('name') : 'Name'}}</span>
+      </div>
+      <div class="col-8 username-col">
+        <span class=""><b>{{driverName}}</b></span>
+      </div>
+    </div>
+    <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang=='ar'}" [rows]="rows" [columns]="columns" [headerHeight]="50" [columnMode]="'force'" [messages]="tableMessages" [rowHeight]="'auto'">
+    </ngx-datatable>
+  </div>
+  <div class="d-block d-md-none">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang === 'ar' ? arabicfn('name') : 'Name'}} : </b></span><span> {{driverName}} </span></div>
+        </div>
+      </div>
+      <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang === 'ar' ? arabicfn('date') : 'Date'}} : </b></span><span>{{row.LogDate}}</span></div>
+            <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang === 'ar' ? arabicfn('extrahour') : 'Extra Hours'}} : </b></span><span>{{row.ExtraHours}}</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang === 'ar' ? arabicfn('compensate') : 'Compensate'}} : </b></span><span> {{row.CompensateHours}}</span></div>
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang === 'ar' ? arabicfn('extrahoursreport') : 'Extra Hours Report'}} : </b></span><span> {{row.BalanceExtraHours}}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="button" (click)="downloadExcel()" class="rounded-btn" style="margin: 0 auto;">{{lang === 'ar' ? arabicfn('print') : 'PRINT'}}</button>
+</div>

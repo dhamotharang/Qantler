@@ -1,0 +1,201 @@
+<div class="page-form-wrapper meeting-form">
+  <div class="form-title" *ngIf="screenStatus === 'createMOM'">
+    CREATE MOM
+  </div>
+  <div class="form-title" *ngIf="screenStatus === 'viewMOM'">
+    VIEW MOM
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" >
+        <label for="Ref ID">Meeting ID</label>
+        <input type="text" class="form-control" [(ngModel)]="Meeting.ReferenceNumber" [disabled]="true" id="Ref_ID">
+      </div>
+      <div class="form-group col-12 col-md-4" >
+        <label for="Organizer De">Organizer Office/Department</label>
+        <!-- <select class="form-control status-ddown" disabled></select> -->
+        <ng-select
+          class="status-ddown"
+          [items]="organizerDeptList"
+          disabled
+          [closeOnSelect]="true"
+          [(ngModel)]="Meeting.OrganizerDepartmentID"
+          bindLabel="OrganizationUnits"
+          bindValue="OrganizationID"
+          placeholder="Select Organizer Department">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" >
+        <label for="Organizer Name">Organizer Name</label>
+        <!-- <select class="form-control status-ddown" disabled></select> -->
+        <ng-select
+          class="status-ddown"
+          [items]="organizerList"
+          [closeOnSelect]="true"
+          disabled
+          [(ngModel)]="Meeting.OrganizerUserID"
+          bindLabel="EmployeeName"
+          bindValue="UserID"
+          placeholder="Select Organizer name">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" >
+        <label for="Subject">Subject</label>
+        <input type="text" class="form-control" [(ngModel)]="Meeting.Subject" [disabled]="true" id="Ref_ID">
+      </div>
+      <div class="form-group col-12 col-md-4" >
+        <label for="location">Location</label>
+        <input type="text" class="form-control" [(ngModel)]="Meeting.Location" [disabled]="true" id="Ref_ID">
+      </div>
+      <div class="form-group col-12 col-md-4" >
+        <label for="Attendies">Attendees</label>
+        <input type="text" class="form-control" [(ngModel)]="Meeting.Attendees" [disabled]="true" id="Ref_ID">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-3">
+        <label for="Date">Start Date / Time</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="Meeting.StartDateTime" [disabled]="true" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4 m-top-input" >
+        <label for="time"></label>
+        <ng-select
+          class="status-ddown"
+          [items]="timeList"
+          disabled
+          [(ngModel)]="Meeting.StartTime"
+          [closeOnSelect]="true"
+          bindLabel="label"
+          bindValue="value"
+          placeholder="Select Time">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-3">
+        <label for="Date1">End Date / Time</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="true" [(ngModel)]="Meeting.EndDateTime" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4 m-top-input" >
+        <label for="time1"></label>
+        <ng-select
+          class="status-ddown"
+          [items]="timeList"
+          disabled
+          [(ngModel)]="Meeting.EndTime"
+          [closeOnSelect]="true"
+          bindLabel="label"
+          bindValue="value"
+          placeholder="Select Time">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12" [ngClass]="{'required': screenStatus == 'createMOM'}">
+        <label for="Attendies">Points Discussed</label>
+        <textarea
+          class="form-control"
+          [(ngModel)]="momModel.PointsDiscussed"
+          (ngModelChange)="ValidateMOM()"
+          [disabled]="enableMOMDownload"
+          rows="5"
+          id="requestDetails">
+        </textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12">
+        <label for="Pending">Pending Points</label>
+        <textarea
+          [(ngModel)]="momModel.PendingPoints"
+          class="form-control"
+          [disabled]="enableMOMDownload"
+          rows="5"
+          id="requestDetails">
+        </textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12">
+        <label for="Suggestions">Suggestions & Recommendation</label>
+        <textarea
+          [(ngModel)]="momModel.Suggestion"
+          class="form-control"
+          [disabled]="enableMOMDownload"
+          rows="5"
+          id="requestDetails">
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.screenStatus == 'viewMOM'" class="page-form-wrapper my-3 p-4">
+    <!-- <div class="row" *ngFor="let his of Meeting.MeetingCommunicationHistory"> -->
+      <!-- <div class="col-auto" *ngIf="his.CreatedDateTime">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+        </div>
+      </div>
+      <div class="col p-2" *ngIf="his.Action">
+        <div class="row">
+          <div class="col-12">{{hisLog(his.Action)}} : {{his.CreatedBy}}</div>
+        </div>
+      </div> -->
+      <div class="col-12 comment">
+        <app-comment-section [comments]="Meeting.MeetingCommunicationHistory" [commentType]="'Meeting'" [moduleId]="MeetingID" [moduleNameID]="'MeetingID'"></app-comment-section>
+        <div class="row leave-comment-section">
+          <div class="col-2 com-md-2 profile">
+            <div class="comment-section-img">
+              <img src="assets/home/user_male.png" class="user-ProfileImg"/>
+            </div>
+          </div>
+          <div class="col-10 col-md-10 comment-text">
+            <div class="comment-section-user-info">
+              <p class="comment-section-username">{{currentUser.userName}}</p>
+            </div>
+            <div class="comment-section-content">
+              <textarea class="form-control vertical-resize" [(ngModel)]="Meeting.Comments" id="NewCommentContent"
+              placeholder="" rows="3"></textarea>
+            </div>
+            <div class="comment-reply-section">
+              <button
+                class="rounded-btn"
+                [disabled]="canComment()"
+                [ngClass]="{'disabled-btn': canComment()}"
+                (click)="sendMessage()"><i class="fa fa-paper-plane"></i> Add Comment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+  <div class="comment-reply-section text-center">
+    <button
+      *ngIf="enableMOMDownload"
+      (click)="downloadMOM()"
+      class="rounded-btn">
+      DOWNLOAD MOM
+    </button>
+    <button
+      *ngIf="!enableMOMDownload"
+      (click)="createToMOM()"
+      [disabled]="!valid || inProgress"
+      [ngClass]="{'disabled-btn': !valid || inProgress}"
+      class="rounded-btn">
+      SUBMIT
+    </button>
+    <button
+      *ngIf="!enableMOMDownload"
+      (click)="createtask()"
+      class="rounded-btn">
+      CREATE TASK
+    </button>
+  </div>
+</div>

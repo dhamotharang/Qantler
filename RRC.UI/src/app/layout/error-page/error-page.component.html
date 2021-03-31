@@ -1,0 +1,20 @@
+<div class="error">
+  <div class="error-main" *ngIf="lang == 'en'">
+    <div class="error-main-header">
+      Access Denied!!!
+    </div>
+    <div class="error-main-body">You are not authorized to access this page. Please call Administrator.</div>
+    <div class="error-main-footer">
+      <button class="rounded-btn" routerLink="/en/home">BACK TO HOME</button>
+    </div>
+  </div>
+  <div class="error-main" *ngIf="lang != 'en'">
+    <div class="error-main-header">
+      Arabic Access Denied!!!
+    </div>
+    <div class="error-main-body">You are not authorized to access this page. Please call Administrator.</div>
+    <div class="error-main-footer">
+      <button class="rounded-btn" routerLink="/ar/home">BACK TO HOME</button>
+    </div>
+  </div>
+</div>

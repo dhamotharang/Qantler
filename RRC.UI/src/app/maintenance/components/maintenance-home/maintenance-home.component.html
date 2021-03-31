@@ -1,0 +1,257 @@
+<div class="maintenance-home" [ngClass]="{'rtl-mode': lang == 'ar'}">
+  <div class="cards-section">
+    <div class="row">
+      <div class="col-sm-12 mb-2 col-md-4" *ngFor="let details of homeCards">
+        <div class="card home-card" (click)="onCardClick(details.type)">
+          <div class="card-body">
+            <div class="row home-card-row-one">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img src="{{details.image}}" />
+              </div>
+              <div class="col col-ls-12 col-xl">
+                <div class="count">{{details.count}}</div>
+                <ng-container *ngIf="details.type == 4">
+                  <div class="displayname">{{details.displayName}}</div>
+                </ng-container>
+                <ng-container *ngIf="details.type != 4">
+                  <div class="name">{{details.displayName}}</div>
+                </ng-container>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="progress my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="details.progress"
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="row dashboard-user-cards">
+      <div class="col-md-4 col-sm-12 col-auto" *ngFor="let card of userCards">
+        <div class="card user-card" routerLink='/app/maintenance/documents'>
+          <div class="card-body user-card-content text-center">
+            <div class="col-md-12 col-xl-auto col-sm-12 col-auto user-card-icon" [ngClass]="{'profile': card.title == 'Employee Profile' }">
+              <img src="{{card.image}}" />
+            </div>
+            <div class="col col-ls-12 col-xl col-md-12 user-card-title">
+              {{card.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-container">
+    <div class="page-form-wrapper" >
+      <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        {{ lang == 'en' ? 'FILTER BY' : arWords.filterby }}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="status">{{ lang == 'en' ? 'Status' : arWords.status }}</label>
+            <ng-select
+              class="status-ddown"
+              [items]="statusList"
+              [closeOnSelect]="true"
+              bindLabel="DisplayName"
+              bindValue="LookupsID"
+              placeholder="{{lang === 'en' ? 'All' : arWords.all}}"
+              [(ngModel)]="status">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="status">{{ lang == 'en' ? 'Source Office/Department' : arWords.sourceofficeSlashDepartment }}</label>
+            <ng-select
+              class="status-ddown"
+              [items]="sourceOUList"
+              [closeOnSelect]="true"
+              bindLabel="OrganizationUnits"
+              bindValue="OrganizationID"
+              placeholder="{{lang === 'en' ? 'All' : arWords.all}}"
+              [(ngModel)]="sourceOU">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="subject">{{ lang == 'en' ? 'Subject' : arWords.subject }}</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="subject"
+              id="subject">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="dateFrom">{{ lang == 'en' ? 'Request Date From' : arWords.requestdatefrom }}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                #dp1="bsDatepicker"
+                [maxDate]="dateTo"
+                [(ngModel)]="dateFrom"
+                [bsConfig]="bsConfig">
+              <span (click)="dp1.toggle()" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="dateTo">{{ lang == 'en' ? 'Request Date To' : arWords.requestdateto }}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                #dp2="bsDatepicker"
+                [minDate]="dateFrom"
+                [(ngModel)]="dateTo"
+                [bsConfig]="bsConfig">
+              <span (click)="dp2.toggle()" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="attendedBy">{{ lang == 'en' ? 'Submitted By' : arWords.legalsubmittedby }}</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="attendedBy"
+              id="attendedBy">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="priority">{{ lang == 'en' ? 'Priority' : arWords.priority }}</label>
+            <ng-select
+              class="status-ddown"
+              [items]="priorityList"
+              [closeOnSelect]="true"
+              bindLabel="name"
+              bindValue="value"
+              placeholder="{{lang === 'en' ? 'All' : arWords.all}}"
+              [(ngModel)]="priority">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <label for="smartSearch">{{ lang == 'en' ? 'Smart Search' : arWords.smartsearch }}</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="smartSearch"
+              id="smartSearch">
+          </div>
+          <div class="form-group col-12 col-md-4 filter-btns text-center">
+            <button
+              class="rounded-btn btn-search"
+              (click)="onSearch()">
+              {{ lang == 'en' ? 'Search' : arWords.search }}
+            </button>
+            <button
+              class="rounded-btn"
+              (click)="openReport()">
+              {{ lang == 'en' ? 'Show Available Reports' : arWords.showavailablereports }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="destination"></div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <ng-container outsideBody>
+      <div class="table-responsive" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <ngx-datatable
+          style="width: 100%"
+          class="bootstrap"
+          [rows]="rows"
+          [columns]="columns"
+          [headerHeight]="50"
+          [columnMode]="'force'"
+          [messages]="tableMessages"
+          [rowHeight]="'auto'">
+        </ngx-datatable>
+        <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+          {{value | date:'dd/MM/yyyy'}}
+        </ng-template>
+        <ng-template #actionTemplate
+          let-row="row"
+          let-value="value"
+          let-i="index">
+          <div class="table-action-btn">
+            <button
+              *ngIf="value.Status == pendingForResubmit && value.AttendedBy == currentUser.DisplayName"
+              class="table-edit"
+              (click)="viewData(value)">
+              <i class="fas fa-edit"
+                style="cursor: pointer;"></i>
+            </button>
+            <button
+              *ngIf="value.Status != pendingForResubmit || (value.Status == pendingForResubmit && value.AttendedBy != currentUser.DisplayName)"
+              class="table-view"
+              (click)="viewData(value)">
+              <i class="fas fa-eye"
+                style="cursor: pointer;"></i>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container footer *ngIf="rows.length > 0">
+      <ngb-pagination *ngIf="config.paging"
+        class="d-flex justify-content-center page-top"
+        [(page)]="page"
+        [maxSize]="maxSize"
+        [boundaryLinks]="true"
+        [collectionSize]="pageCount"
+        [rotate]="false"
+        (pageChange)="onChangePage(config, $event)"
+        (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12"><span><b>{{ lang == 'en' ? 'Ref ID' : arWords.refid }} : </b></span><span>{{row.ReferenceNumber}}</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row" [ngClass]="{'ar-rtl': lang == 'ar'}">
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Source' : arWords.source }} : </b></span><span> {{row.Source}}</span></div>
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Subject' : arWords.subject }} : </b></span><span> {{row.Subject}}</span></div>
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Status' : arWords.status }} : </b></span><span> {{row.Status}}</span></div>
+          <div class="col-6" *ngIf="currentUser.OrgUnitID == 12"><span><b>{{ lang == 'en' ? 'Assigned To' : this.arWords.assignedto }} : </b></span><span> {{row.AssignedTo}}</span></div>
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Request Date' : arWords.requestdate }} : </b></span><span> {{row.RequestDate | date:'dd/MM/yyyy'}}</span></div>
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Submitted By' : arWords.legalsubmittedby }} : </b></span><span> {{row.AttendedBy}}</span></div>
+          <div class="col-6"><span><b>{{ lang == 'en' ? 'Priority' : arWords.priority }} : </b></span><span> {{row.Priority}}</span></div>
+        </div>
+        <div class="row mar-top py-2">
+          <div class="col"></div>
+          <div class="col-auto table-action-btn">
+            <button
+              class="table-view list-btn"
+              style="cursor: pointer;"
+              (click)="viewData(row)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="rows.length > 0">
+      <ngb-pagination
+        *ngIf="config.paging"
+        class="d-flex justify-content-center page-top"
+        [(page)]="page"
+        [maxSize]="maxSize"
+        [boundaryLinks]="true"
+        [collectionSize]="pageCount"
+        [rotate]="false"
+        (pageChange)="onChangePage(page)"
+        (numPages)="numPages = $event">
+      </ngb-pagination>
+    </ng-container>
+  </div>
+</div>

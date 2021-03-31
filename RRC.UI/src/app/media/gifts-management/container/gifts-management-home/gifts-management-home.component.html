@@ -1,0 +1,181 @@
+<div class="page-form-wrapper mb-3">
+  <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <span [ngClass]="{'ar-rtl': lang == 'ar'}">
+      {{lang == 'en' ? 'FILTER BY' : arabicService.words.filterby}}
+    </span>
+    <!-- <ng-container *ngIf="lang == 'ar'" class="ar-rtl">
+        {{arabicService.words[removeWordSpaces(('Filter By').trim().toLowerCase())]}}
+    </ng-container> -->
+  </div>
+  <div class="container-fluid page-form-body py-2" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="name">
+          <ng-container *ngIf="lang == 'en'">
+            Received from / Purchased by
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.receivedfrompurchasedby}}
+          </ng-container>
+        </label>
+        <input type="text" class="form-control" [(ngModel)]="filterBy.RecievedPurchasedBy" id="creator">
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="status">
+          <ng-container *ngIf="lang == 'en'">
+            Status
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.status}}
+          </ng-container>
+        </label>
+        <ng-select [items]="statusList" [closeOnSelect]="true" bindLabel="DisplayName" bindValue="LookupsID"
+          placeholder="{{lang=='en' ? 'Select Status' : arabicService.words.selectstatus}}"
+          [(ngModel)]="filterBy.Status">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="status">
+          <ng-container *ngIf="lang == 'en'">
+            Gift Type
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.gifttype}}
+          </ng-container>
+        </label>
+        <!-- <select class="form-control" [(ngModel)]="filterBy.RequestType" id="RequestType">
+          <option value=''>
+            <ng-container *ngIf="lang == 'en'">
+              All
+            </ng-container>
+            <ng-container *ngIf="lang == 'ar'">
+              {{arabicService.words[removeWordSpaces(('All').trim().toLowerCase())]}}
+            </ng-container>
+          </option>
+          <option *ngFor="let rt of giftTypeList" value="{{rt.value}}">{{rt.label}}</option>
+        </select> -->
+        <ng-select [items]="giftTypeList" bindLabel="label" bindValue="value" [closeOnSelect]="true"
+          placeholder="{{lang == 'en' ? 'Select Gift Type' : arabicService.words.selectgifttype}}"
+          [(ngModel)]="filterBy.GiftType">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="power">
+          <ng-container *ngIf="lang == 'en'">
+            Smart Search
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.smartsearch}}
+          </ng-container>
+        </label>
+        <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder=""
+          [(ngModel)]="filterBy.SmartSearch">
+      </div>
+      <div class="form-group col-auto p-md-4 pl-3 mt-10">
+        <button class="rounded-btn" (click)="onSearch()">
+          <ng-container *ngIf="lang == 'en'">
+            Search
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.search}}
+          </ng-container>
+        </button>
+        <button class="rounded-btn availablereport" (click)="openReport()">
+          <ng-container *ngIf="lang == 'en'">
+            Show Available Reports
+          </ng-container>
+          <ng-container *ngIf="lang == 'ar'">
+            {{arabicService.words.showavailablereports}}
+          </ng-container>
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+
+    </div> -->
+  </div>
+</div>
+<div class="page-form-wrapper mb-3 d-md-block d-none">
+  <ngx-datatable style="width: 100%" class="bootstrap" *ngIf="lang == 'en'" [rows]="rows" [columns]="columns"
+    [messages]="tableMessages" [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'">
+  </ngx-datatable>
+  <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" *ngIf="lang == 'ar'"
+    [rows]="rows" [messages]="tableMessages" [columns]="arabicColumns" [headerHeight]="50" [columnMode]="'force'"
+    [rowHeight]="'auto'">
+  </ngx-datatable>
+  <ng-template #creationDateTemplate let-row="row" let-value="value" let-i="index">
+    {{row.CreationDate | date:'dd/MM/yyyy'}}
+  </ng-template>
+  <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+    <div class="table-action-btn">
+      <button class="table-view" *ngIf="row.Status != 'Pending for Resubmission'" (click)="viewData(row)"><i
+          class="fas fa-eye" style="cursor: pointer;"></i></button>
+      <button *ngIf="row.Status == 'Pending for Resubmission' && row.Creator == currentUser.username" class="table-edit"
+        name="edit" (click)="viewData(row)"><i class="fas fa-edit" style="cursor: pointer;"></i></button>
+    </div>
+  </ng-template>
+  <ngb-pagination *ngIf="config.totalItems > 0" class="d-flex justify-content-center page-top" [(page)]="config.page"
+    [maxSize]="config.maxSize" [pageSize]="config.itemsPerPage" [boundaryLinks]="true"
+    [collectionSize]="config.totalItems" [rotate]="false" (pageChange)="onChangePage(config, $event)"
+    (numPages)="numPages = $event"></ngb-pagination>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}"
+    *ngFor="let hrReqrow of rows">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">
+          <span>
+            <b>
+              <ng-container *ngIf="lang == 'en'">Ref ID : </ng-container>
+              <ng-container *ngIf="lang == 'ar'">مرجع معرف : </ng-container>
+            </b>
+          </span>
+          <span>{{hrReqrow.ReferenceNumber}}</span></div>
+        <div class="col-12"><span><b>
+              <ng-container *ngIf="lang == 'en'">Gift Type : </ng-container>
+              <ng-container *ngIf="lang == 'ar'">المنشئ : </ng-container>
+            </b></span><span>{{hrReqrow.GiftType}}</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <span>
+            <b>
+              <ng-container *ngIf="lang == 'en'">Received from / Purchased by : </ng-container>
+              <ng-container *ngIf="lang == 'ar'">نوع الطلب : </ng-container>
+            </b>
+          </span>
+          <span> {{hrReqrow.PurchasedBy}}</span></div>
+        <div class="col">
+          <span>
+            <b>
+              <ng-container *ngIf="lang == 'en'">Status : </ng-container>
+              <ng-container *ngIf="lang == 'ar'">الحالة : </ng-container>
+            </b>
+          </span>
+          <span> {{hrReqrow.Status}}</span></div>
+      </div>
+      <div class="row mar-top">
+        <div class="col">
+        </div>
+        <div class="col-auto table-action-btn">
+          <button class="list-btn mt-10" *ngIf="hrReqrow.Status != 'Pending for Resubmission'"
+            (click)="viewData(hrReqrow)"><i class="fas fa-eye" style="cursor: pointer;"></i></button>
+          <button class="table-view edit-btn"
+            *ngIf="hrReqrow.Status == 'Pending for Resubmission' && hrReqrow.Creator == currentUser.username"
+            class="table-edit" name="edit" (click)="viewData(hrReqrow)"><i class="fas fa-edit"
+              style="cursor: pointer;"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="config.totalItems > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event">
+    </ngb-pagination>
+  </ng-container>
+</div>

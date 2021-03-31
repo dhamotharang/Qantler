@@ -1,0 +1,18 @@
+.announcement-container {
+  .form-control {
+    border: 0px;
+    border-radius: 0px;
+  }
+  .description {
+    border: 1px solid #ddd;
+    padding: 20px;
+  }
+  .created-by-section {
+    box-shadow: 2px 2px 10px -2px grey;
+    margin-top: 20px;
+    padding: 20px;
+  }
+  .btn-close {
+    margin: 30px;
+  }
+}

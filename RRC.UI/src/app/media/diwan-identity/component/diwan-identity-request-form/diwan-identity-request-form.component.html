@@ -1,0 +1,123 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+    <div class="form-title">
+    REQUEST FOR DIWAN IDENTITY
+    </div>
+    <form [formGroup]="diwanIdentityFormGroup" autocomplete="off">
+      <div class="container-fluid page-form-content py-2">
+        <div class="row" *ngIf="mode=='view'">
+            <div class="form-group col-12 col-md-4">
+              <label for="ReferenceNumber">Reference Id</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ReferenceNumber"
+                id="ReferenceNumber">
+            </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">Date</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" formControlName="CreatedDateTime">
+              <div>
+                <i class="far fa-calendar date"></i>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" >
+            <label for="Source OU">Source Office/Department</label>
+            <input type="text" class="form-control"
+              formControlName="SourceOU" id="Source OU" placeholder="Enter Source OU">
+          </div>
+          <div class="form-group col-12 col-md-4" >
+            <label for="Source Name">Source Name</label>
+            <input type="text" class="form-control"
+              formControlName="SourceName" id="Source Name" placeholder="Enter Source Name">
+          </div>
+        </div>
+        <hr *ngIf="mode=='view'">
+        <div class="row">
+          <div class="form-group col" [ngClass]="{'required':required}">
+            <label for="Reason">Purpose Of Use</label>
+            <textarea class="form-control vertical-resize" formControlName="PurposeofUse" id="Reason"
+              placeholder="" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-6">
+            <label for="Destination OU">Approver Office/Department</label>
+            <ng-select
+              [items]="approverDepartment"
+              [closeOnSelect]="true"
+              (change)="onChangeApproverDepartment()"
+              bindLabel="OrganizationUnits"
+              bindValue="OrganizationID"
+              placeholder="Select Department"
+              formControlName="ApproverDepartmentID">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label for="User Name">Approver - Name</label>
+            <ng-select
+              [items]="userApproverList"
+              [closeOnSelect]="true"
+              bindLabel="EmployeeName"
+              bindValue="UserID"
+              placeholder="Select Approver Name"
+              formControlName="ApproverID">
+            </ng-select>
+          </div>
+        </div>
+        <div  class="page-form-wrapper my-3 p-4">
+          <div class="row ">
+            <div class="col-12 comment">
+              <app-comment-section *ngIf="this.mode == 'view'" [comments]="diwanIdentityRequestComments" [commentType]="'DiwanIdentity'" [moduleId]="diwanIdentityRequestModel.DiwanIdentityID" [moduleNameID]="'DiwanIdentityID'"></app-comment-section>
+              <div class="row diwanIdentity-comment-section">
+                <div class="col-2 com-md-2 profile">
+                  <div class="comment-section-img">
+                    <img src="{{userProfileImg}}" class="user-ProfileImg"/>
+                  </div>
+                </div>
+                <div class="col-10 col-md-10 comment-text">
+                  <div class="comment-section-user-info">
+                    <p class="comment-section-username">{{currentUser.username}}</p>
+                  </div>
+                  <div class="comment-section-content">
+                    <textarea class="form-control vertical-resize" formControlName="Comments" id="NewCommentContent"
+                    placeholder="" rows="3"></textarea>
+                  </div>
+                  <!-- <div class="comment-reply-section" *ngIf="this.mode == 'view'">
+                    <button class="rounded-btn" type="button" [disabled]="isApiLoading" *ngIf="diwanIdentityFormGroup.controls['Comments'].enabled" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> Add Comment </button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row px-3 justify-content-center btn-row">
+          <div *ngIf="assingBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading" (click)="userAction('assign')">ASSIGN</button>
+          </div>
+          <div *ngIf="assignToMeBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading" (click)="userAction('assigntome')">ASSIGN TO ME</button>
+          </div>
+          <div *ngIf="approveBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button" [disabled]="isApiLoading"  (click)="userAction('approve')">APPROVE</button>
+          </div>
+          <div *ngIf="escalateBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button" [disabled]="!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('escalate')">ESCALATE</button>
+          </div>
+          <div *ngIf="returnForInfoBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button"  [disabled]="!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('redirect')">RETURN FOR INFO</button>
+          </div>
+          <div *ngIf="rejectBtn" class="col-auto p-1">
+            <button class="rounded-btn" type="button" [disabled]="!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading" [ngClass]="{'disabled-btn':!diwanIdentityFormGroup.valid || ((!diwanIdentityFormGroup.value.Comments) || (diwanIdentityFormGroup.value.Comments.trim() == '')) || isApiLoading}" (click)="userAction('reject')">REJECT</button>
+          </div>
+          <div *ngIf="submitBtn" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="!diwanIdentityFormGroup.valid || isApiLoading" [ngClass]="{'disabled-btn':!diwanIdentityFormGroup.valid || isApiLoading}" (click)="userAction('submit')">SUBMIT</button>
+          </div>
+          <div *ngIf="closeBtnShow" class="col-auto p-1">
+            <button class="rounded-btn" [disabled]="isApiLoading"  (click)="userAction('close')">CLOSE</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

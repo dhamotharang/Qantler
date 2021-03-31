@@ -1,0 +1,93 @@
+@import '../../../../../styles.scss';
+
+.side-nav-wrapper {
+  .side-nav {
+    background: $black-color;
+    font-size: 16px;
+    color: white;
+    border: 1px solid #4e4e4e;
+    padding: 10px 5px;
+    font-weight: 100;
+    box-sizing: border-box;
+    font-family: inherit;
+    letter-spacing: 0px;
+    border-collapse: collapse;
+    margin-top: -1px;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-align: right;
+
+    .icon {
+      width: 15px;
+      margin-left: 10px;
+    }
+
+    .btn-plus {
+      background: transparent;
+      border: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .card-body {
+      padding: 0 !important;
+    }
+  }
+
+
+  .accord-body {
+    &>div {
+      text-align: right;
+      margin-right: -15px;
+      margin-left: -15px;
+      background: #3a3a3a;
+      border-bottom: 1px solid black;
+      color: white;
+      padding: 8px;
+      padding-right: 55px;
+
+      &.selected {
+        background: #655c46;
+      }
+
+      &:hover {
+        background: $dark-color;
+      }
+
+    }
+  }
+
+
+  @media screen and (max-width:767px) {
+    .side-nav {
+      margin-left: -15px !important;
+      margin-right: -15px !important;
+      border: 0px;
+    }
+}
+}
+
+.side-nav-collapse{
+  cursor: pointer;
+}
+
+
+::ng-deep {
+  accordion-group {
+    .panel {
+      border: none;
+      .panel-heading.card-header {
+        padding: 0px 0px;
+
+        background-color: transparent;
+        border-bottom: 0px;
+      }
+
+      .panel-body.card-body {
+
+        padding: 0px;
+        box-shadow: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,248 @@
+<div class="maintenance-home">
+  <div class="cards-section">
+    <div class="row">
+      <div class="col-sm-12 mb-2 col-md-4" *ngFor="let details of homeCards">
+        <div class="card home-card mouse-point" (click)="onCardClick(details.type)">
+          <div class="card-body">
+            <div class="row home-card-row-one">
+              <div class="col-auto col-ls-12 col-xl-auto">
+                <img src="{{details.image}}" />
+              </div>
+              <div class="col col-ls-12 col-xl">
+                <div class="count">{{details.count}}</div>
+                <div class="name">{{details.displayName}}</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="progress my-3">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="details.progress"
+                    aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </div>
+  <div class="col-md-12 calendar-view" *ngIf="currentUser.departmentID === 4">
+    <div class="row text-left">
+      <button class="rounded-btn" [routerLink]="['/app/media/calendar-management/homepage']"> {{ lang == 'en' ? 'CALENDAR VIEW' : 'عرض التقويم' }} </button>
+    </div>
+  </div>
+  <div class="form-container">
+    <div class="page-form-wrapper">
+      <div class="form-title" [ngClass]="{'ar-rtl': lang=='ar'}">
+        {{ lang == 'en' ? 'FILTER BY' : arabic.words.filterby }}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="status"> {{ lang == 'en' ? 'Reference ID' : arabic.words.referenceid }} </label>
+            <input type="text" class="form-control" [(ngModel)]="filterBy.ReferenceNumber" id="referenceId">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="status">{{ lang == 'en' ? 'Event Type' : arabic.words.eventtype }}</label>
+            <ng-select
+              class="status-ddown"
+              [items]="dropDownEventTypes"
+              [closeOnSelect]="true"
+              bindLabel="label"
+              bindValue="value"
+              placeholder=""
+              [(ngModel)]="filterBy.EventType">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="subject">{{ lang == 'en' ? 'Event Requestor' : arabic.words.eventrequestor }}</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filterBy.EventRequestor"
+              id="subject">
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="dateFrom">{{ lang == 'en' ? 'Start Date' : arabic.words.startdate }}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="filterBy.StartDate"
+                bsDatepicker
+                #dp1="bsDatepicker"
+                [bsConfig]="bsConfig">
+              <span (click)="dp1.toggle()" [ngClass]="{'ar-rtl-icon': lang=='ar'}"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang=='ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="dateTo">{{ lang == 'en' ? 'End Date' : arabic.words.enddate }}</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="filterBy.EndDate"
+                bsDatepicker
+                #fdp="bsDatepicker"
+                [bsConfig]="bsConfig">
+                <span (click)="fdp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="status"> {{ lang == 'en' ? 'Smart Search' : arabic.words.smartsearch }} </label>
+            <input type="text" class="form-control" [(ngModel)]="filterBy.SmartSearch" id="SmartSearch">
+          </div>
+          <div class="col-md-12" *ngIf="dateValidation()" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <p class="text-danger">
+              {{lang == 'en' ? 'Start Date should be less than End Date.' : arabic.words.pleaseselectvalidstarttime}}
+            </p>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+            <label for="status">{{ lang == 'en' ? ' Status' : arabic.words.status }}</label>
+            <ng-select
+              class="status-ddown"
+              [items]="StatusList"
+              [closeOnSelect]="true"
+              bindLabel="DisplayName"
+              bindValue="DisplayName"
+              placeholder=""
+              [(ngModel)]="filterBy.Status">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4 p-t-20" [ngClass]="{'p-right': lang == 'ar', 'p-left': lang == 'en'}">
+            <button class="rounded-btn" (click)="onSearch()">{{ lang == 'en' ? 'Search' : arabic.words.search }}</button>
+            <button class="rounded-btn availableRecords" (click)="openReport()">{{ lang == 'en' ? 'Show Available Reports' : arabic.words.showavailablereports }}</button>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="row justify-content-center justify-content-md-end filter-Btn-width pt-4 filter-action-buttons">
+            <div class="form-group col-auto col-md-auto px-3 p-md-0 py-md-2" [ngClass]="{'p-right': lang == 'ar', 'p-left': lang == 'en'}">
+              <button class="rounded-btn" (click)="onSearch()">{{ lang == 'en' ? 'Search' : arabic.words.search }}</button>
+            </div>
+            <div class="form-group col-auto col-md-auto p-0 p-md-2">
+              <button class="rounded-btn availableRecords" (click)="openReport()">{{ lang == 'en' ? 'Show Available Reports' : arabic.words.showavailablereports }}</button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div id="destination"></div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <ng-container outsideBody>
+      <div class="table-responsive">
+        <ngx-datatable *ngIf="lang == 'en'"
+          style="width: 100%"
+          class="bootstrap"
+          [rows]="rows"
+          [columns]="columns"
+          [headerHeight]="50"
+          [columnMode]="'force'"
+          [rowHeight]="'auto'"
+          [messages]="tableMessages">
+        </ngx-datatable>
+        <ngx-datatable *ngIf="lang == 'ar'"
+          style="width: 100%"
+          [ngClass]="{'ar-rtl': lang =='ar'}"
+          class="bootstrap"
+          [rows]="rows"
+          [columns]="arabicColumns"
+          [headerHeight]="50"
+          [columnMode]="'force'"
+          [rowHeight]="'auto'"
+          [messages]="tableMessages">
+        </ngx-datatable>
+        <ng-template #startDateTemplate let-row="row" let-value="value" let-i="index">
+          {{row.DateFrom | date:'dd/MM/yyyy'}}
+        </ng-template>
+        <ng-template #endDateTemplate let-row="row" let-value="value" let-i="index">
+          {{row.DateTo | date:'dd/MM/yyyy'}}
+        </ng-template>
+        <ng-template #eventTypeTemplate let-row="row" let-value="value" let-i="index">
+          {{getEventTypeByID(row.EventType)}}
+        </ng-template>
+        <ng-template #actionTemplate
+          let-row="row"
+          let-i="index">
+          <!-- <div class="table-action-btn">
+            <button class="table-view"
+            (click)="loadListOfRequests(row)">
+            <i class="fas fa-eye" style="cursor: pointer;"></i>
+          </button> -->
+          <div class="table-action-btn">
+            <button *ngIf="(row.CreatedBy == currentUser.id && ((row.Status == 'Pending for Resubmission') || (row.Status == arabic.words['pendingforresubmission'])))"
+              class="table-view edit-btn"
+              (click)="loadListOfRequests(row)">
+              <i class="fas fa-edit"
+                style="cursor: pointer;"></i>
+            </button>
+            <button *ngIf="(!(row.CreatedBy == currentUser.id && ((row.Status == 'Pending for Resubmission') || (row.Status == arabic.words['pendingforresubmission']))))"
+              class="table-view"
+              style="cursor: pointer;"
+              (click)="loadListOfRequests(row)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+      (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let Reqrow of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12"><span><b>{{ lang == 'en' ? 'Ref ID' : arabic.words.refid }} : </b></span><span>{{Reqrow.ReferenceNumber}}</span></div>
+          <!-- <div class="col-12"><span><b>{{ lang == 'en' ? 'Created By' : arabic.words.createdby }} : </b></span><span>{{Reqrow.CreatedBy}}</span></div> -->
+          <div class="col-12"></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col"><span><b>{{ lang == 'en' ? 'Event Requestor' : arabic.words.eventrequestor }} : </b></span><span>{{Reqrow.EventRequestor}}</span></div>
+          <div class="col"><span><b>{{ lang == 'en' ? 'Event Type' : arabic.words.eventtype }} : </b></span><span>{{getEventTypeByID(Reqrow.EventType)}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col"><span><b>{{ lang == 'en' ? 'Start Date' : arabic.words.startdate }} : </b></span><span></span>{{Reqrow.DateFrom | date:'dd/MM/yyyy'}}</div>
+          <div class="col"><span><b>{{ lang == 'en' ? 'End Date' : arabic.words.enddate }} : </b></span><span>{{Reqrow.DateTo | date:'dd/MM/yyyy'}}</span></div>
+          <!-- <div class="col-12"><span><b>{{ lang == 'en' ? 'End Date' : arabic.words.enddate }} : </b></span><span>{{Reqrow.ReferenceNumber}}</span></div> -->
+          <!-- <div class="col-12"><span><b>{{ lang == 'en' ? 'Priority' : arabic.words.priority }} : </b></span><span>{{Reqrow.ReferenceNumber}}</span></div> -->
+        </div>
+        <div class="row mar-top">
+          <div class="col"></div>
+          <div class="col-auto table-action-btn">
+            <!-- <button
+              class="table-view"
+              style="cursor: pointer;"
+              (click)="loadListOfRequests(row)">
+              <i class="fas fa-eye"></i>
+            </button> -->
+            <button *ngIf="Reqrow.CreatedBy == currentUser.id && ((Reqrow.Status == 'Pending for Resubmission') || (Reqrow.Status == arabic.words['pendingforresubmission']))"
+              class="edit-btn list-btn"
+              (click)="loadListOfRequests(Reqrow)">
+              <i class="fas fa-edit"
+                style="cursor: pointer;"></i>
+            </button>
+            <button *ngIf="(!(Reqrow.CreatedBy == currentUser.id && ((Reqrow.Status == 'Pending for Resubmission') || (Reqrow.Status == arabic.words['pendingforresubmission']))))"
+              class="list-btn"
+              style="cursor: pointer;"
+              (click)="loadListOfRequests(Reqrow)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer>
+        <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+        (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+</div>

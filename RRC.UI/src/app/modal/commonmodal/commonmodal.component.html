@@ -1,0 +1,18 @@
+<div dir="auto" class="modal-header modalclass">
+  <h6 class="modal-title pull-left">{{(language=='English')?'CREATE REQUEST':arabic('createrequest')}}</h6>
+  <button type="button" class="close pull-right" [ngClass]="{'ml-0':language!='English'}" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div [dir]="(language=='English')?'ltr':'rtl'" class="modal-body">
+  <div class="row mb-2 pl-1 menulist" *ngFor="let name of data">
+    <div class="col-1">
+      <img class="image" src={{name.img}} />
+    </div>
+    <div class="col-auto" [ngClass]="{'ml-3': commonService.currentLang == 'en','mr-3': commonService.currentLang == 'ar'}">
+      <div class="mt-3"><a (click)="routepage(name)" class="nameclass">{{name.name}}</a></div>
+    </div>
+    <hr>
+  </div>
+</div>

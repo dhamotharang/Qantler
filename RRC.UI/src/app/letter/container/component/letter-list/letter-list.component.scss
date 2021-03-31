@@ -1,0 +1,71 @@
+@import '../../../../../styles.scss';
+
+.list-btn {
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+
+.edit-btn {
+  background: #3978e0;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+
+.btn-align {
+  margin-top: 32px;
+  margin-left: 16px;
+}
+
+.bg-color {
+  background: $medium-color;
+  color: white;
+}
+
+.fol-rgt {
+  float: right;
+}
+
+.fol-lft {
+  float: left;
+}
+
+.mar-top {
+  margin-top: 12px;
+}
+
+.md-top {
+  margin-top: 20px;
+}
+
+.al-ct {
+  text-align: center;
+}
+
+.priority-clr {
+  width: 12px;
+  height: 11px;
+  background: red;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+
+  &.right-0 {
+    right: 0 !important;
+  }
+}
+
+.chk-mar {
+  margin-left: 6px;
+}

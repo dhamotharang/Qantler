@@ -1,0 +1,314 @@
+<div class="page-form-wrapper" id="trigger-scroll">
+  <div class="form-title">
+    Memo {{screenStatus}}
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Reference Id">Reference Id</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create'||screenStatus=='View'"
+          [(ngModel)]="memoModel.ReferenceNumber" id="Reference Id" placeholder="Enter Ref">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="status">Status</label>
+        <select [disabled]="screenStatus!='Create'||screenStatus=='View'" class="form-control"
+          [(ngModel)]="memoModel.Status" id="exampleFormControlSelect1">
+          <option *ngFor="let us of status" [value]="us.LookupsID">{{us.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Creation Date">Creation Date</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [disabled]="screenStatus!='Create' || screenStatus=='View'"
+            [(ngModel)]="memoModel.CreatedDateTime" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source OU">Source Office/Department</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create'||screenStatus=='View'"
+          [(ngModel)]="memoModel.SourceOU" id="Source OU" placeholder="Enter Source OU">
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source Name">Source Name</label>
+        <input type="text" class="form-control" [disabled]="screenStatus!='Create'||screenStatus=='View'"
+          [(ngModel)]="memoModel.SourceName" id="Source Name" placeholder="Enter Source Name">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus!='Create'">
+    <div class="row">
+      <div class="form-group col-12 col-md-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Memo Title">Memo Title</label>
+        <input type="text" class="form-control" [disabled]="screenStatus=='View'" [(ngModel)]="memoModel.Title"
+          id="Memo Title" placeholder="Enter Memo Title">
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Destination OU">Destination Office/Department</label>
+        <ng-select [items]="destinationDepartment" [closeOnSelect]="false" [disabled]="screenStatus=='View'"
+          (change)="Destination($event)" [multiple]="true" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="memoModel.DestinationOU">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="User Name">User Name</label>
+        <ng-select [items]="userReceiver" [closeOnSelect]="false" [disabled]="screenStatus=='View'"
+          (change)="userName($event)" [multiple]="true" bindLabel="EmployeeName" bindValue="UserID"
+          [(ngModel)]="memoModel.DestinationUsername">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Department">Approver Office/Department</label>
+        <!-- <select [disabled]="screenStatus=='View'" class="form-control" (change)="onChangeDepartment()"
+          [(ngModel)]="memoModel.ApproverDepartment" id="exampleFormControlSelect1">
+          <option *ngFor="let dept of department" [value]="dept.OrganizationID">{{dept.OrganizationUnits}}</option>
+        </select> -->
+        <ng-select [items]="approverDepartment" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="onChangeDepartment()" [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="memoModel.ApproverDepartment">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="To be approved by-Name">Approver Name</label>
+        <!-- <select [disabled]="screenStatus=='View'" class="form-control" [(ngModel)]="memoModel.ApproverName"
+          id="exampleFormControlSelect1">
+          <option *ngFor="let us of userDestination" [value]="us.UserID">{{us.EmployeeName}}</option>
+        </select> -->
+        <ng-select [items]="userDestination" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="memoModel.ApproverName">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-12" [ngClass]="{'required':screenStatus != 'View'}">
+        <label>Details</label>
+      </div>
+      <div class="col-12 d-md-block" [ngClass]="{'d-none':screenStatus=='View'}">
+        <tinymce [config]="tinyConfig" [disabled]="screenStatus=='View'" [(ngModel)]="memoModel.Details"></tinymce>
+      </div>
+      <div class="col-12 d-md-none" [ngClass]="{'d-block':screenStatus=='View','d-none':screenStatus!='View' }">
+        <div class="tiny" #tinyDetail></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Private">Is it Private?</label>
+        <div>
+          <input type="radio" name="private" [disabled]="screenStatus=='View'" [(ngModel)]="memoModel.Private"
+            value="1"> Yes
+          <input class="ml-2" type="radio" [disabled]="screenStatus=='View'" name="private"
+            [(ngModel)]="memoModel.Private" value="0"> No
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Priority">Priority</label>
+        <ng-select [items]="priorityList" [disabled]="screenStatus=='View'" bindLabel="name" bindValue="name"
+          [(ngModel)]="memoModel.Priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="form-group col-12" *ngIf="screenStatus!='View'">
+            <label for="Attachments">Attachments</label>
+            <input #variable type="file" multiple class="form-control attachment d-none d-md-block"
+              [disabled]="screenStatus=='View'" name="Attachments" (change)="Attachments($event)"
+              [(ngModel)]="memoModel.Attachments" id="Attachments" />
+            <div class="form-control attachment d-block d-md-none" id="Attachments"
+              (click)="variable.click()">
+              Choose file
+            </div>
+          </div>
+          <div class="col-11 col-md-6" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2" *ngIf="attachments.length>0">
+            <label for="Keywords">Attachment List</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">File Name</div>
+              <div class="col border text-center" *ngIf="screenStatus!='View'">Action</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                  <a class="cursor"
+                    href="{{AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6">
+        <label for="Keywords">Keywords</label>
+        <tag-input class="form-control" [disable]="disableKeywordsField" [placeholder]="''"
+          [secondaryPlaceholder]="'Enter Keyword'" [clearOnBlur]="true" (onBlur)="onTextChange($event)"
+          [(ngModel)]='memoModel.Keywords'></tag-input>
+      </div>
+    </div>
+    <div class="row" *ngIf="screenStatus=='View' && memoModel.Status !=6 && memoModel.Status !=4">
+      <div class="form-group col">
+        <label for="Reference Id">Comments</label>
+        <textarea class="form-control" [(ngModel)]="memoModel.Comment" id="comments" placeholder="Enter Comments"
+          rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center">
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;statusChange('Approve',template);approveBtnLoad=true">
+          <app-btn-loader *ngIf="approveBtnLoad" class="btn-loader"></app-btn-loader>
+          APPROVE
+        </button>
+      </div>
+      <div *ngIf="createBtnShow || creatorBtn || draftBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}"
+          (click)="btnLoad = true;saveMemo();sendBtnLoad=true">
+          SEND
+          <app-btn-loader *ngIf="sendBtnLoad" class="btn-loader"></app-btn-loader>
+        </button>
+      </div>
+      <div *ngIf="draftBtn || createBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;saveMemo('draft');sendDraftBtnLoad=true">SAVE AS
+          DRAFT
+          <app-btn-loader *ngIf="sendDraftBtnLoad" class="btn-loader"></app-btn-loader>
+        </button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="memoModel.Comment =='' || btnLoad"
+          [ngClass]="{'disabled-btn': memoModel.Comment ==''|| btnLoad}"
+          (click)="btnLoad = true;statusChange('Reject',template);rejectBtnLoad=true">
+          <app-btn-loader *ngIf="rejectBtnLoad" class="btn-loader"></app-btn-loader>
+          REJECT
+        </button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="memoModel.Comment ==''  || btnLoad"
+          [ngClass]="{'disabled-btn': memoModel.Comment ==''  || btnLoad}"
+          (click)="btnLoad = true;popup('Memo Escalate',template)">ESCALATE</button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="memoModel.Comment =='' || btnLoad"
+          [ngClass]="{'disabled-btn': memoModel.Comment =='' || btnLoad}"
+          (click)="btnLoad = true;statusChange('ReturnForInfo');returnInfoBtnLoad = true">
+          <app-btn-loader *ngIf="returnInfoBtnLoad" class="btn-loader"></app-btn-loader>
+          RETURN FOR INFO
+        </button>
+      </div>
+      <div *ngIf="cloneBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;clone();cloneBtnLoad=true">
+          <app-btn-loader *ngIf="cloneBtnLoad" class="btn-loader"></app-btn-loader>
+          CLONE
+        </button>
+      </div>
+      <div *ngIf="editBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;downloadPrint();downloadBtnLoad=true">
+          <app-btn-loader *ngIf="downloadBtnLoad" class="btn-loader"></app-btn-loader>
+          DOWNLOAD AS PDF
+        </button>
+      </div>
+      <div *ngIf="receiverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;shareMemo();shareBtnLoad=true">
+          <app-btn-loader *ngIf="shareBtnLoad" class="btn-loader"></app-btn-loader>
+          SHARE MEMO
+        </button>
+      </div>
+      <div class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad || printbtn" [ngClass]="{'disabled-btn': btnLoad || printbtn }"
+          (click)="btnLoad = true;print(printPDF);printBtnLoad=true">
+          <app-btn-loader *ngIf="printBtnLoad" class="btn-loader"></app-btn-loader>
+          PREVIEW / PRINT
+        </button>
+      </div>
+      <div *ngIf="deleteBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;delete();deleteBtnLoad = true">
+          <app-btn-loader *ngIf="deleteBtnLoad" class="btn-loader"></app-btn-loader>
+          DELETE
+        </button>
+      </div>
+      <div *ngIf="receiverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;statusChange('Close',template);closeBtnLoad=true">
+          <app-btn-loader *ngIf="closeBtnLoad" class="btn-loader"></app-btn-loader>
+          CLOSE
+        </button>
+      </div>
+
+      <!-- <div *ngIf="(receiverBtn || approverBtn) && memoModel.Status !=3" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;popup('Redirect',false,template)">REDIRECT</button>
+      </div> -->
+
+      <div *ngIf="destinationRedirectBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          [ngClass]="{'disabled-btn': btnLoad}"
+          (click)="btnLoad = true;popup('Redirect',true,template)">REDIRECT</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.screenStatus != 'Create'" class="page-form-wrapper my-3 p-4">
+  <div class="row" *ngFor="let his of memoData.HistoryLog">
+    <div class="col-auto">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'hh:mm a'}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+      </div>
+    </div>
+    <div class="col p-2">
+      <div class="row">
+        <div class="col-12">{{hisLog(his.Action)}} By : {{his.ActionBy}}<span *ngIf="showSpanForEscalateRedirect(his.Action)"> To : {{his.Escalate_RedirectUser}}</span></div>
+        <div class="col-12 comment" *ngIf="his.Comments !=''">Comments : {{his.Comments}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Success</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">{{message}}</p>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #printPDF>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">Print Preview</h4>
+    <button type="button" class="close pull-right color-white" aria-label="Close" (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" #printContent>
+    <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="printPdf(printContent);bsModalRef.hide()">Print</button>
+    <button type="button" class="rounded-btn" (click)="downloadPrint();bsModalRef.hide()">Download</button>
+  </div>
+</ng-template>
+
+<!-- button loading -->

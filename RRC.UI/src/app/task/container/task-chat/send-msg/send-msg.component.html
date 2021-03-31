@@ -1,0 +1,21 @@
+    <div class="row right-cl justify-content-end mb-3" [dir]="(lang=='English')?'ltr':'rtl'" 
+    [ngClass]="{'left':lang!='English','right':lang=='English'}">
+      <div class="col-auto right-msg">
+        <div *ngIf="lang=='English'" class="right-indicator"></div>
+        <div *ngIf="lang!='English'" class="left-indicator"></div>
+        <div class="message">
+          <div class="attachment" *ngIf="chat.AttachmentName !=''">
+            <a class="mouse-point"
+              href="{{AttachmentDownloadUrl}}?filename={{chat.AttachmentName}}&guid={{chat.AttachmentGuid}}">{{chat.AttachmentName}}</a>
+          </div>
+          <div class="msg" *ngIf="chat.Message !=''" [ngClass]="{'historylog':history}">{{chat.Message}}</div>
+          <div class="response" *ngIf="!chat.status"><i class="far fa-clock clock"></i></div>
+          <div class="response" *ngIf="chat.status"><i class="fas fa-check clock"></i></div>
+        </div>
+      </div>
+      <div class="col-auto profile">
+        <!-- <img class="right-img" src="{{chat.Photo}}"> -->
+        <div *ngIf="lang=='English'" class="right-time">{{chat.CreatedDateTime | date: 'hh:mm a'}}</div>
+        <div *ngIf="lang!='English'" class="right-time">{{chat.CreatedDateTime | date: 'hh:mm'}} {{(chat.CreatedDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}</div>
+      </div>
+    </div>

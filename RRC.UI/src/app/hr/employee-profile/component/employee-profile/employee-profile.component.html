@@ -1,0 +1,1127 @@
+<div class="page-form-wrapper employees-part" id="trigger-scroll">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span class="screenStatus"
+      *ngIf="screenStatus == 'edit'">{{isEngLang ? 'EDIT PROFILE' : arabicfn('updateprofile')}}</span>
+    <span class="screenStatus"
+      *ngIf="screenStatus == 'View'">{{isEngLang ? 'VIEW PROFILE' : arabicfn('viewprofile')}}</span>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Create Date">{{isEngLang ? 'Date': arabicfn('date')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="empFormData && empFormData.CreatedDateTime"
+            [disabled]="screenStatus" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+          <span><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{ 'ar-rtl': !isEngLang}">
+        <label for="Source OU">{{isEngLang ? 'Employee Name' : arabicfn('employeename')}}</label>
+        <input type="text" class="form-control"
+          placeholder="{{isEngLang ? 'Enter Employee Name' : arabicfn('employeename')}}" autocomplete="off"
+          [(ngModel)]="empFormData && empFormData.EmployeeName" [disabled]="screenStatus=='View' || screenStatus == 'edit'"
+          id="Source OU">
+        <div class="row" *ngIf="submitted && errorEmpNameMsg && checkNullAndTrim(empFormData.EmployeeName)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{isEngLang ? 'Please Enter a valid Employee Name' : arabicfn('errormsgemployeename')}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4 user-pic-div">
+        <div class="profile-picure">
+          <img src="{{ImageUrl ? ImageUrl :'assets/home/user_male.png'}}" class="user-pic"
+            (click)="screenStatus!='View' ? fileInput.click():''">
+          <input id="fileInput" type='file' #fileInput (change)="uploadFiles($event, 'photo')">
+          <div class="profileImg">
+            <img class="photo-camera" (click)="screenStatus!='View' ? fileInput.click():''"
+              src="assets/media/photo-camera.png">
+          </div>
+        </div>
+        <div class="progress" *ngIf="uploadProcess">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+            aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View', 'ar-rtl': !isEngLang}">
+        <label for="Employee Code">{{isEngLang ? 'Employee Code' : arabicfn('employeecode')}}</label>
+        <input type="text" class="form-control"
+          placeholder="{{isEngLang ? 'Enter Employee Code' : arabicfn('employeecode')}}" autocomplete="off"
+          [disabled]="screenStatus=='View'||'Edit'&& HRid!=9" [(ngModel)]="empFormData && empFormData.EmployeeCode"
+          id="Source Name">
+        <div class="row" *ngIf="submitted && errorEmpCodeMsg && checkNullAndTrim(empFormData.EmployeeCode)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{isEngLang ? 'Please Enter a valid Employee Code' : arabicfn('errormsgemployeecode')}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Official Mail ID">{{isEngLang ? 'Official Mail ID' : arabicfn('officialmailid')}}</label>
+        <input type="text" class="form-control"
+          placeholder="{{isEngLang ? 'Enter Official Mail ID' : arabicfn('officialmailid')}}" autocomplete="off"
+          [disabled]="screenStatus=='View' || screenStatus == 'edit'"
+          [(ngModel)]="empFormData && empFormData.OfficialMailId" id="Source Name">
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Personal Mail ID">{{isEngLang ? 'Personal Mail ID' : arabicfn('personalmailid')}}</label>
+        <input type="text" class="form-control" (change)="checkValidEmail()"
+          placeholder="{{isEngLang ? 'Enter Personal Mail ID' : arabicfn('personalmailid')}}" autocomplete="off"
+          [disabled]="screenStatus=='View'" (keypress)="checkPersMail()"
+          [(ngModel)]="empFormData && empFormData.PersonalMailId" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkPersMail() && checkNullAndTrim(empFormData.PersonalMailId)">
+            <div class="col-12">
+              <span class="text-danger">
+                {{ isEngLang ? 'Please Enter Personal Mail ID' : arabicfn('errormsgpersonalmailid') }}
+              </span>
+            </div>
+          </div> -->
+        <div class="row" *ngIf="checkValidEmail()">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please Enter a valid Personal Mail ID' : arabicfn('errormsgpersonalmailid') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Gender">{{ isEngLang ? 'Gender' : arabicfn('gender') }}</label>
+        <div>
+          <input type="radio" name="gender" [checked]="checked" [(ngModel)]="empFormData && empFormData.Gender"
+            [disabled]="screenStatus=='View'" value="0"> {{ isEngLang ? 'Male' : arabicfn('male') }}
+          <input class="ml-2" type="radio" [(ngModel)]="empFormData && empFormData.Gender"
+            [disabled]="screenStatus=='View'" name="gender" value="1"> {{ isEngLang ? 'Female' : arabicfn('female') }}
+        </div>
+        <!-- <div class="row" *ngIf="submitted && errorEmpGenderMsg && !empFormData.Gender">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Gender' : arabicfn('errormsggender') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Birthday Date">{{ isEngLang ? 'Birth Date' : arabicfn('birthday') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Birth Date' : arabicfn('birthday') }}"
+            [(ngModel)]="empFormData.BirthDate" (bsValueChange)="CalculateAge($event)" [disabled]="screenStatus=='View'"
+            bsDatepicker #dp1="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp1.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <!-- <div class="row" *ngIf="submitted && errorEmpbirthdayMsg && checkInvalidDate(empFormData.BirthDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Birth Date' : arabicfn('errormsgbirthdate') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Age">{{ isEngLang ? 'Age' : arabicfn('age') }}</label>
+        <input type="text" class="form-control" [(ngModel)]="empFormData && empFormData.Age" [disabled]="true">
+        <div class="row" *ngIf="submitted && errorEmpAgeMsg && empFormData.Age < 18">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Age should be more than 18 years.Please enter a valid Date of Birth.' : arabicfn('errormsgvalidbirthdate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Country of Residence">{{ isEngLang ? 'Country of Residence' : arabicfn('countryofresidence') }}</label>
+        <ng-select [items]="countryList" [closeOnSelect]="true" bindLabel="CountryName" bindValue="CountryID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.CountryofResidence"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Country': arabicfn('countryofresidence') }}">
+        </ng-select>
+        <!-- <div class="row" *ngIf="submitted && errorEmpCountryMsg && !empFormData.CountryofResidence">
+          <div class="col-12">
+            <span class="text-danger">
+             {{ isEngLang ? 'Please Enter a valid Country of Residence' : arabicfn('errormsgcountryofresidence') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Mobile No">{{ isEngLang ? 'Mobile No' : arabicfn('mobileno') }}</label>
+        <input type="text" class="form-control" minlength="9" maxlength="14"
+          placeholder="{{ isEngLang ? 'Enter Mobile No' : arabicfn('mobileno') }}" (keypress)="numberOnly($event)"
+          autocomplete="off" [disabled]="screenStatus =='View'" [(ngModel)]="empFormData && empFormData.MobileNumber"
+          id="Source Name">
+        <div class="row" *ngIf="submitted && errorEmpMobileMsg && checkNullAndTrim(empFormData.MobileNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please Enter a valid Mobile No' : arabicfn('errormsgmobileno') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Employee Phone no">{{ isEngLang ? 'Employee Phone No' : arabicfn('employeephoneno') }}</label>
+        <input type="text" class="form-control" minlength="9" maxlength="14"
+          placeholder="{{ isEngLang ? 'Enter Employee Phone No' : arabicfn('employeephoneno') }}"
+          (keypress)="numberOnly($event)" autocomplete="off"
+          [disabled]="screenStatus =='View' || screenStatus == 'edit'"
+          [(ngModel)]="empFormData && empFormData.EmployeePhoneNumber" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && errorEmpPhoneMsg && checkNullAndTrim(empFormData.EmployeePhoneNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please Enter a valid Employee Phone No' : arabicfn('errormsgemployeephoneno') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Religion">{{ isEngLang ? 'Religion' : arabicfn('religion') }}</label>
+        <ng-select [items]="religionList" [closeOnSelect]="true" bindLabel="ReligionName" bindValue="ReligionID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.Religion"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Religion': arabicfn('religion') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpReligionMsg && !empFormData.Religion">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Religion' : arabicfn('errormsgreligion') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Nationality">{{ isEngLang ? 'Nationality' : arabicfn('nationality') }}</label>
+        <ng-select [items]="nationalityList" [closeOnSelect]="true" bindLabel="NationalityName"
+          bindValue="NationalityID" [disabled]="screenStatus=='View'"
+          [(ngModel)]="empFormData && empFormData.Nationality"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Nationality': arabicfn('nationality') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpNationalityMsg && !empFormData.Nationality">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Nationality' : arabicfn('errormsgnationality') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Previous Nationality">{{ isEngLang ? 'Previous Nationality' : arabicfn('previousnationality') }}</label>
+        <ng-select [items]="nationalityList" [closeOnSelect]="true" bindLabel="NationalityName"
+          bindValue="NationalityID" [disabled]="screenStatus=='View'"
+          [(ngModel)]="empFormData && empFormData.PreviousNationality"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Nationality': arabicfn('previousnationality') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpPreNationalityMsg && !empFormData.PreviousNationality">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Previous Nationality' : arabicfn('errormsgprenationality') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Join Date">{{ isEngLang ? 'Join Date' : arabicfn('joindate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Join Date' : arabicfn('joindate') }}" autocomplete="off"
+            [(ngModel)]="empFormData && empFormData.JoinDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp2="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp2.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorEmpJoinDateMsg && checkInvalidDate(empFormData.JoinDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Join Date' : arabicfn('errormsgjoindate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Title">{{ isEngLang ? 'Title' : arabicfn('profiletitle') }}</label>
+        <ng-select [items]="titleList" [closeOnSelect]="true" bindLabel="TitleName" bindValue="TitleID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.Title"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Title': arabicfn('title') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpTitleMsg && checkNullAndTrim(empFormData.Title)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Title' : arabicfn('errormsgtitle') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View', 'ar-rtl': !isEngLang}">
+        <label for="Grade">{{ isEngLang ? 'Grade' : arabicfn('grade') }}</label>
+        <ng-select [items]="GradeList" [closeOnSelect]="true" bindLabel="GradeName" bindValue="GradeID"
+          [disabled]="screenStatus=='View'||'Edit'&& HRid!=9" [(ngModel)]="empFormData && empFormData.Grade"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Grade': arabicfn('grade') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpGradeMsg && checkNullAndTrim(empFormData.Grade)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Grade' : arabicfn('errormsggrade') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View', 'ar-rtl': !isEngLang}">
+        <label for="Department">{{ isEngLang ? 'Office/Department' : arabicfn('office/department') }}</label>
+        <ng-select [items]="departmentList" [closeOnSelect]="true" bindLabel="OrganizationUnits"
+          bindValue="OrganizationID" [disabled]="screenStatus=='View'"
+          [(ngModel)]="empFormData && empFormData.OrgUnitID"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Department': arabicfn('department') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpOrgMsg && !empFormData.OrgUnitID">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Department' : arabicfn('errormsgvaliddepartment') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Employee Position">{{ isEngLang ? 'Employee Position' : arabicfn('employeeposition') }}</label>
+        <input type="text" class="form-control"
+          [disabled]="true" [(ngModel)]="empFormData && empFormData.EmployeePosition"
+          id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && errorEmpPositionMsg && checkNullAndTrim(empFormData.EmployeePosition)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please Enter a valid Employee Position' : arabicfn('errormsgemployeeposition') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Employment Status">{{ isEngLang ? 'Employment Status' : arabicfn('employmentstatus') }}</label>
+        <ng-select [items]="employeeStatus" [closeOnSelect]="true" bindLabel="EmployeeStatusName"
+          bindValue="EmployeeStatusID" [disabled]="screenStatus=='View'"
+          [(ngModel)]="empFormData && empFormData.EmploymentStatus"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Employee Status': arabicfn('employmentstatus') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorEmpStatusMsg && !empFormData.EmploymentStatus">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Employment Status' : arabicfn('errormsgemploymentstatus') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Resigned">{{ isEngLang ? 'Resigned?' : arabicfn('resigned')}}</label>
+        <div>
+          <input type="radio" name="resigned" [(ngModel)]="empFormData && empFormData.Resigned"
+            [disabled]="screenStatus=='View'" value="1"> {{ isEngLang ? 'Yes' : arabicfn('yes') }}
+          <input class="ml-2" type="radio" [(ngModel)]="empFormData && empFormData.Resigned"
+            [disabled]="screenStatus=='View'" name="resigned" value="0"> {{ isEngLang ? 'No' : arabicfn('no') }}
+        </div>
+        <div class="row" *ngIf="submitted && errorEmpResignedMsg && !empFormData.Resigned">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a Resigned' : arabicfn('errormsgresigned') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Resignation">{{ isEngLang ? 'Resignation Date' : arabicfn('resignationdate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control"
+            placeholder="{{ isEngLang ? 'Select Resignation Date' : arabicfn('resignationdate') }}"
+            [(ngModel)]="empFormData && empFormData.ResignationDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp3="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp3.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorEmpResignedDateMsg && checkInvalidDate(empFormData.ResignationDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Resignation Date' : arabicfn('errormsgresigndate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View', 'ar-rtl': !isEngLang}">
+        <label for="Balance Leave">{{ isEngLang ? 'Balance Leave' : arabicfn('balanceleave') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Balance Leave' : arabicfn('balanceleave') }}"
+          (keypress)="numberOnly($event)" autocomplete="off" [disabled]="((screenStatus=='View')||('Edit'&& HRid!=9))"
+          [(ngModel)]="empFormData.BalanceLeave" id="Source Name">
+        <div class="row" *ngIf="submitted && checkBalLeave() && checkNullAndTrim(empFormData.BalanceLeave)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Balance Leave' : arabicfn('errormsgbalanceleave') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Source Name">{{ isEngLang ? 'Notification Preferences' : arabicfn('notificationpreference') }}</label>
+        <div class="checkboxGroup">
+          <div class="checkbox-box">
+            <div class="form-field" [ngClass]="{'ar-rtl': lang =='ar'}">
+              <input type="checkbox" [disabled]="screenStatus =='View'"
+                [(ngModel)]="empFormData.NotificationPreferencesEmail" (change)="NotificationPreferencesEmail()"
+                id="c-cb" name="c-cb" />
+              <label for="c-cb" class="custom">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                  viewBox="209.667 9.667 589.37 540.667">
+                  <rect id="" x="211.667" y="11.667" fill="#FFFFFF" stroke="#00ABBB" stroke-width="4"
+                    stroke-miterlimit="10" width="536.667" height="536.667" />
+                  <polygon id="checkmark" stroke="#A39161" stroke-miterlimit="10" points="451.92,291.724 254.569,205.919 211.667,220.22
+                      451.92,463.333 798,28.589 737.937,28.589 " />
+                </svg>
+              </label>
+              <span class="checkbox-text">{{ isEngLang ? 'EMail' : arabicfn('email') }}</span>
+            </div>
+          </div>
+          <div class="checkbox-box smsBox">
+            <div class="form-field" [ngClass]="{'ar-rtl': lang =='ar'}">
+              <input type="checkbox" [disabled]="screenStatus =='View'"
+                [(ngModel)]="empFormData.NotificationPreferencesSMS" (change)="NotificationPreferencesSMS()" id="c-cb1"
+                name="c-cb2" />
+              <label for="c-cb1" class="custom">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                  viewBox="209.667 9.667 589.37 540.667">
+                  <rect id="" x="211.667" y="11.667" fill="#FFFFFF" stroke="#00ABBB" stroke-width="4"
+                    stroke-miterlimit="10" width="536.667" height="536.667" />
+                  <polygon id="checkmark" stroke="#A39161" stroke-miterlimit="10" points="451.92,291.724 254.569,205.919 211.667,220.22
+                      451.92,463.333 798,28.589 737.937,28.589 " />
+                </svg>
+              </label>
+              <span class="checkbox-text">{{ isEngLang ? 'SMS' : arabicfn('sms') }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row"
+          *ngIf="submitted && errorEmpNotifiMsg && !this.empFormData.NotificationPreferencesSMS && !this.empFormData.NotificationPreferencesEmail">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Notification Preferences' : arabicfn('errormsgvalidnotifipreferences') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper employees-part">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span class="screenStatus">{{ isEngLang ? 'EDUCATION' : arabicfn('education') }}</span>
+  </div>
+  <div class="container-fluid py-2" *ngFor="let field of empFormData.Education; let i = index;">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Degree">{{ isEngLang ? 'Degree' : arabicfn('degree') }}</label>
+        <ng-select [items]="qualificationList" [closeOnSelect]="true" bindLabel="EducationName" bindValue="EducationID"
+          [disabled]="screenStatus=='View'" [(ngModel)]="field && field.Degree"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Degree': arabicfn('degree') }}">
+        </ng-select>
+        <!-- <div class="row" *ngIf="submitted && !field.Degree">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Degree' : arabicfn('errormsgvaliddegree') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="School/College">{{ isEngLang ? 'School / College' : arabicfn('schoolcollege') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter School / College' : arabicfn('schoolcollege') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="field && field.SchoolCollege" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.SchoolCollege)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid School / College' : arabicfn('errormsgcollegeschool') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Field of Study">{{ isEngLang ? 'Field of Study' : arabicfn('fieldofstudy') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Field of Study' : arabicfn('fieldofstudy') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="field && field.FieldStudy" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.FieldStudy)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Field of Study' : arabicfn('errormsgfieldstudy') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Time Period From">{{ isEngLang ? 'Time Period From' : arabicfn('timeperiodfrom') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Time Period From' : arabicfn('timeperiodfrom') }}"
+            (bsValueChange)="checkEduStartEndDateDiff(i, $event, 'from')" [(ngModel)]="field && field.TimePeriodFrom"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp4="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp4.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+      </div> -->
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Time Period To">{{ isEngLang ? 'Graduation date' : arabicfn('graduationdate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Graduation date' : arabicfn('graduationdate') }}"
+            (bsValueChange)="checkEduStartEndDateDiff(i, $event, 'to')" [(ngModel)]="field && field.TimePeriodTo"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp44="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp44.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="(submitted && !field.TimePeriodTo) || field.isValidDate">
+          <div class="col-12">
+            <!-- <span class="text-danger" *ngIf="!field.isValidDate">
+              {{ isEngLang ? 'Please select a valid Time Period To' : arabicfn('errormsgtimeperiodto') }}
+            </span> -->
+            <span class="text-danger" *ngIf="field.isValidDate">
+              {{ isEngLang ? 'End date should be greater than Start Date' : arabicfn('errormsgvalidenddate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <a class="addMore" [ngClass]="{'removeLink':screenStatus == 'View'}"
+          (click)="screenStatus!='View' ? addRow('education'):''">+ {{ isEngLang ? 'Add More' : arabicfn('addmore') }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper employees-part">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span class="screenStatus">{{ isEngLang ? 'WORK EXPERIENCE' : arabicfn('workexperience') }}</span>
+  </div>
+  <div class="container-fluid py-2" *ngFor="let field of empFormData.WorkExperience; let i = index;">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Job Title">{{ isEngLang ? 'Job Title' : arabicfn('jobtitle')}} </label>
+        <input type="text" class="form-control" placeholder="{{ isEngLang ? 'Enter Job Title' : arabicfn('jobtitle')}}"
+          autocomplete="off" [disabled]="screenStatus=='View'" [(ngModel)]="field && field.JobTitle" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.JobTitle)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Job Title' : arabicfn('errormsgvalidtitle') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Company">{{ isEngLang ? 'Company' : 'الشركة' }}</label>
+        <input type="text" class="form-control" placeholder="{{ isEngLang ? 'Enter Company' : 'الشركة' }}"
+          autocomplete="off" [disabled]="screenStatus=='View'" [(ngModel)]="field && field.Company" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.Company)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Company' : arabicfn('errormsgvalidcompany') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="City">{{ isEngLang ? 'City' : 'المدينة' }}</label>
+        <input type="text" class="form-control" placeholder="{{ isEngLang ? 'Enter City' : 'المدينة' }}"
+          [disabled]="screenStatus=='View'" [(ngModel)]="field && field.City" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.City)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid City' : arabicfn('errormsgvalidcity') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Time Period From">{{ isEngLang ? 'Time Period From' : arabicfn('timeperiodfrom') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Time Period From' : arabicfn('timeperiodfrom') }}"
+            (bsValueChange)="checkWorkStartEndDateDiff(i, $event, 'from')" [(ngModel)]="field && field.TimePeriodFrom"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp5="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp5.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <!-- <div class="row" *ngIf="(submitted && !field.TimePeriodFrom)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Time Period From' : arabicfn('errormsgtimeperiodfrom') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Time Period To">{{ isEngLang ? 'Time Period To' : arabicfn('timeperiodto') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Time Period To' : arabicfn('timeperiodto') }}"
+            (bsValueChange)="checkWorkStartEndDateDiff(i, $event, 'to')" [(ngModel)]="field && field.TimePeriodTo"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp6="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp6.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="(submitted && !field.TimePeriodTo) || field.isValidDate">
+          <div class="col-12">
+            <!-- <span class="text-danger" *ngIf="!field.isValidDate">
+              {{ isEngLang ? 'Please select a valid Time Period To' : arabicfn('errormsgtimeperiodto') }}
+            </span> -->
+            <span class="text-danger" *ngIf="field.isValidDate">
+              {{ isEngLang ? 'End date should be greater than Start Date' : arabicfn('errormsgvalidenddate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <a class="addMore" [ngClass]="{'removeLink':screenStatus == 'View'}"
+          (click)="screenStatus!='View' ? addRow('work'):''">+ {{ isEngLang ? 'Add More' : arabicfn('addmore') }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper employees-part">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span
+      class="screenStatus">{{ isEngLang ? 'TRAININGS / CERTIFICATIONS' : arabicfn('trainingscertificatons') }}</span>
+  </div>
+  <div class="container-fluid py-2" *ngFor="let field of empFormData.TrainingCertifications; let i = index;">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Training Name">{{ isEngLang ? 'Training Name' : arabicfn('trainingname') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Training Name' : arabicfn('trainingname') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="field && field.TrainingName" id="Source Name">
+        <!-- <div class="row" *ngIf="submitted && checkNullAndTrim(field.TrainingName)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Training Name' : arabicfn('errormsgtrainingname') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Start Date">{{ isEngLang ? 'Start Date' : arabicfn('startdate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Start Date' : arabicfn('startdate') }}"
+            (bsValueChange)="checkTrainingStartEndDateDiff(i, $event, 'from')" [(ngModel)]="field && field.StartDate"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp7="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp7.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <!-- <div class="row" *ngIf="submitted && !field.StartDate">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Start Date' : arabicfn('errormsgvalidstartdate') }}
+            </span>
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="End Date">{{ isEngLang ? 'End Date' : arabicfn('enddate') }}</label>
+        <div class="position-relative">
+          <input type="text" [maxDate]="maxDate(0)" class="form-control"
+            placeholder="{{ isEngLang ? 'Select End Date' : arabicfn('enddate') }}"
+            (bsValueChange)="checkTrainingStartEndDateDiff(i, $event, 'to')" [(ngModel)]="field && field.EndDate"
+            [disabled]="screenStatus=='View'" bsDatepicker #dp8="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp8.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="(submitted && !field.EndDate) || field.isValidDate">
+          <div class="col-12">
+            <!-- <span class="text-danger" *ngIf="!field.isValidDate">
+              {{ isEngLang ? 'Please select a valid End Date' : arabicfn('errormsgvalidenddate') }}
+            </span> -->
+            <span class="text-danger" *ngIf="field.isValidDate">
+              {{ isEngLang ? 'End date should be greater than Start Date' : arabicfn('errormsgvalidenddate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+          <div class="form-group col-12 col-md-4"  *ngIf="field.TrainingRequestID==null" [ngClass]="{'ar-rtl': !isEngLang}">
+            <label for="Trainingattachment">Attachments</label>
+            <input type="file" class="form-control Trainingattachment"
+              name="Trainingattachment" #variable [(ngModel)]="Trainingattachment" id="Trainingattachment"
+              (change) = "TraininghandleFileUpload($event,i)"
+              placeholder="Select file"/>
+          </div>
+      <div class="form-group col-12 col-md-4" *ngIf="field.Attachment.length>0" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Keywords">Attachment List</label>
+        <div class="row border font-weight-bold">
+          <div class="border" [ngClass]="field.TrainingRequestID==null? 'col-6': 'col-12'">File Name</div>
+          <div class="col-6 border text-center" *ngIf="field.TrainingRequestID==null">Action</div>
+        </div>
+        <div *ngFor="let file of field.Attachment; let u = index">
+          <div class="row">
+            <div class="col attachment-width border"  [ngClass]="field.TrainingRequestID==null? 'col-6': 'col-12'">
+              <a class="cursor"
+                href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+            </div>
+            <div class="col-6 border text-center" *ngIf="field.TrainingRequestID==null">
+              <span (click)="deleteTrainingAttachment(i,u)"><i class="fas fa-trash-alt"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <a class="addMore" [ngClass]="{'removeLink':screenStatus == 'View'}"
+          (click)="screenStatus!='View' ? addRow('certificate'):''">+{{ isEngLang ? 'Add More' : arabicfn('addmore') }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper employees-part">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span class="screenStatus">{{ isEngLang ? "VALID ID's" : arabicfn('validids') }}</span>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Passport No">{{ isEngLang ? 'Passport No' : arabicfn('passportno') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Passport No' : arabicfn('passportno') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.PassportNumber" id="Source Name">
+        <div class="row" *ngIf="submitted && errorEmpPassNoMsg && checkNullAndTrim(empFormData.PassportNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Passport No' : arabicfn('errormsgpasportno') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Passport Issue Place">{{ isEngLang ? 'Passport Issue Place' : arabicfn('passportissueplace') }}</label>
+        <input type="text" class="form-control" autocomplete="off"
+          placeholder="{{ isEngLang ? 'Enter Passport Issue Place' : arabicfn('passportissueplace') }}"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.PassportIssuePlace"
+          id="Source Name">
+        <div class="row"
+          *ngIf="submitted && errorEmpPassIssPlaceMsg && checkNullAndTrim(empFormData.PassportIssuePlace)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Passport Issue Place' : arabicfn('errormsgpasportplace') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Passport Issue Date">{{ isEngLang ? 'Passport Issue Date' : arabicfn('passportissuedate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Passport Issue Date' : arabicfn('passportissuedate') }}"
+            [(ngModel)]="empFormData && empFormData.PassportIssueDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp9="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp9.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorEmpPassIssDateMsg && checkInvalidDate(empFormData.PassportIssueDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Passport Issue Date' : arabicfn('errormsgvalidpassportissuedate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Passport Expiry Date">{{ isEngLang ? 'Passport Expiry Date' : arabicfn('passportexpirydate') }}</label>
+        <div class="position-relative">
+          <input type="text" [minDate]="empFormData.PassportIssueDate" class="form-control"
+            placeholder="{{ isEngLang ? 'Select Passport Expiry Date' : arabicfn('passportexpirydate') }}"
+            [(ngModel)]="empFormData && empFormData.PassportExpiryDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp10="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp10.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorEmpPassExDateMsg && checkInvalidDate(empFormData.PassportExpiryDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select a valid Passport Expiry Date' : arabicfn('errormsgvalidpassportexpirydate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Visa No">{{ isEngLang ? 'Visa No' : arabicfn('visano') }}</label>
+        <input type="text" class="form-control" placeholder="{{ isEngLang ? 'Enter Visa No' : arabicfn('visano') }}"
+          autocomplete="off" [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.VisaNumber"
+          id="Source Name">
+        <div class="row" *ngIf="submitted && errorVisaNoMsg && checkNullAndTrim(empFormData.VisaNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Visa No' : arabicfn('errormsgvisano') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Visa Issue Date">{{ isEngLang ? 'Visa Issue Date' : arabicfn('visaissuedate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Visa Issue Date' : arabicfn('visaissuedate') }}"
+            [(ngModel)]="empFormData && empFormData.VisaIssueDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp11="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp11.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorVisaIssMsg && checkInvalidDate(empFormData.VisaIssueDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Visa Issue Date' : arabicfn('errormsgvalidvisaissuedate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Visa Expiry Date">{{ isEngLang ? 'Visa Expiry Date' : arabicfn('visaexpirirydate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="empFormData.VisaIssueDate"
+            placeholder="{{ isEngLang ? 'Select Visa Expiry Date' : arabicfn('visaexpirirydate') }}"
+            [(ngModel)]="empFormData && empFormData.VisaExpiryDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp12="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp12.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row" *ngIf="submitted && errorVisaExpMsg && checkInvalidDate(empFormData.VisaExpiryDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Visa Expiry Date' : arabicfn('errormsgvalidvisaexpirydate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Emirates ID No">{{ isEngLang ? 'Emirates ID No' : arabicfn('emiratesidno') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Emirates ID No' : arabicfn('emiratesidno') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.EmiratesIdNumber" id="Source Name">
+        <div class="row" *ngIf="submitted && errorEmpEmiIdNoMsg && checkNullAndTrim(empFormData.EmiratesIdNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Emirates ID No' : arabicfn('errormsgemiratesno') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for=">Emirates ID Issue Date">{{ isEngLang ? 'Emirates ID Issue Date' : arabicfn('emiratesidissuedate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Emirates ID Issue Date' : arabicfn('emiratesidissuedate') }}"
+            [(ngModel)]="empFormData && empFormData.EmiratesIdIssueDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp13="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp13.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row"
+          *ngIf="submitted && errorEmpEmiIssDateMsg && checkInvalidDate(empFormData.EmiratesIdIssueDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Emirates ID Issue Date' : arabicfn('errormsgemiratesissuedate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Emirates ID Expiry Date">{{ isEngLang ? 'Emirates ID Expiry Date' : arabicfn('emiratesidexpirydate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="empFormData.EmiratesIdIssueDate"
+            placeholder="{{ isEngLang ? 'Select Emirates ID Expiry Date' : arabicfn('emiratesidexpirydate') }}"
+            [(ngModel)]="empFormData && empFormData.EmiratesIdExpiryDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp14="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp14.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row"
+          *ngIf="submitted && errorEmpEmiExDateMsg && checkInvalidDate(empFormData.EmiratesIdExpiryDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Emirates ID Expiry Date' : arabicfn('errormsgemiratesexpirydate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Insurance No">{{ isEngLang ? 'Insurance No' : arabicfn('insuranceno') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Insurance No' : arabicfn('insuranceno') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.InsuranceNumber" id="Source Name">
+      </div>
+
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Insurance Issue Date">{{ isEngLang ? 'Insurance Issue Date' : arabicfn('insuranceissuedate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Insurance Issue Date' : arabicfn('insuranceissuedate') }}"
+            [(ngModel)]="empFormData && empFormData.InsuranceIssueDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp15="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp15.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Insurance Expiry Date">{{ isEngLang ? 'Insurance Expiry Date' : arabicfn('insuranceexpirydate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="empFormData.InsuranceIssueDate"
+            placeholder="{{ isEngLang ? 'Select Insurance Expiry Date' : arabicfn('insuranceexpirydate') }}"
+            [(ngModel)]="empFormData && empFormData.InsuranceExpiryDate" [disabled]="screenStatus=='View'" bsDatepicker
+            #dp16="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp16.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Labour Contract No">{{ isEngLang ? 'Labour Contract No' : arabicfn('labourcontractno') }}</label>
+        <input type="text" class="form-control"
+          placeholder="{{ isEngLang ? 'Enter Labour Contract No' : arabicfn('labourcontractno') }}" autocomplete="off"
+          [disabled]="screenStatus=='View'" [(ngModel)]="empFormData && empFormData.LabourContractNumber"
+          id="Source Name">
+        <div class="row" *ngIf="submitted && errorEmpLabConNoMsg && checkNullAndTrim(empFormData.LabourContractNumber)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Labour Contract No' : arabicfn('errormsgcontractno') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Labour Contractor Issue">{{ isEngLang ? 'Labour Contract Issue Date' : arabicfn('labourcontractissuedate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(0)"
+            placeholder="{{ isEngLang ? 'Select Labour Contractor Issue Date' : arabicfn('labourcontractissuedate') }}"
+            [(ngModel)]="empFormData && empFormData.LabourContractIssueDate" [disabled]="screenStatus=='View'"
+            bsDatepicker #dp17="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp17.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row"
+          *ngIf="submitted && errorConIssDateMsg && checkInvalidDate(empFormData.LabourContractIssueDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Labour Contract Issue Date' : arabicfn('errormsglabourcontractorissuedate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label
+          for="Labour Contractor Expiry">{{ isEngLang ? 'Labour Contract Expiry Date' : arabicfn('labourcontractexpirydate') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="empFormData.LabourContractIssueDate"
+            placeholder="{{ isEngLang ? 'Select Labour Contractor Expiry Date' : arabicfn('labourcontractexpirydate') }}"
+            [(ngModel)]="empFormData && empFormData.LaborContractExpiryDate" [disabled]="screenStatus=='View'"
+            bsDatepicker #dp18="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='View' ? dp18.toggle(): ''"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': !isEngLang}"></i></span>
+        </div>
+        <div class="row"
+          *ngIf="submitted && errorEmpConExDateMsg && checkInvalidDate(empFormData.LaborContractExpiryDate)">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please enter a valid Labour Contract Expiry Date' : arabicfn('errormsglabourcontractorexpirydate') }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper employees-part">
+  <div class="form-title" [ngClass]="{'ar-rtl': !isEngLang}">
+    <span class="screenStatus">{{ isEngLang ? 'Upload Personal Document': arabicfn('uploadpersonaldocument')}}</span>
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="Document Type">{{ isEngLang ? 'Document Type': arabicfn('documenttype')}}</label>
+        <ng-select [items]="attachmentTypeList" [closeOnSelect]="true" bindLabel="name" bindValue="name"
+          [disabled]="screenStatus=='View'" [(ngModel)]="AttachmentType" (change)="clearAttachment()"
+          placeholder="{{ common.currentLang!='ar' ? 'Select Document Type': arabicfn('documenttype') }}">
+        </ng-select>
+        <div class="row" *ngIf="submitted && errorAttchmentTypeMsg && !AttachmentType && attachments.length == 0">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please select valid Document Type' : arabicfn('errormsgvaliddocumenttype') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-8" *ngIf="!uploadProcess" [ngClass]="{'ar-rtl': !isEngLang}">
+        <label for="certificate">{{ isEngLang ? 'Attachments': arabicfn('attachments') }}</label>
+        <input #variable type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'"
+          name="Attachments" (change)="uploadFiles($event, 'file')" id="Attachments"
+          placeholder="{{ common.currentLang!='ar' ? 'Select file': arabicfn('Select File') }}" />
+        <div class="row" *ngIf="submitted && errorattachmentsMsg && attachments.length == 0">
+          <div class="col-12">
+            <span class="text-danger">
+              {{ isEngLang ? 'Please upload valid Attachments' : arabicfn('errormsgvalidattachements') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4" *ngIf="uploadProcess">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+            aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+        </div>
+      </div>
+      <div class="col-md-6 mx-3 mb-2" [ngClass]="{'ar-rtl': !isEngLang}" *ngIf="attachments && attachments.length>0">
+        <label for="Keywords">{{ isEngLang ? 'Attachment List': arabicfn('attachmentlist') }}</label>
+        <div class="row border font-weight-bold">
+          <div class="col border">{{ isEngLang ? 'Attachment Type': arabicfn('attachmentlist') }}</div>
+          <div class="col border">{{ isEngLang ? 'File Name' : arabicfn('filename')}}</div>
+          <div class="col border text-center">{{ isEngLang ? 'Action': arabicfn('action') }}</div>
+        </div>
+        <div *ngFor="let file of attachments; let i = index">
+          <div class="row">
+            <div class="col attachment-width border">
+              {{file.AttachmentType}}
+            </div>
+            <div class="col attachment-width border">
+              <a class="cursor"
+                href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+            </div>
+            <div class="col border text-center">
+              <span (click)="screenStatus!='View' ? deleteAttachment(i):''"><i class="fas fa-trash-alt"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl': !isEngLang}">
+            <label for="certificate">{{ isEngLang ? 'Digital Signature' : arabicfn('digitalsignature') }}</label>
+            <input #signVar type="file" class="form-control attachment"
+              [disabled]="screenStatus=='View' || signatureUploadProcess" name="Attachments"
+              (change)="uploadSignatureFiles($event)" id="Attachments"
+              placeholder="{{ common.currentLang!='ar' ? 'Select file': arabicfn('Select File') }}" />
+            <div class="row" *ngIf="submitted && signatureErrorattachmentsMsg && signatureAttachments.length == 0">
+              <div class="col-12">
+                <span class="text-danger">
+                  {{ isEngLang ? 'Please upload valid Digital Signature' : arabicfn('errormsgvaliddigitalsignature') }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6" *ngIf="signatureUploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':signatureUploadPercentage+'%'}"
+                aria-valuenow="signatureUploadPercentage" aria-valuemin="0" aria-valuemax="100">
+                {{signatureUploadPercentage}}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 mx-3 mb-2" [ngClass]="{'ar-rtl': !isEngLang}"
+            *ngIf="signatureAttachments && signatureAttachments.length>0">
+            <label for="Keywords">{{ isEngLang ? 'Attachment List': arabicfn('attachmentlist') }}</label>
+            <div class="row border font-weight-bold">
+              <!-- <div class="col border">Attachment Type</div> -->
+              <div class="col border">{{ isEngLang ? 'File Name': arabicfn('filename')}}</div>
+              <div class="col border text-center">{{ isEngLang ? 'Action': arabicfn('action') }}</div>
+            </div>
+            <div *ngFor="let file of signatureAttachments; let i = index">
+              <div class="row">
+                <!-- <div class="col-4 attachment-width border">
+                    {{file.AttachmentType}}
+                  </div> -->
+                <div class="col attachment-width border">
+                  <a class="cursor"
+                    href="{{downloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col border text-center">
+                  <span (click)="screenStatus!='View' ? deleteSignatureAttachment(i):''"><i
+                      class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  [disabled]="checkEduStartEndDateDiff() || checkTrainingStartEndDateDiff() || checkWorkStartEndDateDiff()" [ngClass]="{'disabled-btn': checkEduStartEndDateDiff() || checkTrainingStartEndDateDiff() || checkWorkStartEndDateDiff()}"-->
+    <div class="row px-3 justify-content-center">
+      <div *ngIf="screenStatus == 'Create'">
+        <button class="rounded-btn" (click)="save()"
+          [disabled]="isEduStartEndDiff || isWorkStartEndDiff || isTrainingStartEndDiff"
+          [ngClass]="{'disabled-btn':isEduStartEndDiff || isWorkStartEndDiff || isTrainingStartEndDiff}">{{ isEngLang ? 'SAVE' : arabicfn('save') }}</button>
+      </div>
+      <div *ngIf="screenStatus == 'edit'" class="col-auto p-1">
+        <button class="rounded-btn" (click)="update()"
+          [disabled]="isEduStartEndDiff || isWorkStartEndDiff || isTrainingStartEndDiff"
+          [ngClass]="{'disabled-btn':isEduStartEndDiff || isWorkStartEndDiff || isTrainingStartEndDiff}">{{ isEngLang ? 'SAVE' : arabicfn('save') }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass" dir="{{ isEngLang ? 'ltr' : 'rtl' }}" style="background: #726236; color: white;">
+    <h4 class="modal-title pull-left">{{ isEngLang ? 'Success' : arabicfn('success') }}</h4>
+    <button type="button" class="close p-0 m-0" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{ isEngLang ? 'ltr' : 'rtl' }}">
+    <p class="messagebody" [ngClass]="{'ar-rtl': !isEngLang}">{{message}}</p>
+  </div>
+  <div class="modal-footer" dir="{{ isEngLang ? 'ltr' : 'rtl' }}">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{ isEngLang ? 'Ok' : arabicfn('ok') }}</button>
+  </div>
+</ng-template>

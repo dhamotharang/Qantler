@@ -1,0 +1,56 @@
+<div class="modal-header modalclass" dir="{{lang!='en' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{lang == 'en' ? 'Report' : arabicfn('report')}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+      (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <div class="form-group col-sm-4" dir="{{lang!='en' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="status">{{lang == 'en' ? 'Status' : arabicfn('status')}}</label>
+        <ng-select [items]="statusList" id="LookupsID" [closeOnSelect]="true" [multiple]="false" bindLabel="DisplayName"
+          bindValue="DisplayName" [(ngModel)]="reportFilter.Status">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4" dir="{{lang!='en' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="status">{{lang == 'en' ? 'Request Type' : arabicfn('requesttype')}}</label>
+        <ng-select [items]="requestTypeList" id="RequestType" [closeOnSelect]="true" [multiple]="false" bindLabel="label"
+          bindValue="value" [(ngModel)]="reportFilter.RequestType">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="name">{{lang == 'en' ? 'Creator' : arabicfn('creator')}}</label>
+        <input type="text" class="form-control" [(ngModel)]="reportFilter.Creator" id="creator">
+      </div>
+    </div>
+    <div class="row" dir="auto" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <div class="form-group col-sm-4" dir="{{lang!='en' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date Range From">{{lang == 'en' ? 'Request Date From' : arabicfn('requestdatefrom')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="reportFilter.ReqDateFrom" bsDatepicker #fdp="bsDatepicker"
+            [bsConfig]="bsConfig">
+          <span (click)="fdp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang=='ar'}"></i></span>
+        </div>
+        <div class="col-12" class="text-danger">
+          <ng-container *ngIf="dateValidation()">
+            {{ validateStartEndDateMmsg }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="form-group col-sm-4" dir="{{lang!='en' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="Date Range From">{{lang == 'en' ? 'Request Date To' : arabicfn('requestdateto')}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="reportFilter.ReqDateTo" bsDatepicker #tdp="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="tdp.toggle()"><i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang=='ar'}"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-sm-4" [ngClass]="{'ar-rtl': lang=='ar'}">
+        <label for="power">{{lang == 'en' ? 'Smart Search' : arabicfn('smartsearch')}}</label>
+        <input type="text" name="smartSearch" class="form-control inputwidth" id="smart_search" placeholder="" [(ngModel)]="reportFilter.SmartSearch">
+      </div>      
+    </div>
+  </div>
+  <div class="modal-footer" dir="auto" [ngClass]="{'ar-rtl': lang=='ar'}">
+    <button type="button" class="rounded-btn" (click)="Download()">{{lang == 'en' ? 'Download Excel' : arabicfn('downloadexcel')}}</button>
+  </div>

@@ -1,0 +1,120 @@
+<div class="page-form-wrapper salary-certificate" id="trigger-scroll">
+  <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    {{ lang == 'ar' ? 'إنشاء شهادة راتب': 'SALARY CERTIFICATE CREATION' }}
+    <!-- <span class="screenStatus">{{screenStatus}}</span> -->
+  </div>
+  <div class="container-fluid py-2">
+    <div class="row" *ngIf="screenStatus!='Creation'">
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="screenStatus!='Creation'">
+        <label for="Reference Id">{{ lang == 'ar' ? 'الرقم المرجعي': 'Reference Id' }}</label>
+        <input type="text" class="form-control" [disabled]="screenStatus !='Creation'"
+            [(ngModel)]="certificatedata.ReferenceNumber" id="Reference Id" placeholder="Enter Ref">
+        </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="Creation Date">{{ lang == 'ar' ? 'تاريخ': 'Date' }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control pr-4" [(ngModel)]="CreatedDateTime" [disabled]="screenStatus =='Creation' || screenStatus=='View'">
+          <div *ngIf="screenStatus!='Creation'">
+            <i class="far fa-calendar date"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="Source OU">{{ lang == 'ar' ? 'صادرة عن': 'Source OU' }}</label>
+        <input type="text" class="form-control" [(ngModel)]="certificatedata.SourceOU" [disabled]="screenStatus =='Creation'|| screenStatus=='View'" id="Source OU">
+      </div>
+    </div>
+    <div class="row" *ngIf="screenStatus!='Creation'" [ngClass]="{'ar-rtl': lang == 'ar'}">
+      <div class="form-group col-12 col-md-4">
+        <label for="Source Name">{{ lang == 'ar' ? 'اسم المصدر': 'Source Name' }}</label>
+        <input type="text" class="form-control" [(ngModel)]="certificatedata.SourceName" [disabled]="screenStatus =='Creation'|| screenStatus=='View'" id="Source OU" >
+      </div>
+    </div>
+    <hr *ngIf="screenStatus!='Creation'">
+    <div class="row">
+      <div class="form-group col-12 col-md-6 attentionSec" [ngClass]="{'required':screenStatus != 'View','ar-rtl': lang == 'ar'}">
+        <label for="Source Name">{{lang == 'ar' ? 'إلى': 'Attention'}}</label>
+        <div class="radioSec">
+          <input type="radio" name="attention" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.Attention" id="attentionTo" value="0">
+          {{lang == 'ar' ? 'إلي من يهمه الامر': 'To whom it may concern'}}
+          <input class="ml-2" type="radio" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.Attention" name="attention" id="attentionAddress" value="1">
+          {{lang == 'ar' ? 'المرسل اليه': 'Addressee'}}
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="certificatedata.Attention == '1'" [ngClass]="{'required':screenStatus != 'View','ar-rtl': lang == 'ar'}">
+        <label for="Source Name">{{lang == 'ar' ? 'اسم المعني': 'To'}}</label>
+        <input type="text" class="form-control" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.To" id="Source Name">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-12" [ngClass]="{'required':screenStatus != 'View','ar-rtl': lang == 'ar'}">
+        <label for="Source Name">{{lang == 'ar' ? 'تصنيف الشهادة': 'Certificate Classification'}}</label>
+        <div class="radioSec">
+          <input type="radio" name="classification" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.SalaryCertificateClassification" value="0">
+          {{lang == 'ar' ? 'عامة': 'General'}}
+          <input class="ml-2" type="radio" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.SalaryCertificateClassification" name="classification" value="1">
+          {{lang == 'ar' ? 'مفصلة': 'Detailed'}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col" [ngClass]="{'required':screenStatus != 'View','ar-rtl': lang == 'ar'}">
+        <label for="Reference Id">{{lang == 'ar' ? 'السبب': 'Reason'}}</label>
+        <textarea class="form-control" id="comments" rows="5" placeholder="{{lang == 'ar' ? 'السبب': 'Reason'}}" [disabled]="screenStatus !='Creation'" [(ngModel)]="certificatedata.Reason" ></textarea>
+      </div>
+    </div>
+    <div class="row px-3 justify-content-center">
+      <div *ngIf="screenStatus == 'Creation'">
+        <button class="rounded-btn" *ngIf="isSubmitted" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}" (click)="saveSalCer()">{{lang == 'ar' ? 'إرسال': 'SUBMIT'}}</button>
+      </div>
+      <div *ngIf="screenStatus == 'View' && assignBtn && IsOrgHead" class="col-auto p-1">
+        <button class="rounded-btn" (click)="popup('AssignTo',template)">{{lang == 'ar' ? 'إسناد': 'ASSIGN'}}</button>
+      </div>
+      <div *ngIf="screenStatus == 'View' && assignToMeBtn && !IsOrgHead" class="col-auto p-1">
+        <button class="rounded-btn" (click)="statusChange('AssignToMe',template)">{{lang == 'ar' ? 'اسناد لي': 'ASSIGN TO ME'}}</button>
+      </div>
+      <div *ngIf="screenStatus == 'View' && closeBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" (click)="statusChange('Close',template)">{{lang == 'ar' ? 'إغلاق': 'CLOSE'}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.screenStatus == 'View'" class="page-form-wrapper my-3 p-4">
+  <div class="row" *ngFor="let his of certificatedata.HistoryLog">
+    <div class="col-auto" *ngIf="his.ActionDateTime">
+      <div class="rounded-btn" *ngIf="lang == 'en'">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'hh:mm a'}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+      </div>
+      <div class="rounded-btn" *ngIf="lang == 'ar'">
+        <img class="clock" src="assets/home/Meeting-clock.png">
+        {{his.ActionDateTime | date: 'dd/MM/yyyy'}} / {{his.ActionDateTime | date: 'hh:mm'}} {{(his.ActionDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}
+      </div>
+    </div>
+    <div class="col p-2"*ngIf="his.Action">
+      <div class="row" *ngIf="lang == 'en'">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+        <!-- <div class="col-12 comment" *ngIf="his.Comments !='' && his.Comments !='null'">Comments : {{his.Comments}}</div> -->
+      </div>
+      <div class="row text-right" *ngIf="lang == 'ar'">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header modalclass" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <h4 class="modal-title pull-left">{{lang == 'ar' ? 'نجاح': 'Success'}}</h4>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl':lang=='ar'}">
+      <p class="messagebody">{{message}}</p>
+
+  </div>
+  <div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{lang == 'ar' ? 'حسنا': 'Ok'}}</button>
+  </div>
+</ng-template>

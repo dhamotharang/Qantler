@@ -1,0 +1,231 @@
+<div class="photographer-form-container">
+  <div class="page-form-wrapper" id="trigger-scroll">
+    <div class="form-title ar-rtl">
+      {{arabic('requestforphotographer')}}
+    </div>
+    <div class="container-fluid page-form-body py-2">
+      <div class="row" *ngIf="mode!=='create'">
+        <div class="form-group right col-12 col-md-4">
+          <label for="Date">{{arabic('refid')}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="photographer.ReferenceNumber"
+              placeholder="RefID"
+              disabled>
+          </div>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="Date">{{arabic('date')}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              disabled
+              class="form-control pr-4"
+              value="{{photographer.Date | date:'dd/MM/yyyy'}}"/>
+            <i class="far fa-calendar date ar-rtl-icon"></i>
+          </div>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="sourceou">{{arabic('sourceofficeSlashDepartment')}}</label>
+          <input
+            type="text"
+            [(ngModel)]="photographer.SourceOU"
+            placeholder="Source OU"
+            disabled
+            class="form-control"
+            id="sourceou">
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="source-name">{{arabic('sourcename')}}</label>
+          <input
+            type="text"
+            placeholder="Source Name"
+            disabled
+            [(ngModel)]="photographer.SourceName"
+            class="form-control"
+            id="sourceName">
+        </div>
+      </div>
+      <hr *ngIf="mode!=='create'">
+      <div class="row before">
+        <div class="form-group right col-12 col-md-4" [ngClass]="{required:editMode}">
+          <label for="employeeCode">{{arabic('eventname')}}</label>
+          <input
+            type="text"
+            [disabled]='!editMode'
+            placeholder="{{arabic('entereventname')}}"
+            class="form-control"
+            [(ngModel)]="photographer.EventName"
+            id="eventName"
+            (blur)="validate()">
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{required:editMode}">
+          <label for="Date">{{arabic('eventdate')}}</label>
+          <div class="position-relative">
+            <input
+              type="text"
+              [disabled]='!editMode'
+              class="form-control pr-4"
+              [minDate]="allowedDateLimit"
+              [(ngModel)]="photographer.EventDate"
+              placeholder="{{arabic('selecteventdate')}}"
+              bsDatepicker
+              #dp="bsDatepicker"
+              [bsConfig]="bsConfig">
+              <span *ngIf="submitBtn" (click)="dp.toggle()"><i class="far fa-calendar date ar-rtl-icon"></i></span>
+              <span *ngIf="!submitBtn"><i class="far fa-calendar date ar-rtl-icon"></i></span>
+          </div>
+        </div>
+        <div class="form-group right col-12 col-md-4" [ngClass]="{required:editMode}">
+          <label for="employeeGrade">{{arabic('location')}}</label>
+          <input
+            type="text"
+            placeholder="{{arabic('enterlocation')}}"
+            [disabled]='!editMode'
+            class="form-control"
+            [(ngModel)]="photographer.Location"
+            id="location">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group right col-12 col-md-4">
+          <label for="country-of-birth">{{arabic('approverofficeSlashDepartment')}}</label>
+          <ng-select
+            [closeOnSelect]="true"
+            (change)="onChangeApproverDepartment()"
+            [items]="department"
+            [disabled]='!editMode'
+            bindLabel="OrganizationUnits"
+            bindValue="OrganizationID"
+            placeholder="{{arabic('approverdepartment')}}"
+            [(ngModel)]="photographer.ApproverDepartmentID">
+          </ng-select>
+        </div>
+        <div class="form-group right col-12 col-md-4">
+          <label for="city-of-birth">{{arabic('approvername')}}</label>
+          <ng-select
+            [closeOnSelect]="true"
+            [items]="userApproverList"
+            [disabled]='!editMode'
+            bindLabel="EmployeeName"
+            bindValue="UserID"
+            placeholder="{{arabic('selectapprovername')}}"
+            [(ngModel)]="photographer.ApproverID">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="page-form-wrapper my-3 p-4">
+        <div class="row ">
+          <div class="col-12 comment">
+            <app-comment-section
+              [comments]="photographerRequestComments"
+              [commentType]="'Photographer'"
+              [moduleId]="id"
+              
+              [moduleNameID]="'PhotographerID'">
+            </app-comment-section>
+            <div class="row leave-comment-section">
+              <div class="col-2 com-md-2 profile">
+                <div class="comment-section-img">
+                  <img src="{{empProfileImg}}" class="user-ProfileImg"/>
+                </div>
+              </div>
+              <div class="col-10 col-md-10 comment-text">
+                <div class="comment-section-user-info">
+                  <p class="comment-section-username form-group right">{{currentUser.username}}</p>
+                </div>
+                <div class="comment-section-content">
+                  <textarea
+                    class="form-control vertical-resize"
+                    [(ngModel)]="photographer.Comments"
+                    id="NewCommentContent"
+                    placeholder=""
+                    [disabled]="!canComment"
+                    rows="3">
+                  </textarea>
+                </div>
+                <!-- <div class="comment-reply-section">
+                  <button class="rounded-btn" (click)="sendMessage()"><i class="fa fa-paper-plane"></i> SEND</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-reply-section text-center">
+        <button
+          (click)='createPhotographer()'
+          class="rounded-btn"
+          *ngIf="submitBtn && !reSubmit"
+          [disabled]="validate() || inProgress"
+          [ngClass]="{'disabled-btn': validate() || inProgress}">
+          {{arabic('mediasubmitbtn')}}
+        </button>
+        <button
+          (click)="userAction('resubmit')"
+          class="rounded-btn"
+          *ngIf="submitBtn && reSubmit"
+          [disabled]="validate() || inProgress"
+          [ngClass]="{'disabled-btn': validate() || inProgress}">
+          {{arabic('mediasubmitbtn')}}
+        </button>
+        <button
+          *ngIf='approveBtn'
+          class="rounded-btn"
+          [disabled]="validate() || inProgress"
+          (click)="userAction('approve')">
+          {{arabic('approve')}}
+        </button>
+        <button
+          *ngIf='escalateBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('escalate')">
+          {{arabic('escalate')}}
+        </button>
+        <button
+          *ngIf='rejectBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('reject')">
+          {{arabic('reject')}}
+        </button>
+        <button
+          *ngIf='returnForInfoBtn'
+          class="rounded-btn"
+          [disabled]="inProgress || !photographer.Comments"
+          [ngClass]="{'disabled-btn':((!photographer.Comments) || (photographer.Comments.trim() == '')) || inProgress}"
+          (click)="userAction('returnforinfo')">
+          {{arabic('returnforinfo')}}
+        </button>
+        <button
+          *ngIf='assingBtn'
+          class="rounded-btn"
+          [disabled]="inProgress"
+          (click)="userAction('assign')" [ngClass]="{'disabled-btn': inProgress}">
+          {{arabic('assign')}}
+        </button>
+        <button
+          *ngIf='assignToMeBtn'
+          class="rounded-btn"
+          [disabled]="inProgress"
+          (click)="userAction('assigntome')" [ngClass]="{'disabled-btn': inProgress}">
+          {{arabic('assigntome')}}
+        </button>
+        <button
+          *ngIf='closeBtnShow'
+          class="rounded-btn"
+          [disabled]="isApiLoading"
+          (click)="userAction('close')" [ngClass]="{'disabled-btn': isApiLoading}">
+          {{arabic('close')}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

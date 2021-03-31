@@ -1,0 +1,121 @@
+<div class="modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">
+      {{
+        isBanner ? lang == 'en' ? 'Banner' : arabicfn('banner') :
+        lang == 'en' ? 'Photo' : arabicfn('photo')
+      }}
+  </h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+    (click)="closemodal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}" [ngClass]="{'ar-rtl': lang=='ar'}" class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div [ngClass]="{'ar-rtl': lang == 'ar'}" class="row row-separator">
+        <div class="col-12" [ngClass]="{'ar-rtl': lang=='ar'}">
+          <div *ngIf="isShowNewsAdd" class="page-form-wrapper mb-3">
+            <input
+              #fileInput
+              type="file"
+              multiple
+              class="form-control attachment"
+              name="Attachments"
+              id="Attachments"
+              (change) = "handleFileUpload($event)"
+            />
+            <img src="{{ImageUrl}}" *ngIf="ImageUrl" class="banner-pic">
+            <div class="progress" *ngIf="uploadProcess">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                  aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+              </div>
+            <div [ngClass]="{'ar-rtl': lang == 'ar'}" class="modal-footer">
+              <!-- <button type="button" class="rounded-btn" (click)="showFilter()">
+                {{lang == 'en' ? 'Save' : 'حفظ'}}
+              </button>       -->
+              <button 
+                type="button" 
+                [disabled]="inProgress || !ImageUrl" 
+                [ngClass]="{'disabled-btn': inProgress || !ImageUrl}" 
+                class="rounded-btn" 
+                (click)="isBanner ? saveBanner() : savePhoto()">
+                {{lang == 'en' ? 'Save' : 'حفظ'}}
+              </button>
+              <!-- <button type="button" class="rounded-btn" (click)="showFilter()">
+                {{lang == 'en' ? 'Cancel' : 'إلغاء'}}
+              </button> -->
+            </div>
+          </div>
+          <div [ngClass]="{'page-form-wrapper mb-3 d-md-block d-none': reqType == 'photo'}">
+              <div class="table-responsive">
+                <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" *ngIf="reqType == 'photo'" [rows]="rows" [columns]="newsColumns" [headerHeight]="50"
+                  [columnMode]="'force'" [rowHeight]="'auto'">
+                </ngx-datatable>
+                <ng-template #creationImageTemplate let-row="row" let-value="value" let-i="index">
+                    <!-- <img src="{{imageURL}}{{row.AttachmentGuid}}/{{row.AttachmentName}}" class="banner-pic"> -->
+                    <img src="{{imageURL}}?filename={{row.AttachmentName}}&guid={{row.AttachmentGuid}}" class="banner-pic">
+                  </ng-template>
+                <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+                  <div class="table-action-btn">
+                      <button (click)="openDeleteDialog(row)" class="attachment-delete-icon" name="Delete" ><i
+                        class="fas fa-trash-alt" ></i></button>
+                  </div>
+                </ng-template>
+              </div>
+              <ng-container footer *ngIf="config && config.totalItems>0 && reqType == 'photo'">
+                <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="config.page"
+                  [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+                  (pageChange)="onChangePage(config, $event)" (numPages)="numPages = $event"></ngb-pagination>
+              </ng-container>
+            </div>
+          <div class="d-block d-md-none" *ngIf="reqType == 'photo'">
+            <div class="card shadow page-form-wrapper my-3 d-block d-md-none" [ngClass]="{'ar-rtl': lang =='ar'}" *ngFor="let dropDownrow of rows">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col"><span><b>
+                    <ng-container *ngIf="lang == 'en'">Image : </ng-container>
+                    <ng-container *ngIf="lang == 'ar'">{{arabicfn('photo')}} : </ng-container>
+                  </b></span><img src="{{imageURL}}?filename={{dropDownrow.AttachmentName}}&guid={{dropDownrow.AttachmentGuid}}" class="banner-pic">
+                </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row mar-top">
+                  <div class = "col-auto">
+                    <button (click)="openDeleteDialog(dropDownrow)" class="attachment-delete-icon" name="Delete" ><i
+                      class="fas fa-trash-alt"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container footer *ngIf="config.totalItems > 0">
+              <ngb-pagination *ngIf="config.totalItems > 0" (pageChange)="onChangePage(config, $event)" class="d-flex justify-content-center page-top" [pageSize]="config.itemsPerPage" [boundaryLinks]="true" [collectionSize]="config.totalItems" [maxSize]="config.maxSize" (numPages)="numPages = $event"></ngb-pagination>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}" class="modal-footer">
+  <button class="rounded-btn" (click)="closemodal()">
+    {{lang == 'en' ? 'Close' : 'إغلاق'}}
+  </button>
+</div>
+<ng-template #deletetemplate>
+    <div class="create-request-modal modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}">
+      <h4 class="modal-title pull-left">{{(lang=='en')?'Delete':arabicfn('delete')}}</h4>
+      <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" (click)="closeDialog()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <p class="messagebody">{{(lang=='en')?'Do you really want to delete this Image?':arabicfn('deletephotomessage')}}</p>
+    </div>
+    <div dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}" class="modal-footer">
+      <button type="button" class="rounded-btn"
+        (click)="delateNews()">{{(lang=='en')?'Yes':arabicfn('yes')}}</button>
+      <button type="button" class="rounded-btn" (click)="closeDialog()">{{(lang=='en')?'No':arabicfn('no')}}</button>
+    </div>
+  </ng-template>

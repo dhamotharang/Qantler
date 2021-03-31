@@ -1,0 +1,147 @@
+<div class="page-body-wrapper h-50">
+  <div class="row p-3">
+    <div class="col p-4 shadow">
+      <div class="row">
+        <div class="col title-sy" [ngClass]="{'ar-rtl' : lang == 'ar'}">
+          {{ lang === 'en' ? 'CV BANK' : arWords.cvbank }}
+        </div>
+        <div class="col-auto">
+          <button class="rounded-btn" routerLink="/app/hr/cv-bank/cv-bank-create">
+            <i class="fa fa-plus"></i>
+            {{ lang == 'en' ? 'CREATE REQUESTS' : arWords.createrequests }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row cv-bank-list-container" [ngClass]="{'text-right':lang == 'ar'}">
+  <div class="col-12">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        {{ lang == 'en' ? 'FILTER BY': arWords.filterby  }}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row">
+          <div class="form-group col-12 col-md-4">
+            <label for="candidateList">{{ lang == 'en' ? 'Candidate Name' : arWords.candidatename }}</label>
+            <ng-select class="candidate-ddown" [disabled]="!editMode" [items]="candidateList" [closeOnSelect]="true"
+              bindLabel="CandidateName" bindValue="CandidateName" [(ngModel)]="candidateName">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="experience">{{ lang == 'en' ? 'Years of Experience' : arWords.yeasofexperience }}</label>
+            <input type="text" class="form-control" [(ngModel)]="experience" id="experience">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="specialization">{{ lang == 'en' ? 'Specialization' : arWords.specialization }}</label>
+            <input type="text" class="form-control" [(ngModel)]="specialization" id="specialization">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="country">{{ lang == 'en' ? 'Country' : arWords.country }}</label>
+            <input type="text" class="form-control" [(ngModel)]="country" id="country">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">{{ lang == 'en' ? 'Date From' : arWords.datefrom }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" (change)="validateDates()" [(ngModel)]="dateFrom" bsDatepicker
+                #dp="bsDatepicker" [maxDate]="dateTo" [bsConfig]="bsConfig">
+              <span (click)="dp.toggle()">
+                <i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i>
+              </span>
+            </div>
+            <small id="dateHelp" class="form-text text-danger">{{dateFromErr}}</small>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">{{ lang == 'en' ? 'Date To' : arWords.cvdateto }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" (change)="validateDates()" [(ngModel)]="dateTo" bsDatepicker
+                #dp1="bsDatepicker" [minDate]="dateFrom" [bsConfig]="bsConfig">
+              <span (click)="dp1.toggle()">
+                <i class="far fa-calendar date" [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i>
+              </span>
+            </div>
+            <small id="dateHelp" class="form-text text-danger">{{dateToErr}}</small>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="SmartSearch">{{ lang == 'en' ? 'Smart Search' : arWords.smartsearch }}</label>
+            <input type="text" class="form-control" [(ngModel)]="SmartSearch" id="SmartSearch">
+          </div>
+          <div class="col-12 col-md-8">
+            <button *ngIf="editMode" [ngClass]="{'disabled-btn': !valid || inProgress }"
+              [disabled]="!valid || inProgress" class="rounded-btn btn-search" (click)="loadCVList()">
+              {{ lang == 'en' ? 'Search' : arWords.search }}
+            </button>
+            <button class="rounded-btn" (click)="openReport()">
+              {{ lang == 'en' ? 'Show Available Reports' : arWords.showavailablereports }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-form-wrapper my-3 d-md-block d-none" [ngClass]="{'ar-rtl': lang == 'ar'}">
+  <ng-container outsideBody>
+    <div class="table-responsive">
+      <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns" [headerHeight]="50"
+        [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+      </ngx-datatable>
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'dd/MM/yyyy'}}
+      </ng-template>
+      <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+        <div class="table-action-btn">
+          <button class="table-view" (click)="viewData(value)"><i class="fas fa-eye"
+              style="cursor: pointer;"></i></button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-container footer *ngIf="rows.length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="pageCount" [rotate]="false"
+      (pageChange)="onChangePage(page)" (numPages)="numPages = $event">
+    </ngb-pagination>
+  </ng-container>
+</div>
+<div class="d-block d-md-none">
+  <div class="card shadow my-3 d-block d-md-none" *ngFor="let row of rows" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+    <div class="card-header" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+      <div class="row" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="col-12"><span><b> {{lang == 'en' ? 'Ref ID' : arWords.refid }} :
+            </b></span><span>{{row.ReferenceNumber}}</span></div>
+      </div>
+    </div>
+    <div class="card-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+      <div class="row" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Candidate Name' : arWords.candidatename  }} : </b></span><span>
+            {{row.CandidateName}}</span></div>
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Position' : arWords.position }} : </b></span><span>
+            {{row.Position}}</span></div>
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Years of Experience' : arWords.yeasofexperience }} :
+            </b></span><span> {{row.YearsofExperience}}</span></div>
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Specialization' : arWords.specialization }} : </b></span><span>
+            {{row.Specialization}}</span></div>
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Country' : arWords.country }} : </b></span><span>
+            {{row.CountryofResidence}}</span></div>
+        <div class="col-6"><span><b> {{lang == 'en' ? 'Date' : arWords.date }} : </b></span><span>
+            {{row.Date | date:'dd/MM/yyyy'}}</span></div>
+      </div>
+      <div class="row mar-top" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <div class="col"></div>
+        <div class="col-auto table-action-btn">
+          <button class="table-view list-btn" style="cursor: pointer;" (click)="viewData(row)">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container footer *ngIf="rows.length > 0">
+    <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+      [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="pageCount" [rotate]="false"
+      (pageChange)="onChangePage(page)" (numPages)="numPages = $event">
+    </ngb-pagination>
+  </ng-container>
+</div>

@@ -1,0 +1,273 @@
+<div class="maintenance-home">
+  <div class="form-container" [ngClass]="{'ar-rtl' : lang == 'ar'}">
+    <div class="page-form-wrapper">
+      <div class="form-title">
+        {{ lang == 'en' ? 'FILTER BY' : arabic('filterby') }}
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="status"> {{ lang == 'en' ? 'Status' : arabic('status') }}</label>
+            <ng-select class="status-ddown" [items]="StatusList" [(ngModel)]="filter.status" bindLabel="StatusName"
+              bindValue="StatusName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label
+              for="status">{{ lang=='en' ? 'Office / Department' : arabic('office/department') }}</label>
+            <ng-select class="status-ddown" [items]="filterDepartmentList" [(ngModel)]="filter.department"
+              bindLabel="OrganizationUnits" bindValue="OrganizationUnits"
+              placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+            </ng-select>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="subject">{{ lang=='en' ? 'Issued Against Name' :arabic('issuedagainstname') }}</label>
+            <ng-select class="status-ddown" [items]="filterUserList" [(ngModel)]="filter.name" bindLabel="EmployeeName"
+              bindValue="EmployeeName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="dateFrom">{{ lang == 'en' ? 'Fine Date From' : arabic('finedatefrom') }} </label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [maxDate]="maxDate(filter.to)" [(ngModel)]="filter.from"
+                bsDatepicker #dp1="bsDatepicker" [bsConfig]="bsConfig">
+              <span (click)="dp1.toggle()"><i class="far fa-calendar date"
+                  [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+            <div class="col-12" class="text-danger">
+              <ng-container *ngIf="dateValidation()">
+                {{ dateMsg }}
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="dateTo">{{ lang == 'en' ? 'Fine Date To' : arabic('finedateto') }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [minDate]="maxDate(filter.from)" [(ngModel)]="filter.to"
+                bsDatepicker #dp2="bsDatepicker" [bsConfig]="bsConfig">
+              <span (click)="dp2.toggle()"><i class="far fa-calendar date"
+                  [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="platenumber">{{ lang == 'en' ? 'Plate Number' : arabic('platenumber') }}</label>
+            <div class="position-relative">
+              <input type="text" class="form-control" [(ngModel)]="filter.plateNumber" id="plate_number">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+            <label for="name">{{ lang == 'en' ? 'Smart Search' : arabic('smartsearch') }}</label>
+            <input type="text" class="form-control" [(ngModel)]="filter.search" autocomplete="off" id="name">
+          </div>
+          <div class="search-container">
+            <button class="rounded-btn" (click)="loadList()">{{ lang=='en' ? 'Search' : arabic('search') }}</button>
+            <button class="rounded-btn availablereport"
+              (click)="openReport(report)">{{ lang == 'en'? 'Show Available Reports' : arabic('showavailablereports') }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <app-progress-bar *ngIf="progress"></app-progress-bar>
+    <ng-container outsideBody>
+      <div class="table-responsive">
+        <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows" [columns]="columns"
+          [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+        </ngx-datatable>
+        <!-- <ngx-datatable style="width: 100%" class="bootstrap" [ngClass]="{'ar-rtl': lang =='ar'}" [rows]="rows"
+          *ngIf="lang == 'ar'" [columns]="arabicColumns" [headerHeight]="50" [columnMode]="'force'"
+          [rowHeight]="'auto'">
+        </ngx-datatable> -->
+        <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+          {{formatAMPM(value)}}
+        </ng-template>
+        <ng-template #actionTemplate let-row="row" let-value="value" let-i="index">
+          <div class="table-action-btn">
+            <button class="table-view mb-1" (click)="viewData(row)">
+              <i class="fas fa-eye" style="cursor: pointer;"></i>
+            </button>
+            <button class="table-view ml-1" [ngClass]="{'aml-1': lang == 'ar'}" (click)="setReminder(row,template)">
+              {{lang=='en'?'SEND REMINDER':arabic('sendremainder')}} 
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+        (pageChange)="onChangePage(page)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+  <div class="d-block d-md-none">
+    <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Plate Number':arabic('platenumber')}} :
+              </b></span><span>{{row.PlateNumber}}</span></div>
+          <!-- <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Subject':arabic('subject')}} :
+              </b></span><span>{{row.Subject}}</span></div> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Issued Against Office/Department':arabic('issuedagainstofficedepartment')}} :
+              </b></span><span> {{row.IssuedAgainstDepartment}}</span></div>
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <span><b>{{lang=='en'?'Issued Against Name':arabic('issuedagainstname')}} : </b></span><span>
+              {{row.IssuedAgainstName}}</span></div>
+        </div>
+        <div class="row">
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <span><b>{{lang=='en'?'Time':arabic('time')}} : </b></span><span>
+              {{row.Time}}             
+            </span></div>
+          <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+            <span><b>{{lang=='en'?'Status':arabic('status')}} : </b></span><span> {{row.Status}}</span>
+          </div>
+        </div>
+        <div class="row mar-top">
+          <div class="col"></div>
+          <div class="col-auto">
+            <button class="list-btn" (click)="viewData(row)">
+              <i class="fas fa-eye"></i>
+            </button>&nbsp;
+            <button class="list-btn ml-1" [ngClass]="{'aml-1': lang == 'ar'}" (click)="setReminder(row,template)">
+              {{lang=='en'?'SEND REMINDER':arabic('sendremainder')}} 
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container footer *ngIf="config && config.totalItems>0">
+      <ngb-pagination *ngIf="config.paging" class="d-flex justify-content-center page-top" [(page)]="page"
+        [maxSize]="maxSize" [boundaryLinks]="true" [collectionSize]="config.totalItems" [rotate]="false"
+        (pageChange)="onChangePage(page)" (numPages)="numPages = $event"></ngb-pagination>
+    </ng-container>
+  </div>
+</div>
+
+
+<!-- show available reportemplate -->
+<ng-template #report>
+  <div dir="auto" class="modal-header modalclass">
+    <h6 class="modal-title pull-left">{{reportTitle}}</h6>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="status"> {{ lang == 'en' ? 'Status' : arabic('status') }}</label>
+        <ng-select class="status-ddown" [items]="StatusList" [(ngModel)]="filter.status" bindLabel="StatusName"
+          bindValue="StatusName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="status">{{ lang=='en' ? 'Office / Department' : arabic('office/department') }}</label>
+        <ng-select class="status-ddown" [items]="filterDepartmentList" [(ngModel)]="filter.department"
+          bindLabel="OrganizationUnits" bindValue="OrganizationUnits"
+          placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="subject">{{ lang=='en' ? 'Issued Against Name' :arabic('issuedagainstname') }}</label>
+        <ng-select class="status-ddown" [items]="filterUserList" [(ngModel)]="filter.name" bindLabel="EmployeeName"
+          bindValue="EmployeeName" placeholder="{{ lang == 'en' ? 'Select Status' : arabic('selectstatus') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="dateFrom">{{ lang == 'en' ? 'Fine Date From' : arabic('finedatefrom') }} </label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [maxDate]="maxDate(filter.to)" [(ngModel)]="filter.from" bsDatepicker
+            #dp1="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="dp1.toggle()"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+        </div>
+        <div class="col-12" class="text-danger">
+          <ng-container *ngIf="dateValidation()">
+            {{ dateMsg }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="dateTo">{{ lang == 'en' ? 'Fine Date To' : arabic('finedateto') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [minDate]="maxDate(filter.from)" [(ngModel)]="filter.to" bsDatepicker
+            #dp2="bsDatepicker" [bsConfig]="bsConfig">
+          <span (click)="dp2.toggle()"><i class="far fa-calendar date"
+              [ngClass]="{'ar-rtl-icon': lang == 'ar'}"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="platenumber">{{ lang == 'en' ? 'Plate Number' : arabic('platenumber') }}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="filter.plateNumber" id="plate_number">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-12 col-md-4" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="name">{{ lang == 'en' ? 'Smart Search' : arabic('smartsearch') }}</label>
+        <input type="text" class="form-control" [(ngModel)]="filter.search" autocomplete="off" id="name">
+      </div>
+      <div class="search-container">
+        <button class="rounded-btn"
+          (click)="downloadReport()">{{ lang=='en' ? 'Download Excel' : arabic('downloadexcel') }}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- ------ -->
+
+<!-- set reminder template -->
+<ng-template #template>
+  <div dir="auto" class="modal-header modalclass">
+    <h6 class="modal-title pull-left">{{formlabels.title}}</h6>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'ar-rtl':lang=='ar'}">
+        <label for="From">{{formlabels.to}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="mailTo" [disabled]="true">
+        </div>
+      </div>
+    </div>
+    <div class="my-3" [ngClass]="{'ar-rtl':lang=='ar'}"><b>{{formlabels.cc}}</b><hr /></div><br />
+    <div class="row">
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus!='View','ar-rtl':lang=='ar'}">
+        <label for="To">{{formlabels.department}}</label>
+        <div class="position-relative">
+          <ng-select class="status-ddown" [items]="departmentList" (change)="getUserList()"
+            [(ngModel)]="emailDepartment" bindLabel="OrganizationUnits" bindValue="OrganizationID" placeholder="">
+          </ng-select>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-6" [ngClass]="{'required':screenStatus!='View','ar-rtl':lang=='ar'}">
+        <label for="To">{{formlabels.name}}</label>
+        <div class="position-relative">
+          <ng-select class="status-ddown" [items]="userList" [(ngModel)]="emailUser" bindLabel="EmployeeName"
+            bindValue="UserID" placeholder="">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center my-3">
+      <button type="button" class="rounded-btn" [ngClass]="{'disabled-btn':validateReminder()}"
+        [disabled]="validateReminder()" (click)="saveReminder()">{{ formlabels.send}}</button>
+    </div>
+  </div>
+</ng-template>
+<!-- ---- -->

@@ -1,0 +1,56 @@
+
+@import '../../../../styles.scss';
+.vehicle-request {
+	.form-title {
+		background: #a39161;
+		color: #fff;
+		padding: 10px 25px;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	.container-fluid {
+		line-height: 30px; 
+	}
+	.ar-rtl {
+		.radioSec {
+			padding-right: 0;
+			input {
+				margin-right: 0px;
+				margin-left: 10px;
+			}
+		}
+	}
+	.radioSec {
+		padding-left: 0px;
+		input {
+			margin-right: 10px;
+		}
+	}
+	.addMore{
+		text-decoration: underline;
+		color: #A39161;
+		cursor: pointer;
+	}
+}
+.removeLink{
+	cursor: none;
+}
+
+.modalclass {
+    background: $medium-color;
+    color: white;
+  
+    .modal-title{
+        font-size: 16px;
+	}
+	
+	.ar-rtl {
+		text-align: right;
+	  }
+  }
+
+  .m-left {
+	margin-left: 0 !important;
+  }
+  

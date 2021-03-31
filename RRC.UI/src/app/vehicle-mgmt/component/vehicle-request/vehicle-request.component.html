@@ -1,0 +1,425 @@
+<div class="page-form-wrapper vehicle-request" id="trigger-scroll">
+  <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    {{screenTitle}}
+  </div>
+  <div class="container-fluid page-form-content py-2" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="row" *ngIf="!editMode">
+      <div class="form-group col-12 col-md-4">
+        <label for="Reference Number">
+          {{ lang == 'en' ? 'Reference Number' : arabic('referencenumber') }}
+        </label>
+        <input type="text" class="form-control" [disabled]="true" autocomplete="off" [(ngModel)]="ReferenceNumber"
+          id="drivername">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-12 attentionSec" [ngClass]="{ required: editMode }">
+        <label for="Source Name">
+          {{ lang == 'en' ? 'Request Type' : arabic('requesttype') }}
+        </label>
+        <div class="col-12 radioSec">
+          <input type="radio" (change)="radioChange($event)" [disabled]="!editMode" name="RequestType" id="annual"
+            value="1" [(ngModel)]="formData && formData.RequestType">
+          {{ lang == 'en' ? 'Temporary car With Driver' : arabic('tempcarwithdriver') }}
+          <input class="ml-2" (change)="radioChange($event)" [disabled]="!editMode" type="radio" name="RequestType"
+            id="other" [(ngModel)]="formData && formData.RequestType" value="2">
+          {{ lang == 'en' ? 'Temporary car Without Driver' : arabic('tempcarwithoutdriver') }}
+          <input class="ml-2" (change)="radioChange($event)" [disabled]="!editMode" type="radio" name="RequestType"
+            id="other" [(ngModel)]="formData && formData.RequestType" value="3">
+          {{ lang == 'en' ? 'Permanent Car' : arabic('permanantcar') }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="Requestor">
+          {{ lang == 'en' ? 'Requestor' : arabic('requestor') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="requestorList" [closeOnSelect]="true"
+          [disabled]="OrgUnitID != 13 || !editMode" [(ngModel)]="formData && formData.Requestor"
+          bindLabel="EmployeeName" bindValue="UserID" (change)="onChangeRequestor(formData.Requestor)"
+          placeholder="{{ lang == 'en' ? 'Select Requestor' : arabic('requestorname') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Date">
+          {{ lang == 'en' ? 'Request Date & Time' : arabic('requestdatetime') }}
+        </label>
+        <div class="position-relative">
+          <input type="text" placeholder="{{ lang =='en'? 'Select Request Date' : arabic('selectdate') }}"
+            class="form-control" [disabled]="true" autocomplete="off" [(ngModel)]="DisplayRequestDateTime">
+          <!-- <input
+              type="text"
+              placeholder="{{ lang =='en'? 'Select Request Date' : arabic('selectdate') }}"
+              class="form-control"
+              [disabled]="true"
+              bsDatepicker
+              #dpSD="bsDatepicker"
+              [(ngModel)]="formData && formData.RequestDateTime"
+              [bsConfig]="bsConfig"> -->
+          <span>
+            <i class="far fa-calendar date"></i>
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="formData && formData.RequestType != 3">
+        <label for="driverName">
+          {{ lang == 'en' ? 'Driver Name' : arabic('drivername') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="driversList" bindLabel="DriverName" bindValue="DriverID"
+          [disabled]="true" [closeOnSelect]="true" [(ngModel)]="formData && formData.DriverId"
+          placeholder="{{ lang == 'en' ? 'Driver Name' : arabic('drivername') }}">
+        </ng-select>
+      </div>
+      <!-- <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang == 'ar',required: editMode}">
+          <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+          <ng-select class="approverDept-ddown" 
+          [items]="timeList" 
+          [disabled]="screenStatus =='View'" 
+          [(ngModel)]="formData && formData.RequestTime" 
+          [closeOnSelect]="true" 
+          bindLabel="label"
+          bindValue="value" 
+          placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+          </ng-select>
+        </div> -->
+    </div>
+    <div class="row" *ngIf="formData && formData.RequestType == 3" [ngClass]="{ required: editMode }">
+      <div class="form-group col-12 col-md-4">
+        <label for="Emirates">
+          {{ lang == 'en' ? 'To be Driven By Office/Department' : arabic('tobedrivenbydepart') }}
+        </label>
+        <ng-select class="approverDept-ddown" [closeOnSelect]="true" [items]="departmentList" [disabled]="!editMode"
+          bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          (change)="onChangeApproverDept('driverdepart', formData.TobeDrivenbyDepartmentID)"
+          [(ngModel)]="formData && formData.TobeDrivenbyDepartmentID"
+          placeholder="{{ lang == 'en' ? 'To be Driven By Department' : arabic('tobedrivenbydepart') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{ required: editMode }">
+        <label for="city">
+          {{ lang == 'en' ? 'To be Driven By Driver Name' : arabic('tobedrivenbydriver') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="toBedrivenList" [disabled]="!editMode" [closeOnSelect]="true"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="formData && formData.TobeDrivenbyDriverID"
+          placeholder="{{ lang == 'en' ? 'To be Driven By Driver Name' : arabic('tobedrivenbydriver') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields" [ngClass]="{ required: editMode }">
+        <label for="Requestor">
+          {{ lang == 'en' ? 'Trip Type' : arabic('triptype') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="tripTypeList" [disabled]="!editMode" [closeOnSelect]="true"
+          bindLabel="TripTypeName" bindValue="TripTypeID" (change)="getTripTypeName(formData.TripTypeID)"
+          [(ngModel)]="formData && formData.TripTypeID"
+          placeholder="{{ lang == 'en' ? 'Trip Type' : arabic('triptype') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row" *ngIf="formData.TripTypeID == 3" [ngClass]="{ required: editMode }">
+      <div class="form-group col-12">
+        <label for="notes">
+          {{ lang == 'en' ? "Please Specify (If 'others' is selected)" : arabic('plsspeicifyifothers') }}
+        </label>
+        <textarea class="form-control" [disabled]="!editMode" [(ngModel)]="formData && formData.TripTypeOthers"
+          id="notes" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields" [ngClass]="{ required: editMode }">
+        <label for="Emirates">
+          {{ lang == 'en' ? 'Emirates' : arabic('emirates') }}
+        </label>
+        <ng-select class="approverDept-ddown" [disabled]="!editMode" [items]="emiratesList" [closeOnSelect]="true"
+          bindLabel="{{ lang == 'en' ? 'DisplayName' : 'ArDisplayName' }}" bindValue="LookupsID"
+          (change)="onChangeEmirates(formData.Emirates)" [(ngModel)]="formData && formData.Emirates"
+          placeholder="{{ lang == 'en' ? 'Emirates' : arabic('emirates') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields" [ngClass]="{ required: editMode }">
+        <label for="city">
+          {{ lang == 'en' ? 'City' : arabic('city') }}
+        </label>
+        <ng-select class="approverDept-ddown" [disabled]="!editMode" [items]="cityList" [closeOnSelect]="true"
+          bindLabel="CityName" bindValue="CityID" [(ngModel)]="formData && formData.City"
+          placeholder="{{ lang == 'en' ? 'City' : arabic('city') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="formData.Destination != 4 && HideFields"
+        [ngClass]="{ required: editMode }">
+        <label for="Requestor">
+          {{ lang == 'en' ? 'Destination' : arabic('destination') }}
+        </label>
+        <ng-select class="approverDept-ddown" [disabled]="!editMode" [items]="destinationList" [closeOnSelect]="true"
+          bindLabel="TripDestinationName" (change)="getDestinationName(formData.Destination)"
+          bindValue="TripDestinationID" [(ngModel)]="formData && formData.Destination"
+          placeholder="{{ lang == 'en' ? 'Destination' : arabic('destination') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row" *ngIf="formData.Destination == 4">
+      <div class="form-group col-12 col-md-4" [ngClass]="{ required: editMode }">
+        <label for="Requestor">
+          {{ lang == 'en' ? 'Destination' : arabic('destination') }}
+        </label>
+        <ng-select class="approverDept-ddown" [disabled]="!editMode" [items]="destinationList" [closeOnSelect]="true"
+          bindLabel="TripDestinationName" (change)="getDestinationName(formData.Destination)"
+          bindValue="TripDestinationID" [(ngModel)]="formData && formData.Destination"
+          placeholder="{{ lang == 'en' ? 'Destination' : arabic('destination') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{ required: editMode }">
+        <label for="notes">
+          {{ lang == 'en' ? "Please Specify (If 'others' is selected)" : arabic('plsspeicifyifothers') }}
+        </label>
+        <input type="text" class="form-control" [disabled]="!editMode" autocomplete="off"
+          [(ngModel)]="formData && formData.DestinationOthers" id="drivername">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields" [ngClass]="{ required: editMode }">
+        <label for="Date">
+          {{ lang == 'en' ? 'Trip Period From' : arabic('tripperiodfrom') }}
+        </label>
+        <div class="position-relative">
+          <input type="text" placeholder="{{ lang == 'en' ? 'Select Date' : arabic('selectdate') }}"
+            class="form-control" [disabled]="!editMode" bsDatepicker #dpSD1="bsDatepicker" [maxDate]="maxDate(0)"
+            [(ngModel)]="formData && formData.TripPeriodFromDate" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='view' ? dpSD1.toggle(): ''">
+            <i class="far fa-calendar date"></i>
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields"
+        [ngClass]="{'ar-rtl': lang == 'ar',required: editMode}">
+        <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+        <ng-select class="approverDept-ddown" [items]="timeList" [disabled]="!editMode" [(ngModel)]="TripPeriodFromTime"
+          (change)="onStartTimeSelect()" [closeOnSelect]="true" bindLabel="label" bindValue="value"
+          placeholder="{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+        </ng-select>
+        <!-- <div class="row">
+            <div class="col-12">
+              <span class="text-danger" *ngIf="showValidTimeAlert">
+                Please select valid From Time.
+              </span>
+            </div>
+          </div> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields" [ngClass]="{ required: editMode }">
+        <label for="Date">
+          {{ lang == 'en' ? 'Trip Period To' : arabic('tripperiodto') }}
+        </label>
+        <div class="position-relative">
+          <input type="text" placeholder="{{ lang == 'en' ? 'Select Date' : arabic('selectdate') }}"
+            class="form-control" [disabled]="!editMode" bsDatepicker #dpSD2="bsDatepicker" [minDate]="minDate(0)"
+            [(ngModel)]="formData && formData.TripPeriodToDate" [bsConfig]="bsConfig">
+          <span (click)="screenStatus!='view' ? dpSD2.toggle(): ''">
+            <i class="far fa-calendar date"></i>
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields"
+        [ngClass]="{'ar-rtl': lang == 'ar',required: editMode}">
+        <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+        <ng-select class="approverDept-ddown" [items]="timeList" [disabled]="!editMode" [(ngModel)]="TripPeriodToTime"
+          [closeOnSelect]="true" (change)="onEndTimeSelect()" bindLabel="label" bindValue="value"
+          placeholder="{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+        </ng-select>
+        <div class="row">
+          <div class="col-12">
+            <span class="text-danger" *ngIf="showValidTimeAlert">
+              {{ lang == 'en' ? 'Sorry, please enter a valid value, Note: the trip to time should be after the trip from time' : arabic('vehiclereqtriptimevalidationmsg') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4" [ngClass]="{ required: editMode }">
+        <label for="Requestor">
+          {{ lang == 'en' ? 'Vehicle Model' : arabic('vehiclemodel') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="vehicleModelList" [disabled]="!editMode"
+          bindLabel="VehicleModelName" bindValue="VehicleModelID" [closeOnSelect]="true"
+          [(ngModel)]="formData && formData.VehicleModelID"
+          placeholder="{{ lang == 'en' ? 'Vehicle Model' : arabic('vehiclemodel') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4"
+        [ngClass]="{ required: editMode && formData && formData.RequestType != 3}">
+        <label for="Emirates">
+          {{ lang == 'en' ? 'Approver Office/Department' : arabic('vehicleapproverdepartment') }}
+        </label>
+        <ng-select class="approverDept-ddown" [closeOnSelect]="true" [items]="departmentList"
+          [disabled]="DisableApproverField" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          (change)="onChangeApproverDept('approver', formData.ApproverDepartment)"
+          [(ngModel)]="formData && formData.ApproverDepartment"
+          placeholder="{{ lang == 'en' ? 'Approver Department' : arabic('vehicleapproverdepartment') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4"
+        [ngClass]="{ required: editMode && formData && formData.RequestType != 3 }">
+        <label for="city">
+          {{ lang == 'en' ? 'Approver Name' : arabic('vehicleapprovername') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="approverList" [closeOnSelect]="true" bindLabel="EmployeeName"
+          [disabled]="DisableApproverField" bindValue="UserID" [(ngModel)]="formData && formData.ApproverName"
+          placeholder="{{ lang == 'en' ? 'Approver Name' : arabic('vehicleapprovername') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row" *ngFor="let drop of multipledropdown;let i = index">
+      <div class="form-group col-12 col-md-4" *ngIf="HideFields">
+        <label for="Emirates">
+          {{ lang == 'en' ? 'Co-Passengers Office/Department' : arabic('copassengerdepar') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="CoPassengarDepartList" bindLabel="OrganizationUnits"
+          [disabled]="!editMode" bindValue="OrganizationID" [closeOnSelect]="true"
+          (change)="onChangeCoApproverDept($event,i)" [(ngModel)]="CoPassengerDepartmentID[i]"
+          placeholder="{{ lang == 'en' ? 'Co-Passengers Department' : arabic('copassengerdepar') }}">
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="CoPassengerDepartmentID[i] != '0' && HideFields">
+        <label for="city">
+          {{ lang == 'en' ? 'Co-Passengers Name' : arabic('copassengername') }}
+        </label>
+        <ng-select class="approverDept-ddown" [items]="CoPssApproverList[i]" [disabled]="!editMode"
+          [closeOnSelect]="true" bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="CoPassengerID[i]"
+          placeholder="{{ lang == 'en' ? 'Co-Passengers Name' : arabic('copassengername') }}">
+        </ng-select>
+        <!-- (change)="setCoPassengerID(i, formData.CoPassengerID[i])" -->
+      </div>
+      <div class="form-group col-12 col-md-4" *ngIf="CoPassengerDepartmentID[i] == '0' && HideFields ">
+        <label for="notes">
+          {{ lang == 'en' ? 'Co-Passengers Name' : arabic('copassengername') }}
+        </label>
+        <input type="text" class="form-control" [disabled]="!editMode" autocomplete="off"
+          placeholder="{{ lang == 'en' ? 'Co-Passengers Name' : arabic('copassengername') }}"
+          [(ngModel)]="CoPassengerID[i]" id="drivername">
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid py-2" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="editMode">
+    <div class="row" *ngIf="HideFields">
+      <div class="form-group col-12 col-md-4">
+        <a class="addMore" [ngClass]="{'removeLink':screenStatus == 'view'}"
+          (click)="screenStatus =='view' ? '': addCoPassenger()">+ {{ lang == 'en' ? 'Add More' : arabic('addmore') }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid page-form-content py-2" [ngClass]="{'ar-rtl': lang == 'ar'}" *ngIf="!editMode">
+    <div class="row">
+      <div class="form-group col-12">
+        <label for="notes">{{ lang=='en' ? 'Notes' : arabic('notes') }}</label>
+        <textarea class="form-control" [(ngModel)]="notes" id="notes" [disabled]="!isApprover" rows="4"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center px-3">
+    <div class="col-auto p-1" *ngIf="screenStatus == 'create'">
+      <button class="rounded-btn" (click)="saveVehiclerequest()"
+        [ngClass]="{'disabled-btn': !validate() || (formData.RequestType == 3 && !validatePermanantCar()) || inProgress }"
+        [disabled]="!validate() || (formData.RequestType == 3 && !validatePermanantCar()) || inProgress"
+        class="rounded-btn">
+        {{ lang=='en' ? 'SUBMIT' : arabic('submit') }}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="!editMode && isApprover">
+      <button [ngClass]="{'disabled-btn': inProgress }" class="rounded-btn" [disabled]="inProgress"
+        (click)="updateAction('Approve')">
+        {{ lang=='en' ? 'APPROVE' : arabic('approve') }}
+      </button>
+    </div>
+    <div class="col-auto p-1" *ngIf="!editMode && isApprover">
+      <button [ngClass]="{'disabled-btn': !validateNotes() || inProgress }" class="rounded-btn"
+        [disabled]="!validateNotes() || inProgress" (click)="updateAction('Reject')">
+        {{ lang=='en' ? 'REJECT' : arabic('reject') }}
+      </button>
+    </div>
+    <div class="col-auto p-1"
+      *ngIf="!editMode && ((OrgUnitID == 13) || (formData.Requestor == currentUser.id) || (CurrentApproverID == currentUser.id)) && (currentStatus != 212 && currentStatus != 224 && currentStatus != 213 && currentStatus != 215 && currentStatus != 216 && currentStatus != 217)">
+      <button [ngClass]="{'disabled-btn': inProgress }" class="rounded-btn" [disabled]="inProgress"
+        (click)="showCancelModal(template)">
+        {{ lang=='en' ? 'CANCEL' : arabic('cancel') }}
+      </button>
+    </div>
+
+    <div class="col-auto p-1" *ngIf="DeptID==3 && screenStatus!='create'">
+      <button [ngClass]="{'disabled-btn': inProgress}" (click)="print(printPDF, 'Release')" class="rounded-btn"
+        [disabled]="inProgress">
+        {{ lang=='en' ? 'PRINT RELEASE FORM' : arabic('PrintReleaseForm')}}
+      </button>
+    </div>
+
+
+    <div class="col-auto p-1" *ngIf="DeptID==3 && screenStatus!='create' ">
+      <button [ngClass]="{'disabled-btn': inProgress}" (click)="print(printPDF, 'Return')" class="rounded-btn"
+        [disabled]="inProgress">
+        {{ lang=='en' ? 'PRINT RETURN FORM' : arabic('PrintReturnForm')}}
+      </button>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- For cancel event -->
+<ng-template #template>
+  <div dir="auto" class="modal-header modalclass">
+    <h6 class="modal-title pull-left"> {{ lang=='en' ? 'Reason' : arabic('reason') }}</h6>
+    <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close"
+      (click)="closemodal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body">
+    <div class="row">
+      <div class="form-group col-12" [ngClass]="{'ar-rtl': lang == 'ar'}">
+        <label for="notes">{{ lang=='en' ? 'Reason' : arabic('reason') }}</label>
+        <textarea class="form-control" [(ngModel)]="Reason" [ngClass]="{'ar-rtl': lang == 'ar'}" id="notes"
+          rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="row justify-content-center my-3">
+      <button type="button" class="rounded-btn" [ngClass]="{'disabled-btn': !validateReason() || inProgress}"
+        [disabled]="!validateReason() || inProgress"
+        (click)="updateAction('Cancel')">{{ lang=='en' ? 'SUBMIT' : arabic('submit') }}</button>
+    </div>
+  </div>
+</ng-template>
+<!-- ---- -->
+
+
+
+<!--Print Return & Release form-->
+<ng-template #printPDF>
+  <div dir="auto" class="modal-header modalclass">
+    <h4 class="modal-title pull-left" [ngClass]="{'ar-rtl':lang=='ar'}">
+      {{ (lang=='ar') ? arabic('printpreview') : 'Print Preview' }}</h4>
+    <button *ngIf="lang=='en'" type="button" class="close pull-right color-white" aria-label="Close"
+      (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button *ngIf="lang=='ar'" type="button" class="close pull-left m-left" aria-label="Close"
+      (click)="closePrintPop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div dir="auto" class="modal-body" #printContent [ngClass]="{'ar-rtl':lang=='ar'}">
+    <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+  </div>
+  <div dir="auto" class="modal-footer">
+    <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress"
+      (click)="printPdf(printContent);bsModalRef.hide()">{{ (lang=='ar') ? arabic('print') : 'Print' }}</button>
+    <button type="button" [ngClass]="{'disabled-btn': inProgress}" class="rounded-btn" [disabled]="inProgress"
+      (click)="downloadPrint();bsModalRef.hide()">{{ (lang=='ar') ? arabic('download') : 'Download' }}</button>
+  </div>
+</ng-template>
+<!---->

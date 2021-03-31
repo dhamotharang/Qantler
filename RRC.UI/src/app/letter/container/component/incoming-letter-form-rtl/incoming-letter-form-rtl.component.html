@@ -1,0 +1,394 @@
+<div class="page-form-wrapper" id="trigger-letter-in">
+  <div class="form-title text-right">
+    {{arabic('incomingcreation')}}
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Letter Ref">{{arabic('letterref')}}</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Letter Ref"
+          placeholder="Enter Ref" [(ngModel)]="letterModel.LetterReferenceNumber">
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="status">{{arabic('status')}}</label>
+        <select [disabled]="screenStatus!='Create'" class="form-control" [(ngModel)]="letterModel.Status"
+          id="exampleFormControlSelect1">
+          <option *ngFor="let us of status" [value]="us.LookupsID">{{us.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Creation Date">{{arabic('createdate')}}</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus!='Create'" type="text" class="form-control"
+            [(ngModel)]="letterModel.CreatedDateTime" bsDatepicker #dpCreate="bsDatepicker" [bsConfig]="bsConfigs">
+          <i class="far fa-calendar date ar-rtl-icon"></i>
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source OU">{{arabic('sourceofficeSlashDepartment')}}</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Source OU"
+          placeholder="Enter Source OU" [(ngModel)]="letterModel.SourceOU">
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Source Name">{{arabic('sourcename')}}</label>
+        <input [disabled]="screenStatus!='Create'" type="text" class="form-control" id="Source Name"
+          placeholder="Enter Source Name" [(ngModel)]="letterModel.SourceName">
+      </div>
+    </div>
+    <hr *ngIf="screenStatus=='View'">
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Letter Title">{{arabic('lettertittle')}}</label>
+        <input type="text" [disabled]="screenStatus=='View'" class="form-control" id="Letter Title" placeholder=""
+          [(ngModel)]="letterModel.Title">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Destination OU">{{arabic('destinationoffice/department')}}</label>
+        <ng-select [items]="destinationDepartment" [closeOnSelect]="true" (remove)="checkDepartmentUser($event)"
+          [disabled]="screenStatus=='View'" (change)="Destination($event)" (clear)="letterModel.DestinationUserId = []"
+          [multiple]="false" bindLabel="OrganizationUnits" bindValue="OrganizationID"
+          [(ngModel)]="letterModel.DestinationOU" [disabled]="screenStatus=='View'">
+        </ng-select>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="User Name">{{arabic('destinationname')}}</label>
+        <ng-select [items]="userReceiver" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="userName($event)" [multiple]="false" bindLabel="EmployeeName" bindValue="UserID"
+          [(ngModel)]="letterModel.DestinationUserId" [disabled]="screenStatus=='View'">
+        </ng-select>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus!='View'"
+        [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">{{arabic('receivingdate')}}</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus=='View'" type="text" class="form-control"
+            [(ngModel)]="letterModel.ReceivingDate" bsDatepicker #dpReceive="bsDatepicker" [bsConfig]="bsConfigs">
+          <div (click)="dpReceive.toggle()">
+            <i class="far fa-calendar date ar-rtl-icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" *ngIf="screenStatus=='View'"
+        [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">{{arabic('receivingdate')}}</label>
+        <div class="position-relative">
+          <input [disabled]="screenStatus=='View'" type="text" class="form-control"
+            [(ngModel)]="letterModel.ReceivingDate" bsDatepicker #dpReceive="bsDatepicker" [bsConfig]="bsConfigs">
+          <span (click)="dpReceive.click()">
+            <i class="far fa-calendar date  ar-rtl-icon"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Receiving Date">{{arabic('receivedfrom')}}</label>
+        <div>
+          <input type="radio" name="entity" [disabled]="screenStatus =='View'" [(ngModel)]="letterModel.OfficialEntity"
+            id="attentionTo" value="1" (change)=onentitychange(letterModel.OfficialEntity)>{{arabic('govtentity')}}
+        </div>
+        <div>
+          <input type="radio" [disabled]="screenStatus =='View'" [(ngModel)]="letterModel.OfficialEntity" name="entity"
+            id="attentionAddress" value="2" (change)=onentitychange(letterModel.OfficialEntity)>
+          {{arabic('nongovtentity')}}
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Received from-Goverment entity">{{arabic('senderentity')}}</label>
+        <ng-select [items]="organisationEntity" [closeOnSelect]="true" (change)="checkEntity($event)"
+          [disabled]="screenStatus=='View'" [multiple]="false" bindLabel="EntityName" bindValue="ID"
+          [(ngModel)]="letterModel.ReceivedFromGovernmentEntity">
+          <!-- <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+                        <button class="rounded-btn" (click)="addContact()">
+              {{arabic('add')}}
+            </button>
+                    </ng-template> -->
+        </ng-select>
+
+      </div>
+
+      <div class="form-group ar-rtl col-12 col-md-4">
+        <label for="Received from-Name">{{arabic('sendername')}}</label>
+        <!-- <ng-select [items]="organisationEntityNames" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false" bindLabel="UserName" bindValue="ID" [(ngModel)]="letterModel.ReceivedFromName"> -->
+        <input type="text" [disabled]="screenStatus=='View'" class="form-control"
+          [(ngModel)]="letterModel.ReceivedFromName">
+        <!-- <ng-template ng-notfound-tmp let-searchTerm="searchTerm"> -->
+        <button *ngIf="canEditContact && screenStatus!='View'" class="rounded-btn mt-1"
+          style="margin-left: 0px;float: left;" (click)="addContact()">
+          {{arabic('add')}}
+        </button>
+        <!-- </ng-template>
+                </ng-select> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Department">{{arabic('approverofficeSlashDepartment')}}</label>
+        <ng-select [items]="approverDepartment" [closeOnSelect]="true" [disabled]="screenStatus=='View'"
+          (change)="ApproverDestination($event)" [multiple]="false" bindLabel="OrganizationUnits"
+          bindValue="OrganizationID" [(ngModel)]="letterModel.ApproverDepartmentId">
+        </ng-select>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-4" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Approver Name">{{arabic('approvername')}}</label>
+        <ng-select [items]="userDestination" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="EmployeeName" bindValue="UserID" [(ngModel)]="letterModel.ApproverId">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Related to outgoing letter(s)">{{arabic('relatedtooutgoingletters')}}</label>
+        <div class="d-flex flex-row">
+          <tag-input class="form-control" [disable]="screenStatus=='View'" (onAdd)="onAddChangeout($event)"
+            (onRemove)="onRemoveChangeout($event)" [placeholder]="arabic('enterletter')"
+            [secondaryPlaceholder]="arabic('enteroutgoingletter')" [(ngModel)]='letterModel.RelatedToOutgoingLetter'>
+          </tag-input>
+          <button *ngIf="screenStatus!='View'" class="custom-btn" (click)="openLinkToModal('out')">...</button>
+        </div>
+        <div *ngIf="Ismemolink" class="alert alert-danger alert-dismissible fade" [ngClass]="{'show':Ismemolink}"
+          role="alert">{{arabic('letterlinkmessage')}}
+          <button type="button" class="close" (click)="Ismemolink = !Ismemolink" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Related to outgoing letter(s)">{{arabic('relatedtoincomingletters')}}</label>
+        <div class="d-flex flex-row">
+          <tag-input class="form-control" [disable]="screenStatus=='View'" (onAdd)="onAddChangein($event)"
+            (onRemove)="onRemoveChangein($event)" [placeholder]="arabic('enterletter')"
+            [secondaryPlaceholder]="arabic('enterincomingletter')" [(ngModel)]='letterModel.RelatedToIncomingLetter'>
+          </tag-input>
+          <button *ngIf="screenStatus!='View'" class="custom-btn" (click)="openLinkToModal('in')">...</button>
+        </div>
+        <div *ngIf="Isletterlink" class="alert alert-danger alert-dismissible fade" [ngClass]="{'show':Isletterlink}"
+          role="alert">{{arabic('letterlinkmessage')}}
+          <button type="button" class="close" (click)="Isletterlink = !Isletterlink" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-auto text-right" *ngFor="let link of link_list">
+            <a [href]="getRefLink(link,1)"
+              target="_blank">{{(link.ReferenceNo?link.ReferenceNo:link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-auto text-right" *ngFor="let income_link of incoming_link_list">
+            <a [href]="getRefLink(income_link,0)"
+              target="_blank">{{(income_link.ReferenceNo?income_link.ReferenceNo:income_link.OutgoingLetterReferenceNo)}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=" row py-3">
+      <div class="col-12 text-right">
+        {{arabic('letterdetails')}}
+      </div>
+      <div class="col-12">
+        <tinymce [config]="tinyConfig" [disabled]="screenStatus=='View'" [(ngModel)]="letterModel.LetterDetails">
+        </tinymce>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col">
+        <label for="notes">{{arabic('notes')}}</label>
+        <textarea [disabled]="screenStatus=='View'" class="form-control" [(ngModel)]="letterModel.Notes" id="notes"
+          [placeholder]="arabic('enternotes')" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group ar-rtl col-12 col-md-6" [ngClass]="{'required':screenStatus != 'View'}">
+        <label for="Decument classification">{{arabic('documentclassification')}}</label>
+        <ng-select [items]="documentList" [closeOnSelect]="true" [disabled]="screenStatus=='View'" [multiple]="false"
+          bindLabel="us" bindValue="us" [(ngModel)]="letterModel.DocumentClassification">
+        </ng-select>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Priority">{{arabic('priority')}}</label>
+        <ng-select [items]="priorityList" [disabled]="screenStatus=='View'" bindLabel="name" bindValue="name"
+          [(ngModel)]="letterModel.Priority">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="select-priority mr-1" [ngClass]="item"></div>
+            <div class="d-inline">{{item}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="form-group ar-rtl col-12" *ngIf="screenStatus!='View'">
+            <label for="Attachments">{{arabic('attachments')}}</label>
+            <input #variable type="file" multiple class="form-control attachment" [disabled]="screenStatus=='View'"
+              name="Attachments" (change)="Attachments($event)" id="Attachments" placeholder="Select file" />
+          </div>
+          <div class="col-11" *ngIf="uploadProcess">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+                aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+            </div>
+          </div>
+          <div class="col-11 mx-3 mb-2 ar-rtl" *ngIf="attachments.length>0">
+            <label for="Keywords">{{arabic('attachmentlist')}}</label>
+            <div class="row border font-weight-bold">
+              <div class="col border">{{arabic('filename')}}</div>
+              <div class="col border text-center" *ngIf="screenStatus!='View'">{{arabic('action')}}</div>
+            </div>
+            <div *ngFor="let file of attachments; let i = index">
+              <div class="row">
+                <div class="col-{{(screenStatus!='View')?'6':12}} attachment-width border">
+                  <a class="cursor"
+                    href="{{environment.AttachmentDownloadUrl}}?filename={{file.AttachmentsName}}&guid={{file.AttachmentGuid}}">{{file.AttachmentsName}}</a>
+                </div>
+                <div class="col-6 border text-center" *ngIf="screenStatus!='View'">
+                  <span (click)="deleteAttachment(i)"><i class="fas fa-trash-alt"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Keywords">{{arabic('keywords')}}</label>
+        <tag-input class="form-control" [disable]="screenStatus=='View'" [placeholder]="" [clearOnBlur]="true"
+          (onBlur)="onTextChange($event)" [secondaryPlaceholder]="arabic('enterkeyword')"
+          [(ngModel)]='letterModel.Keywords'></tag-input>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Need Reply">{{arabic('needreply')}}</label>
+        <div>
+          <input type="radio" name="reply" [(ngModel)]="letterModel.NeedReply" value="true"
+            [disabled]="screenStatus=='View'"> {{arabic('yes')}}
+          <input class="ml-2" type="radio" name="reply" [(ngModel)]="letterModel.NeedReply" value="false"
+            [disabled]="screenStatus=='View'"> {{arabic('no')}}
+        </div>
+      </div>
+      <div class="form-group ar-rtl col-12 col-md-6">
+        <label for="Need Reply">{{arabic('didoriginalletterphysicallysend')}}</label>
+        <div>
+          <input type="radio" name="replys" [(ngModel)]="letterModel.LetterPhysicallySend" value="true"
+            [disabled]="screenStatus=='View'"> {{arabic('yes')}}
+          <input class="ml-2" type="radio" name="replys" [(ngModel)]="letterModel.LetterPhysicallySend" value="false"
+            [disabled]="screenStatus=='View'"> {{arabic('no')}}
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="screenStatus=='View' && approverBtn">
+      <div class="form-group ar-rtl col">
+        <label for="Reference Id">{{arabic('comments')}}</label>
+        <textarea class="form-control" [(ngModel)]="letterModel.Comments" id="comments"
+          [placeholder]="arabic('entercomments')" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row justify-content-center px-3">
+      <div *ngIf="approverBtn || destinationBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="distinationBtnDis || btnLoad"
+          [ngClass]="{'disabled-btn': distinationBtnDis}"
+          (click)="btnLoad = 'true';statusChange('Close',template);closeBtnLoad='true'">
+          <app-btn-loader *ngIf="closeBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('close')}}
+        </button>
+      </div>
+      <div *ngIf="approverBtn || destinationBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="distinationBtnDis" [ngClass]="{'disabled-btn': distinationBtnDis}"
+          (click)="btnLoad = 'true';popup('Letter Redirect',destinationBtn)">{{arabic('redirect')}}</button>
+      </div>
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || btnLoad" [ngClass]="{'disabled-btn': approverBtnDis}"
+          (click)="btnLoad = 'true';statusChange('Approve',template);approveBtnLoad='true'">
+          <app-btn-loader *ngIf="approveBtnLoad" class="btn-loader"></app-btn-loader>
+          {{arabic('approve')}}
+        </button>
+      </div>
+
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || letterModel.Comments == '' || btnLoad "
+          [ngClass]="{'disabled-btn': approverBtnDis || letterModel.Comments =='' || btnLoad}"
+          (click)="btnLoad = 'true';popup('Letter Escalate',template)">{{arabic('escalate')}}</button>
+      </div>
+      <div *ngIf="draftBtn || createBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="validateForm()" [ngClass]="{'disabled-btn': validateForm()}"
+          (click)="btnLoad = 'true';saveLetter('Submit');sendBtnLoad='true'">
+          <app-btn-loader *ngIf="sendBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('send')}}
+        </button>
+      </div>
+      <div *ngIf="createBtnShow || draftBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';saveLetter('Save');sendDraftBtnLoad='true'">
+          <app-btn-loader *ngIf="sendDraftBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('saveasdraft')}}
+        </button>
+      </div>
+      <div *ngIf="downloadBtnShow" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';downloadPdf();downloadBtnLoad='true'">
+          <app-btn-loader *ngIf="downloadBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('download')}}
+        </button>
+      </div>
+      <div class="col-auto p-1" *ngIf="approverBtn">
+        <button class="rounded-btn" [disabled]="approverBtnDis || btnLoad" [ngClass]="{'disabled-btn': approverBtnDis}"
+          (click)="createDutyTask()">
+          {{arabic('createdutytaskrelated')}}
+        </button>
+      </div>
+
+      <div *ngIf="approverBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="approverBtnDis || letterModel.Comments =='' || btnLoad"
+          [ngClass]="{'disabled-btn': approverBtnDis || letterModel.Comments =='' || btnLoad}"
+          (click)="btnLoad = 'true';statusChange('Reject',template);rejectBtnLoad='true'">
+          <app-btn-loader *ngIf="rejectBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('reject')}}
+        </button>
+      </div>
+      <div *ngIf="creatorBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad"
+          (click)="btnLoad = 'true';saveClone('Clone',template);cloneBtnLoad='true'">
+          <app-btn-loader *ngIf="cloneBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('clone')}}
+        </button>
+      </div>
+      <div *ngIf="deleteBtn" class="col-auto p-1">
+        <button class="rounded-btn" [disabled]="btnLoad" (click)="btnLoad = 'true';delete();deleteBtnLoad = 'true'">
+          <app-btn-loader *ngIf="deleteBtnLoad" class="btn-loader"></app-btn-loader>{{arabic('delete')}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="screenStatus != 'Create'" class="page-form-wrapper my-3 p-4">
+  <div class="row" *ngFor="let his of letterModel.HistoryLog">
+    <div class="col-auto">
+      <div class="rounded-btn">
+        <img class="clock" src="assets/home/Meeting-clock.png"> {{his.ActionDateTime | date: 'dd/MM/yyyy'}} /
+        {{his.ActionDateTime | date: 'hh:mm'}}
+        {{(his.ActionDateTime | date: 'a')=='AM'?common.arabic.words['am']:common.arabic.words['pm']}}
+      </div>
+    </div>
+    <div class="col text-right p-2">
+      <div class="row">
+        <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}<span *ngIf="showSpanForEscalateRedirect(his.Action)"> {{arabic('to')}} : {{his.Escalate_RedirectUser}}</span></div>
+        <div class="col-12 comment" *ngIf="his.Comments !=''">{{arabic('comments')}} : {{his.Comments}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header modalclass">
+    <h4 class="modal-title pull-left">{{arabic('success')}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="messagebody">{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="rounded-btn" (click)="closemodal()">{{arabic('ok')}}</button>
+  </div>
+</ng-template>

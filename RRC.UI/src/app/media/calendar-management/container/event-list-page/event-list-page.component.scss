@@ -1,0 +1,69 @@
+@import '../../../../../styles.scss';
+
+.calendar-view {
+  padding-bottom: 20px;
+}
+
+.filter-btns {
+  padding-top: 30px;
+}
+
+.event-list-table {
+  padding-top: 20px;
+}
+
+.buttons-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.child-select-all {
+  margin-left: 30px;
+}
+
+.page-form-wrapper{
+  padding-bottom: 0px;
+}
+.rounded-btn{
+  margin-bottom: 5px;
+}
+
+.table-action-btn .table-view{
+  border: none;
+  border-radius: 10%;
+  background: #726236;
+  color: white;
+  padding-bottom: 5px;
+}
+
+.table-action-btn .table-view.edit-btn{
+  background: #06cfff;
+  border: none;
+  border-radius: 10%;
+  color: white;
+  padding-bottom: 5px;
+}
+
+.list-btn{
+  background: #b59647;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 20px;
+}
+
+.padding-right-0{
+  padding-right: 0px;
+}
+
+.padding-left-0{
+  padding-left:0px;
+}
+
+.margin-top-5{
+  margin-top: 5px;
+}
+
+.mtop-6 {
+  margin-top: 6px;
+}

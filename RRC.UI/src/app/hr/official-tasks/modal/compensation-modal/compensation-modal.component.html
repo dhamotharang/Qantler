@@ -1,0 +1,51 @@
+<div class="modal-header modalclass" dir="{{lang == 'ar' ? 'rtl' : 'ltr'}}">
+  <h4 class="modal-title pull-left">
+    {{ lang === 'ar' ? arWords.createcompensationrequest : 'Compensation Request'}}
+  </h4>
+  <button type="button" class="close pull-right" [ngClass]="{'p-0 m-0':lang=='ar'}" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <div class="form-group required"
+    [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <label for="hospitality">
+      {{ lang === 'ar' ? arWords.doyouneedhospitalitycompensation : 'Do you need Hospitality / Compensation ?'}}
+    </label>
+    <div>
+      <input
+        type="radio"
+        name="hospitality"
+        (click)="validate()"
+        [(ngModel)]="hospitality"
+        value="yes"> {{ lang === 'ar' ? arWords.yes : 'Yes'}}
+      <input
+        class="ml-2"
+        type="radio"
+        name="hospitality"
+        (click)="validate()"
+        [(ngModel)]="hospitality"
+        value="no"> {{ lang === 'ar' ? arWords.no : 'No'}}
+    </div>
+  </div>
+  <div class="form-group required" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <label for="taskDescription">{{ lang === 'ar' ? arWords.officialtaskdescription : 'Official Task Description'}}</label>
+    <textarea
+      class="form-control vertical-resize"
+      [(ngModel)]="taskDescription"
+      (ngModelChange)="validate()"
+      id="taskDescription"
+      placeholder=""
+      rows="5">
+    </textarea>
+  </div>
+</div>
+<div class="modal-footer" dir="{{lang === 'ar' ? 'rtl' : 'ltr'}}">
+  <button
+    [ngClass]="{'disabled-btn': validate() || inProgress }"
+    class="rounded-btn"
+    [disabled]="validate() || inProgress"
+    (click)="submitCompensation()">
+    {{ lang === 'ar' ? arWords.submit: 'Submit'}}
+  </button>
+</div>

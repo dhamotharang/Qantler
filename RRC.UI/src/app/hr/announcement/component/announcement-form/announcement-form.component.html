@@ -1,0 +1,126 @@
+<div class="row announcement-container">
+  <div class="col-12" [ngClass]="{'ar-rtl': lang=='ar'}">
+    <div class="page-form-wrapper"  id="trigger-scroll">
+      <div class="form-title">
+        ANNOUNCEMENT REQUESTS
+      </div>
+      <div class="container-fluid page-form-body py-2">
+        <div class="row" *ngIf="!editMode">
+          <div class="form-group col-12 col-md-4">
+            <label for="sourceou">Reference Id</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="refId"
+              id="sourceou">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="Date">Date</label>
+            <div class="position-relative">
+                <input type="text" class="form-control pr-4" [disabled]="true" bsDatepicker #dp="bsDatepicker"
+            [(ngModel)]="announcementDate" [bsConfig]="bsConfig">
+              <i class="far fa-calendar date" *ngIf="mode == 'create'" (click)="dp.toggle()"></i>
+              <i class="far fa-calendar date" *ngIf="!editMode"></i>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="sourceou">Source OU</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="sourceou"
+              id="sourceou">
+          </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="source-name">Source Name</label>
+            <input
+              type="text"
+              disabled
+              class="form-control"
+              [(ngModel)]="sourceName"
+              id="sourceName">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-4" [ngClass]="{'ar-rtl': lang=='ar', 'required':editMode}">
+            <label for="Assignee-Department">Announcement Type</label>
+            <ng-select
+              class="announce-type"
+              [disabled]="!editMode || inProgress"
+              [items]="announcementTypes"
+              [closeOnSelect]="true"
+              (change)="onTypeSelect()"
+              (clear)="onClear()"
+              bindLabel="AnnouncementTypeName"
+              bindValue="AnnouncementTypeID"
+              [(ngModel)]="announcementType">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-12" [ngClass]="{'ar-rtl' : lang== 'ar', 'required':editMode}">
+            <label>Announcement Description</label>
+          </div>
+          <div class="col-12 d-md-block" [ngClass]="{'d-none':!editMode}">
+            <tinymce [config]="tinyConfig" [disabled]="!editMode" (ngModelChange)="validate()" [(ngModel)]="description"></tinymce>
+          </div>
+          <div class="col-12 d-md-none" [ngClass]="{'d-block':!editMode,'d-none':editMode }">
+            <div class="tiny" #tinyDetail></div>
+          </div>
+      </div>
+      <div class="row md-top">
+        <div class="col">
+          <div class="col-auto p-1 text-center">
+            <button
+              [ngClass]="{'disabled-btn': !validate() || inProgress}"
+              [disabled]="!validate() || inProgress"
+              *ngIf="editMode"
+              class="rounded-btn btn-close"
+              (click)="onSubmit()">
+              SUBMIT
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && ifAssignedToMe"
+              [ngClass]="{'disabled-btn': inProgress }"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onClose()">
+              CLOSE
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && IsOrgHead && !ifAssignedToMe"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onAssigneTo()">
+              ASSIGN
+            </button>
+            <button
+              *ngIf="!editMode  && status == 37 && OrgUnitID == 9 && !IsOrgHead && !ifAssignedToMe"
+              [disabled]="inProgress"
+              class="rounded-btn btn-close"
+              (click)="onAssigneToMe()">
+              ASSIGN TO ME
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="created-by-section" *ngIf="!editMode && historyLogs && (historyLogs.length > 0)">
+    <div class="row" *ngFor="let his of historyLogs">
+      <div class="col-auto" *ngIf="his.ActionDateTime">
+        <div class="rounded-btn">
+          <img class="clock" src="assets/home/Meeting-clock.png">
+          {{his.ActionDateTime | date: 'hh:mm a'}} / {{his.ActionDateTime | date: 'dd/MM/yyyy'}}
+        </div>
+      </div>
+      <div class="col p-2"*ngIf="his.Action">
+        <div class="row">
+          <div class="col-12">{{hisLog(his.Action)}} : {{his.ActionBy}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

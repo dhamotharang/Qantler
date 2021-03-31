@@ -1,0 +1,168 @@
+<div class="page-form-wrapper">
+  <div class="form-title" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    {{formLabels.title}}
+  </div>
+  <div class="container-fluid py-2" [ngClass]="{'ar-rtl': lang == 'ar'}">
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="From">{{formLabels.from}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="TripPeriodFrom" [disabled]="true" bsDatepicker #dp="bsDatepicker"
+            [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+        <ng-select class="approverDept-ddown" 
+        [items]="timeList" 
+        [disabled]="true" 
+        [(ngModel)]="TripPeriodFromTime" 
+        [closeOnSelect]="true" 
+        bindLabel="label"
+        bindValue="value" 
+        placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4">
+        <label for="To">{{formLabels.to}}</label>
+        <div class="position-relative">
+          <input type="text" class="form-control" [(ngModel)]="TripPeriodTo" [disabled]="true" bsDatepicker #dp="bsDatepicker"
+            [bsConfig]="bsConfig">
+          <i class="far fa-calendar date" (click)="dp.toggle()"></i>
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="Time">{{ lang == 'en' ? 'Time' : arabic('time') }}</label>
+        <ng-select class="approverDept-ddown" 
+        [items]="timeList" 
+        [disabled]="true" 
+        [(ngModel)]="TripPeriodToTime" 
+        [closeOnSelect]="true" 
+        bindLabel="label"
+        bindValue="value" 
+        placeholder= "{{ lang == 'en' ? 'Select Time' : arabic('selecttime') }}">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-4" *ngIf="screenStatus!='Create'">
+        <label for="Requester Name">{{formLabels.requestname}}</label>
+        <input type="text" class="form-control" [(ngModel)]="requestorName" [disabled]="true" id="Requester Name"
+          placeholder="Enter Requester Name">
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="city">{{formLabels.city}}</label>
+        <input type="text" class="form-control" [(ngModel)]="requestorCity" [disabled]="true" id="city">
+
+      </div>
+      <div class="form-group col-12 col-md-4">
+        <label for="destination">{{formLabels.destination}}</label>
+        <input type="text" class="form-control"  [(ngModel)]="requestorDestination"  [disabled]="true" id="destination">
+      </div>
+    </div>
+  
+  <div class="description"><b>{{trip_same_city}}</b></div>
+  <div class="page-form-wrapper my-3 d-md-block d-none">
+    <!-- <app-progress-bar *ngIf="progress"></app-progress-bar> -->
+    <ng-container outsideBody>
+      <div class="table-responsive">
+        <ngx-datatable style="width: 100%" class="bootstrap" [rows]="rows" [columns]="columns"
+          [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+        </ngx-datatable>
+      </div>
+    </ng-container>
+  </div>
+  <div class="d-block d-md-none">
+      <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of rows">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Requestor':arabic('requestor')}} :
+                </b></span><span>{{row.Requestor}}</span></div>
+            <!-- <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Subject':arabic('subject')}} :
+                </b></span><span>{{row.Subject}}</span></div> -->
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Driver Name':arabic('drivername')}} :
+                </b></span><span> {{row.DriverName}}</span></div>
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <span><b>{{lang=='en'?'Destination':arabic('destination')}} : </b></span><span>
+                {{row.Destination}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+              <span><b>{{lang=='en'?'Co-Passengers':arabic('copassengers')}} : </b></span><span>
+                {{row.CoPassenger}}               
+              </span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="page-form-wrapper" [ngClass]="{'ar-rtl': lang == 'ar'}">
+  <div class="container-fluid py-2">
+    <div class="form-group col-12 col-md-4">
+      <label for="city">{{formLabels.drivername}}</label>
+      <ng-select 
+      [items]="driverList"
+      [closeOnSelect]="true"
+      bindLabel="DriverName"
+      bindValue="DriverID"
+      [(ngModel)]="DriverId"
+      (change)="getVehicleDriverTrips(DriverId)">
+      </ng-select>
+    </div>
+    <div class="description"><b>{{other_trip}}</b></div>
+    <div class="page-form-wrapper my-3 d-md-block d-none">
+      <app-progress-bar *ngIf="inProgress"></app-progress-bar>
+      <ng-container outsideBody>
+        <div class="table-responsive">
+          <ngx-datatable style="width: 100%" class="bootstrap" [rowClass]="getRowClass" [rows]="driverRows" [columns]="drivercolumns"
+            [headerHeight]="50" [columnMode]="'force'" [rowHeight]="'auto'" [messages]="tableMessages">
+          </ngx-datatable>
+        </div>
+      </ng-container>
+    </div>
+    <div class="d-block d-md-none">
+        <div class="card shadow page-form-wrapper my-3 d-block d-md-none" *ngFor="let row of driverRows">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Trip Time - From':arabic('tripperiodfrom')}} :
+                  </b></span><span>{{row.TripTimeFrom}}</span></div>
+              <div class="col-12" [ngClass]="{'ar-rtl': lang == 'ar'}"><span><b>{{lang=='en'?'Trip Time - To':arabic('tripperiodto')}} :
+                  </b></span><span>{{row.TripTimeTo}}</span></div>
+            </div>
+          </div>
+          <div class="card-body" [ngClass]="getRowClass(row)">
+            <div class="row">
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <span><b>{{lang=='en'?'City':arabic('city')}} : </b></span>
+                <span>{{row.City}}</span>
+              </div>
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <span><b>{{lang=='en'?'Destination':arabic('destination')}} : </b></span>
+                <span>{{row.Destination}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" [ngClass]="{'ar-rtl': lang == 'ar'}">
+                <span><b>{{lang=='en'?'Requestor':arabic('requestor')}} : </b></span>
+                <span>{{row.Requestor}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row justify-content-center px-3">
+    <div class="col-auto p-1">
+      <button  class="rounded-btn" [disabled]="EnableAssignButton" (click)="updateAction('Assign')">
+        {{formLabels.assign}}
+      </button>
+    </div>
+  </div>
+</div>

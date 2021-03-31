@@ -1,0 +1,69 @@
+<div class="page-form-wrapper pb-0">
+  <div class="form-title text-center">
+    {{title}}
+  </div>
+  <div class="form-title text-center d-block d-lg-none">
+    <div class="row">
+      <div class="col-auto" (click)="backToForm()"><i class="fas fa-arrow-left"></i></div>
+      <div class="col-auto px-0"><span>{{taskTitle}} :
+        </span><span>{{(chatDet)?chatDet.TaskReferenceNumber:''}}</span></div>
+      <div class="col"><span>{{createDate}} :
+        </span><span>{{(chatDet)?(chatDet.CreatedDateTime | date: 'dd-MM-yyyy'):''}}</span></div>
+    </div>
+  </div>
+  <div class="container-fluid page-form-body pt-2">
+    <div dir="ltr" class="chat-body communication-board" [ngStyle]="{'height':screenHeight+'px'}" #taskChatHeight>
+      <div *ngFor="let msg of messageList">
+        <app-receive-msg *ngIf="msg.CreatedBy != currentUser.id" [message]="msg"></app-receive-msg>
+        <app-send-msg *ngIf="msg.CreatedBy == currentUser.id" [message]="msg"></app-send-msg>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" *ngIf="uploadProcess">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{'width':uploadPercentage+'%'}"
+            aria-valuenow="uploadPercentage" aria-valuemin="0" aria-valuemax="100">{{uploadPercentage}}%</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="attachFile" [ngClass]="{'show':attachmentShow}">
+          <div class="attachCancel" (click)="cancelAttachment()">X</div>
+          {{attachementName}}
+        </div>
+      </div>
+      <div class="col-12" #emoji>
+        <!-- <ngx-emoji (emojiClick)="emojiClick(emoji,$event)" [emoji]="selectedEmoji" size="16"></ngx-emoji> -->
+      </div>
+    </div>
+    <div class="chat-foot" [dir]="language=='English'?'lrt':'rtl'">
+      <div class="row p-2 position-relative">
+        <div class="col-auto attach px-0" [ngClass]="{'curser-none':!visibleChat}"
+          (click)="(!visibleChat)?'':attachFile.click()">
+          <input [hidden]="true" multiple (change)="Attachments($event)" type="file" #attachFile>
+          <img src="assets/task/attach.png">
+        </div>
+        <div class="tagUser" [ngClass]="{'showTag':isTags}">
+          <div class="tagList" *ngFor="let user of tagUserList" (click)='tagUserSelect(user)'>
+            {{user.name}}
+          </div>
+        </div>
+        <div class="col px-0">
+          <input #messageBox type="text" [ngClass]="{'curser-none':!visibleChat}" [disabled]="!visibleChat"
+            class="form-control chat-input p-0" (keyup)="enterSendMsg($event)" placeholder={{placeholder}}
+            [(ngModel)]="message" (input)="tagUser()" id="Link to - Memo">
+        </div>
+        <div class="col-auto m-auto px-0 smile" [ngClass]="{'curser-none':!visibleChat}"
+          (click)="isEmoji = (!visibleChat)?isEmoji:!isEmoji">
+          <i class="far fa-smile"></i>
+        </div>
+        <div class="col-auto pl-1 px-0 send" [ngClass]="{'send-rotate': language!='English','curser-none':!visibleChat}"
+          (click)="(!visibleChat)?'':sendMsg()"><img src="assets/task/send.png">
+        </div>
+        <div class="emoji" [ngClass]="{'showEmoji':isEmoji}">
+          <emoji-mart [showPreview]='false' emoji="point_up" [style]="{ width: '100%'}" (emojiClick)="addEmoji($event)">
+          </emoji-mart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
