@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "gulp",
+            "task": "bundleVendors",
+            "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "inject",
+            "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "serve",
+            "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "buildOptionalVendorStyles",
+            "problemMatcher": [
+                "$gulp-tsc"
+            ]
+        }
+    ]
+}

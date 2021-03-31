@@ -1,0 +1,108 @@
+﻿@model eHS.Portal.Model.Case;
+
+<div class="card main">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Details</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-1 display-info id">
+                    <strong>Case ID # :</strong>
+                    <span>@Model.ID</span>
+                </div>
+                <div class="mb-1 display-info">
+                    <strong>Source :</strong>
+                    <span>@Model.Source</span>
+                </div>
+                @if (Model.RefID != null && Model.RefID != "")
+                {
+                    <div class="mb-1 display-info">
+                        <strong>Reference # :</strong>
+                        <span>@Model.RefID</span>
+                    </div>
+                }
+                <div class="mb-1 display-info">
+                    <strong>Status :</strong>
+                    <span>@Model.StatusText</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-1 display-info">
+                    <strong>Type :</strong>
+                    <span>@Model.TypeText</span>
+                </div>
+                <div class="mb-1 display-info">
+                    <strong>Managed By :</strong>
+                    <span>@Model.ManagedBy?.Name</span>
+                </div>
+                @if (Model.AssignedTo?.ID != null)
+                {
+                    <div class="mb-1 display-info">
+                        <strong>Assigned To :</strong>
+                        <span>@Model.AssignedTo?.Name</span>
+                    </div>
+                }
+            </div>
+            <div class="col-md-12 display-info mt-4">
+                <strong class="offenceTitle">Offences:</strong>
+            </div>
+            @foreach (var breach in Model.BreachCategories)
+            {
+                <div class="col-md-12">
+                    <div class="border-bottom mt-2"></div>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <div class="mb-1 display-info id">
+                        <span>@breach.Value</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                    @foreach (var offence in Model.Offences.Where(x => x.ParentID == breach.ID))
+                    {
+                        <div class="mb-1 display-info id">
+                            <span>@offence.Value</span>
+                        </div>
+                    }
+                </div>
+            }
+            <div class="col-md-12">
+                <div class="border-bottom mt-2"></div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Background))
+            {
+                <div class="col-md-12 background">
+                    <div class="mt-2 display-info">
+                        <strong>Background</strong>
+                    </div>
+                    <p>@Model.Background</p>
+                </div>
+            }
+            @if (Model.Attachments != null && Model.Attachments.Count > 0)
+            {
+                <div class="col-md-12 background">
+                    <div class="mt-2 display-info">
+                        <strong>Attachments</strong>
+                    </div>
+                    <div class="attachments">
+
+                        @foreach (var Attachment in Model.Attachments)
+                        {
+                            <div class="attachment item">
+                                <div class="thumb">
+                                    <i class="mdi mdi-paperclip"></i>
+                                </div>
+                                <div class="details">
+                                    <p class="file-name">@Attachment.FileName</p>
+                                    <div class="buttons">
+                                        <p class="file-size file-size-format d-none">@Attachment.Size</p>
+                                        <a href="/api/file/@Attachment.FileID?fileName=@Attachment.FileName" class="download" download="@Attachment.FileName">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

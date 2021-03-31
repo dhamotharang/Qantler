@@ -1,0 +1,2314 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Angular Client App documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Angular Client App documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>ResourceService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/resource.service.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Resource API Service</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkWhiteListUrl">checkWhiteListUrl</a>
+                            </li>
+                            <li>
+                                <a href="#commentResource">commentResource</a>
+                            </li>
+                            <li>
+                                <a href="#contentWithdrawal">contentWithdrawal</a>
+                            </li>
+                            <li>
+                                <a href="#deleteResourceBySlug">deleteResourceBySlug</a>
+                            </li>
+                            <li>
+                                <a href="#deleteResourceComment">deleteResourceComment</a>
+                            </li>
+                            <li>
+                                <a href="#downloadContent">downloadContent</a>
+                            </li>
+                            <li>
+                                <a href="#downloadContentForResource">downloadContentForResource</a>
+                            </li>
+                            <li>
+                                <a href="#getCategories">getCategories</a>
+                            </li>
+                            <li>
+                                <a href="#getCopyrights">getCopyrights</a>
+                            </li>
+                            <li>
+                                <a href="#getEducations">getEducations</a>
+                            </li>
+                            <li>
+                                <a href="#getMaterials">getMaterials</a>
+                            </li>
+                            <li>
+                                <a href="#getProfessions">getProfessions</a>
+                            </li>
+                            <li>
+                                <a href="#getRemixVersion">getRemixVersion</a>
+                            </li>
+                            <li>
+                                <a href="#getResourceBySlug">getResourceBySlug</a>
+                            </li>
+                            <li>
+                                <a href="#getResourceMasterData">getResourceMasterData</a>
+                            </li>
+                            <li>
+                                <a href="#getResources">getResources</a>
+                            </li>
+                            <li>
+                                <a href="#getSubCategories">getSubCategories</a>
+                            </li>
+                            <li>
+                                <a href="#hideResourceComment">hideResourceComment</a>
+                            </li>
+                            <li>
+                                <a href="#patchResource">patchResource</a>
+                            </li>
+                            <li>
+                                <a href="#postResource">postResource</a>
+                            </li>
+                            <li>
+                                <a href="#postWhiteListUrl">postWhiteListUrl</a>
+                            </li>
+                            <li>
+                                <a href="#rateResource">rateResource</a>
+                            </li>
+                            <li>
+                                <a href="#rateResourceAlignment">rateResourceAlignment</a>
+                            </li>
+                            <li>
+                                <a href="#reportResource">reportResource</a>
+                            </li>
+                            <li>
+                                <a href="#reportResourceComment">reportResourceComment</a>
+                            </li>
+                            <li>
+                                <a href="#updateCommentResource">updateCommentResource</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/resource.service.ts:13</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkWhiteListUrl"></a>
+                    <span class="name">
+                        <b>
+                            checkWhiteListUrl
+                        </b>
+                        <a href="#checkWhiteListUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkWhiteListUrl(url, id)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">src/app/services/resource.service.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>check whitelist url API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>id</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="commentResource"></a>
+                    <span class="name">
+                        <b>
+                            commentResource
+                        </b>
+                        <a href="#commentResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>commentResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="214"
+                            class="link-to-prism">src/app/services/resource.service.ts:214</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>comment on resource</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contentWithdrawal"></a>
+                    <span class="name">
+                        <b>
+                            contentWithdrawal
+                        </b>
+                        <a href="#contentWithdrawal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>contentWithdrawal(id)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">src/app/services/resource.service.ts:70</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>resource withdrawal API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteResourceBySlug"></a>
+                    <span class="name">
+                        <b>
+                            deleteResourceBySlug
+                        </b>
+                        <a href="#deleteResourceBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteResourceBySlug(slug)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="377"
+                            class="link-to-prism">src/app/services/resource.service.ts:377</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>slug</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteResourceComment"></a>
+                    <span class="name">
+                        <b>
+                            deleteResourceComment
+                        </b>
+                        <a href="#deleteResourceComment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteResourceComment(commentId, requestedBy)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">src/app/services/resource.service.ts:233</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>delete resource comment</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>commentId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>requestedBy</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadContent"></a>
+                    <span class="name">
+                        <b>
+                            downloadContent
+                        </b>
+                        <a href="#downloadContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>downloadContent(contentId)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">src/app/services/resource.service.ts:192</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>download reousce content API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>contentId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadContentForResource"></a>
+                    <span class="name">
+                        <b>
+                            downloadContentForResource
+                        </b>
+                        <a href="#downloadContentForResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>downloadContentForResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">src/app/services/resource.service.ts:183</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>download reousce content API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategories"></a>
+                    <span class="name">
+                        <b>
+                            getCategories
+                        </b>
+                        <a href="#getCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategories()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/services/resource.service.ts:25</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get all categories list</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCopyrights"></a>
+                    <span class="name">
+                        <b>
+                            getCopyrights
+                        </b>
+                        <a href="#getCopyrights"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCopyrights()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="137"
+                            class="link-to-prism">src/app/services/resource.service.ts:137</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get Copyrights list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEducations"></a>
+                    <span class="name">
+                        <b>
+                            getEducations
+                        </b>
+                        <a href="#getEducations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getEducations()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">src/app/services/resource.service.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get education list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMaterials"></a>
+                    <span class="name">
+                        <b>
+                            getMaterials
+                        </b>
+                        <a href="#getMaterials"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMaterials()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/app/services/resource.service.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get materials list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProfessions"></a>
+                    <span class="name">
+                        <b>
+                            getProfessions
+                        </b>
+                        <a href="#getProfessions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProfessions()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">src/app/services/resource.service.ts:58</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get professions list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRemixVersion"></a>
+                    <span class="name">
+                        <b>
+                            getRemixVersion
+                        </b>
+                        <a href="#getRemixVersion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRemixVersion(slug)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">src/app/services/resource.service.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get remix reource</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>slug</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getResourceBySlug"></a>
+                    <span class="name">
+                        <b>
+                            getResourceBySlug
+                        </b>
+                        <a href="#getResourceBySlug"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getResourceBySlug(slug)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/services/resource.service.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get resource by id</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>slug</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getResourceMasterData"></a>
+                    <span class="name">
+                        <b>
+                            getResourceMasterData
+                        </b>
+                        <a href="#getResourceMasterData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getResourceMasterData()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">src/app/services/resource.service.ts:36</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get resource master data API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getResources"></a>
+                    <span class="name">
+                        <b>
+                            getResources
+                        </b>
+                        <a href="#getResources"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getResources(pageNumber, pageSize)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/app/services/resource.service.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get resources list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>pageNumber</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>pageSize</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSubCategories"></a>
+                    <span class="name">
+                        <b>
+                            getSubCategories
+                        </b>
+                        <a href="#getSubCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSubCategories()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">src/app/services/resource.service.ts:126</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get sub categories list API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideResourceComment"></a>
+                    <span class="name">
+                        <b>
+                            hideResourceComment
+                        </b>
+                        <a href="#hideResourceComment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hideResourceComment(commentId, resourceId, requestedBy)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="244"
+                            class="link-to-prism">src/app/services/resource.service.ts:244</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>hide resource comment API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>commentId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>resourceId</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>requestedBy</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="patchResource"></a>
+                    <span class="name">
+                        <b>
+                            patchResource
+                        </b>
+                        <a href="#patchResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>patchResource(data, slug)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="326"
+                            class="link-to-prism">src/app/services/resource.service.ts:326</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>update Resource API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>slug</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="postResource"></a>
+                    <span class="name">
+                        <b>
+                            postResource
+                        </b>
+                        <a href="#postResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>postResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">src/app/services/resource.service.ts:271</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>create resource API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="postWhiteListUrl"></a>
+                    <span class="name">
+                        <b>
+                            postWhiteListUrl
+                        </b>
+                        <a href="#postWhiteListUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>postWhiteListUrl(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="165"
+                            class="link-to-prism">src/app/services/resource.service.ts:165</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>create whitelist url request</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rateResource"></a>
+                    <span class="name">
+                        <b>
+                            rateResource
+                        </b>
+                        <a href="#rateResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>rateResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">src/app/services/resource.service.ts:253</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>rate resource API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rateResourceAlignment"></a>
+                    <span class="name">
+                        <b>
+                            rateResourceAlignment
+                        </b>
+                        <a href="#rateResourceAlignment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>rateResourceAlignment(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="262"
+                            class="link-to-prism">src/app/services/resource.service.ts:262</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>rate resource alignment API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reportResource"></a>
+                    <span class="name">
+                        <b>
+                            reportResource
+                        </b>
+                        <a href="#reportResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reportResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="174"
+                            class="link-to-prism">src/app/services/resource.service.ts:174</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>repost reousrce API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reportResourceComment"></a>
+                    <span class="name">
+                        <b>
+                            reportResourceComment
+                        </b>
+                        <a href="#reportResourceComment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reportResourceComment(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">src/app/services/resource.service.ts:205</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>report resource comment API</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateCommentResource"></a>
+                    <span class="name">
+                        <b>
+                            updateCommentResource
+                        </b>
+                        <a href="#updateCommentResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateCommentResource(data)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="223"
+                            class="link-to-prism">src/app/services/resource.service.ts:223</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>update resource comment</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {HttpClient, HttpHeaders} from &#x27;@angular/common/http&#x27;;
+import {Observable} from &#x27;rxjs&#x27;;
+import {retry} from &#x27;rxjs/operators&#x27;;
+import {environment} from &#x27;../../environments/environment&#x27;;
+
+/**
+ * Resource API Service
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class ResourceService {
+  /**
+   *
+   * @param http
+   */
+  constructor(private http: HttpClient) {
+  }
+
+  /**
+   *get all categories list
+   *
+   */
+  getCategories(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Categories&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   * get resource master data API
+   *
+   */
+  getResourceMasterData(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Resource/ResourceMasterData&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   * get education list API
+   *
+   */
+  getEducations(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Educations&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get professions list API
+   *
+   */
+  getProfessions(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Professions&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *resource withdrawal API
+   *
+   * @param id
+   */
+  contentWithdrawal(id): Observable&lt;any&gt; {
+    return this.http.put(environment.apiUrl + &#x27;Course/ContentWithdrawal?contentTypeId&#x3D;2&amp;contentId&#x3D;&#x27; + id, {});
+  }
+
+  /**
+   *get resources list API
+   *
+   * @param pageNumber
+   * @param pageSize
+   */
+  getResources(pageNumber, pageSize): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Resource/&#x27; + pageNumber + &#x27;/&#x27; + pageSize)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get resource by id
+   *
+   * @param slug
+   */
+  getResourceBySlug(slug): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Resource/&#x27; + slug)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get remix reource
+   *
+   * @param slug
+   */
+  getRemixVersion(slug): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Resource/GetRemixVersion/&#x27; + slug)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get materials list API
+   *
+   */
+  getMaterials(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Materials&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get sub categories list API
+   *
+   */
+  getSubCategories(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;SubCategories&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *get Copyrights list API
+   *
+   */
+  getCopyrights(): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Copyrights&#x27;)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   *check whitelist url API
+   *
+   * @param url
+   * @param id
+   */
+  checkWhiteListUrl(url, id): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;URLWhiteListing/ISWhilteListed&#x27;, {
+      url: url,
+      requestedBy: id
+    })
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+  /**
+   * create whitelist url request
+   *
+   * @param data
+   */
+  postWhiteListUrl(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;URLWhiteListing&#x27;, data);
+  }
+
+  /**
+   *repost reousrce API
+   *
+   * @param data
+   */
+  reportResource(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/ReportResource&#x27;, data);
+  }
+
+  /**
+   *download reousce content API
+   *
+   * @param data
+   */
+  downloadContentForResource(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/DownloadContentForResource&#x27;, data);
+  }
+
+  /**
+   *download reousce content API
+   *
+   * @param contentId
+   */
+  downloadContent(contentId): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;ContentMedia/DownloadResourcesFiles/&#x27; + contentId + &#x27;/2&#x27;, {
+      headers: new HttpHeaders({
+        &#x27;Content-Type&#x27;: &#x27;application/zip&#x27;,
+      }), responseType: &#x27;blob&#x27;
+    });
+  }
+
+  /**
+   * report resource comment API
+   *
+   * @param data
+   */
+  reportResourceComment(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/ReportResourceComment&#x27;, data);
+  }
+
+  /**
+   *comment on resource
+   *
+   * @param data
+   */
+  commentResource(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/CommentOnResource&#x27;, data);
+  }
+
+  /**
+   *update resource comment
+   *
+   * @param data
+   */
+  updateCommentResource(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/UpdateResourceComment&#x27;, data);
+  }
+
+  /**
+   * delete resource comment
+   *
+   * @param commentId
+   * @param requestedBy
+   */
+  deleteResourceComment(commentId, requestedBy): Observable&lt;any&gt; {
+    return this.http.delete(environment.apiUrl + &#x27;Resource/DeleteResourceComment/&#x27; + commentId + &#x27;/&#x27; + requestedBy);
+  }
+
+  /**
+   *hide resource comment API
+   *
+   * @param commentId
+   * @param resourceId
+   * @param requestedBy
+   */
+  hideResourceComment(commentId, resourceId, requestedBy): Observable&lt;any&gt; {
+    return this.http.get(environment.apiUrl + &#x27;Resource/HideResourceComment/&#x27; + commentId + &#x27;/&#x27; + resourceId + &#x27;/&#x27; + requestedBy);
+  }
+
+  /**
+   *rate resource API
+   *
+   * @param data
+   */
+  rateResource(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/RateResource&#x27;, data);
+  }
+
+  /**
+   *rate resource alignment API
+   *
+   * @param data
+   */
+  rateResourceAlignment(data): Observable&lt;any&gt; {
+    return this.http.post(environment.apiUrl + &#x27;Resource/ResourceAlignmentRating&#x27;, data);
+  }
+
+  /**
+   *create resource API
+   *
+   * @param data
+   */
+  postResource(data): Observable&lt;any&gt; {
+    const resource &#x3D; data;
+    let keywords &#x3D; &#x27;&#x27;;
+    if (data.keywords &amp;&amp; data.keywords.length &gt; 0) {
+      data.keywords.forEach((item, index) &#x3D;&gt; {
+        if (index &lt; (data.keywords.length - 1)) {
+          keywords +&#x3D; item.value + &#x27;, &#x27;;
+        } else {
+          keywords +&#x3D; item.value;
+        }
+      });
+    } else {
+      keywords &#x3D; &#x27;&#x27;;
+    }
+    const resourceFiles &#x3D; [];
+    if (data.resourceFiles) {
+      data.resourceFiles.forEach((item) &#x3D;&gt; {
+        resourceFiles.push({
+          associatedFile: item.url,
+          fileName: item.fileName
+        });
+      });
+    }
+    resource.resourceFiles &#x3D; resourceFiles;
+    const postData &#x3D; {
+      title: resource.title,
+      categoryId: resource.categoryId !&#x3D; null ? +resource.categoryId : null,
+      subCategoryId: resource.subCategoryId !&#x3D; null ? +resource.subCategoryId : null,
+      thumbnail: resource.thumbnail,
+      readingTime: resource.readingTime !&#x3D; null ? +resource.readingTime : null,
+      resourceDescription: resource.resourceDescription,
+      keywords: keywords,
+      resourceContent: resource.resourceContent,
+      materialTypeId: resource.materialTypeId !&#x3D; null ? +resource.materialTypeId : null,
+      copyRightId: resource.copyRightId !&#x3D; null ? +resource.copyRightId : null,
+      isDraft: resource.isDraft,
+      references: resource.references,
+      resourceFiles: resource.resourceFiles,
+      createdBy: resource.createdBy,
+      emailUrl: resource.emailUrl,
+      educationalStandardId: resource.educationalStandardId !&#x3D; null ? +resource.educationalStandardId : null,
+      educationalUseId: resource.educationalUseId !&#x3D; null ? +resource.educationalUseId : null,
+      levelId: resource.levelId !&#x3D; null ? +resource.levelId : null,
+      objective: resource.objective,
+      resourceSourceId: resource.resourceSourceId !&#x3D; null ? +resource.resourceSourceId : null
+    };
+    return this.http.post(environment.apiUrl + &#x27;Resource&#x27;, postData);
+  }
+
+  /**
+   *update Resource API
+   *
+   * @param data
+   * @param slug
+   */
+  patchResource(data, slug): Observable&lt;any&gt; {
+    const resource &#x3D; data;
+    let keywords &#x3D; &#x27;&#x27;;
+    if (data.keywords &amp;&amp; data.keywords.length &gt; 0) {
+      data.keywords.forEach((item, index) &#x3D;&gt; {
+        if (index &lt; (data.keywords.length - 1)) {
+          keywords +&#x3D; item.value + &#x27;, &#x27;;
+        } else {
+          keywords +&#x3D; item.value;
+        }
+      });
+    } else {
+      keywords &#x3D; &#x27;&#x27;;
+    }
+    const resourceFiles &#x3D; [];
+    if (data.resourceFiles) {
+      data.resourceFiles.forEach((item) &#x3D;&gt; {
+        resourceFiles.push({
+          associatedFile: item.url,
+          fileName: item.fileName
+        });
+      });
+    }
+    resource.resourceFiles &#x3D; resourceFiles;
+    const postData &#x3D; {
+      id: +slug,
+      title: resource.title,
+      categoryId: resource.categoryId !&#x3D; null ? +resource.categoryId : null,
+      subCategoryId: resource.subCategoryId !&#x3D; null ? +resource.subCategoryId : null,
+      thumbnail: resource.thumbnail,
+      readingTime: resource.readingTime !&#x3D; null ? +resource.readingTime : null,
+      resourceDescription: resource.resourceDescription,
+      keywords: keywords,
+      resourceContent: resource.resourceContent,
+      materialTypeId: resource.materialTypeId !&#x3D; null ? +resource.materialTypeId : null,
+      copyRightId: resource.copyRightId !&#x3D; null ? +resource.copyRightId : null,
+      isDraft: resource.isDraft,
+      references: resource.references,
+      resourceFiles: resource.resourceFiles,
+      createdBy: resource.createdBy,
+      emailUrl: resource.emailUrl,
+      educationalStandardId: resource.educationalStandardId !&#x3D; null ? +resource.educationalStandardId : null,
+      educationalUseId: resource.educationalUseId !&#x3D; null ? +resource.educationalUseId : null,
+      levelId: resource.levelId !&#x3D; null ? +resource.levelId : null,
+      objective: resource.objective,
+      resourceSourceId: resource.resourceSourceId !&#x3D; null ? +resource.resourceSourceId : null
+    };
+    return this.http.put(environment.apiUrl + &#x27;Resource/&#x27; + slug, postData);
+  }
+
+
+  deleteResourceBySlug(slug): Observable&lt;any&gt; {
+    return this.http.delete(environment.apiUrl + &#x27;Resource/&#x27; + slug)
+      .pipe(
+        retry(3) // retry a failed request up to 3 time
+      );
+  }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ResourceService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

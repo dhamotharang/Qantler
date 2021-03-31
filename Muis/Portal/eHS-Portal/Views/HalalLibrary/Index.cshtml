@@ -1,0 +1,94 @@
+﻿@using Core.Util;
+
+@{
+    ViewData["Title"] = "Halal Library";
+}
+
+@section CSS {
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/datatables.net-select-bs4/select.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/datatables.net-scroller/scroller.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/icheck/all.css" />
+    <link rel="stylesheet" href="~/css/halallibrary/index.css" />
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title" id="page-title">Halal Library</h4>
+        <div class="quick-link-wrapper">
+            <ul class="quick-links">
+            </ul>
+        </div>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            @{
+                if (PermissionUtil.HasPermission(@User.FindFirstValue("Permissions"), 41, Access.Active))
+                {
+                    <li><a id="newButton" onclick="app.page.newItem()" data-toggle="modal" data-target="#HalallibraryDetailModal" href="javascript:void(0)">New</a></li>
+                }
+            }
+
+            <li><a id="filterButton" data-toggle="modal" data-target="#HalallibraryFilterModal" href="javascript:void(0)">Advanced Filter</a></li>
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="listing" class="table hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Supplier</th>
+                                <th>Certifying Body</th>
+                                <th>Risk Category</th>
+                                <th>Status</th>
+                                <th>Verified By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot />
+                        <tbody />
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_detailsItem.cshtml" />
+<partial name="_detailsCertifyingBodyItem.cshtml" />
+<partial name="_detailsSupplierItem.cshtml" />
+<partial name="_detailsEstablishment.cshtml" />
+<partial name="_detailsFilter.cshtml" />
+
+@section Scripts
+{
+    <link href="~/css/shared/jquery-ui.css" rel="stylesheet" />
+    <script src="~/js/plugins/jquery-1.12.4.js"></script>
+    <script src="~/js/plugins/jquery-ui.js"></script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/datatables.net-select/dataTables.select.min.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/icheck/icheck.min.js"></script>
+    <script src="~/js/halallibrary/index.js"></script>
+    <script src="~/js/halallibrary/_detailsItem.js"></script>
+    <script src="~/js/halallibrary/_detailsCertifyingBodyItem.js"></script>
+    <script src="~/js/halallibrary/_detailsSupplierItem.js"></script>
+    <script src="~/js/halallibrary/_detailsEstablishment.js"></script>
+    <script src="~/js/halallibrary/_detailsFilter.js"></script>
+}

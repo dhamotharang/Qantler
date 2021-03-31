@@ -1,0 +1,93 @@
+﻿.last-tbl table tr th {
+  padding: 12px 0px;
+  font-weight: bold;
+}
+
+.text-nrl.pl-0 tr th {
+  padding: 12px 0px;
+  max-width: 260px;
+  display: table-cell;
+  font-weight: normal;
+}
+
+.custome_input {
+  width: 50px !important;
+  margin-left:6px;
+  margin-right:6px;
+}
+
+.table td, .jsgrid .jsgrid-table td, .table th, .jsgrid .jsgrid-table th {
+  font-size: 0.95rem;
+}
+
+.custome_setting {
+  overflow-x: inherit;
+  padding-bottom: 10px;
+}
+
+.last-tbl {
+  overflow-x: inherit !important;
+}
+
+.ststem-bx .table-borderless td input {
+  width: 100px !important;
+}
+
+.custome_setting table tr th {
+  font-weight: normal;
+}
+
+p {
+  font-size: .80rem;
+}
+
+.card .card-body {
+  padding: 1.88rem 1.81rem 10px;
+}
+
+.timeline-content {
+  font-size: .875rem;
+}
+
+.err_message {
+  color: red;
+  display: block;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.required {
+  border-color: red !important;
+}
+
+.inner-label {
+  width: 70%;
+  padding: 4px 8px 0px 0px;
+  font-size: .8rem;
+}
+
+.main-label {
+  width: 71%;
+  padding-left: 12px;
+  font-size: 0.875rem;
+}
+
+h6.main-label {
+  padding-left: 0px;
+  width: 100%;
+}
+
+.form-group h6.main-label {
+  padding-left: 12px;
+  flex: 1;
+}
+
+.form-group > label {
+  flex: 1;
+}
+
+.activities .timeline {
+  max-height: 520px;
+  overflow-y: auto;
+  padding-left: 8px;
+}

@@ -1,0 +1,38 @@
+<app-sub-banner [title]="'View Test' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs [items]="[{text: 'Home'|translate,link:'/',active:false}]">
+</app-breadcrumbs>
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+
+      <div class="panel-box p-30" *ngIf="courseTest">
+
+        <div class="ques-row" *ngFor="let question of courseTest.questions;let i = index">
+          <p class="question-title">
+            {{i+1}} . {{question.questionText}}
+          </p>
+          <div class="media resource-media">
+            <div class="img-block mr-3">
+              <div class="file-viewer-flex">
+                <app-file-viewer *ngIf="question.media" [fileName]="question.fileName ? question.fileName : ''"
+                                 [title]="'Course Test'"
+                                 [url]="question.media"></app-file-viewer>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngFor="let answer of courseTest.answers">
+            <ng-container *ngIf="question.id === answer.questionId">
+              <div class="rad-list">
+                <label class="rad-container">{{answer.optionText}}
+                  <input type="radio" name="radio{{question.id}}" disabled [checked]="answer.correctAnswer">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div><!--ques-row-->
+
+      </div><!--panel-box-->
+
+    </div><!--container-->
+  </div><!--grey-bg-->

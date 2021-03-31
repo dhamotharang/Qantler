@@ -1,0 +1,113 @@
+<section class="content-header">
+  <h1>
+    Page Name
+    <small>it all starts here</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Active Page Name</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+
+  <div *ngIf="!showUpdateContent" class="nav-tabs-custom">
+    <ul class="nav nav-tabs pull-right">
+      <li class="pull-left header"><em class="fa fa-th"></em> WCM</li>
+      <li class="active"><a routerLink="#requests" data-toggle="tab">Pages</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="requests">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover datatable" aria-describedby="pages">
+            <thead>
+              <tr>
+                <th id="pagename">Page Name</th>
+                <th id="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of catList">
+                <td>{{item.pageName}}</td>
+                <td>
+                  <button class="btn btn-primary" type="button" (click)="editContent(item)">Update</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+
+
+    </div>
+    <div class="box-footer text-right">
+      <div class="box-footer">
+        <p-paginator *ngIf="length > 10" [rows]="10" [totalRecords]="length"
+                     (onPageChange)="paginateCat($event)"></p-paginator>
+      </div>
+    </div>
+    <!-- /.tab-content -->
+  </div>
+  <div class="box" *ngIf="showUpdateContent">
+    <div class="box-header with-border">
+      <h3 class="box-title">Page : {{Page.pageName}}</h3>
+    </div>
+    <div class="box-body">
+
+      <div class="panel-box p-30">
+        <form [formGroup]="ContentForm">
+          <div
+            class=" form-group {{((!ContentForm.controls['content'].valid && (!ContentForm.controls['content'].untouched || ContentForm.controls['content'].dirty)))? 'has-error' : ''}}">
+            <label for="page-title"> Add English Content</label>
+            <editor [init]="init" formControlName="content"></editor>
+            <span class="help-block"
+              *ngIf="!ContentForm.controls['content'].valid && (!ContentForm.controls['content'].untouched || ContentForm.controls['content'].dirty)">Please
+              enter valid content</span>
+            <ng-container *ngIf="(ContentForm.controls.content.errors | json) != 'null'">
+              <span class="help-block" *ngIf="ContentForm.controls.content.errors.maxlength != null">Maximum
+                characters allowed is {{ContentForm.controls.content.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+          <div
+            class=" form-group {{((!ContentForm.controls['content_Ar'].valid && (!ContentForm.controls['content_Ar'].untouched || ContentForm.controls['content_Ar'].dirty)))? 'has-error' : ''}}">
+            <label for="page-title"> Add Arabic Content</label>
+            <editor [init]="init1" formControlName="content_Ar"></editor>
+            <span class="help-block"
+              *ngIf="!ContentForm.controls['content_Ar'].valid && (!ContentForm.controls['content_Ar'].untouched || ContentForm.controls['content_Ar'].dirty)">Please
+              enter valid arabic content</span>
+            <ng-container *ngIf="(ContentForm.controls.content_Ar.errors | json) != 'null'">
+              <span class="help-block" *ngIf="ContentForm.controls.content_Ar.errors.maxlength != null">Maximum
+                characters allowed is {{ContentForm.controls.content_Ar.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+          <div *ngIf="pageName=='Video Section'"
+          class=" form-group {{((!ContentForm.controls['videolink'].valid && (!ContentForm.controls['videolink'].untouched || ContentForm.controls['videolink'].dirty)))? 'has-error' : ''}}">
+          <label for="page-title"> Add Video Link </label>
+            <input type="url"  autocomplete="off"  class="form-control"   formControlName="videolink"/>
+            <span class="help-block"
+              *ngIf="!ContentForm.controls['videolink'].valid && (!ContentForm.controls['videolink'].untouched || ContentForm.controls['videolink'].dirty)">Please
+              enter valid video link</span>
+              <ng-container *ngIf="(ContentForm.controls.videolink.errors | json) != 'null'">
+                <span class="help-block" *ngIf="ContentForm.controls.videolink.errors.pattern != null">Please enter valid youtube or vimeo video link</span>
+              </ng-container>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <button class="btn btn-primary pull-right" type="button" [disabled]="ContentForm.invalid"
+        (click)="UpdateContent()">Update
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="cancelUpdate()">Cancel</button>
+    </div>
+    <!-- /.box-footer-->
+  </div>
+  <!-- /.box -->
+</section>

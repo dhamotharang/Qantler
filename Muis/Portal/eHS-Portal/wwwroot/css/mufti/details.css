@@ -1,0 +1,43 @@
+﻿.comments .card-body {
+  padding-bottom: 0;
+}
+
+.widget-placeholder {
+  margin-bottom: 16px;
+}
+
+.timeline {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-left: 8px;
+}
+
+.compose {
+  height: 56px;
+  display: flex;
+  margin: 0 -30px;
+  padding: 0 16px;
+  border-top: 1px solid #dee2e6;
+}
+
+  .compose input {
+    height: 36px;
+    margin-top: 8px;
+    border-radius: 20px;
+    border: 1px solid #dee2e6;
+    padding: 0 16px;
+    flex: 1;
+    margin-right: 8px;
+    font-size: 0.875rem;
+    color: #222;
+  }
+
+  .compose .btn {
+    min-width: 40px;
+    padding: 0;
+  }
+
+    .compose .btn.busy,
+    .compose input.busy {
+      cursor: progress;
+    }

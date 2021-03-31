@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>UAE - Open Educational Cources</title>
+	<link rel="icon" href="assets/images/favicon.ico">
+	<style>
+		@media print {
+			.dtl-overlay-txt {
+				font-size: 18px !important;
+			}
+		}
+
+		@page {
+			margin: 0.5cm;
+		}
+	</style>
+
+</head>
+
+<body class="d-flex flex-column h-100"
+	style="height: 100% !important;background: #f0f0f0; font-family:'Segoe UI';font-weight: 400;font-size: 16px;color: #121212;">
+	<table style=" max-width: 1140px;margin: 0 auto">
+        <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 100%;vertical-align: top;">
+                                <img src="{logo}" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%">
+                        <tr>
+                            <td style="width: 40%;vertical-align: top;">
+                                <div class="dtl-img-main" style="position: relative;width: 100%;overflow: hidden;">
+                                    <img src="{courseThumbnail}" class="img-fluid"
+                                         style="width: 100%;height: auto;margin: 0 auto">
+                                    <div class="dtl-img-overlay"
+                                         style="position: absolute;width: 100%;top: 0;bottom: 0;background: rgba(0, 0, 0, 0.7);padding: 20px;max-width: 93%;">
+                                        <div class="dtl-overlay-txt" style="color: #fff;bottom: 20px;position: relative;font-size:23px;width: 100%;
+											white-space: pre-line;">
+                                            <h4 class="mb-0">{courseTitle} </h4>
+                                        </div>
+                                        <!--dtl-overlay-txt-->
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 60%;padding: 0 2em 2em;vertical-align: top;">
+                                <h3 style="margin-top: 0;">Description</h3>
+                                <hr>
+                                <p class="dtl-p1">
+                                    {courseDescription}
+                                </p>
+
+                                <div class="descr-cnt">
+                                    <p><b>Category:</b> {category}</p>
+                                    <p><b>Author:</b> {CreatedBy}</p>
+                                    <p>
+                                        <!--<b>Associated Courses:</b> Multimedia Resources for the
+                                    Classroom and
+                                    Professional Development, Teachers' Domain
+                                </p>-->
+                                    <p><b>Date Added:</b> {CreatedOn}</p>
+                                    <p><b>Educational Standard:</b> {EducationalStandard}</p>
+                                    <p><b>Educational Use:</b> {EducationalUse}</p>
+                                    <p><b>Level:</b> {Level}</p>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <div class="panel-box p-30 mb-30"
+                                     style="background-color: #fff;border-radius: 2px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.23);margin-bottom: 						30px;padding: 30px;">
+                                    {courseContent}
+                                </div>
+                                <h3>Course Section</h3>
+                                <hr>
+
+                                {courseSection}
+                                <!--panel-box-->
+                                <!-- loop-->
+                                {URLReferences}
+                                <!--panel-box-->
+                                <!--panel-box-->
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%;vertical-align: top;">
+                    <img src="{footer}" />
+                </td>
+            </tr>
+        </tbody>
+	</table>
+</body>
+
+</html>

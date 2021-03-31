@@ -1,0 +1,74 @@
+﻿<div class="card widget rfa">
+    <div class="card-body">
+        <div class="wrapper">
+            <h5 class="font-weight-bold mb-0">RFA</h5>
+            <div class="container">
+            </div>
+        </div>
+        <div class="widget-placeholder d-none">
+            <span class="text-muted">No RFA submitted.</span>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade rfa rfaModal" id="rfaModal" role="dialog" aria-labelledby="rfaModalLabel" aria-hidden="true" tabindex="-1" data-focus-on="input:first">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="nav RFA_tab" id="RFA_tab" role="tablist">
+                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9 left">
+                        <div class="tab-content" id="pills-tabContent">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 right">
+                        <div class="wrapper info-container">
+                            <h4 class="card-title mb-0">Information</h4>
+                            <div class="wrapper info-body">
+                                <div class="row">
+                                    <div class="wrapper text-muted info status">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="wrapper text-muted info managedBy">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="wrapper text-muted info createdOn">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="wrapper text-muted info dueOn">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper info-container response-attachments d-none">
+                            <h4 class="card-title mb-0">Response Attachments</h4>
+                            <div class="wrapper info-body">
+                                <div class="attachments">
+                                    <ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper info-container activities d-none">
+                            <h4 class="card-title mb-0">Activities</h4>
+                            <ul class="info-body timeline">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="rfaCloseButton" type="button" class="btn btn-outline-primary d-none">Close RFA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - eHS_Portal</title>
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/base.css" />
+    <link rel="stylesheet" href="~/css/template.css" />
+    <link rel="stylesheet" href="~/css/theme.css" />
+    @RenderSection("CSS", required: false)
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+    @RenderBody()
+
+    <script src="~/js/vendor.bundle.base.js"></script>
+    <script src="~/js/plugins/off-canvas.js"></script>
+    <script src="~/js/plugins/hoverable-collapse.js"></script>
+    <script src="~/js/plugins/misc.js"></script>
+    <script src="~/plugins/moment/moment.js"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        app.identity = {
+            id: '@Html.Raw(User.FindFirstValue(ClaimTypes.NameIdentifier))',
+            name: '@Html.Raw(User.FindFirstValue(ClaimTypes.Name))'
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

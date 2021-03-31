@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
+    <!-- End Plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/demo_9/style.css">
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+          <div class="hero-banner">
+            <!-- partial:partials/_navbar.html -->
+            <div class="navbar">
+              <div class="nav-brand-wrapper">
+                <ul class="nav">
+                  <li class="nav-item brand-logo">
+                    <a href="index.html" class="logo">
+                      <img src="../assets/images/logo_9.svg" alt="Logo">
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="navbar-menu-wrapper">
+                <ul class="nav d-none d-lg-flex">
+                  <li class="nav-item dropdown languageDropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="LanguageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                      <div class="flag-wrapper">
+                        <i class="flag-icon flag-icon-us"></i>
+                      </div>
+                      <div class="dropdown-title"><span class="text-white font-weight-semibold mr-1">15:55</span>(GMT+1)</div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left navbar-dropdown pb-0" aria-labelledby="LanguageDropdown">
+                      <a class="dropdown-item">ENGLISH<i class="flag-icon ml-auto flag-icon-us"></i></a>
+                      <a class="dropdown-item">FRENCH<i class="flag-icon ml-auto flag-icon-fr"></i></a>
+                      <a class="dropdown-item">ARABIC<i class="flag-icon ml-auto flag-icon-ae"></i></a>
+                      <a class="dropdown-item">RUSSIAN<i class="flag-icon ml-auto flag-icon-ru"></i></a>
+                    </div>
+                  </li>
+                  <li class="nav-item form-search">
+                    <a href="#" class="nav-link">
+                      <i class="mdi mdi-magnify"></i>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav ml-auto">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                      <i class="mdi mdi-message-text-outline"></i>
+                      <span class="count bg-warning"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+                      <a class="dropdown-item py-3 border-bottom">
+                        <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
+                        <span class="badge badge-pill badge-primary float-right">View all</span>
+                      </a>
+                      <a class="dropdown-item preview-item py-3">
+                        <div class="preview-thumbnail">
+                          <i class="mdi mdi-alert m-auto text-primary"></i>
+                        </div>
+                        <div class="preview-item-content">
+                          <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                          <p class="font-weight-light small-text mb-0"> Just now </p>
+                        </div>
+                      </a>
+                      <a class="dropdown-item preview-item py-3">
+                        <div class="preview-thumbnail">
+                          <i class="mdi mdi-settings m-auto text-primary"></i>
+                        </div>
+                        <div class="preview-item-content">
+                          <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                          <p class="font-weight-light small-text mb-0"> Private message </p>
+                        </div>
+                      </a>
+                      <a class="dropdown-item preview-item py-3">
+                        <div class="preview-thumbnail">
+                          <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                        </div>
+                        <div class="preview-item-content">
+                          <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                          <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+                        </div>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                      <i class="mdi mdi-bell-outline"></i>
+                      <span class="count bg-danger"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown dropdown-h-style-1 pb-0" aria-labelledby="notificationDropdown">
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-printer"></i>Print Invoice</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-content-copy"></i>Copy</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-file-document-edit-outline"></i>CSV</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-share-outline"></i>Share</a>
+                    </div>
+                  </li>
+                  <li class="nav-item d-none d-md-flex">
+                    <a class="nav-link" href="#"><i class="mdi mdi-information-outline mr-2"></i>Help</a>
+                  </li>
+                  <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
+                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                      <div class="wrapper d-flex flex-column">
+                        <span class="profile-text">Addam Smith</span>
+                        <span class="user-designation">Administrator</span>
+                      </div>
+                      <div class="display-avatar">AS</div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                      <div class="dropdown-header text-center">
+                        <img class="img-md rounded-circle" src="../assets/images/faces/face1.jpg" alt="Profile image">
+                        <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
+                        <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                      </div>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary"></i> Messages</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary"></i> Activity</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary"></i> FAQ</a>
+                      <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary"></i>Sign Out</a>
+                    </div>
+                  </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button">
+                  <span class="mdi mdi-menu"></span>
+                </button>
+              </div>
+            </div>
+            <!-- partial -->
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="right-sidebar-toggler-wrapper">
+              <div class="sidebar-toggler" id="layout-toggler"><i class="mdi mdi-settings"></i></div>
+              <div class="sidebar-toggler" id="chat-toggler"><i class="mdi mdi-chat-processing"></i></div>
+              <div class="sidebar-toggler"><a href="https://www.bootstrapdash.com/demo/star-admin-pro/src/docs/documentation.html" target="_blank"><i class="mdi mdi-file-document-outline"></i></a></div>
+              <div class="sidebar-toggler"><a href="https://www.bootstrapdash.com/product/star-admin-pro" target="_blank"><i class="mdi mdi-cart"></i></a></div>
+            </div>
+            <div class="theme-setting-wrapper">
+              <div id="theme-settings" class="settings-panel">
+                <i class="settings-close mdi mdi-close"></i>
+                <div class="d-flex align-items-center justify-content-between border-bottom">
+                  <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Template Demos </p>
+                </div>
+                <div class="demo-screen-wrapper">
+                  <a href="../demo_1/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/default.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_2/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/default-two.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_3/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/default-dark.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_4/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/analytics-dasboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_5/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/Marketing-dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_6/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/crm-dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_7/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/modern-dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_8/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/e-commerce_dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_9/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/finance-dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_10/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/classic-dashboard.jpg" alt="demo image">
+                  </a>
+                  <a href="../demo_11/index.html" class="demo-thumb-image">
+                    <img src="../assets/images/screenshots/horizontal-screens.jpg" alt="demo image">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div id="right-sidebar" class="settings-panel">
+              <i class="settings-close mdi mdi-close"></i>
+              <div class="d-flex align-items-center justify-content-between border-bottom">
+                <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              </div>
+              <ul class="chat-list">
+                <li class="list active">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face1.jpg" alt="image">
+                    <span class="online"></span>
+                  </div>
+                  <div class="info">
+                    <p>Thomas Douglas</p>
+                    <p>Available</p>
+                  </div>
+                  <small class="text-muted my-auto">19 min</small>
+                </li>
+                <li class="list">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face2.jpg" alt="image">
+                    <span class="offline"></span>
+                  </div>
+                  <div class="info">
+                    <div class="wrapper d-flex">
+                      <p>Catherine</p>
+                    </div>
+                    <p>Away</p>
+                  </div>
+                  <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                  <small class="text-muted my-auto">23 min</small>
+                </li>
+                <li class="list">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face3.jpg" alt="image">
+                    <span class="online"></span>
+                  </div>
+                  <div class="info">
+                    <p>Daniel Russell</p>
+                    <p>Available</p>
+                  </div>
+                  <small class="text-muted my-auto">14 min</small>
+                </li>
+                <li class="list">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face4.jpg" alt="image">
+                    <span class="offline"></span>
+                  </div>
+                  <div class="info">
+                    <p>James Richardson</p>
+                    <p>Away</p>
+                  </div>
+                  <small class="text-muted my-auto">2 min</small>
+                </li>
+                <li class="list">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face5.jpg" alt="image">
+                    <span class="online"></span>
+                  </div>
+                  <div class="info">
+                    <p>Madeline Kennedy</p>
+                    <p>Available</p>
+                  </div>
+                  <small class="text-muted my-auto">5 min</small>
+                </li>
+                <li class="list">
+                  <div class="profile">
+                    <img src="../assets/images/faces/face6.jpg" alt="image">
+                    <span class="online"></span>
+                  </div>
+                  <div class="info">
+                    <p>Sarah Graves</p>
+                    <p>Available</p>
+                  </div>
+                  <small class="text-muted my-auto">47 min</small>
+                </li>
+              </ul>
+            </div>
+            <!-- partial -->
+          </div>
+          <div class="content-wrapper container-wrapper-width">
+            <!-- partial:partials/_sidebar.html -->
+            <div class="sidebar-menu">
+              <div class="user-profile-section">
+                <div class="profile-tab text-center">
+                  <img class="img-lg rounded-circle" src="../assets/images/faces/face3.jpg" alt="profile image">
+                  <h3 class="user-name">Addam Smith</h3>
+                  <p class="account-type">Premium</p>
+                </div>
+                <div class="user-stats">
+                  <div class="user-details">
+                    <p class="stat-title">Used</p>
+                    <p class="stat-count">763,215</p>
+                  </div>
+                  <div class="user-details">
+                    <p class="stat-title">Balance</p>
+                    <p class="stat-count">3,500€</p>
+                  </div>
+                </div>
+              </div>
+              <nav class="nav">
+                <div class="nav-item active">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-home-outline"></i><span class="menu-title">Dashboard</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-database"></i><span class="menu-title">Trade</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-poll"></i><span class="menu-title">Strategy</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-domain"></i><span class="menu-title">Markets</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-monitor-multiple"></i><span class="menu-title">History</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-flag-outline"></i><span class="menu-title">Refferal</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-settings"></i><span class="menu-title">Settings</span>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a href="index.html" class="nav-link">
+                    <i class="menu-icons mdi mdi-account-outline"></i><span class="menu-title">Team</span>
+                  </a>
+                </div>
+              </nav>
+              <div class="sidebar-footer">
+                <div class="progress-wrapper">
+                  <div class="d-flex progress-wrapper-inner">
+                    <p class="progress-title">14 days</p>
+                    <p class="text-muted progress-balance">left in trial</p>
+                  </div>
+                  <div class="progress progress-md">
+                    <div class="progress-bar" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-inverse-primary btn-block upgrade-button">Upgrade plan</button>
+              </div>
+              <div class="sidebar-footer-bottom">
+                <ul>
+                  <li><a href="#">Privacy & Policy</a></li>
+                  <li><a href="#">Help & Guide</a></li>
+                </ul>
+                <p>© 2019 Staradmin Responsive Bootstrap 4 Dashboard Template</p>
+              </div>
+            </div>
+            <!-- partial -->
+            <div class="content-area">
+              <div class="page-header">
+                <div class="info-section">
+                  <div class="d-flex align-items-center mb-2">
+                    <h4 class="page-title">Hi, welcome back!</h4>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" id="reportSummary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weekly</button>
+                      <div class="dropdown-menu" aria-labelledby="reportSummary">
+                        <a class="dropdown-item" href="#">Daily</a>
+                        <a class="dropdown-item" href="#">Weekly</a>
+                        <a class="dropdown-item" href="#">Monthly</a>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mb-3 mb-md-0">Your customer Management dashboard template.</p>
+                </div>
+                <div class="page-header-content">
+                  <div class="server-load d-block d-sm-flex">
+                    <div class="server-stats d-flex flex-row align-items-end mr-5">
+                      <div class="server-stats-title mr-4">
+                        <p class="head-title">Memory Usage</p>
+                        <h3 class="text-white mb-0 stats-count font-weight-medium">32.44%</h3>
+                      </div>
+                      <div class="wrapper">
+                        <canvas id="server-load-data-chart-1" height="45" width="80"></canvas>
+                      </div>
+                    </div>
+                    <div class="server-stats d-flex flex-row align-items-end mt-4 mt-sm-0">
+                      <div class="server-stats-title mr-4">
+                        <p class="head-title">Disk Usage</p>
+                        <h3 class="text-white mb-0 stats-count font-weight-medium">52.40%</h3>
+                      </div>
+                      <div class="wrapper">
+                        <canvas id="server-load-data-chart-2" height="45" width="80"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="content-area-inner">
+                <div class="row">
+                  <div class="col-md-12 grid-margin">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">NETWORK PERFORMANCE</h4>
+                        <div class="row">
+                          <div class="col-md-9 d-flex flex-column">
+                            <div class="wrapper d-flex">
+                              <div class="d-flex align-items-center mr-3">
+                                <span class="dot-indicator bg-success"></span>
+                                <p class="mb-0 ml-2">TCP FIN Packets</p>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <span class="dot-indicator bg-info"></span>
+                                <p class="mb-0 ml-2">TCP Reset Packets</p>
+                              </div>
+                            </div>
+                            <canvas class="pt-4 mt-auto" height="370" id="network-performance-chart"></canvas>
+                          </div>
+                          <div class="col-md-3 pl-4 pr-4 mt-4 mt-md-0">
+                            <div class="wrapper border-bottom mb-5 pb-5">
+                              <div class="d-flex justify-content-between">
+                                <h4 class="font-weight-semibold">120,495</h4>
+                                <div class="wrapper d-flex text-danger font-weight-semibold">
+                                  <p>-11.81%</p>
+                                  <i class="ml-2 icon-sm mdi mdi-arrow-down-bold-box-outline"></i>
+                                </div>
+                              </div>
+                              <p class="text-muted font-weight-medium">Hours available</p>
+                              <canvas id="network-bar-chart-1" height="70"></canvas>
+                            </div>
+                            <div class="wrapper">
+                              <div class="d-flex justify-content-between">
+                                <h4 class="font-weight-semibold">22.5%</h4>
+                                <div class="wrapper d-flex text-success font-weight-semibold">
+                                  <p>+12.20%</p>
+                                  <i class="ml-2 icon-sm mdi mdi-arrow-up-bold-box-outline"></i>
+                                </div>
+                              </div>
+                              <p class="text-muted font-weight-medium">Productivity goal</p>
+                              <canvas id="network-bar-chart-2" height="70"></canvas>
+                            </div>
+                            <button type="button" class="btn btn-info btn-block mt-4">VIEW REPORTS</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Global Sales by Top Locations</h4>
+                        <div class="row pb-2 border-bottom">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-end pb-2">
+                              <h3 class="text-primary font-weight-bold mb-0">1,508</h3>
+                              <p class="text-muted mb-1 ml-2">items</p>
+                            </div>
+                            <div class="progress grouped progress-lg">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-primary" role="progressbar" style="width: 24%" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-danger" role="progressbar" style="width: 26%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                          <div class="col-md-8 mt-2">
+                            <div class="d-flex align-items-center">
+                              <div class="d-flex justify-content-between w-100">
+                                <div class="item d-flex">
+                                  <div class="dot-indicator bg-success mt-1"></div>
+                                  <div class="wrapper pl-2">
+                                    <p class="mb-0 font-weight-medium">Keyboard</p>
+                                    <p class="mb-0 text-muted">628</p>
+                                  </div>
+                                </div>
+                                <div class="item d-flex">
+                                  <div class="dot-indicator bg-primary mt-1"></div>
+                                  <div class="wrapper pl-2">
+                                    <p class="mb-0 font-weight-medium">Laptops</p>
+                                    <p class="mb-0 text-muted">628</p>
+                                  </div>
+                                </div>
+                                <div class="item d-flex">
+                                  <div class="dot-indicator bg-danger mt-1"></div>
+                                  <div class="wrapper pl-2">
+                                    <p class="mb-0 font-weight-medium">Mouse</p>
+                                    <p class="mb-0 text-muted">628</p>
+                                  </div>
+                                </div>
+                                <div class="item d-flex">
+                                  <div class="dot-indicator bg-warning mt-1"></div>
+                                  <div class="wrapper pl-2">
+                                    <p class="mb-0 font-weight-medium">Desktop</p>
+                                    <p class="mb-0 text-muted">628</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-4">
+                          <div class="col-md-4 mx-n2">
+                            <div class="d-flex py-3 border-bottom">
+                              <i class="flag-icon flag-icon-us mr-3"></i>
+                              <p class="mb-0">United States</p>
+                              <p class="ml-auto mb-0">53.23%</p>
+                            </div>
+                            <div class="d-flex py-3 border-bottom">
+                              <i class="flag-icon flag-icon-td mr-3"></i>
+                              <p class="mb-0">Romania</p>
+                              <p class="ml-auto mb-0">20.43%</p>
+                            </div>
+                            <div class="d-flex py-3 border-bottom">
+                              <i class="flag-icon flag-icon-au mr-3"></i>
+                              <p class="mb-0">Australia</p>
+                              <p class="ml-auto mb-0">10.35%</p>
+                            </div>
+                            <div class="d-flex py-3 border-bottom">
+                              <i class="flag-icon flag-icon-br mr-3"></i>
+                              <p class="mb-0">Brasil</p>
+                              <p class="ml-auto mb-0">23.30%</p>
+                            </div>
+                            <div class="d-flex pt-3">
+                              <i class="flag-icon flag-icon-de mr-3"></i>
+                              <p class="mb-0">Germany</p>
+                              <p class="ml-auto mb-0">13.20%</p>
+                            </div>
+                          </div>
+                          <div class="col-md-8 pl-5 mt-5 mt-md-0">
+                            <div id="user-visits-map" class="vector-map" style="width: 100%; height:250px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Reports</h4>
+                        <div class="row">
+                          <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card card-no-shadow border px-2 py-4">
+                              <small class="text-muted mb-0 font-weight-medium">Members online</small>
+                              <h3 class="font-weight-semibold">3,450</h3>
+                              <div class="progress progress-sm mb-2">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <small class="text-dark font-weight-medium">34.6% avg</small>
+                            </div>
+                          </div>
+                          <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card card-no-shadow border px-2 py-4">
+                              <small class="text-muted mb-0 font-weight-medium">Server load</small>
+                              <h3 class="font-weight-semibold">49.4%</h3>
+                              <div class="progress progress-sm mb-2">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 49%" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <small class="text-dark font-weight-medium">489 avg</small>
+                            </div>
+                          </div>
+                          <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card card-no-shadow border px-2 py-4">
+                              <small class="text-muted mb-0 font-weight-medium">Today's revenue</small>
+                              <h3 class="font-weight-semibold">$18,390</h3>
+                              <div class="progress progress-sm mb-2">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 49%" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <small class="text-dark font-weight-medium">$37,578 avg</small>
+                            </div>
+                          </div>
+                          <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card card-no-shadow border px-2 py-4">
+                              <small class="text-muted mb-0 font-weight-medium">Expected profit</small>
+                              <h3 class="font-weight-semibold">$23,461</h3>
+                              <div class="progress progress-sm mb-2">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <small class="text-dark font-weight-medium">$37,578 avg</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body d-flex flex-column">
+                        <div class="wrapper">
+                          <h4 class="card-title">Users by traffic</h4>
+                          <div class="d-flex align-items-end">
+                            <h4 class="mb-0 font-weight-medium">6,576</h4>
+                            <p class="text-success font-weight-semibold mb-1 ml-2">9.1%</p>
+                          </div>
+                        </div>
+                        <canvas class="mt-4 md-lg-auto" height="220" id="user-traffic-bar"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 grid-margin">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Support Tracker</h4>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th colspan="2">COUNTRY</th>
+                                <th>ENTRANCES</th>
+                                <th>BOUNCE RATE</th>
+                                <th>EXITS</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td colspan="2">
+                                  <div class="d-flex align-items-center">
+                                    <div class="img-ss rounded-circle mr-2"><i class="flag-icon flag-icon-us"></i></div> United States
+                                  </div>
+                                </td>
+                                <td>134 (1.51%)</td>
+                                <td>33.58%</td>
+                                <td>15.47%</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <div class="d-flex align-items-center">
+                                    <div class="img-ss rounded-circle mr-2"><i class="flag-icon flag-icon-tr"></i></div> Turkey
+                                  </div>
+                                </td>
+                                <td>144 (5.67%) </td>
+                                <td>45.99%</td>
+                                <td>34.70%</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <div class="d-flex align-items-center">
+                                    <div class="img-ss rounded-circle mr-2"><i class="flag-icon flag-icon-au"></i></div> Australia
+                                  </div>
+                                </td>
+                                <td>114 (6.21%)</td>
+                                <td>23.80%</td>
+                                <td>54.45%</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <div class="d-flex align-items-center">
+                                    <div class="img-ss rounded-circle mr-2"><i class="flag-icon flag-icon-br"></i></div> Brazil
+                                  </div>
+                                </td>
+                                <td>324 (9.10%)</td>
+                                <td>12.89%</td>
+                                <td>18.89%</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Human Resources</h4>
+                        <div class="aligner-wrapper">
+                          <canvas id="humanResouceDoughnutChart" height="140"></canvas>
+                          <div class="wrapper d-flex flex-column justify-content-center absolute absolute-center">
+                            <h4 class="text-center mb-0">8.234</h4>
+                            <small class="d-block text-center text-muted mb-0">Units</small>
+                          </div>
+                        </div>
+                        <div class="wrapper mt-4">
+                          <div class="d-flex align-items-center py-3 border-bottom">
+                            <span class="dot-indicator bg-danger"></span>
+                            <p class="mb-0 ml-3">Human Resources</p>
+                            <p class="ml-auto mb-0 text-muted">86%</p>
+                          </div>
+                          <div class="d-flex align-items-center py-3 border-bottom">
+                            <span class="dot-indicator bg-success"></span>
+                            <p class="mb-0 ml-3">Manager</p>
+                            <p class="ml-auto mb-0 text-muted">28%</p>
+                          </div>
+                          <div class="d-flex align-items-center pt-3">
+                            <span class="dot-indicator bg-primary"></span>
+                            <p class="mb-0 ml-3">Other</p>
+                            <p class="ml-auto mb-0 text-muted">20%</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-6 col-sm-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Schedules</h4>
+                        <div class="shedule-list d-flex align-items-center justify-content-between mb-3">
+                          <h3>27 Sep 2018</h3>
+                          <small>21 Events</small>
+                        </div>
+                        <div class="event border-bottom py-3">
+                          <p class="mb-2 font-weight-medium">Skype call with alex</p>
+                          <div class="d-flex align-items-center">
+                            <div class="badge badge-success">3:45 AM</div>
+                            <small class="text-muted ml-2">London, UK</small>
+                            <div class="image-grouped ml-auto">
+                              <img src="../assets/images/faces/face10.jpg" alt="profile image">
+                              <img src="../assets/images/faces/face13.jpg" alt="profile image"> </div>
+                          </div>
+                        </div>
+                        <div class="event py-3 border-bottom">
+                          <p class="mb-2 font-weight-medium">Data Analysing with team</p>
+                          <div class="d-flex align-items-center">
+                            <div class="badge badge-warning">12.30 AM</div>
+                            <small class="text-muted ml-2">San Francisco, CA</small>
+                            <div class="image-grouped ml-auto">
+                              <img src="../assets/images/faces/face20.jpg" alt="profile image">
+                              <img src="../assets/images/faces/face17.jpg" alt="profile image">
+                              <img src="../assets/images/faces/face14.jpg" alt="profile image"> </div>
+                          </div>
+                        </div>
+                        <div class="event py-3">
+                          <p class="mb-2 font-weight-medium">Meeting with client</p>
+                          <div class="d-flex align-items-center">
+                            <div class="badge badge-danger">4.15 AM</div>
+                            <small class="text-muted ml-2">San Diego, CA</small>
+                            <div class="image-grouped ml-auto">
+                              <img src="../assets/images/faces/face21.jpg" alt="profile image">
+                              <img src="../assets/images/faces/face16.jpg" alt="profile image"> </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Order Activity</h4>
+                        <ul class="list list-noborders">
+                          <li class="list-item">
+                            <img class="img-sm rounded-circle bg-warning d-flex align-items-center justify-content-center text-white" src="../assets/images/faces/face2.jpg" alt="Profile Image">
+                            <div class="wrapper ml-3">
+                              <h6 class="mb-0 font-weight-medium">Lottie Arnold</h6>
+                              <p class="mb-0 text-muted">STR-10834</p>
+                            </div>
+                            <div class="imgage-wrapper ml-auto d-flex">
+                              <img class="img-sm mr-1" src="../assets/images/thumb_images/thumb_image1.jpg" alt="thumb images">
+                              <img class="img-sm" src="../assets/images/thumb_images/thumb_image2.jpg" alt="thumb images">
+                            </div>
+                          </li>
+                          <li class="list-item">
+                            <img class="img-sm rounded-circle bg-warning d-flex align-items-center justify-content-center text-white" src="../assets/images/faces/face3.jpg" alt="Profile Image">
+                            <div class="wrapper ml-3">
+                              <h6 class="mb-0 font-weight-medium">Alan Macedo</h6>
+                              <p class="mb-0 text-muted">STR-10834</p>
+                            </div>
+                            <div class="imgage-wrapper ml-auto d-flex">
+                              <img class="img-sm mr-1" src="../assets/images/thumb_images/thumb_image3.jpg" alt="thumb images">
+                              <img class="img-sm" src="../assets/images/thumb_images/thumb_image4.jpg" alt="thumb images">
+                            </div>
+                          </li>
+                          <li class="list-item">
+                            <img class="img-sm rounded-circle bg-warning d-flex align-items-center justify-content-center text-white" src="../assets/images/faces/face4.jpg" alt="Profile Image">
+                            <div class="wrapper ml-3">
+                              <h6 class="mb-0 font-weight-medium">Bruce Tran</h6>
+                              <p class="mb-0 text-muted">STR-10834</p>
+                            </div>
+                            <div class="imgage-wrapper ml-auto d-flex">
+                              <img class="img-sm mr-1" src="../assets/images/thumb_images/thumb_image5.jpg" alt="thumb images">
+                              <img class="img-sm" src="../assets/images/thumb_images/thumb_image6.jpg" alt="thumb images">
+                            </div>
+                          </li>
+                          <li class="list-item">
+                            <img class="img-sm rounded-circle bg-warning d-flex align-items-center justify-content-center text-white" src="../assets/images/faces/face5.jpg" alt="Profile Image">
+                            <div class="wrapper ml-3">
+                              <h6 class="mb-0 font-weight-medium">Mina Harper</h6>
+                              <p class="mb-0 text-muted">STR-10834</p>
+                            </div>
+                            <div class="imgage-wrapper ml-auto d-flex">
+                              <img class="img-sm mr-1" src="../assets/images/thumb_images/thumb_image7.jpg" alt="thumb images">
+                              <img class="img-sm" src="../assets/images/thumb_images/thumb_image8.jpg" alt="thumb images">
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../assets/js/shared/off-canvas.js"></script>
+    <script src="../assets/js/shared/hoverable-collapse.js"></script>
+    <script src="../assets/js/shared/misc.js"></script>
+    <script src="../assets/js/shared/settings.js"></script>
+    <script src="../assets/js/shared/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../assets/js/demo_9/dashboard.js"></script>
+    <script src="../assets/js/demo_9/script.js"></script>
+    <!-- End custom js for this page -->
+  </body>
+</html>

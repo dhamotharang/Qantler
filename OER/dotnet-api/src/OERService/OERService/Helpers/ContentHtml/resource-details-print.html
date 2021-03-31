@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>UAE - Open Educational Resources</title>
+	<link rel="icon" href="assets/images/favicon.ico">
+	<style>
+		@media print {
+			.dtl-overlay-txt {
+				top: 0 !important;
+			}
+
+			.dtl-overlay-txt h4 {
+				font-size: 15px !important;
+			}
+		}
+
+		@page {
+			margin: 0.5cm;
+		}
+	</style>
+
+</head>
+
+<body class="d-flex flex-column h-100"
+	style="height: 100% !important;background: #f0f0f0; font-family:'Segoe UI';font-weight: 400;font-size: 16px;color: #121212;">
+	<table style=" max-width: 1140px;margin: 0 auto">
+        <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 100%;vertical-align: top;">
+                                <img src="{logo}" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 40%;vertical-align: top;">
+                                <div class="dtl-img-main" style="position: relative;width: 100%;overflow: hidden;">
+                                    <img src="{ResourceThumbnail}" class="img-fluid"
+                                         style="width: 100%;height: auto;margin: 0 auto">
+                                    <div class="dtl-img-overlay"
+                                         style="position: absolute;width: 100%;top: 0;bottom: 0;background: rgba(0, 0, 0, 0.7);padding: 20px;max-width: 93%;">
+                                        <div class="dtl-overlay-txt"
+                                             style="color: #fff;position: relative;width: 100%; top: 50px;">
+                                            <!--<div class="remix-badge" style="font-size: 14px;border-radius: 16px;padding: 5px 10px;background-color: #ba9a3a;color: #ffffff;width:
+                                        auto;display: inline-block;line-height: 1; white-space: normal;">
+                                        Remixed Resources
+                                    </div>-->
+                                            <i class="ovel-dte"
+                                               style="font-size: 13px;white-space: normal;display: block;margin: 15px 0;">
+                                                Last
+                                                Viewed on
+                                                {LastViewedOn}
+                                            </i>
+                                            <h4 class="mb-0"
+                                                style="margin-top: 0;font-weight: 500;font-size:18px;white-space: normal;">
+                                                {ResourceTitle}
+                                            </h4>
+                                        </div>
+                                        <!--dtl-overlay-txt-->
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 60%;padding: 0 2em 0;vertical-align: top;">
+                                <h3 style="margin-top: 0;">Description</h3>
+                                <hr>
+                                <p class="dtl-p1">
+                                    {resourceDescription}
+                                </p>
+
+                                <div class="descr-cnt">
+                                    <p><b>Category:</b> {category}</p>
+                                    <p><b>Material Type:</b> {materialType} </p>
+                                    <p><b>Author:</b> {CreatedBy}</p>
+                                    <p>
+                                        <b>Associated Courses:</b> Multimedia Resources for the
+                                        Classroom and
+                                        Professional Development, Teachers' Domain
+                                    </p>
+                                    <p><b>Date Added:</b> {CreatedOn}</p>
+                                    <p><b>Educational Standard:</b> {EducationalStandard}</p>
+                                    <p><b>Educational Use:</b> {EducationalUse}</p>
+                                    <p><b>Level:</b> {Level}</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-bottom:20px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-bottom:20px;">
+                                <div class="panel-box mb-30 p-30" style="background-color: #fff;border-radius: 2px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.23);margin-bottom: 						30px;padding: 30px;">
+                                    <h3 class="dtl-h3">Objective</h3>
+                                    <hr>
+                                    <p>{Objectives}</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="panel-box p-30 mb-30"
+                                     style="background-color: #fff;border-radius: 2px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.23);margin-bottom:30px;padding: 30px;">
+                                    {ResourceContent}
+                                </div>
+                                <!-- loop-->
+                                {URLReferences}
+
+                                <!--panel-box-->
+                                <!--panel-box-->
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%;vertical-align: top;">
+                    <img src="{footer}" />
+                </td>
+            </tr>
+        </tbody>
+	</table>
+</body>
+
+</html>

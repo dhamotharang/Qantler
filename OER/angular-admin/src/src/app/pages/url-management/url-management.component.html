@@ -1,0 +1,210 @@
+<section class="content-header">
+  <h1>
+    External URL Management
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">External URL Management</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <form action="">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs pull-right">
+        <li class="pull-left header"><em class="fa fa-th"></em> External URL Management</li>
+        <li class="{{type === 'approved' ? 'active' : ''}}"><a routerLink="/external-url-management/approved"
+                                                               data-toggle="tab">Whitelist Approved
+          Requests</a></li>
+        <li class="{{type === 'requests' ? 'active' : ''}}"><a routerLink="/external-url-management/requests"
+                                                               data-toggle="tab">Whitelist Requests</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div *ngIf="type === 'requests'" class="tab-pane active" id="requests">
+          <div class="container-fluid">
+            <div class="row">
+                <form class="ng-untouched ng-pristine ng-valid">
+                  <div class="d-flex search-filter-row">
+                <div class="row">
+                  <div class="col-md-4">
+                <label for="" class="">Search</label>
+                <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+              </div>
+              <div class="col-md-1">
+                <div class="form-group search-btn-col" style="margin-top: 24px;">
+                  <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                    Search
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                  <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                    Clear
+                  </button>
+                </div>
+              </div>
+                </div>
+              <!-- <div class="col-xs-6"> 
+              <div class="form-group search-btn-col">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+              <div class="form-group clear-btn-col ml-3">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                 Clear
+                </button>
+              </div>
+              </div> -->
+                  </div>
+            </form>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="request list">
+              <thead>
+              <tr>
+                <th id="url" data-toggle="tooltip" title="Sort By Urls" (click)="Clickingevent($event, 1)">Urls
+                  <span *ngIf="spanColNo=='asc-1' && Clickfield=='url'" id="url"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-1' && Clickfield=='url'" id="url" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="status" data-toggle="tooltip" title="Sort By Status" (click)="Clickingevent($event, 2)">Status
+                  <span *ngIf="spanColNo=='asc-2' && Clickfield=='status'" id="status"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-2' && Clickfield=='status'" id="status" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="requestedon" data-toggle="tooltip" title="Sort By RequestedOn" (click)="Clickingevent($event, 3)">Requested On
+                  <span *ngIf="spanColNo=='asc-3' && Clickfield=='requestedon'" id="requestedon"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-3' && Clickfield=='requestedon'" id="requestedon" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="action">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of requests">
+                <td>{{item.url}}</td>
+                <td>{{(item.rejectedReason === null && item.isApproved === false) ? 'New Request' : 'Rejected, Reason :
+                  '}}{{item.rejectedReason}}
+                </td>
+                <td>{{item.requestedOn | date:'fullDate'}}</td>
+                <td>
+                  <button *ngIf="(item.rejectedReason === null && item.isApproved === false) === true"
+                          class="btn btn-primary" type="button" (click)="ApproveURL(item)">Approve
+                  </button>
+                  <button *ngIf="(item.rejectedReason === null && item.isApproved === false) === true"
+                          class="btn btn-secondary" type="button" (click)="rejectURL(item)">Reject
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- /.tab-pane -->
+        <div *ngIf="type === 'approved'" class="tab-pane active" id="approved">
+
+          <div class="container-fluid">
+            <div class="row">
+                <form class="ng-untouched ng-pristine ng-valid">
+                  <div class="d-flex search-filter-row">
+                <div class="row">
+                  <div class="col-md-4">
+                <label for="" class="">Search</label>
+                <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+              </div>
+              <div class="col-md-1">
+                <div class="form-group search-btn-col" style="margin-top: 24px;">
+                  <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                    Search
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                  <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                    Clear
+                  </button>
+                </div>
+              </div>
+                </div>
+              <!-- <div class="col-xs-6"> 
+              <div class="form-group search-btn-col">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+              <div class="form-group clear-btn-col ml-3">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                 Clear
+                </button>
+              </div>
+              </div> -->
+                  </div>
+            </form>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="approved list">
+              <thead>
+              <tr>
+                <th id="url" data-toggle="tooltip" title="Sort By RequestedOn" (click)="Clickingevent($event, 1)">Urls
+                  <span *ngIf="spanColNo=='asc-1' && Clickfield=='url'" id="url"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-1' && Clickfield=='url'" id="url" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="reqby" data-toggle="tooltip" title="Sort By RequestedBy" (click)="Clickingevent($event, 2)">Requested By
+                  <span *ngIf="spanColNo=='asc-2' && Clickfield=='reqby'" id="reqby"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-2' && Clickfield=='reqby'" id="reqby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="reqon" data-toggle="tooltip" title="Sort By RequestedOn" (click)="Clickingevent($event, 3)">Requested On
+                  <span *ngIf="spanColNo=='asc-3' && Clickfield=='reqon'" id="reqon"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-3' && Clickfield=='reqon'" id="reqon" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="verby" data-toggle="tooltip" title="Sort By VerifiedBy" (click)="Clickingevent($event, 4)">Verified By
+                  <span *ngIf="spanColNo=='asc-4' && Clickfield=='verby'" id="verby"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-4' && Clickfield=='verby'" id="verby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="veron" data-toggle="tooltip" title="Sort By VerifiedOn" (click)="Clickingevent($event, 5)">Verified On
+                  <span *ngIf="spanColNo=='asc-5' && Clickfield=='veron'" id="veron"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-5' && Clickfield=='veron'" id="veron" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                </th>
+                <th id="action">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of approvedRequests">
+                <td>{{item.url}}</td>
+                <td>{{item.requestedBy}}</td>
+                <td>{{item.requestedOn | date:'fullDate'}}</td>
+                <td>{{item.verifiedBy}}</td>
+                <td>{{item.verifiedOn | date:'fullDate'}}</td>
+                <button class="btn btn-primary" type="button" (click)="deleteUrl(item)">Delete</button>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- /.tab-pane -->
+
+
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+  </form>
+</section>
+<p-dialog header="Reject Reason" [(visible)]="showRejectReasonForm" [modal]="true" [width]="600">
+  <div class="form-group material">
+    <textarea class="form-control" rows="10" [(ngModel)]="rejectReason"></textarea>
+  </div>
+
+  <p-footer>
+    <button class="btn btn-primary" type="button" (click)="submitRejectRequest()">Submit</button>
+    <button class="btn btn-secondary pull-left" type="button" (click)="cancelRejectRequest()">Cancel</button>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,123 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding: 2px;
+        }
+
+        table.boxPdf {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+            table.boxPdf td, table.boxPdf th {
+                border-width: 1px;
+                border-color: #000000;
+                border-style: solid;
+                padding: 15px;
+            }
+
+                table.boxPdf td.boxTd-center {
+                    text-align: center;
+                    padding:40px;
+                }
+
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+            table.pdftable td, table.pdftable th {
+                border-width: 1px;
+                border-color: #000000;
+                border-style: solid;
+                padding: 15px;
+            }
+
+                table.pdftable td.normalTd-right {
+                    width: 70%;
+                    text-align: right;
+                }
+
+                table.pdftable td.normalTd-full {
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-right {
+                    background-color: lightgrey;
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-center {
+                    background-color: lightgrey;
+                    text-align: center;
+                }
+                table.pdftable td.boxTd-center {
+                    padding: 80px;
+                }
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <table class="boxPdf">
+        <tbody>
+            <tr>
+                <td class="boxTd-center">{{DeliveryNoteHeading}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="clear"></p><p class="clear"></p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{DateValue}}</td>
+                <td class="greyTd-right">: {{DateLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{RefNoValue}}</td>
+                <td class="greyTd-right">: {{RefNoLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{FromValue}}</td>
+                <td class="greyTd-right">: {{FromLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{ToValue}}</td>
+                <td class="greyTd-right">: {{ToLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{SubjectValue}}</td>
+                <td class="greyTd-right">: {{SubjectLabel}}</td>
+            </tr>
+            <tr>
+                <td class="greyTd-center">{{PhoneLabel}}</td>
+                <td class="greyTd-center">{{SignatureLabel}}</td>
+                <td class="greyTd-center">{{SectionLabel}}</td>
+                <td class="greyTd-center">{{RecipientLabel}}</td>
+            </tr>
+            <tr>
+                <td class="boxTd-center"></td>
+                <td class="boxTd-center"></td>
+                <td class="boxTd-center"></td>
+                <td class="boxTd-center"></td>
+            </tr>
+        </tbody>
+    </table>    
+</body>
+</html>

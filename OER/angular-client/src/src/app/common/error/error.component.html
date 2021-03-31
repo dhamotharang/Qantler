@@ -1,0 +1,18 @@
+<app-sub-banner [title]="getTitle()"
+                [description]="getDescription()">
+</app-sub-banner>
+<app-breadcrumbs [items]="[{text: 'Home'|translate,link:'/',active:false},{text: getTitle(),link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40">
+  <div class="container">
+    <div *ngIf="code === 401">
+      <p class="text-center"> {{"Sorry, your account is Inactive." | translate}}<br>{{"Please Contact site Administrator" | translate}}</p>
+    </div>
+    <div *ngIf="code === 403">
+      <p class="text-center"> {{"Sorry, Access is forbidden to the requested page." | translate}}</p>
+    </div>
+    <div *ngIf="code === 404">
+      <p class="text-center"> {{"Sorry, your page you requested is Not Found." | translate}}</p>
+    </div>
+  </div>
+</div>

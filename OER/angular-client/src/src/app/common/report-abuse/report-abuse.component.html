@@ -1,0 +1,42 @@
+<p-dialog header="{{'Report Abuse' | translate}}" [(visible)]="display" (onHide)="closeModel()"
+          [style]="{width: '600px', 'max-height':'500px'}">
+  <form [formGroup]="ReportForm">
+    <div class="form-group mt-4">
+      <div>
+        <label for="" class="form-label">{{"Select reasons" | translate}}</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label class="chk-container">{{"Spam" | translate}}
+          <input type="checkbox" formControlName="spam">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label class="chk-container">{{"Offensive" | translate}}
+          <input type="checkbox" formControlName="offensive">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label class="chk-container">{{"Misleading" | translate}}
+          <input type="checkbox" formControlName="misleading">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label class="chk-container">{{"Other" | translate}}
+          <input type="checkbox" formControlName="other">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="" class="form-label">{{"Comments" | translate}}</label>
+      <textarea class="form-control" formControlName="comment" rows="3"></textarea>
+    </div>
+    <p-footer>
+      <button type="button" class="btn btn-primary text-uppercase" (click)="submitReport()">{{"Submit" | translate}}
+      </button>
+    </p-footer>
+  </form>
+</p-dialog>

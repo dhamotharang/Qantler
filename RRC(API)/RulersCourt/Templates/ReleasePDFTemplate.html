@@ -1,0 +1,196 @@
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+		body{
+			padding: 10px;
+			border-style: groove;
+		}
+        .clear {
+            padding:2px;
+        }
+
+        .pdfpara {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 10px;
+        }
+		.title {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 1px;
+        }
+		
+		.titleRed{
+			background-color: #b83116;
+			color:white;
+			font-size: 20px;
+			text-align: center;
+			padding:4px;
+		}
+		
+		.tableTitle{
+			background-color: #b83116;
+			color:white;
+			font-size: 15px;
+		}
+		
+		.text{
+			font-family: Arial;
+            font-size: 20px;
+			padding: 4px;
+			text-align: center;
+		}
+		
+		
+        table.pdftable {
+           width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            font-family: Arial;
+            font-size: 15px;
+        }
+		table.pdftable1 {
+           width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            font-family: Arial;
+			 border-width: 1px;
+            font-size: 15px;
+        }
+		
+		table.pdftable1 td, table.pdftable th {
+                border-width: 1px;
+                border-color: #000000;
+                border-style: solid;
+                padding: 10px;
+            }
+
+            table.pdftable td, table.pdftable th {
+                border-width: 0px;
+                border-color: #000000;
+                padding: 10px;
+            }
+			
+			
+
+                table.pdftable td.normalTd-right {
+                    width: 25%;
+                    text-align: right;
+                }
+				
+				table.pdftable td.normalTd-right1 {
+                    width: 16.6%;
+                    text-align: right;
+                }
+
+                table.pdftable td.normalTd-full {
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-right {
+                    background-color: lightgrey;
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-center {
+                    background-color: lightgrey;
+                    text-align: center;
+                }
+    </style>
+</head>
+<body>
+    <p class="clear"></p>
+	<p class="title">{{ArRealeaseForm}}</p>
+    <p class="titleRed">{{VehicleDetails}}</P>
+	
+	<table class="pdftable">
+        <tbody>
+            <tr>
+				<td></td><td></td>
+                <td class="normalTd-right1">{{PlateColorValue}}</td>
+                <td class="normalTd-right1">: {{ArPlateColorlabel}}</td>
+				<td class="normalTd-right1">{{PlateNumberValue}}</td>
+                <td class="normalTd-right1">: {{ArPlateNumberLabel}}</td>
+            </tr>
+            <tr>
+				<td class="normalTd-right1">{{YearofManufactureValue}}</td>
+                <td class="normalTd-right1">: {{ArYearofManufactureValueLabel}}</td>
+                <td class="normalTd-right1">{{VehicleModelValue}}</td>
+                <td class="normalTd-right1">: {{ArVehicleModelLabel}}</td>
+				<td class="normalTd-right1">{{VehicleMakeValue}}</td>
+                <td class="normalTd-right1">: {{ArReleaseVehicleMakeLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+	
+	<p class="titleRed">{{VehicleDeliveryData}}</P>
+	
+	<table class="pdftable">
+        <tbody>
+            <tr>
+                <td></td><td></td>
+				<td class="normalTd-right">{{UserNameValue}}</td>
+                <td class="normalTd-right">: {{ArUserNameLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">
+					<table style="width: 100%;">
+					<tbody style="width: 100%;">
+					<tr>
+						<td style="text-align: right;padding: 0px;">{{ReleaseMeridiemTimeValue}}</td>
+						<td style="padding: 0px;text-align: right;width: 22px;">{{ReleaseTimeValue}}
+						</td>
+					</tr>
+					</tbody>
+					</table>
+				</td>
+                <td class="normalTd-right">: {{ArReleaseTimeLabel}}</td>
+				<td class="normalTd-right">{{ReleaseDateValue}}</td>
+                <td class="normalTd-right">: {{ArReleaseDateLabel}}</td>
+            </tr>
+			 <tr>
+                <td class="normalTd-right">{{LastMileageReleaseValue}}</td>
+                <td class="normalTd-right">: {{ArLastMileageReleaseLabel}}</td>
+				<td class="normalTd-right">{{ReleaseLocationValue}}</td>
+                <td class="normalTd-right">: {{ArReleaseLocationLabel}}</td>
+            </tr>			
+        </tbody>
+    </table>
+	<p></P>
+	
+	<p class="titleRed">{{VehicleCondition}}</P>
+	<p class="text">{{VehicleConditionMessage}}</p>
+	<p></p>
+	
+	<table class="pdftable">
+        <tbody>
+            <tr>
+			<td><img src="{{CarAttachment1}}"></img><br><img src="{{CarAttachment2}}"></img></td>
+			<td><img src="{{CarAttachment3}}"></img></td>
+			<td><img src="{{CarAttachment4}}"></img><br><img src="{{CarAttachment5}}"></img></td>
+			</tr>
+		</tbody>
+	</table>	
+	<p></p>
+	
+	{{checkbox}}
+    <p></p>
+	
+	<table class="pdftable1">
+        <tbody>
+            <tr>
+			<td class="tableTitle"><div align="right">: {{ReceivedByLabel}}</div></td>
+			<td class="tableTitle"><div align="right">: {{ReleasedByLabel}}</div></td>		
+			</tr>
+			<tr>
+			<td><div align="right">{{UserNameValue}}</div></td>
+			<td><div align="right">{{ReceivedByValue}}</div></td>		
+			</tr>
+		</tbody>
+	</table>	
+</body>
+</html>

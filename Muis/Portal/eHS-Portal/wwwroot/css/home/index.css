@@ -1,0 +1,20 @@
+﻿.form-group.has-danger .input-group .form-control,
+.form-group.has-danger .input-group .input-group-prepend .input-group-text {
+  border-color: #ff6258 !important;
+}
+
+input[id="key"] {
+  border-radius: 0 !important;
+}
+.forget-password-link {
+  font-size: 13px;
+  color: #6c757d;
+}
+.nav-get-started a {
+  text-decoration: none;
+}
+
+.nav-get-started a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}

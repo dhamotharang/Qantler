@@ -1,0 +1,225 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Angular Client App documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Angular Client App documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content module">
+                   <div class="content-data">
+
+
+
+<ol class="breadcrumb">
+    <li>Modules</li>
+    <li>AppRoutingModule</li>
+</ol>
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li  class="active" >
+        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    </li>
+    <li >
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/app-routing.module.ts</code>
+        </p>
+
+
+
+
+        <div class="container-fluid module">
+            <div class="row">
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
+import {RouterModule, Routes} from &#x27;@angular/router&#x27;;
+import {LandingPageComponent} from &#x27;./pages/landing-page/landing-page.component&#x27;;
+import {AuthGuard} from &#x27;./guards/auth.guard&#x27;;
+import {MakeProfileComponent} from &#x27;./pages/make-profile/make-profile.component&#x27;;
+import {PublicProfileComponent} from &#x27;./pages/public-profile/public-profile.component&#x27;;
+import {SearchResultComponent} from &#x27;./pages/search-result/search-result.component&#x27;;
+import {DashboardComponent} from &#x27;./pages/dashboard/dashboard.component&#x27;;
+import {UserProfileComponent} from &#x27;./pages/user-profile/user-profile.component&#x27;;
+import {EditProfileComponent} from &#x27;./pages/edit-profile/edit-profile.component&#x27;;
+import {AccountSettingsComponent} from &#x27;./pages/account-settings/account-settings.component&#x27;;
+import {NotificationSettingsComponent} from &#x27;./pages/notification-settings/notification-settings.component&#x27;;
+import {AnnouncementsComponent} from &#x27;./pages/announcements/announcements.component&#x27;;
+import {ProfileUpdateGuard} from &#x27;./guards/profile-update.guard&#x27;;
+import {MyResourcesListComponent} from &#x27;./pages/my-resources-list/my-resources-list.component&#x27;;
+import {MyCoursesComponent} from &#x27;./pages/my-courses/my-courses.component&#x27;;
+import {QRCComponent} from &#x27;./pages/qrc/qrc.component&#x27;;
+import {DiscoverComponent} from &#x27;./pages/discover/discover.component&#x27;;
+import {ResourcesComponent} from &#x27;./pages/resources/resources.component&#x27;;
+import {CreateResourceComponent} from &#x27;./pages/create-resource/create-resource.component&#x27;;
+import {ResourceDetailComponent} from &#x27;./pages/resource-detail/resource-detail.component&#x27;;
+import {CoursesComponent} from &#x27;./pages/courses/courses.component&#x27;;
+import {CreateCourseComponent} from &#x27;./pages/create-course/create-course.component&#x27;;
+import {CourseDetailComponent} from &#x27;./pages/course-detail/course-detail.component&#x27;;
+import {VerifyContentComponent} from &#x27;./pages/verify-content/verify-content.component&#x27;;
+import {VerifyTestComponent} from &#x27;./pages/verify-test/verify-test.component&#x27;;
+import {TakeTestComponent} from &#x27;./pages/take-test/take-test.component&#x27;;
+import {ErrorComponent} from &#x27;./common/error/error.component&#x27;;
+import {WCMComponent} from &#x27;./pages/wcm/wcm.component&#x27;;
+import {ContributorGuard} from &#x27;./guards/contributor.guard&#x27;;
+import {FavouritesComponent} from &#x27;./pages/favourites/favourites.component&#x27;;
+import {MyNotificationsComponent} from &#x27;./pages/my-notifications/my-notifications.component&#x27;;
+import {VerifierGuard} from &#x27;./guards/verifier.guard&#x27;;
+import {CommunityCheckComponent} from &#x27;./pages/community-check/community-check.component&#x27;;
+import {SensoryCheckComponent} from &#x27;./pages/sensory-check/sensory-check.component&#x27;;
+import {MoeCheckComponent} from &#x27;./pages/moe-check/moe-check.component&#x27;;
+
+const routes: Routes &#x3D; [
+  {path: &#x27;&#x27;, redirectTo: &#x27;/&#x27;, pathMatch: &#x27;full&#x27;},
+  {path: &#x27;&#x27;, component: LandingPageComponent},
+  {path: &#x27;make-profile&#x27;, canActivate: [AuthGuard], component: MakeProfileComponent},
+  {path: &#x27;user/profile/:slug&#x27;, canActivate: [AuthGuard], component: PublicProfileComponent},
+  {path: &#x27;search&#x27;, component: SearchResultComponent, data: {f: {}, q: &#x27;&#x27;}},
+  {path: &#x27;dashboard/profile/edit&#x27;, canActivate: [AuthGuard, ProfileUpdateGuard], component: EditProfileComponent},
+  {path: &#x27;dashboard/profile&#x27;, canActivate: [AuthGuard], component: UserProfileComponent},
+  {path: &#x27;dashboard/notification-settings&#x27;, canActivate: [AuthGuard], component: NotificationSettingsComponent},
+  {path: &#x27;dashboard/announcements&#x27;, canActivate: [AuthGuard], component: AnnouncementsComponent},
+  {path: &#x27;dashboard/favourites&#x27;, canActivate: [AuthGuard], component: FavouritesComponent},
+  {path: &#x27;dashboard/my-notifications&#x27;, canActivate: [AuthGuard], component: MyNotificationsComponent},
+  {path: &#x27;dashboard/resources/:type&#x27;, canActivate: [AuthGuard, ContributorGuard], component: MyResourcesListComponent},
+  {path: &#x27;dashboard/resources&#x27;, canActivate: [AuthGuard, ContributorGuard], component: MyResourcesListComponent},
+  {path: &#x27;dashboard/courses/:type&#x27;, canActivate: [AuthGuard, ContributorGuard], component: MyCoursesComponent},
+  {path: &#x27;dashboard/courses&#x27;, canActivate: [AuthGuard, ContributorGuard], component: MyCoursesComponent},
+  {path: &#x27;dashboard/qrc&#x27;, canActivate: [AuthGuard, ContributorGuard], component: QRCComponent},
+  {path: &#x27;dashboard/community-check&#x27;, canActivate: [AuthGuard, ContributorGuard], component: CommunityCheckComponent},
+  {path: &#x27;dashboard/sensitivity-check&#x27;, canActivate: [AuthGuard, VerifierGuard], component: SensoryCheckComponent},
+  {path: &#x27;dashboard/expert-check&#x27;, canActivate: [AuthGuard, VerifierGuard], component: MoeCheckComponent},
+  {path: &#x27;dashboard&#x27;, canActivate: [AuthGuard], component: DashboardComponent},
+  {path: &#x27;discover&#x27;, component: DiscoverComponent},
+  {path: &#x27;resources/create/:slug&#x27;, canActivate: [AuthGuard, ContributorGuard], component: CreateResourceComponent},
+  {path: &#x27;resources/create&#x27;, canActivate: [AuthGuard, ContributorGuard], component: CreateResourceComponent},
+  {path: &#x27;resource/:slug&#x27;, component: ResourceDetailComponent},
+  {path: &#x27;resources&#x27;, component: ResourcesComponent, data: {sc: [], q: &#x27;&#x27;}},
+  {path: &#x27;courses/create/:slug&#x27;, canActivate: [AuthGuard, ContributorGuard], component: CreateCourseComponent},
+  {path: &#x27;courses/create&#x27;, canActivate: [AuthGuard, ContributorGuard], component: CreateCourseComponent},
+  {path: &#x27;course/:slug&#x27;, component: CourseDetailComponent},
+  {path: &#x27;courses&#x27;, component: CoursesComponent, data: {sc: [], q: &#x27;&#x27;}},
+  {
+    path: &#x27;verify-content/:type/:id/:contentApprovalId/:checkType&#x27;,
+    canActivate: [AuthGuard, ContributorGuard],
+    component: VerifyContentComponent
+  },
+  {path: &#x27;verify-test/:id&#x27;, canActivate: [AuthGuard, ContributorGuard], component: VerifyTestComponent},
+  {path: &#x27;take-test/:id&#x27;, canActivate: [AuthGuard], component: TakeTestComponent},
+  {path: &#x27;error/:code&#x27;, component: ErrorComponent},
+  {path: &#x27;:wcm&#x27;, component: WCMComponent},
+  {path: &#x27;**&#x27;, redirectTo: &#x27;error/404&#x27;},
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
+            var COMPODOC_CURRENT_PAGE_URL = 'AppRoutingModule.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

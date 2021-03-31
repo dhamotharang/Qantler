@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  request.api:
+    image: ${DOCKER_REGISTRY-}request
+    build:
+      context: .
+      dockerfile: Services/Request/Request.API/Dockerfile
+
+  file.api:
+    image: ${DOCKER_REGISTRY-}file
+    build:
+      context: .
+      dockerfile: Services/File/File.API/Dockerfile
+
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
+
+  joborder.api:
+    image: ${DOCKER_REGISTRY-}joborder
+    build:
+      context: .
+      dockerfile: Services/JobOrder/JobOrder.API/Dockerfile
+
+  notification.api:
+    image: ${DOCKER_REGISTRY-}notification
+    build:
+      context: .
+      dockerfile: Services/Notification/Notification.API/Dockerfile
+
+  finance.api:
+    image: ${DOCKER_REGISTRY-}finance
+    build:
+      context: .
+      dockerfile: Services/Finance/Finance.API/Dockerfile
+
+  case.api:
+    image: ${DOCKER_REGISTRY-}case
+    build:
+      context: .
+      dockerfile: Services/Case/Case.API/Dockerfile
+
+
+  halallibrary.api:
+    image: ${DOCKER_REGISTRY-}halallibrary
+    build:
+      context: .
+      dockerfile: Services/HalalLibrary/HalalLibrary.API/Dockerfile
+

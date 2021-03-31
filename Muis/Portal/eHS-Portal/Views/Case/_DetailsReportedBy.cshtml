@@ -1,0 +1,34 @@
+﻿@model eHS.Portal.Model.Person;
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Reported By</h5>
+        <div class="row reporter-info">
+            <div class="col-md-12 info reporter">
+                <p class="mb-1">
+                    <strong>Name : </strong>
+                    <span id="name">
+                        @Model.Salutation @Model.Name
+                    </span>
+                </p>
+            </div>
+            <div class="col-md-12 info reporter-other">
+                @if (Model != null && Model.ContactInfos != null && Model.ContactInfos.Count > 0)
+                {
+                    <p class="mb-1 mt-4"><strong>Contact Details </strong></p>
+                    @foreach (var contact in Model.ContactInfos)
+                    {
+                        @if (contact.IsPrimary)
+                        {
+                            <p class="mb-1"><span class="badge badge-primary mr-2"> @contact.TypeText </span>@contact.Value</p>
+                        }
+                        else
+                        {
+                            <p class="mb-1"><span class="badge badge-outline-dark mr-2"> @contact.TypeText </span>@contact.Value</p>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

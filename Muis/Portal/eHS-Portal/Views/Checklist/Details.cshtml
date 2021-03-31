@@ -1,0 +1,216 @@
+@using eHS.Portal.Model;
+@model eHS.Portal.Models.Checklist.DetailsModel;
+
+@{
+  ViewData["Title"] = "Checklist Details";
+}
+
+@section CSS
+{
+  <link href="~/plugins/tinymce/skins/ui/oxide-dark/skin.min.css" rel="stylesheet" />
+  <link href="~/plugins/tinymce/skins/ui/oxide-dark/content.min.css" rel="stylesheet" />
+  <link href="~/plugins/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+  <link href="~/plugins/sweetalert2/sweetalert2.all.min.js.css" rel="stylesheet" />
+  <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="~/css/checklist/index.css" />
+
+  <style>
+    .error {
+      border-color: red;
+      color: red;
+    }
+
+    .rfa .mdi-minus-circle {
+      color: #ff6258;
+      padding: 0 5px 0 0px;
+    }
+  </style>
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+
+    @if (@Model.Action != "Edit")
+    {
+      <h4 class="page-title">
+        New Checklist
+        <strong class="ml-3" style="margin-left:1rem !important">Version @(@Model.LastVersion + 1)</strong>
+      </h4>
+    }
+    else
+    {
+      <h4 class="page-title">
+        Edit Checklist
+        <strong class="ml-3" style="margin-left:1rem !important">Version @Model.LastVersion</strong>
+      </h4>
+    }
+
+  </div>
+}
+
+@section Toolbar {
+  <div class="quick-link-wrapper">
+    <ul class="quick-links ml-auto">
+      <li><a id="saveChecklist" data-toggle="modal" data-target="#save" href="javascript:void(0)">Save</a></li>
+    </ul>
+  </div>
+}
+
+<div class="row content">
+  <div class="col-md-12"> </div>
+  <div class="col-12">
+    <div class="card widget rfa">
+      <div class="card-body">
+        <h5 class="font-weight-bold mt-0 mb-4" id="scheme"></h5>
+        <div class="wrapper row">
+          <form class="col-md-6">
+            <div class="form-group row mb-0">
+              <label for="staticEmail" class="col-sm-4 col-form-label">Effective From:</label>
+              <div class="col-sm-8">
+                <div id="effectiveDate" class="input-group date datepicker effectiveDate">
+                  <input type="text" class="form-control">
+                  <span class="input-grupo-addon input-group-append border-left">
+                    <span class="mdi mdi-calendar input-group-text"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt-4">
+    <div class="card widget rfa">
+      <div class="card-body">
+        <form id="form" action="" method="post">
+          <div class="table-responsive border-bottom mb-3 categories">
+            <table class="table table-borderless">
+              <tr category="1">
+                <td style="width: 20px;" class="category-index"><i category="1" class="remove-section mdi mdi-minus-circle" onclick="app.page.removeSection(this)"></i>1</td>
+                <td>
+                  <input data-rule-oneormorechecked="true" category="1" type="text" maxlength="4000" name="category1" class="form-control category-text" style="margin-bottom: 3px;">
+                </td>
+              </tr>
+              <tr section="1" category="1">
+                <td class="align-top index" style="width: 20px"><i onclick="app.page.removeItem(this)" section="1" class="item mdi mdi-minus-circle" category="1"></i>1.1</td>
+                <td>
+                  <div class="mb-3">
+                    <textarea section="1" maxlength="4000" category="1" name="categoryText1.1" id="" rows="5" class="form-control text"></textarea>
+                  </div>
+                  <div>
+                    <button type="button" class="add-note btn btn-primary btn-rounded btn-fw" style="float:right" category="1" onclick="app.page.addNote(this)"><i class="mdi mdi-plus"></i>Add Note</button>
+                  </div>
+                  <div class="mb-3" style="display:none">
+                    <textarea section="1" category="1" id="tinyMce1s1" class="tinyMce note"></textarea>
+                  </div>
+                </td>
+              </tr>
+              <tr category="1">
+                <td class="align-top" style="width: 20px;"></td>
+                <td>
+                  <div class="mb-3 row col-md-7 col-lg-6">
+                    <div class="col-md-5 col-lg-4 col-xs-12" style="padding-bottom: 2px;">
+                      <button type="button" class="add-section btn btn-primary btn-rounded btn-fw" onclick="app.page.addItem(this)"><i class="mdi mdi-plus"></i>New Item</button>
+                    </div>
+                    <div class="col-md-5 col-lg-4 col-xs-12">
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+        <div class="mb-3">
+          <button type="button" style="margin-right: 25px;" class="add-category btn btn-primary btn-rounded btn-fw" onclick="app.page.addCategory(this)"><i class="mdi mdi-plus"></i>New Section</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="templates" id="addsection" hidden>
+  <div class="table-responsive border-bottom mb-3 {class}">
+    <table class="table table-borderless">
+      <tr category="{categoryIndex}" >
+        <td style="width: 20px" class="category-index">
+          <i category={categoryIndex} onclick="app.page.removeSection(this)"
+             class="remove-section mdi mdi-minus-circle"></i><span>{categoryIndex}</span>
+        </td>
+        <td>
+          <input maxlength="4000" category="{categoryIndex}" type="text" style="margin-bottom: 3px;" class="form-control category-text" name="category{categoryIndex}">
+        </td>
+      </tr>
+      <tr section="1" category="{categoryIndex}" >
+        <td class="align-top index" style="width: 20px;">
+          <i section="1" category="{categoryIndex}" onclick="app.page.removeItem(this)" class="item  mdi mdi-minus-circle"></i>{categoryIndex}.1
+        </td>
+        <td>
+          <div class="mb-3">
+            <textarea maxlength="4000" section="1" category={categoryIndex} name="categoryText{categoryIndex}.1" rows="5" class="form-control text"></textarea>
+          </div>
+          <div>
+            <button type="button" class="add-note btn btn-primary btn-rounded btn-fw" style="float:right" category="1" onclick="app.page.addNote(this)">
+              <i class="mdi mdi-plus"></i>Add Note
+            </button>
+          </div>
+          <div class="mb-3" style="display:none">
+            <textarea id="tinyMce{categoryIndex}s1" section="1" category="{categoryIndex}" class="tinyMce note"></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr category="{categoryIndex}" >
+        <td class="align-top" style="width: 20px;"></td>
+        <td>
+          <div class="mb-3 row col-md-7 col-lg-6">
+            <div class="col-md-5 col-lg-4 col-xs-12" style="padding-bottom: 2px;">
+              <button type="button" class="add-section btn btn-primary btn-rounded btn-fw" onclick="app.page.addItem(this)">
+                <i class="mdi mdi-plus"></i>New Item
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<table class="templates" id="addItem" hidden>
+  <tr section="{sectionIndex}" category="{categoryIndex}">
+    <td class="align-top index" style="width: 20px;">
+      <i section="{sectionIndex}" category="{categoryIndex}" onclick="app.page.removeItem(this)" class="item mdi mdi-minus-circle"></i>
+      {categoryIndex}.{sectionIndex}
+    </td>
+    <td>
+      <div class="mb-3">
+        <textarea maxlength="4000" name="categoryText{categoryIndex}.{sectionIndex}" section="{sectionIndex}"
+                  category="{categoryIndex}" rows="5" class="form-control text"></textarea>
+      </div>
+      <div>
+        <button type="button" class="add-note btn btn-primary btn-rounded btn-fw" style="float:right" category="1" onclick="app.page.addNote(this)">
+          <i class="mdi mdi-plus"></i>Add Note
+        </button>
+      </div>
+      <div class="mb-3" style="display:none">
+        <textarea id="tinyMce{categoryIndex}s{sectionIndex}" section={sectionIndex} category={categoryIndex} class='tinyMce note'></textarea>
+      </div>
+    </td>
+  </tr>
+</table>
+
+
+@section Scripts
+{
+  <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+  </script>
+
+  <script src="~/plugins/sweetalert/sweetalert.min.js"></script>
+  <script src="~/plugins/tinymce/tinymce.min.js"></script>
+  <script src="~/plugins/select2/select2.min.js"></script>
+  <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+  <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+  <script src="~/js/checklist/details.js"></script>
+}

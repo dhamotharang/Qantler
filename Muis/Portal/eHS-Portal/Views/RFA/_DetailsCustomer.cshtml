@@ -1,0 +1,133 @@
+﻿@using eHS.Portal.Extensions;
+
+@model eHS.Portal.Model.Request;
+
+<div class="card customer">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Customer Details</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-1 display-info">
+                    <strong>Name :</strong>
+                    <span>@Model.Customer.Name.ToTitleCase()</span>
+                </div>
+                <div class="mb-1 display-info">
+                    <strong>@Model.Customer.IDTypeText :</strong>
+                    <span>@Model.Customer.AltID</span>
+                </div>
+            </div>
+        </div>
+        @if (@Model.Agent != null)
+        {
+            <h5 class="font-weight-bold my-4">Filer's Details</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-1 display-info">
+                        <strong>Name :</strong>
+                        <span>@Model.Agent.Name.ToTitleCase()</span>
+                    </div>
+                    <div class="mb-1 display-info">
+                        <strong>@Model.Agent.IDTypeText :</strong>
+                        <span>@Model.Customer.AltID</span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(@Model.Agent.Nationality))
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Nationality :</strong>
+                            <span>@Model.Agent.Nationality.ToTitleCase()</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.Agent.Gender))
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Gender :</strong>
+                            <span>@Model.Agent.Gender.ToTitleCase()</span>
+                        </div>
+                    }
+                    @if (@Model.Agent.DOB.HasValue)
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Date of Birth :</strong>
+                            <span>@Model.Agent.DOB.Value.ToString("dd MMMM yyyy")</span>
+                        </div>
+                    }
+                </div>
+                @if (@Model.Agent.ContactInfos?.Any() ?? false)
+                {
+                    <div class="col-md-6">
+                        <div class="mb-1 display-info">
+                            <strong>Contact Details</strong>
+                        </div>
+                        @foreach (var contact in @Model.Agent.ContactInfos)
+                        {
+                            <div class="item contact">
+                                <p class="contact mb-1">
+                                    @{
+                                        var bg = contact.IsPrimary ? "badge-primary" : "badge-outline-dark";
+                                    }
+                                    <span class="badge @bg">@contact.TypeText</span>@contact.Value
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        @if (@Model.Requestor != null)
+        {
+            <h5 class="font-weight-bold my-4">Applicant's Details</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-1 display-info">
+                        <strong>Name :</strong>
+                        <span>@Model.Requestor.Name</span>
+                    </div>
+                    <div class="mb-1 display-info">
+                        <strong>@Model.Requestor.IDTypeText :</strong>
+                        <span>@Model.Requestor.AltID</span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(@Model.Requestor.Nationality))
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Nationality :</strong>
+                            <span>@Model.Requestor.Nationality</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.Requestor.Gender))
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Gender :</strong>
+                            <span>@Model.Requestor.Gender</span>
+                        </div>
+                    }
+                    @if (@Model.Requestor.DOB.HasValue)
+                    {
+                        <div class="mb-1 display-info">
+                            <strong>Date of Birth :</strong>
+                            <span>@Model.Requestor.DOB.Value.ToString("dd MMMM yyyy")</span>
+                        </div>
+                    }
+                </div>
+                @if (@Model.Requestor.ContactInfos?.Any() ?? false)
+                {
+                    <div class="col-md-6">
+                        <div class="mb-1 display-info">
+                            <strong>Contact Details</strong>
+                        </div>
+                        @foreach (var contact in @Model.Requestor.ContactInfos)
+                        {
+                            <div class="item contact">
+                                <p class="contact mb-1">
+                                    @{
+                                        var bg = contact.IsPrimary ? "badge-primary" : "badge-outline-dark";
+                                    }
+                                    <span class="badge @bg">@contact.TypeText</span>@contact.Value
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

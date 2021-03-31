@@ -1,0 +1,77 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model eHS.Portal.Models.TransactionCode.DetailsModel
+
+@{
+  ViewData["Title"] = "Transaction Code Details";
+}
+
+@section CSS {
+  <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+  <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/request/details.css" />
+  <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <link href="~/css/transactionCode/index.css" rel="stylesheet" />
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+    <h4 class="page-title">Financial Transaction Code Details</h4>
+  </div>
+}
+
+@section Toolbar {
+  <div class="quick-link-wrapper">
+    <ul class="quick-links ml-auto">
+      @if (Model.Data.IsBillable != true)
+      {
+        <li><a id="saveButton" class="btn-update saveTransactionBtn" href="javascript:void(0)">Save</a></li>
+      }
+    </ul>
+  </div>
+}
+
+<form id="form1" name="form1">
+  <div class="row">
+    <div class="col-md-8">
+      <partial name="_codeDetails.cshtml" />
+      <div class="row">
+        @if (Model.Data.IsBillable != true)
+        {
+          <partial name="_amountHistory.cshtml" />
+        }
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <partial name="_detailsActivities.cshtml" />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+@section Scripts
+{
+  <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+  </script>
+  <link href="~/css/shared/jquery-ui.css" rel="stylesheet" />
+  <script src="~/js/plugins/jquery-1.12.4.js"></script>
+  <script src="~/js/plugins/jquery-ui.js"></script>
+
+  <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+  <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+  <script src="~/plugins/select2/select2.min.js"></script>
+  <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="~/plugins/inputmask/jquery.inputmask.bundle.js"></script>
+
+  <script src="~/js/transactionCode/details.js"></script>
+  <script src="~/js/transactionCode/_codeDetails.js"></script>
+  <script src="~/js/transactionCode/_detailsActivities.js"></script>
+  <script src="~/js/transactionCode/_amountHistory.js"></script>
+}

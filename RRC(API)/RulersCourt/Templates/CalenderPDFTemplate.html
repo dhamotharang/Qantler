@@ -1,0 +1,127 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 1em;
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        table.pdftable td, table.pdftable th {
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            <!-- padding: 15px; -->
+        }
+
+            table.pdftable td.normalTd-right {
+                text-align: right;
+            }
+
+            table.pdftable td.normalTd-full {
+                text-align: right;
+            }
+
+            table.pdftable td.greyTd-right {
+                background-color: #b6b6ff;
+                text-align: right;
+            }
+
+            table.pdftable td.greyTd-center {
+                background-color: #b6b6ff;
+                text-align: center;
+            }
+
+        .DriverTitle {
+            width: 260px;
+            padding: 10px;
+        }
+
+        .headerStyle {
+            font-weight: bold;
+        }
+
+        .DriverName {
+            width: 20%;
+            padding: 10px;
+        }
+
+        .time {
+            width: 50px;
+            text-align: center;
+        }
+
+        .timebar {
+            width: 10%;
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+            font-family: Arial;
+            font-weight: 500;
+        }
+
+        .tripTextSize {
+            border-color: skyblue !important;
+            padding: 0px;
+            background-color: skyblue;
+            font-size: .85em;
+            word-wrap: break-word;
+            max-width: 25px;
+            min-width: 25px;
+        }
+
+        .minsplit {
+            width: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Left"><h2>{{Date}}</h2></div>
+    <table class="pdftable">
+        <tr class="headerStyle">
+            <td><div class="DriverTitle"> {{DriverName}} </div></td>
+            <!--<td style="width: 1%;"> </td>-->
+            <td colspan='2'><div class="time">12{{AM}}</div></td>
+            <td colspan='2'><div class="time">1{{AM}}</div></td>
+            <td colspan='2'><div class="time">2{{AM}}</div></td>
+            <td colspan='2'><div class="time">3{{AM}}</div></td>
+            <td colspan='2'><div class="time">4{{AM}}</div></td>
+            <td colspan='2'><div class="time">5{{AM}}</div></td>
+            <td colspan='2'><div class="time">6{{AM}}</div></td>
+            <td colspan='2'><div class="time">7{{AM}}</div></td>
+            <td colspan='2'><div class="time">8{{AM}}</div></td>
+            <td colspan='2'><div class="time">9{{AM}}</div></td>
+            <td colspan='2'><div class="time">10{{AM}}</div></td>
+            <td colspan='2'><div class="time">11{{AM}}</div></td>
+            <td colspan='2'><div class="time">12{{PM}}</div></td>
+            <td colspan='2'><div class="time">1{{PM}}</div></td>
+            <td colspan='2'><div class="time">2{{PM}}</div></td>
+            <td colspan='2'><div class="time">3{{PM}}</div></td>
+            <td colspan='2'><div class="time">4{{PM}}</div></td>
+            <td colspan='2'><div class="time">5{{PM}}</div></td>
+            <td colspan='2'><div class="time">6{{PM}}</div></td>
+            <td colspan='2'><div class="time">7{{PM}}</div></td>
+            <td colspan='2'><div class="time">8{{PM}}</div></td>
+            <td colspan='2'><div class="time">9{{PM}}</div></td>
+            <td colspan='2'><div class="time">10{{PM}}</div></td>
+            <td colspan='2'><div class="time">11{{PM}}</div></td>
+        </tr>
+        {{ListData}}
+    </table>
+</body>
+
+<!--<div id= "box"></div>-->
+</html>

@@ -1,0 +1,15 @@
+﻿.dataTables_scrollBody {
+  min-height: 60vh;
+}
+
+.tickets-tab-switch > .nav-item {
+  width: 50% !important;
+}
+
+.tickets-tab-switch {
+  margin-bottom: 8px !important;
+}
+
+#tickets-nav-tab-main {
+  display: none;
+}

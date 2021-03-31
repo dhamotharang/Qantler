@@ -1,0 +1,30 @@
+<app-sub-banner [title]="'Notification Settings' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Notification Settings' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="panel-box p-30 mb-30 min-height">
+
+          <div class="checkbox-inline mt-15">
+            <p-inputSwitch [(ngModel)]="checked" (onChange)="updateNotificationStatus($event)"></p-inputSwitch>
+            {{'Send Email Notifications' | translate}}
+          </div>
+        </div>
+        <!--panel-box-->
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

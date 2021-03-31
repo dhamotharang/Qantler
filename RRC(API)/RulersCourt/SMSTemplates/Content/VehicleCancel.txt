@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم إرسال {{ArService}} {{ArReferenceNumber}} بواسطة {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+The {{EnService}} {{ReferenceNumber}} has been Cancelled by {{EnFromName}}.
+Best Regards

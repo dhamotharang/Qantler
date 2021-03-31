@@ -1,0 +1,40 @@
+﻿.table-responsive .name {
+  max-width: 300px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+  margin-bottom: 0;
+}
+
+.table-responsive .brand {
+  max-width: 300px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+  margin-bottom: 0;
+}
+
+.table-responsive .supplierName {
+  max-width: 300px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+  margin-bottom: 0;
+}
+
+.table-responsive .certifyingBody {
+  max-width: 300px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+  margin-bottom: 0;
+}
+
+.btn-edit {
+  margin-right: 0.25rem
+}
+
+.btn-fw {
+  min-width: 20% !important;
+  height: calc(1.5em + 1rem + 2px);
+}
+
+div.dts div.dataTables_scrollBody {
+  background: white
+}

@@ -1,0 +1,660 @@
+<ng-container *ngIf="view === 'Create Resource'">
+  <app-sub-banner [title]="'Create Resource'|translate" [description]="'landing_2'|translate">
+  </app-sub-banner>
+  <app-breadcrumbs
+    [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Resources'|translate,link:'/resources',active:false},{text: 'Create Resource'|translate,link:null,active:true}]">
+  </app-breadcrumbs>
+
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+      <div class="panel-box p-30 mb-30">
+
+        <form [formGroup]="ResourceForm">
+
+          <div class="row">
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormDrafted || resourceFormSubmitted || ResourceForm.controls.title.touched) && ResourceForm.controls.title.invalid) ? 'is-invlaid' : ''}}">
+                <label for="" class="form-label">{{'Resource Title' | translate}} <span
+                  class="text-danger">*</span></label>
+                <input class="form-control alt-bg" formControlName="title">
+                <p
+                  *ngIf="(resourceFormDrafted || resourceFormSubmitted || ResourceForm.controls.title.touched) && ResourceForm.controls.title.invalid"
+                  class="field-error">
+                  {{'Please enter a valid title' | translate}}.
+                </p>
+                <ng-container *ngIf="(ResourceForm.controls.title.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="ResourceForm.controls.title.errors.maxlength != null">
+                    {{'Make_Profile_message_4' |
+                    translate}} {{ResourceForm.controls.title.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormDrafted || resourceFormSubmitted || ResourceForm.controls.categoryId.touched) && ResourceForm.controls.categoryId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Categories' | translate}} <span class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="categoryId"
+                        (change)="handleCategoryChange($event.target.value)" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of categories" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                    getCurrentLang() === 'ar' ? item.name_Ar : item.name}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormDrafted || resourceFormSubmitted || ResourceForm.controls.categoryId.touched) && ResourceForm.controls.categoryId.invalid"
+                  class="field-error">
+                  {{'Please select a valid category' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.subCategoryId.touched) && ResourceForm.controls.subCategoryId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Sub Categories' | translate}} <span
+                  class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="subCategoryId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of filteredSubCategories" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.name :
+                    getCurrentLang() === 'ar' ? item.name_Ar : item.name}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.subCategoryId.touched) && ResourceForm.controls.subCategoryId.invalid"
+                  class="field-error">
+                  {{'Please select a valid sub category' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-8">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.resourceDescription.touched) && ResourceForm.controls.resourceDescription.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Add Resource Description' | translate}} <span
+                  class="text-danger">*</span></label>
+                <textarea class="form-control alt-bg" formControlName="resourceDescription" rows="8"></textarea>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.resourceDescription.touched) && ResourceForm.controls.resourceDescription.invalid"
+                  class="field-error">
+                  {{'Please enter a valid resource description' | translate}}.
+                </p>
+                <ng-container *ngIf="(ResourceForm.controls.resourceDescription.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="ResourceForm.controls.resourceDescription.errors.maxlength != null">
+                    {{'Make_Profile_message_4' |
+                    translate}} {{ResourceForm.controls.resourceDescription.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.thumbnail.touched) && ResourceForm.controls.thumbnail.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Upload Resource Thumbnail' | translate}} <span
+                  class="text-danger">*</span>&nbsp;<span tooltip="{{'File_limit_message' | translate}}"
+                                                          placement="top" class="text-info"><i class="fa fa-info-circle"
+                                                                                               aria-hidden="true"></i></span></label>
+                <div class="kv-avatar" style="width:200px">
+                  <div class="file-input">
+                    <div class="file-preview">
+                      <div class="file-drop-zone file-drop-zone-nojs">
+                        <img src="{{imgURL}}" class="preview-image"/>
+                        <input *ngIf="imgURL === defaultImage" type="file" id="file" name="file" class="inputfile"
+                               accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp"
+                               (change)="handleFileInput($event.target.files)">
+                        <label for="file" class="btn btn-djblue" *ngIf="imgURL === defaultImage"> <i
+                          class="fa fa-folder-open"></i><span>{{'Upload Resource Thumbnail' | translate}}</span></label>
+                        <label class="btn btn-djblue" *ngIf="imgURL != defaultImage" (click)="removePhoto()">
+                          <i class="fa fa-times"></i><span>{{'Remove' | translate}}</span></label>
+                      </div>
+                    </div>
+                  </div>
+                  <progress-bar *ngIf="thumbnailImageUploadStatus === 'Uploading' && imgURL != defaultImage"
+                                [color]="'#ba9a3a'" [progress]="profileImageUploadPercentage"
+                                [style]="{'height': '20px'}">
+                  </progress-bar>
+                </div>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.thumbnail.touched) && ResourceForm.controls.thumbnail.invalid"
+                  class="field-error">
+                  {{'Please select a valid thumbnail' | translate}}.
+                </p>
+
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.materialTypeId.touched) && ResourceForm.controls.materialTypeId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Material Type' | translate}} <span
+                  class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="materialTypeId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of materials" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                    getCurrentLang() === 'ar' ? item.name_Ar : item.name}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.materialTypeId.touched) && ResourceForm.controls.materialTypeId.invalid"
+                  class="field-error">
+                  {{'Please select a valid material type' | translate}}.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.keywords.touched) && ResourceForm.controls.keywords.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Add Keywords' | translate}}</label>
+                <tag-input formControlName="keywords" [addOnBlur]="true" placeholder="{{'Enter keywords' | translate}}"
+                           (onAdd)="addKeyword($event)"
+                           [maxItems]="10" secondaryPlaceholder="{{'Enter keywords' | translate}}"></tag-input>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.keywords.touched) && ResourceForm.controls.keywords.invalid"
+                  class="field-error">
+                  {{'Please enter a valid keyword' | translate}}.
+                </p>
+                <ng-container *ngIf="(ResourceForm.controls.keywords.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="ResourceForm.controls.keywords.errors.maxlength != null">
+                    {{'Make_Profile_message_4' | translate}}
+                    {{ResourceForm.controls.keywords.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.resourceContent.touched) && ResourceForm.controls.resourceContent.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Resource Content' | translate}} <span
+                  class="text-danger">*</span></label>
+
+                  <editor formControlName="resourceContent" [init]="init"></editor>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.resourceContent.touched) && ResourceForm.controls.resourceContent.invalid"
+                  class="field-error">
+                  {{'Please enter a valid resource content' | translate}}.
+                </p>
+                <ng-container *ngIf="(ResourceForm.controls.resourceContent.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="ResourceForm.controls.resourceContent.errors.maxlength != null">
+                    {{'Make_Profile_message_4' | translate}}
+                    {{ResourceForm.controls.resourceContent.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.resourceFiles.touched) && ResourceForm.controls.resourceFiles.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label"><span
+                  style="unicode-bidi: plaintext;">{{'Upload Associated file (Media/Doc)' | translate}}</span>
+                  &nbsp;<span tooltip="{{'Resource_file_message' | translate}}" placement="top" class="text-info"><i
+                    class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                <!-- <input type="file" (change)="handleResourceFileChange($event.target.files)" class="form-control alt-bg"
+                       formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                  .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"> -->
+                  <div class="upload-btn-wrapper" style="position: relative; overflow: hidden; display: inline-block; background-color: #fff; border: 1px solid #cdcdcd; border-radius: 3px; padding: 8px 12px; height: 39px!important; width:calc(100% - 26px);">
+                    <button class="btnr" style=" top: -6px;border: 2px solid #121212;color: #121212; background-color: #eee; padding: 5px 10px; border-radius: 1px; font-size: 14px; font-weight: bold; position: relative; padding: 5px; font-weight: normal;" title="{{'Choose File' | translate}}">{{'Choose File' | translate}}</button>
+                    <span style="vertical-align: 4px;padding: 5px; font-weight: normal;">{{'No file chosen' | translate }} </span>
+                    <input type="file" name="myfile" style="font-size: 42px; position: absolute; left: 0; top: 0; opacity: 0;" (change)="handleResourceFileChange($event.target.files)" class="form-control alt-bg"
+                      formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                    .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"
+                      title="{{'Choose File' | translate}}" />
+                  </div>
+                <a href="javascript:;" *ngIf="ResourceForm.value.tempFile" (click)="addNewFile()" class="clone-field">+
+                  {{'Add' | translate}}</a>
+
+                <ol *ngIf="resourceFiles.length > 0" class="add-list-image">
+                  <li *ngFor="let item of resourceFiles; let i = index">
+                    <div class="item-group">
+                      <span *ngIf="item.status != 'Uploading'" class="item-status" title="{{item.status}}"><span
+                        class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span></span>
+                      <span class="item-name"
+                            tooltip="{{'The uploaded file can be previewed in the Resource Preview' | translate}}"
+                            container="body"><span class="ellipses">{{item.originalName}}</span></span>
+                      <span class="item-action"><a (click)="removeResourceFile(i)" style="cursor: pointer;"
+                                                   class="btn btn-link btn-sm text-danger"
+                                                   title="{{'Remove Item' | translate}}"><i
+                        class="fa fa-trash-o" aria-hidden="true"></i></a></span>
+                    </div>
+                    <progress-bar *ngIf="item.status === 'Uploading'" [color]="'#ba9a3a'" [progress]="item.progress"
+                                  [style]="{'height': '10px'}">
+                    </progress-bar>
+                  </li>
+                </ol>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.resourceFiles.touched) && ResourceForm.controls.resourceFiles.invalid"
+                  class="field-error">
+                  {{"Please select a valid resource file" | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.references.touched) && ResourceForm.controls.references.invalid) ? 'is-invalid' : ''}}">
+
+                <label for="" class="form-label">{{'Public URL Reference' | translate}} <span
+                  tooltip="{{'Click add to submit' | translate}}" placement="top" class="text-info"><i
+                  class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                <input type="text" (keydown.enter)="addNewUrl()" class="form-control alt-bg" formControlName="tempUrl">
+                <a href="javascript:;" *ngIf="ResourceForm.value.tempUrl" (click)="addNewUrl()" class="clone-field"
+                   data-toggle="modal" data-target="#add-modal">+ {{'Add' | translate}}</a>
+                <ol *ngIf="ResourceForm.value['references'] && ResourceForm.value['references'].length > 0"
+                    class="add-list">
+                  <li *ngFor="let item of ResourceForm.value['references']; let i = index">
+                    <div class="item-group">
+                      <span class="item-name"><span class="ellipses" title="{{item.url}}">{{item.url}}</span></span>
+                      <span class="item-action"><button (click)="removeResourceUrl(i)"
+                                                        class="btn btn-link btn-sm text-danger"
+                                                        title="{{'Remove Item' | translate}}"><i
+                        class="fa fa-trash-o" aria-hidden="true"></i></button></span>
+                    </div>
+                  </li>
+                </ol>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.references.touched) && ResourceForm.controls.references.invalid"
+                  class="field-error">
+                  {{'Please enter a valid reference url' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.copyRightId.touched) && ResourceForm.controls.copyRightId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Select Copyright' | translate}} <span
+                  class="text-danger">*</span></label>
+                <input type="text" class="form-control rd-only" placeholder="{{getSelectedCopyRight()}}"
+                       (click)="showCopyRightList = true" readonly>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.copyRightId.touched) && ResourceForm.controls.copyRightId.invalid"
+                  class="field-error">
+                  {{'Please select a valid copyright' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+
+          <div class="row">
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.educationalStandardId.touched) && ResourceForm.controls.educationalStandardId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Educational Standard' | translate}} <span
+                  class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="educationalStandardId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of educationalStandards" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.standard :
+                    getCurrentLang() === 'ar' ? item.standard_Ar : item.standard}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.educationalStandardId.touched) && ResourceForm.controls.educationalStandardId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Educational Standard' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.educationalUseId.touched) && ResourceForm.controls.educationalUseId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Educational Use' | translate}} <span
+                  class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="educationalUseId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of educationalUses" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.text :
+                    getCurrentLang() === 'ar' ? item.text_Ar : item.text}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.educationalUseId.touched) && ResourceForm.controls.educationalUseId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Educational Use' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.levelId.touched) && ResourceForm.controls.levelId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Level' | translate}} <span class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="levelId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of levels" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.levelText :
+                    getCurrentLang() === 'ar' ? item.levelText_Ar : item.levelText}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.levelId.touched) && ResourceForm.controls.levelId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Level' | translate}}.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--row-->
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.objective.touched) && ResourceForm.controls.objective.invalid) ? 'is-invalid' : ''}}">
+                <label for="readtime" class="form-label">{{'Objective' | translate}} <span
+                  class="text-danger">*</span></label>
+                <textarea class="form-control alt-bg" formControlName="objective" rows="8"></textarea>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.objective.touched) && ResourceForm.controls.objective.invalid"
+                  class="field-error">
+                  {{'Please enter a valid Objective' | translate}}.
+                </p>
+                <ng-container *ngIf="(ResourceForm.controls.objective.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="ResourceForm.controls.objective.errors.maxlength != null">
+                    {{'Make_Profile_message_4' |
+                    translate}}{{ResourceForm.controls.objective.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="form-group {{((resourceFormSubmitted || ResourceForm.controls.readingTime.touched) && ResourceForm.controls.readingTime.invalid) ? 'is-invalid' : ''}}">
+                <label for="readtime" class="form-label">{{'Reading time' | translate}} <span
+                  class="text-danger">*</span> :
+                  {{ResourceForm.value.readingTime ?
+                  ResourceForm.value.readingTime + '' : '0'}} {{'Minutes' | translate}}</label>
+                <!-- <p-slider formControlName="readingTime" [min]="5" [max]="600" [step]="1"></p-slider> -->
+                <div *ngIf="getCurrentLang() == 'en'&&profileService.themeColor=='#1a3464'">
+                  <ng5-slider  formControlName="readingTime" [options]="optionsEn"></ng5-slider>
+                  </div>
+                  <div *ngIf="getCurrentLang() != 'en'&&profileService.themeColor=='#1a3464'">
+                    <ng5-slider  formControlName="readingTime" [options]="optionsAr"></ng5-slider>
+                    </div>
+                    <div *ngIf="getCurrentLang() == 'en'&&profileService.themeColor!='#1a3464'">
+                      <ng5-slider  formControlName="readingTime" [options]="optionsThemeEn"></ng5-slider>
+                      </div>
+                      <div *ngIf="getCurrentLang() != 'en'&&profileService.themeColor!='#1a3464'">
+                        <ng5-slider  formControlName="readingTime" [options]="optionsThemeAr"></ng5-slider>
+                        </div>
+                <p
+                  *ngIf="(resourceFormSubmitted || ResourceForm.controls.readingTime.touched) && ResourceForm.controls.readingTime.invalid"
+                  class="field-error">
+                  {{'Please enter a valid reading time' | translate}}.
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+          <p-dialog [(visible)]="showWhitelistUrlRequest" [modal]="true" [responsive]="true"
+                    header="{{'Public URL Reference' | translate}}">
+            <p>{{'We apologize the mentioned URL is not whitelisted as per the content policies of Manara' |
+              translate}}</p>
+            <p>{{'You can request the administrators of Manara portal to whitelist the mentioned URL' | translate}}</p>
+            <p>{{'Not whitelisted URL will visible only if approved by admin' | translate}}</p>
+            <a href="javascript:;" class="lnk-red">{{ResourceForm.value.tempUrl}}</a>
+            <!--modal-body-->
+
+            <p-footer>
+              <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+                      (click)="RequestWhitelistUrl()">{{'Request' | translate}}
+              </button>
+            </p-footer>
+          </p-dialog>
+          <p-dialog [(visible)]="showCopyRightList" [modal]="true" [responsive]="true"
+                    header="{{'Select Copyright' | translate}}" [contentStyle]="{'width':'800px','max-height':'500px'}">
+            <div class="modal-body-cust">
+              <ng-container *ngFor="let item of copyrights">
+                <label class="rad-container"><strong>{{getCurrentLang() === 'en' ? item.title :
+                  getCurrentLang() === 'ar' ? item.title_Ar : item.title}}</strong>
+                  <input type="radio" value="{{item.id}}" formControlName="copyRightId">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="pop-bdy-txt mb-3">
+                  <div class="copy-flex">
+                    <div class="img-flex">
+                      <img *ngIf="item.media" src="{{ item.media}}" class="img-fluid"/></div>
+                    <div class="text-flex">
+                      <p class="mb-0">{{getCurrentLang() === 'en' ? item.description :
+                        getCurrentLang() === 'ar' ? item.description_Ar : item.description}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+              </ng-container>
+            </div>
+            <!--modal-body-->
+
+            <p-footer>
+              <button type="button" class="btn btn-primary text-uppercase" (click)="submitCopyRight()">{{'Select' |
+                translate}}
+              </button>
+              <button type="button" class="btn btn-info text-uppercase" (click)="cancelCopyRight()">
+                {{'Cancel' | translate}}
+              </button>
+            </p-footer>
+          </p-dialog>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <div (click)="showTerms()"
+                   class="form-group {{((resourceFormSubmitted || ResourceForm.controls.agreed.touched) && ResourceForm.value.agreed === true) ? 'is-invalid' : ''}}">
+                <label class="chk-container">{{'I accept the terms and contents policy of the portal' | translate}}.
+                  <span class="text-danger">*</span>
+                  <input type="checkbox" formControlName="agreed" value="true">
+                  <span class="checkmark"></span>
+                  <p *ngIf="resourceFormSubmitted && ResourceForm.value.agreed === false" class="field-error">
+                    {{'Please agree terms and contents policy of the portal' | translate}}.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <a href="javascript:;" (click)="clearForm()"
+                   class="btn btn-primary text-uppercase mr-1 ar-mr-0">{{'Clear' | translate}}</a>
+                <a href="javascript:;" (click)="previewResource()"
+                   class="btn btn-primary text-uppercase mr-1">{{'Preview' | translate}}</a>
+                <a href="javascript:;" (click)="submitForApproval(ResourceForm)"
+                   class="btn btn-primary text-uppercase mr-1">
+                  {{'Submit for Approval' | translate}}</a>
+                <a href="javascript:;" (click)="saveAsDraft(ResourceForm)" class="btn btn-primary text-uppercase mr-1">
+                  {{'Save as draft' | translate}}</a>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+        </form>
+
+      </div>
+      <!--panel-box-->
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+  <p-dialog header="{{'I accept the terms and contents policy of the portal' | translate}}" [(visible)]="terms"
+            [modal]="true"
+            [responsive]="true" [closable]="false"
+            [style]="{width: '600px', minWidth: '200px', 'max-height':'500px', 'overflow':'auto'}" [minY]="70"
+            [maximizable]="true" [baseZIndex]="10000" focusTrap="false" [focusOnShow]="false">
+    <div [innerHtml]="(getCurrentLang() === 'en' ? termsContent :termsContent_Ar)"></div>
+    <p-footer>
+      <button type="button" class="btn btn-primary" (click)="acceptAgreement(true)">{{'Agree'|translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="acceptAgreement(false)">{{'Cancel'|translate}}</button>
+    </p-footer>
+  </p-dialog>
+</ng-container>
+<ng-container *ngIf="view === 'View Resource'">
+  <app-sub-banner [title]="'Create Resource'|translate" [description]="''">
+  </app-sub-banner>
+  <app-breadcrumbs
+    [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Resources'|translate,link:'/resources',active:false},{text: 'Create Resource'|translate,link:null,active:true}]">
+  </app-breadcrumbs>
+
+
+  <div class="grey-bg pt-40 pb-40" style="position: relative;">
+    <div class="close_btn_preview">
+      <p-button icon="pi pi-times" label="Close Preview" (onClick)="closePreviewResource()" class="ui-button-primary">
+      </p-button>
+    </div>
+    <div class="container">
+      <div class="detail-content-main ml-0">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{ResourceForm.value.thumbnail? ResourceForm.value.thumbnail :'assets/images/dtl1.jpg'}}"
+                   class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <h4 class="mb-0">{{ResourceForm.value.title}} </h4>
+                  <!--item-rating-->
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+            <p class="text-white-space-pre">{{ResourceForm.value.resourceDescription}}</p>
+            <hr>
+
+            <div class="descr-cnt">
+              <p><span>{{'Category' | translate}}:</span> {{getCategory(ResourceForm.value.categoryId)}}</p>
+              <p><span>{{'Material Type' | translate}}:</span> {{getMaterialType(ResourceForm.value.materialTypeId)}}
+              </p>
+              <p><span>{{'Date Added' | translate}}:</span> {{whatTime}}</p>
+              <p><span>{{'Educational Standard' | translate}}:</span>
+                {{getEduStanard(ResourceForm.value.educationalStandardId)}}</p>
+              <p><span>{{'Educational Use' | translate}}:</span> {{getEduUse(ResourceForm.value.educationalUseId)}}</p>
+              <p><span>{{'Level' | translate}}:</span> {{getLevel(ResourceForm.value.levelId)}}</p>
+              <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                {{getKeywords(ResourceForm.value.keywords)}}</p>
+              <p><span>{{'Copyrights' | translate}}</span></p>
+              <div class="copy-flex">
+                <div class="img-flex" *ngIf="ResourceForm.value.copyRight && ResourceForm.value.copyRight.Media">
+                  <img src="{{ResourceForm.value.copyRight.Media}}" class="img-fluid" alt="copyright images">
+                </div>
+                <div class="text-flex">
+                  <p><a href="javascript:;">{{getCopyrightTitle(ResourceForm.value.copyRightId)}}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="dtl-h3">{{'Objective' | translate}}</h3>
+            <hr>
+            <div class="panel-box mb-30 p-30">
+              <p class="text-white-space-pre"
+                 [innerHTML]="ResourceForm.value.objective ? ResourceForm.value.objective : ''"></p>
+            </div>
+          </div>
+        </div> <!-- Objective :END-->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30"
+                 [innerHTML]="ResourceForm.value.resourceContent ? ResourceForm.value.resourceContent : ''">
+            </div>
+          </div>
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of ResourceForm.value.references;let i = index">
+                  <app-iframe-viewer [url]="item.url"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                     *ngIf="ResourceForm.value && (!ResourceForm.value.references || (ResourceForm.value.references && ResourceForm.value.references.length === 0))">
+                  <p>{{'No Reference Links Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Resource Files' | translate}}</h3>
+              <hr>
+              <div class="file-viewer-flex">
+                <app-file-viewer class="col-md-3" *ngFor="let item of ResourceForm.value.resourceFiles"
+                                 [title]="ResourceForm.value.title" [fileName]="item.fileName ? item.fileName : ''"
+                                 [url]="item.url">
+                </app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                     *ngIf="ResourceForm.value && (!ResourceForm.value.resourceFiles || (ResourceForm.value.resourceFiles && ResourceForm.value.resourceFiles.length === 0))">
+                  <p>{{'No Resource Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+  <!--grey-bg-->
+</ng-container>
+<ng-container *ngIf="view === 'Blocked Resource'">
+  <app-sub-banner [title]="'Create Resource'|translate"
+                  [description]="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec tincidunt arcu, sit amet fermentum sem.'">
+  </app-sub-banner>
+  <app-breadcrumbs
+    [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Resources'|translate,link:'/resources',active:false},{text: 'Create Resource'|translate,link:null,active:true}]">
+  </app-breadcrumbs>
+
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+      <div class="panel-box p-30 mb-30">
+
+        <p>{{'Resource cannot be further modified' | translate}}</p>
+
+      </div>
+      <!--panel-box-->
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+</ng-container>

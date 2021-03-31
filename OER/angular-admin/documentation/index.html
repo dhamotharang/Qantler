@@ -1,0 +1,133 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Angular Admin App documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">Angular Admin App documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="oeradmin">oeradmin</h1>
+<p>##Development Setup Instructions </p>
+<ul>
+<li><p>Install the Nodejs </p>
+<div><pre class="line-numbers"><code class="language-none">https://nodejs.org</code></pre></div></li>
+<li><p>Install the Angular CLI </p>
+<div><pre class="line-numbers"><code class="language-none">https://angular.io/guide/setup-local#step-1-install-the-angular-cli</code></pre></div></li>
+<li><p>Run the command below in the root folder of the app via terminal to install dependencies</p>
+<div><pre class="line-numbers"><code class="language-none">$ npm install</code></pre></div></li>
+<li><p>Update the environment ﬁle, path : src/environments/environment.ts </p>
+<div><pre class="line-numbers"><code class="language-typescript">  const keycloakConfig: KeycloakConfig = {
+            url: &#39;http://{keycloak_server_address}}/auth&#39;,
+            realm: &#39;{keycloak_realm_name}&#39;,
+            clientId: &#39;{keycloak_client_id}&#39;,
+            credentials: {
+              secret: &#39;{keycloak_client_secret}&#39;
+            }
+          };
+          // Add here your environment setup infos
+          export const environment = {
+            production: false,
+            keycloak: keycloakConfig,
+            clientUrl: &#39;http://localhost:4200&#39;,
+            apiUrl: &#39;http://{dotnet_api_address}/api/&#39;,
+            encKey: &#39;rNyuFzkutcZL6kmFqWBEtGzJksun1ijU&#39;,
+            userClientUrl: &#39;http://{client_app_URL}/&#39;
+            encKey: &#39;{random encryption key of length 32(should be same as added in Angular Admin App environment file settings)}&#39;
+          };</code></pre></div></li>
+</ul>
+<ul>
+<li><p>Run the command below in the root folder of the app via terminal to build the app for Deployment</p>
+<div><pre class="line-numbers"><code class="language-none">ng serve --watch</code></pre></div></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

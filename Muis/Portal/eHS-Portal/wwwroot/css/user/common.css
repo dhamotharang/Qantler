@@ -1,0 +1,61 @@
+﻿.select2-container--default
+.select2-selection--multiple
+.select2-selection__choice {
+  padding: 6.5px;
+}
+
+.select2-container
+.select2-selection--single {
+  height: 38px;
+  padding: 3px;
+}
+
+.select2-container--default
+.select2-selection--single
+.select2-selection__arrow {
+  top: 6px;
+}
+
+.select2.select2-container.select2-container--default.select2-container--focus
+.selection
+.select2-selection {
+  border-color: #80bdff;
+}
+
+.select2-container--disabled .select2-selection__arrow {
+  display: none;
+}
+
+.icheck-flat {
+  display: flex;
+}
+
+  .icheck-flat div:first-child {
+    align-self: center;
+  }
+
+  .icheck-flat .info {
+    margin-left: 16px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+    .icheck-flat .info .label {
+      font-size: .875rem;
+      font-weight: bold;
+    }
+
+    .icheck-flat .info .description {
+      font-size: .75rem;
+    }
+
+.icheckbox_flat-blue {
+  cursor: auto;
+}
+
+.timeline {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-left: 8px;
+}

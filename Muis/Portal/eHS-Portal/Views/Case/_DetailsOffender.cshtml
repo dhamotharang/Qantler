@@ -1,0 +1,64 @@
+﻿@model eHS.Portal.Model.Case;
+
+<div class="card main">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Offender</h5>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-1 display-info id">
+                    <strong>Name :</strong>
+                    <span>@Model.Offender?.Name</span>
+                </div>
+            </div>
+            <div class="col-md-12 info reporter-other">
+                @if (Model.Offender.ContactInfos != null &&
+              Model.Offender.ContactInfos.Count > 0)
+                {
+                    <p class="mb-1 mt-4"><strong>Contact Details </strong></p>
+                    @foreach (var contact in Model.Offender.ContactInfos)
+                    {
+                        @if (contact.IsPrimary)
+                        {
+                            <p class="mb-1"><span class="badge badge-primary mr-2"> @contact.TypeText </span>@contact.Value</p>
+                        }
+                        else
+                        {
+                            <p class="mb-1"><span class="badge badge-outline-dark mr-2"> @contact.TypeText </span>@contact.Value</p>
+                        }
+                    }
+                }
+            </div>
+            @if (Model.Premises != null)
+            {
+                <div class="col-md-12 premises">
+                    <div><strong>Premises</strong></div>
+                    <div class="row container">
+                        @foreach (var premises in Model.Premises)
+                        {
+                            <div class="list-item" style="padding-bottom:0px">
+                                <div>
+                                    <span class="d-none premise-value" id=@premises.ID></span>
+                                    @if (Model.Certificates != null)
+                                    {
+                                        <ul class="premises-scheme">
+                                            @foreach (var certificate in Model.Certificates.Where(x => x.PremiseID == premises.ID))
+                                            {
+                                                <li class="row">
+                                                    <i class="mdi mdi-file icon-sm text-primary align-items-center col-1"></i>
+                                                    <div class="col-10" style="padding-top: 5px; line-height: 1rem; margin-top: 6px;">
+                                                        <strong>@certificate.SchemeText</strong>, @certificate.Number;
+                                                        <span>expires on </span><span class="expires-on d-none">@certificate.ExpiresOn.Value.UtcDateTime</span>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

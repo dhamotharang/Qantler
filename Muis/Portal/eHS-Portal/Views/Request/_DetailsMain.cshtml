@@ -1,0 +1,205 @@
+﻿<div class="row">
+  <div class="col-md-12 grid-margin">
+    <ul class="nav nav-tabs tab-solid tab-solid-danger" role="tablist" id="request-menu">
+      <li class="nav-item">
+        <a class="nav-link active" id="main-tab-details" data-toggle="tab" href="#main-content-details" role="tab" data-type="main">Main</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-none" id="main-tab-ingredients" data-toggle="tab" href="#main-content-ingredients" role="tab" data-type="ingredients">Ingredients</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-none" id="main-tab-finance" data-toggle="tab" href="#main-content-finance" role="tab" data-type="finance">Invoice/Payments</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="main-tab-notes" data-toggle="tab" href="#main-content-notes" role="tab" data-type="notes">Notes</a>
+      </li>
+    </ul>
+    <div class="tab-content tab-content-solid">
+      <div class="tab-pane fade active show" id="main-content-details" role="tabpanel" aria-labelledby="tab-5-1">
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div id="customer-details-container" class="card-body">
+                <h5 class="font-weight-bold mb-4">Customer Details</h5>
+                <div class="row customer-info">
+                  <div class="col-md-6 info customer">
+                    <p class="mb-1"><strong>Name : </strong><span id="name"></span></p>
+                    <p class="mb-1"><strong>UEN : </strong><span id="altid"></span></p>
+                  </div>
+                  <div class="col-md-6 info customer-other">
+                      <div class="mb-1">
+                          <strong>Customer Code:</strong>
+                          <span id="code"></span>
+                          <button id="codeBtn" type="button" data-toggle="modal" data-target="#selectCodeModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                      </div>
+                      <div class="mb-1">
+                          <strong>Group Code:</strong>
+                          <span id="code-group"></span>
+                          <button id="groupCodeBtn" type="button" data-toggle="modal" data-target="#selectCodeModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                      </div>
+                      <div class="mb-1">
+                          <strong>Parent:</strong>
+                          <span id="parent-code"></span>
+                          <button id="parentBtn" type="button" data-toggle="modal" data-target="#selectCustomerModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                      </div>
+                      <div class="mb-1">
+                          <strong>Officer-in-Charge:</strong>
+                          <span id="officer-code"></span>
+                          <button id="officerBtn" type="button" data-toggle="modal" data-target="#selectOfficerModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <partial name="_detailsWorkflow.cshtml" />
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div id="request-details-container" class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bold mb-4">Request Details</h5>
+                <div class="row">
+                  <div class="col-md-6 info request">
+                    <p class="mb-1 refid"><strong>Reference # : </strong><span id="refid"></span></p>
+                    <p class="mb-1 status"><strong>Status : </strong><span class="text-dark"><span id="status"></span></span></p>
+                    <p class="mb-1 type"><strong>Type : </strong><span id="type"></span></p>
+
+                  </div>
+                  <div class="col-md-6 info request-other">
+                    <p class="mb-1 source"><strong>Source : </strong><span id="source"></span></p>
+                    <p class="mb-1 submittedon"><strong>Submitted On : </strong><span id="submittedon"></span></p>
+                    <p class="mb-1 dueon d-none"><strong>Due On : </strong><span id="dueon"></span></p>
+                    <p class="mb-1 assignedto d-none"><strong>Manage By : </strong><span id="assignedto"></span></p>
+                  </div>
+                </div>
+                <div class="row mt-4 info characteristics d-none">
+                  <div class="col-md-6 info characteristics-left">
+                  </div>
+                  <div class="col-md-6 info characteristics-right">
+                  </div>
+                </div>
+                <div class="row mt-4 info lineitems d-none">
+                  <div class="col-md-12 container">
+                    <div class="row">
+                      <div class="col-12">
+                        <strong>Schemes:</strong>
+                        <div class="border-bottom mt-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row premises d-none">
+          <div class="col-md-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bold mb-4">Premises</h5>
+                <div class="container">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row filer-card">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bold mb-4">Filer's Details</h5>
+                <div class="row filer-info">
+                  <div class="col-md-6 info requestor customer">
+                    <p class="mb-1"><strong>Name : </strong><span id="name"></span></p>
+                    <p class="mb-1"><strong>ID Type : </strong><span id="idtype"></span></p>
+                    <p class="mb-1"><strong>ID : </strong><span id="altid"></span></p>
+                    <p class="mb-1 nationality d-none"><strong>Nationality : </strong><span id="nationality"></span></p>
+                    <p class="mb-1 gender d-none"><strong>Gender : </strong><span id="gender"></span></p>
+                    <p class="mb-1 dob d-none"><strong>Date of Birth : </strong><span id="dob"></span></p>
+                  </div>
+                  <div class="col-md-6 info requestor customer-other">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body applicant-root">
+                <h5 class="font-weight-bold mb-4">Applicant's Details</h5>
+                <div class="row applicant-info">
+                  <div class="col-md-6 info requestor customer">
+                    <p class="mb-1"><strong>Name : </strong><span id="name"></span></p>
+                    <p class="mb-1"><strong>ID Type : </strong><span id="idtype"></span></p>
+                    <p class="mb-1"><strong>ID : </strong><span id="altid"></span></p>
+                    <p class="mb-1 nationality d-none"><strong>Nationality : </strong><span id="nationality"></span></p>
+                    <p class="mb-1 gender d-none"><strong>Gender : </strong><span id="gender"></span></p>
+                    <p class="mb-1 dob d-none"><strong>Date of Birth : </strong><span id="dob"></span></p>
+                  </div>
+                  <div class="col-md-6 info requestor customer-other">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row halal-team d-none">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bold mb-4">Halal Team</h5>
+                <div class="row">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row supporting-documents d-none">
+          <div class="col-md-6 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="font-weight-bold mb-4">Supporting Documents</h5>
+                <div class="row container">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="main-content-menu" role="tabpanel">
+        <partial name="_DetailsMenu.cshtml" />
+      </div>
+      <div class="tab-pane fade" id="main-content-ingredients" role="tabpanel">
+        <partial name="_DetailsIngredients.cshtml" />
+      </div>
+      <div class="tab-pane fade" id="main-content-finance" role="tabpanel">
+        <partial name="_DetailsFinance.cshtml" />
+      </div>
+      <div class="tab-pane fade" id="main-content-notes" role="tabpanel">
+        <partial name="_DetailsNotes.cshtml" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="templates" id="addHalalTeam" hidden>
+  <div class="col-4  d-flex team-row halal-item">
+    <div class=" col-1 img-sm rounded-circle bg-{color} text-white text-avatar">{name}</div>
+    <div class="col-11">
+      <p class="mb-n1 font-weight-semibold halal-content">{u_name}</p>
+      <small>{designation}</small>
+    </div>
+    <div class="tooltip-data col-10 p-3 border rounded">
+      <ul class="list-unstyled m-0">
+        <li><b>{u_name}</b>&nbsp;&nbsp;&nbsp;<span class="text-danger">{isCertified}</span></li>
+        <li>{designation}</li>
+        <li>{altID}</li>
+        <li>{joinedOn}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="templates" id="addmenu" hidden>
+  <li class="nav-item">
+    <a class="nav-link" id="main-tab-menu" data-toggle="tab" href="#main-content-menu" role="tab" data-id="{dataId}" data-type="menu" aria-selected="false">Menu({scheme})</a>
+  </li>
+</div>
+

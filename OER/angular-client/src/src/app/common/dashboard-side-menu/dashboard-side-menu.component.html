@@ -1,0 +1,46 @@
+<div class="panel-box mb-30 user-side-panel">
+  <div class="user-side-panel-head">
+    <p class="user-side-panel-head-txt">{{'Sidemenu' | translate}}</p>
+    <button class="user-side-panel-head-btn"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <div class="clearfix"></div>
+  </div>
+  <div class="overflow-scroll">
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard"><i
+        class="fa fa-laptop" aria-hidden="true"></i> {{'Dashboard' | translate}}</a>
+      </li>
+      <li *ngIf="showQRC" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/qrc"><i
+        class="fa fa-th" aria-hidden="true"></i> {{'QRC Management' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a
+        routerLink="/dashboard/community-check"><i
+        class="fa fa-th" aria-hidden="true"></i> {{'Community Check' | translate}}</a></li>
+      <li *ngIf="isVerifier" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a
+        routerLink="/dashboard/sensitivity-check"><i
+        class="fa fa-th" aria-hidden="true"></i> {{'Sensitivity Check' | translate}}</a></li>
+      <li *ngIf="isVerifier" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a
+        routerLink="/dashboard/expert-check"><i
+        class="fa fa-th" aria-hidden="true"></i> {{'Expert Check' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/profile"><i
+        class="fa fa-user-circle" aria-hidden="true"></i> {{'Profile Information' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/courses"><i
+        class="fa fa-book" aria-hidden="true"></i> {{'My Courses' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/resources"><i
+        class="fa fa-folder" aria-hidden="true"></i> {{'My Resources' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/favourites"><i
+        class="fa fa-book" aria-hidden="true"></i> {{'My Favourites' | translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a
+        routerLink="/dashboard/my-notifications"><i class="fa fa-bell" aria-hidden="true"></i> {{'My Notifications' |
+        translate}}</a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard/announcements"><i
+        class="fa fa-bullhorn" aria-hidden="true"></i> {{'Announcements' | translate}}</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a
+        routerLink="/dashboard/notification-settings"><i class="fa fa-bell" aria-hidden="true"></i>
+        {{'Notification Settings' | translate}}</a></li>
+
+    </ul>
+  </div>
+
+  <div class="clearfix"></div>
+</div>
+

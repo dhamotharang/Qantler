@@ -1,0 +1,49 @@
+{
+  "Logging": {
+    "LogLevel": "Warning",
+    "Address": "10.0.2.4",
+    "Port": 515
+  },
+  "AllowedHosts": "*",
+  "ConnectionSettings": {
+    "ConnectionString": "Server=QtK2DEV;database=RulersCourt;User Id=rrc1;Password=Qant@12345;",
+    "AuthSecret": "RRC Secret Key - For generating JWT token"
+  },
+  "LdapConfig": {
+    "Url": "Qt.K2Dev",
+    "BindDn": "Qtadmin",
+    "BindCredentials": "QtOmronAd01!",
+    "Domain": "K2Dev",
+    "SearchBase": "OU=rrcUsers,DC=Qt,DC=K2Dev",
+    "AdminCn": "Administrators"
+  },
+  "EmailSettings": {
+    "SMTPHost": "mail.verbat.com",
+    "SMTPPort": 25,
+    "Email": "rrc.notification@verbat.com",
+    "Password": "hbhjsb@2725&7Gb",
+    "EnableSsl": false
+  },
+  "SMSProvider": {
+    "SMSProviderUrl": "https://sms.ducont.com/smscompanion/smsadmin/rapidegovsmssubmit_Sub.asp?",
+    "SMSProviderUserName": "rrctest",
+    "SMSProviderPassword": "smS112233"
+  },
+  "UIConfig": {
+    "Url": "http://qtk2dev.westus.cloudapp.azure.com/rrcui/#/"
+  },
+  "APIConfig": {
+    "Url": "http://qtk2dev.westus.cloudapp.azure.com/rrc/"
+  },
+  "NotificationConfig": {
+    "DeletionDay": 30
+  },
+  "WrdUserLoginCredentials": {
+    "UserName": "WrdUser",
+    "Password": "P@$$w0rd"
+  },
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=", //Do not change this
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg==" //Do not change this
+  }
+}

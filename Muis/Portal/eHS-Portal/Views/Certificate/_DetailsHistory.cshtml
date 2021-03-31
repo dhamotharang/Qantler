@@ -1,0 +1,37 @@
+﻿<div class="card widget history">
+    <div class="card-body">
+        <div class="wrapper">
+            <h5 class="font-weight-bold mb-0">History</h5>
+            <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                <div class="loader-demo-box history-loader-box-outerline">
+                    <div class="jumping-dots-loader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="history-container">
+            </div>
+            <div class="widget-placeholder d-none">
+                <span class="text-muted">No data available.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="history-template" hidden>
+    <a class="tickets-card row" href="/request/details/{id}">
+        <div class="tickets-details col-md-12">
+            <div class="wrapper text-muted info">
+                <span>#{refid}</span>
+            </div>
+            <div class="wrapper text-muted info">
+                <span><i class="mdi mdi-certificate"></i>{serialno}</span>
+            </div>
+            <div class="wrapper text-muted time">
+                <span><i class="mdi mdi-clock-outline"></i>{issuedon}</span>
+            </div>
+        </div>
+    </a>
+</div>

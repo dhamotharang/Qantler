@@ -1,0 +1,174 @@
+<app-sub-banner [title]="'Dashboard'|translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Dashboard'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+
+        <div class="panel-box p-30 mb-30">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="user-pic">
+                <img src="{{user && user.photo ?  user.photo : 'assets/images/default-user.png'}}" alt=""
+                  class="img-fluid">
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-lg-9">
+
+              <div class="dash-usbt">
+                <h3 class="dash-username">{{user? user.firstName ? user.firstName : '' : ''}} {{user? user.middleName ?
+                  user.middleName : '' : ''}} {{user? user.lastName ? user.lastName : '' : ''}}</h3>
+                <!-- <a routerLink="/dashboard/profile/edit" class="btn btn-primary btn-sm edit-prof-btn">{{'Edit Profile' |
+                  translate}}</a> -->
+                  <div class="container">
+                    <div class="row edit-prof-btn">
+                  <a routerLink="/dashboard/profile/edit" class="btn btn-primary btn-sm">{{'Edit Profile' |
+                    translate}}</a>    
+                  </div>   
+                  <br><br>
+                  <div class="row edit-prof-btn">     
+                  <a href="javascript:;" (click)="ResetPassword()">{{'Resetpassword' | translate}}</a>
+                </div> 
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <p><b>{{'Email' | translate}}</b>: {{User ? User.email ? User.email : '' : ''}}</p>
+
+              <p class="quicka-txt">{{'Description' | translate}}</p>
+
+              <p class="quicka-content">{{user && user.profileDescription ? user.profileDescription : ''}}</p>
+
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+        </div>
+        <!--panel-box-->
+
+        <div class="panel-box p-30 pb-0 mb-30">
+
+          <div class="row">
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/resources/draft">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.draftResources : 0}}</span>
+                <span class="user-stat-txt">{{"Draft Resources" | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/resources/submitted">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.resourceToApprove : 0}}</span>
+                <span class="user-stat-txt">{{'Resources submitted for Approval' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/resources/published">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.pubishedResources : 0}}</span>
+                <span class="user-stat-txt">{{'Published Resources' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/courses/draft">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.draftCourses : 0}}</span>
+                <span class="user-stat-txt">{{'Draft Courses' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/courses/submitted">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.courseToApprove : 0}}</span>
+                <span class="user-stat-txt">{{'Courses submitted for Approval' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" routerLink="/dashboard/courses/published">
+                <span class="user-stat-count">{{dashboardData ? dashboardData.publishedCourses : 0}}</span>
+                <span class="user-stat-txt">{{'Published Courses' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" href="javascript:;">
+                <span
+                  class="user-stat-count">{{dashboardData ? dashboardData.downloadedCourses + dashboardData.downloadedResources : 0}}</span>
+                <span class="user-stat-txt">{{'Download Count' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+
+            <div class="col-md-3 col-sm-6 user-stat-box-col">
+              <a class="user-stat-box" href="javascript:;">
+                <span
+                  class="user-stat-count">{{dashboardData ? dashboardData.sharedCourses + dashboardData.sharedResources : 0}}</span>
+                <span class="user-stat-txt">{{'Shared Count' | translate}}</span>
+              </a>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+        </div>
+        <!--panel-box-->
+
+        <div class="panel-box p-30" *ngIf="latestCourses && latestCourses.length > 0">
+          <h5 class="lat-res-head">{{'Latest Resources / Courses' | translate}}</h5>
+          <div class="res-co-list">
+            <owl-carousel [options]="{autoplay: true, loop:false, dots: false, nav: true, margin:20, responsiveClass: true,
+              responsive: {'0':{items:1},'480':{items: 1}, '600':{items: 3}, '1000':{items:3}}}"
+              [carouselClasses]="['owl-theme', 'sliding']" [items]="latestCourses" *ngIf="latestCourses">
+              <div class="item" *ngFor="let item of latestCourses ;let i = index">
+                <div class="img-holder"
+                  (click)="router.navigateByUrl(item.contentType === 1 ? '/course/' + encService.set(item.id) :  '/resource/' + encService.set(item.id) )">
+                  <img src="{{item.thumbnail ?  item.thumbnail : 'assets/images/res-co1.jpg'}}" alt=""
+                    class="img-fixed">
+                </div>
+                <a *ngIf="item.contentType === 1" routerLink="/course/{{encService.set(item.id)}}"
+                  class="res-co-box-title">{{item.title}}</a>
+                <a *ngIf="item.contentType === 2" routerLink="/resource/{{encService.set(item.id)}}"
+                  class="res-co-box-title">{{item.title}}</a>
+                <p class="res-co-box-desc">{{ item.description ? truncate(item.description, 100, '…') : '' }}
+                </p>
+                <a *ngIf="item.contentType === 1" routerLink="/course/{{encService.set(item.id)}}"
+                  class="res-co-box-rd">{{'Read More' | translate}}</a>
+                <a *ngIf="item.contentType === 2" routerLink="/resource/{{encService.set(item.id)}}"
+                  class="res-co-box-rd">{{'Read More' | translate}}</a>
+              </div>
+            </owl-carousel>
+
+          </div>
+          <!--res-co-list-->
+        </div>
+        <!--panel-box-->
+
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

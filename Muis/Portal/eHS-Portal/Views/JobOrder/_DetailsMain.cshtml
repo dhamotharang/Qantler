@@ -1,0 +1,79 @@
+﻿@using eHS.Portal.Model;
+
+@model eHS.Portal.Model.JobOrder;
+
+<div class="card main">
+  <div class="card-body">
+    <h5 class="font-weight-bold mb-4">Job Order Details</h5>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-1 display-info id">
+          <strong>Job ID :</strong>
+          <span>@Model.ID</span>
+        </div>
+        @if (@Model.Type == eHS.Portal.Model.JobOrderType.Audit)
+        {
+          <div class="mb-1 display-info refNo">
+            <strong>Reference # :</strong>
+            <span>@Model.RefID</span>
+            <a class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2" href="/request/details/@Model.RefID">View Details</a>
+          </div>
+        }
+        <div class="mb-1 display-info type">
+          <strong>Type :</strong>
+          <span>@Model.TypeText</span>
+        </div>
+        <div class="mb-1 display-info status">
+          <strong>Status :</strong>
+          <span>@Model.StatusText</span>
+        </div>
+      </div>
+      @if (@Model.Status != JobOrderStatus.Draft)
+      {
+        <div class="col-md-6">
+          <div class="mb-1 display-info scheduledOn">
+            <strong>Scheduled Start Time :</strong>
+            <span></span>
+          </div>
+          <div class="mb-1 display-info scheduledOnTo">
+            <strong>Scheduled End Time :</strong>
+            <span></span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-1 display-info managedBy">
+            <strong>Managed By :</strong>
+            <span>@Model.Officer?.Name</span>
+          </div>
+        </div>
+      }
+      else
+      {
+        <div class="col-md-6">
+          <div class="mb-1 display-info targetDate">
+            <strong>Target Date :</strong>
+            <span>@Model.TargetDate</span>
+          </div>
+        </div>
+      }
+      <div class="col-md-12">
+        <div class="mb-1 display-info schemes">
+          <strong>Schemes :</strong>
+          <span></span>
+        </div>
+      </div>
+      <div class="col-md-12 premise">
+        <span></span>
+      </div>
+      @if (!string.IsNullOrEmpty(Model.Notes))
+      {
+        <div class="col-md-12 notes">
+          <div class="mt-2 display-info">
+            <strong>Notes</strong>
+          </div>
+          <p class="p-3">@Model.Notes</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

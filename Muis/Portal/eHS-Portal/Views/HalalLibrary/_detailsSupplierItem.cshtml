@@ -1,0 +1,24 @@
+﻿<div class="modal fade" id="SupplierDetailModal" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Supplier</h5>
+      </div>
+      <div class="modal-body">
+        <form class="form">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input id="supplierName" type="text" maxlength="255" class="form-control form-control-lg">
+              <label class="error mt-2 text-danger">Name is required</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="saveButton" onclick="app.page.supplier.save()" type="button" class="btn btn-outline-primary">Save</button>
+        <button id="cancelButton" onclick="app.page.supplier.close()" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

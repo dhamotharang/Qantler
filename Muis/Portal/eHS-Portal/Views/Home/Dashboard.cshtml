@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+@section CSS
+{
+    <link rel="stylesheet" href="~/plugins/jquery-bar-rating/css-stars.css">
+    <link rel="stylesheet" href="~/css/home/dashboard.css">
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">Dashboard</h4>
+    </div>
+}
+
+<div class="row">
+    <partial name="_DashboardPerformance" />
+    <partial name="_DashboardStatistics.cshtml" />
+    <partial name="_DashboardStatus.cshtml" />
+    <partial name="_DashboardWorkItems.cshtml" />
+</div>
+
+@section Scripts
+{
+    <script src="~/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/plugins/jquery-bar-rating/jquery.barrating.min.js"></script>
+
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-select/dataTables.select.min.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+
+    <script src="~/js/chart.js"></script>
+
+    <script src="~/js/home/_dashboardWorkItems.js"></script>
+    <script src="~/js/home/_DashboardWorkItemRequestBuilder.js"></script>
+    <script src="~/js/home/_dashboardPerformance.js"></script>
+    <script src="~/js/home/_dashboardOverview.js"></script>
+    <script src="~/js/home/_dashboardStatus.js"></script>
+    <script src="~/js/home/dashboard.js"></script>
+}

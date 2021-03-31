@@ -1,0 +1,61 @@
+.version-selected {
+  background-color: azure;
+}
+
+h4 a.add-new-btn {
+  font-size: 18px;
+  color: #000;
+}
+
+.checklist-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+  .checklist-tooltip .tooltip-text {
+    visibility: hidden;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 16px;
+    position: absolute;
+    left: -405px;
+    top: 5px;
+    z-index: 999;
+    box-shadow: 0 0 0 0 rgba(90,113,208,.11),0 4px 16px 0 rgba(167,175,183,.44);
+  }
+
+.list.header{
+  margin-top: 16px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+  .checklist-tooltip:hover .tooltip-text {
+    visibility: visible;
+  }
+
+.versions{
+  min-height: 60px;
+}
+
+.compliance {
+  display: flex
+}
+
+.compliance-body {
+  flex: 1
+}
+
+.list.item{
+  margin-top:8px;
+}
+
+@media (max-width: 992px) {
+  .page-title {
+    margin-bottom: 5px !important;
+  }
+}
+
+.categories td {
+  vertical-align: top;
+}

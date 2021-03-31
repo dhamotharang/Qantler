@@ -1,0 +1,93 @@
+﻿@model eHS.Portal.Models.Request.IndexModel;
+
+@{
+    ViewData["Title"] = "Requests";
+}
+
+@section CSS
+{
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/datatables.net-select-bs4/select.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/css/request/index.css" />
+    <style>
+        p[class="last-action"] {
+            width: 220px;
+            white-space: pre-wrap;
+            line-height: 1.2rem;
+        }
+    </style>
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">Requests</h4>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            <li><a id="clearSelectionButton" class="d-none" href="javascript:void(0)">Clear Selection</a></li>
+            <li><a id="recommendButton" data-toggle="modal" data-target="#recommendModal" class="d-none" href="javascript:void(0)">Recommend All</a></li>
+            <li><a id="rejectAllButton" data-toggle="modal" data-target="#approveModal" class="d-none" href="javascript:void(0)">Reject All</a></li>
+            <li><a id="approveAllButton" data-toggle="modal" data-target="#approveModal" class="d-none" href="javascript:void(0)">Approve All</a></li>
+            <li><a id="filterButton" data-toggle="modal" data-target="#filterModal" href="javascript:void(0)">Advanced Filter</a></li>
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="listing" class="table hover">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Reference #</th>
+                            <th>Scheme</th>
+                            <th>Customer</th>
+                            <th style="width: 180px;">Premise</th>
+                            <th>Submitted On</th>
+                            <th>Last Action</th>
+                            <th>Status</th>
+                            <th>RFA</th>
+                            <th>Managed By</th>
+                          </tr>
+                        </thead>
+                        <tfoot />
+                        <tbody />
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_IndexFilter.cshtml" />
+<partial name="_IndexRecommend.cshtml" />
+<partial name="_IndexApproveReject.cshtml" />
+<partial name="/Views/Shared/_ComposeEmail.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+    </script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-select/dataTables.select.min.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/js/shared/_composeEmail.js"></script>
+    <script src="~/js/request/_helpers.js"></script>
+    <script src="~/js/request/_indexFilter.js"></script>
+    <script src="~/js/request/_indexRecommend.js"></script>
+    <script src="~/js/request/_indexApproveReject.js"></script>
+    <script src="~/js/request/index.js"></script>
+}

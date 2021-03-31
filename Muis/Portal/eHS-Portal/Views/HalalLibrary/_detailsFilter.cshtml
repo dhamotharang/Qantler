@@ -1,0 +1,69 @@
+﻿<div class="modal fade" id="HalallibraryFilterModal" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Advanced Filter</h5>
+      </div>
+      <div class="modal-body">
+        <form class="form">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input id="filterName" type="text" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Brand</label>
+            <div class="col-sm-9">
+              <input id="filterBrand" type="text" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Supplier</label>
+            <div class="col-sm-9">
+              <input id="filterSupplier" type="text" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Certifying Body</label>
+            <div class="col-sm-9">
+              <input id="filterCertifyingBody" type="text" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Risk Category</label>
+            <div class="col-sm-9">
+              <select id="filterRiskCategory" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                <option value="100">Low</option>
+                <option value="200">Medium-Low Risk</option>
+                <option value="300">Medium-High Risk</option>
+                <option value="400">High Risk</option>
+                <option value="999">Uncategorized</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Verified</label>
+            <div class="col-sm-9">
+              <select id="filterIsVerified" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                <option value="0">Unverified</option>
+                <option value="1">Verified</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Verified By</label>
+            <div class="col-sm-9">
+              <input id="filterVerifiedBy" type="text" class="form-control form-control-lg">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="filterApplyButton" onclick="app.page.filter.apply()" type="button" class="btn btn-outline-primary">Apply</button>
+        <button id="filterClearButton" onclick="app.page.filter.clear()" type="button" class="btn btn-outline-secondary">Clear</button>
+        <button id="filterCloseButton" onclick="app.page.filter.close()" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

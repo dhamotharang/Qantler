@@ -1,0 +1,76 @@
+<div class="grid">
+  <div *ngIf="checkFileType() === 'document'" class="grid">
+    <a href="javascript:;" (click)="showViewer()" class="media-item">
+      <span class="filename">{{fileName}}</span>
+      <span class="fa-icon"><i class="fa fa-file-o" aria-hidden="true"></i></span>
+    </a>
+  </div>
+  <div *ngIf="checkFileType() === 'pdf'" class="grid">
+    <a href="javascript:;" (click)="showViewer()" class="media-item">
+      <span class="filename">{{fileName}}</span>
+      <span class="fa-icon"><i class="fa fa-file-o" aria-hidden="true"></i></span>
+    </a>
+  </div>
+  <div *ngIf="checkFileType() === 'audio'" class="grid">
+    <a href="javascript:;" (click)="showViewer()" class="media-item">
+      <span class="filename">{{fileName}}</span>
+      <span class="fa-icon"><i class="fa fa-file-audio-o" aria-hidden="true"></i></span>
+    </a>
+  </div>
+  <div *ngIf="checkFileType() === 'accepted'" class="grid">
+    <a href="javascript:;" (click)="showViewer()" class="media-item">
+      <span class="filename">{{fileName}}</span>
+      <span class="fa-icon"><i class="fa fa-file-o" aria-hidden="true"></i></span>
+    </a>
+  </div>
+  <div *ngIf="checkFileType() === 'video'" class="grid">
+    <a href="javascript:;" (click)="showViewer()" class="media-item">
+      <span class="filename">{{fileName}}</span>
+      <video width="99%">
+        <source src="{{url}}">
+        <span class="fa-icon"><i class="fa fa-file-video-o" aria-hidden="true"></i></span>
+        <track default kind="captions" src=""/>
+      </video>
+    </a>
+  </div>
+  <div *ngIf="checkFileType() === 'image'" class="grid bg-grey">
+    <a (click)="showViewer()"><img src="{{url}}" class="img-fluid"></a>
+  </div>
+</div>
+
+<p-dialog [(visible)]="showModal" [contentStyle]="{'overflow':'hidden','max-height':'90vh'}" [maximizable]="true">
+  <p-header>
+    <div class="title-flex">
+      <div class="title-flex-column"><img src="/assets/images/header-logo.png" alt="Manara"></div>
+      <div class="title-flex-column"><span class="ellipsis">{{title}}</span></div>
+    </div>
+  </p-header>
+  <div *ngIf="showModal">
+    <div *ngIf="checkFileType() === 'image'" class="doc-viewer">
+      <ngx-image-viewer [src]="[url]">
+      </ngx-image-viewer>
+    </div>
+    <div *ngIf="checkFileType() === 'pdf'" class="doc-viewer">
+     <tld-file-viewer [src]="url" [type]="filetype"></tld-file-viewer>
+    </div>
+    <div *ngIf="checkFileType() === 'document'" class="doc-viewer">
+      <a href="{{url}}" download><button  style="  background-color: #121212; color: white;" ><i class="fa fa-download"></i> {{'Download'| translate}} </button></a>
+       <ngx-doc-viewer [url]="url" viewer="google"></ngx-doc-viewer>
+    </div>
+    <div *ngIf="checkFileType() === 'audio'" class="media-viewer">
+      <mat-basic-audio-player [audioUrl]="url"></mat-basic-audio-player>
+    </div>
+    <div *ngIf="checkFileType() === 'video'" class="video-viewer">
+      <mat-video [src]="url"></mat-video>
+    </div>
+    <div *ngIf="checkFileType() === 'accepted'" class="video-viewer">
+      <div class="text-center">
+        <p>{{"Download_Msg_1" | translate}}</p>
+
+        <p>{{"Download_Msg_2" | translate}}</p>
+
+        <a href="{{url}}" target="_blank"><h4 style="margin-top: 50px;">{{'Open'| translate}}</h4></a>
+      </div>
+    </div>
+  </div>
+</p-dialog>

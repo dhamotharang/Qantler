@@ -1,0 +1,52 @@
+﻿<div class="checklist-template" hidden>
+
+    <div class="checklist">
+    </div>
+
+    <div class="checklist-item">
+    </div>
+
+    <div class="info">
+        <div>
+            <p>{id}</p>
+            <p>{text}</p>
+        </div>
+        <div class="checklist-tooltip {tooltipVisibility}">
+            <span class="mdi mdi-information-outline"></span>
+            <div class="tooltip-text">
+                {tooltipText}
+            </div>
+        </div>
+    </div>
+
+    <div class="info category">
+        <p>{id}</p>
+        <p>{text}</p>
+    </div>
+
+    <div class="remarks">
+        <div class="{complianceVisibility}">
+            <span class="officer">{officer}</span><span class="compliance {color}">{compliance}</span>
+        </div>
+        <div class="{separatorVisibility}" style="height:8px;"> </div>
+        <p>
+            {text}
+        </p>
+    </div>
+
+    <div class="attachments">
+    </div>
+
+    <div class="attachment item">
+        <div class="thumb">
+            <i class="mdi mdi-paperclip"></i>
+        </div>
+        <div class="details">
+            <p class="file-name">{fileName}</p>
+            <div class="buttons">
+                <p class="file-size">{fileSize}</p>
+                <a href="/api/file/{fileID}?fileName={fileName}" class="download" download="{fileName}">Download</a>
+            </div>
+        </div>
+    </div>
+</div>

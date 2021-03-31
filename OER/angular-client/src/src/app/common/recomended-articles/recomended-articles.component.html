@@ -1,0 +1,29 @@
+<div class="panel-box p-30 mb-30">
+  <h3 class="dtl-h3">{{"Recommended Article" | translate}}</h3>
+  <hr>
+  <ng-container *ngFor="let item of resources;let i=index">
+    <div class="row" *ngIf="i < 4 && item.contentType === 1">
+      <div class="col-lg-4 col-md-2 col-sm-2" (click)="router.navigateByUrl('/course/' + encService.set(item.id))">
+        <img src="{{item.thumbnail ?  item.thumbnail : 'assets/images/res-co1.jpg'}}" class="img-fluid">
+      </div>
+      <div class="col-lg-8 col-md-10 col-sm-10">
+        <a class="rec-art-txt" routerLink="/course/{{encService.set(item.id)}}">{{item.title}}</a>
+
+        <p class="rec-art-decr"><span class="ellipsis">{{item.description}}</span></p>
+      </div>
+    </div>
+    <div class="row" *ngIf="i < 4 && item.contentType === 2">
+      <div class="col-lg-4 col-md-2 col-sm-2" (click)="router.navigateByUrl('/resource/' + encService.set(item.id))">
+        <img src="{{item.thumbnail ?  item.thumbnail : 'assets/images/res-co1.jpg'}}" class="img-fluid">
+      </div>
+      <div class="col-lg-8 col-md-10 col-sm-10">
+        <a class="rec-art-txt" routerLink="/resource/{{encService.set(item.id)}}">{{item.title}}</a>
+
+        <p class="rec-art-decr"><span class="ellipsis">{{item.description}}</span></p>
+      </div>
+    </div>
+    <hr *ngIf="i < 3">
+  </ng-container>
+
+</div>
+<!--panel-box-->

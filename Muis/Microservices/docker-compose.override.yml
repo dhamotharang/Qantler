@@ -1,0 +1,60 @@
+version: '3.4'
+
+services:
+  request.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56122
+    ports:
+      - "56122:56122/tcp"
+
+  file.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56152
+    ports:
+      - "56152:56152/tcp"
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56132
+    ports:
+      - "56132:56132/tcp"
+
+  joborder.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56142
+    ports:
+      - "56142:56142/tcp"
+
+  notification.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56112
+    ports:
+      - "56112:56112/tcp"
+
+  finance.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56162
+    ports:
+       - "56162:56162/tcp"
+
+  case.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56172
+    ports:
+       - "56172:56172/tcp"
+
+
+  halallibrary.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56182
+    ports:
+       - "56182:56182/tcp"
+

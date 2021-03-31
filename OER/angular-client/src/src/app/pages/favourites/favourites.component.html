@@ -1,0 +1,100 @@
+<app-sub-banner [title]="'My Favourites' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home' | translate,link:'/',active:false},{text: 'My Favourites' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="panel-box p-30 mb-30">
+          <ul class="nav nav-fill panel-tabs panel-top-nav" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">
+                <i class="fa fa-book" aria-hidden="true"></i> {{"Courses" | translate}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#tab2" role="tab">
+                <i class="fa fa-folder" aria-hidden="true"></i> {{'Resources' | translate}}
+              </a>
+            </li>
+          </ul>
+          <!-- tab-navigation :END -->
+
+          <div class="tab-content pt-30">
+            <div class="tab-pane active" id="tab1" role="tabpanel">
+              <div class="row">
+                <div *ngFor="let item of courses" class="col-xs-12 col-sm-6 col-md-4 mb-3">
+                  <div class="blog mini">
+                    <button type="button" (click)="removeSavedItem(item)" class="close"><i class="fa fa-times-circle"
+                        aria-hidden="true"></i>
+                    </button>
+                    <div class="img-viewer" (click)="router.navigateByUrl('/course/' +  encService.set(item.id))">
+                      <div class="img"
+                        [ngStyle]="{ 'background-image': 'url(' + (item.thumbnail ?  item.thumbnail : 'assets/images/pop-res1.jpg') + ')'}">
+                      </div>
+                    </div>
+                    <div class="content">
+                      <h4><span class="truncate">{{item.title}}</span></h4>
+                      <p class="res-co-box-desc truncate">
+                        {{item.description}}
+                      </p>
+                      <a i18n [routerLink]="'/course/' + encService.set(item.contentId)"
+                        class="btn btn-primary text-uppercase mt-2">{{'View Course' | translate}}</a>
+
+                    </div>
+                  </div>
+                </div> <!-- loop this Item-->
+                <div *ngIf="courses.length === 0" class="col-xs-12 text-center">
+                  <p>{{'No items Found' | translate}}</p>
+                </div>
+              </div>
+            </div> <!-- tab1 :END-->
+
+
+            <div class="tab-pane" id="tab2" role="tabpanel">
+              <div class="row">
+
+
+                <div *ngFor="let item of resources" class="col-xs-12 col-sm-6 col-md-4 mb-3">
+                  <div class="blog mini">
+                    <button type="button" (click)="removeSavedItem(item)" class="close"><i class="fa fa-times-circle"
+                        aria-hidden="true"></i>
+                    </button>
+                    <div class="img-viewer">
+                      <div class="img-viewer" (click)="router.navigateByUrl('/resource/' +  encService.set(item.id))">
+                        <div class="img"
+                          [ngStyle]="{ 'background-image': 'url(' + (item.thumbnail ?  item.thumbnail : 'assets/images/pop-res1.jpg') + ')'}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <h4><span class="truncate">{{item.title}}</span></h4>
+                      <p class="res-co-box-desc truncate">
+                        {{item.description}}
+                      </p>
+                      <a i18n [routerLink]="'/resource/' + encService.set(item.contentId)"
+                        class="btn btn-primary text-uppercase mt-2">{{'View Resource' | translate}}</a>
+                    </div>
+                  </div>
+                </div> <!-- loop this Item-->
+                <div *ngIf="resources.length === 0" class="col-xs-12 text-center">
+                  <p>{{'No items Found' |
+                  translate}}</p>
+                </div>
+
+              </div>
+            </div><!-- tab2 :END-->
+          </div> <!-- tab-content :END-->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

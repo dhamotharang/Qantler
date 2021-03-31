@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم تأكيد نموذج إستلام المركبة والخاص بطلبك رقم {{ArReferenceNumber}} بواسطة {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+Release form against the request {{EnService}} {{ReferenceNumber}} has been confirmed by {{EnFromName}}.
+Best Regards

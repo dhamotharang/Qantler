@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  ehs-portal:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:56201
+    ports:
+      - "56201:56201/tcp"

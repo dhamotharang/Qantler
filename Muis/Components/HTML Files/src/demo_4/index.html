@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- End Plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/demo_4/style.css">
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../assets/images/favicon.png" />
+  </head>
+  <body class="dark-theme sidebar-dark">
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <div class="navbar fixed-top">
+        <div class="navbar-menu-wrapper d-flex align-items-center w-100">
+          <ul class="nav">
+            <div class="nav-item ml-0">
+              <li class="nav-item dropdown d-none d-md-inline-block ml-0">
+                <a class="nav-link dropdown-toggle pl-0" id="dashboardDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                  <span class="profile-text">Dashboard</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="dashboardDropdown">
+                  <a class="dropdown-item mt-3">Annual Reports</a>
+                  <a class="dropdown-item">Revenue Reports <span class="badge badge-danger ml-auto badge-pill">3</span></a>
+                  <a class="dropdown-item">IPO Reports <i class="dropdown-arrow mdi mdi-chevron-right"></i></a>
+                  <a class="dropdown-item">Finance Reports<i class="dropdown-arrow mdi mdi-chevron-right"></i></a>
+                  <a class="dropdown-item">HR Reports</a>
+                </div>
+              </li>
+            </div>
+            <div class="nav-item ml-0">
+              <li class="nav-item dropdown d-none d-md-inline-block ml-0">
+                <a class="nav-link dropdown-toggle" id="ordersDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                  <span class="profile-text">Orders</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="ordersDropdown">
+                  <a class="dropdown-item mt-3">View Orders <span class="badge badge-primary ml-auto badge-pill">13</span></a>
+                  <a class="dropdown-item">Create Order<i class="dropdown-arrow mdi mdi-chevron-right"></i></a>
+                  <a class="dropdown-item">Cancel Order<i class="dropdown-arrow mdi mdi-chevron-right"></i></a>
+                </div>
+              </li>
+            </div>
+            <div class="nav-item ml-0">
+              <li class="nav-item dropdown d-none d-md-inline-block ml-0">
+                <a class="nav-link dropdown-toggle" id="ordersDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                  <span class="profile-text">Reports</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="ReportsDropdown">
+                  <a class="dropdown-item mt-3">View Reports</a>
+                  <a class="dropdown-item">Cancel Reports<i class="dropdown-arrow mdi mdi-chevron-right"></i></a>
+                  <a class="dropdown-item">Manage Reports<span class="badge badge-success ml-auto badge-pill">6</span></a>
+                </div>
+              </li>
+            </div>
+          </ul>
+          <ul class="nav navbar-nav-right ml-auto">
+            <li class="nav-item dropdown circle-grid">
+              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-bell-outline"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+                <a class="dropdown-item dropdown-header">
+                  <div class="wrapper">
+                    <h4 class="mb-1 font-weight-medium">Notification</h4>
+                    <p class="mb-0 font-weight-medium float-left font-weight-light">You have 7 unread mails </p>
+                  </div>
+                  <span class="badge badge-pill badge-primary float-right">View all</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic"> </div>
+                  <div class="preview-item-content flex-grow py-2">
+                    <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
+                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic"> </div>
+                  <div class="preview-item-content flex-grow py-2">
+                    <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
+                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="../assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic"> </div>
+                  <div class="preview-item-content flex-grow py-2">
+                    <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown circle-grid">
+              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <i class="mdi mdi-tune"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+                <a class="dropdown-item dropdown-header">
+                  <div class="wrapper">
+                    <h4 class="mb-1 font-weight-medium">Activity Controller</h4>
+                    <p class="mb-0 font-weight-medium float-left font-weight-light">You have 4 new notifications</p>
+                  </div>
+                  <span class="badge badge-pill badge-primary float-right">View all</span>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-alert m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                    <p class="font-weight-light small-text mb-0"> Just now </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-settings m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                    <p class="font-weight-light small-text mb-0"> Private message </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                    <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item circle-grid indicator-language">
+              <a class="nav-link">
+                <i class="flag-icon flag-icon-us"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
+              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <img class="img-xs rounded-circle" src="../assets/images/faces/face1.jpg" alt="Profile image">
+                <span class="profile-text">Allen Moreno</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                <a class="dropdown-item mt-2 active"> Manage Accounts </a>
+                <a class="dropdown-item"> Change Password </a>
+                <a class="dropdown-item"> Check Inbox </a>
+                <a class="dropdown-item"> Sign Out </a>
+                <div class="wrapper px-4 pt-2">
+                  <button type="button" class="btn btn-rounded btn-sm btn-outline-primary mr-2">Logout</button>
+                  <button type="button" class="btn btn-rounded btn-sm btn-outline-secondary">Cancel</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center pr-0" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="right-sidebar-toggler-wrapper">
+        <div class="sidebar-toggler" id="layout-toggler"><i class="mdi mdi-settings"></i></div>
+        <div class="sidebar-toggler" id="chat-toggler"><i class="mdi mdi-chat-processing"></i></div>
+        <div class="sidebar-toggler"><a href="https://www.bootstrapdash.com/demo/star-admin-pro/src/docs/documentation.html" target="_blank"><i class="mdi mdi-file-document-outline"></i></a></div>
+        <div class="sidebar-toggler"><a href="https://www.bootstrapdash.com/product/star-admin-pro" target="_blank"><i class="mdi mdi-cart"></i></a></div>
+      </div>
+      <div class="theme-setting-wrapper">
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close mdi mdi-close"></i>
+          <div class="d-flex align-items-center justify-content-between border-bottom">
+            <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Template Demos </p>
+          </div>
+          <div class="demo-screen-wrapper">
+            <a href="../demo_1/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/default.jpg" alt="demo image">
+            </a>
+            <a href="../demo_2/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/default-two.jpg" alt="demo image">
+            </a>
+            <a href="../demo_3/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/default-dark.jpg" alt="demo image">
+            </a>
+            <a href="../demo_4/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/analytics-dasboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_5/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/Marketing-dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_6/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/crm-dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_7/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/modern-dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_8/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/e-commerce_dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_9/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/finance-dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_10/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/classic-dashboard.jpg" alt="demo image">
+            </a>
+            <a href="../demo_11/index.html" class="demo-thumb-image">
+              <img src="../assets/images/screenshots/horizontal-screens.jpg" alt="demo image">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close mdi mdi-close"></i>
+        <div class="d-flex align-items-center justify-content-between border-bottom">
+          <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+        </div>
+        <ul class="chat-list">
+          <li class="list active">
+            <div class="profile">
+              <img src="../assets/images/faces/face1.jpg" alt="image">
+              <span class="online"></span>
+            </div>
+            <div class="info">
+              <p>Thomas Douglas</p>
+              <p>Available</p>
+            </div>
+            <small class="text-muted my-auto">19 min</small>
+          </li>
+          <li class="list">
+            <div class="profile">
+              <img src="../assets/images/faces/face2.jpg" alt="image">
+              <span class="offline"></span>
+            </div>
+            <div class="info">
+              <div class="wrapper d-flex">
+                <p>Catherine</p>
+              </div>
+              <p>Away</p>
+            </div>
+            <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+            <small class="text-muted my-auto">23 min</small>
+          </li>
+          <li class="list">
+            <div class="profile">
+              <img src="../assets/images/faces/face3.jpg" alt="image">
+              <span class="online"></span>
+            </div>
+            <div class="info">
+              <p>Daniel Russell</p>
+              <p>Available</p>
+            </div>
+            <small class="text-muted my-auto">14 min</small>
+          </li>
+          <li class="list">
+            <div class="profile">
+              <img src="../assets/images/faces/face4.jpg" alt="image">
+              <span class="offline"></span>
+            </div>
+            <div class="info">
+              <p>James Richardson</p>
+              <p>Away</p>
+            </div>
+            <small class="text-muted my-auto">2 min</small>
+          </li>
+          <li class="list">
+            <div class="profile">
+              <img src="../assets/images/faces/face5.jpg" alt="image">
+              <span class="online"></span>
+            </div>
+            <div class="info">
+              <p>Madeline Kennedy</p>
+              <p>Available</p>
+            </div>
+            <small class="text-muted my-auto">5 min</small>
+          </li>
+          <li class="list">
+            <div class="profile">
+              <img src="../assets/images/faces/face6.jpg" alt="image">
+              <span class="online"></span>
+            </div>
+            <div class="info">
+              <p>Sarah Graves</p>
+              <p>Available</p>
+            </div>
+            <small class="text-muted my-auto">47 min</small>
+          </li>
+        </ul>
+      </div>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div class="sidebar sidebar-offcanvas" id="sidebar-icon-only">
+          <div class="sidebar-inner ps-enabled">
+            <nav class="nav">
+              <div class="nav-item brand-logo">
+                <a class="nav-link" href="index.html"><img src="../assets/images/logo-mini-4.svg" alt="logo"></a>
+              </div>
+              <div class="nav-item active">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-poll-box"></i>
+                  <span class="menu-title">Resources</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <div class="profile-tab text-white">
+                      <img class="img-sm rounded mb-3" src="../assets/images/faces/face1.jpg" alt="profile image">
+                      <p class="mb-0 text-white">Allen Moreno</p>
+                      <h3>$387,098</h3>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item nav-category">Applications</div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-chart-bar"></i></div>Analysis
+                        </a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-message-text-outline"></i></div>Problem
+                        </a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-magnify"></i></div>Search
+                        </a>
+                      </div>
+                      <div class="nav-item nav-category">Modules</div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">Finance <div class="badge badge-pill ml-auto badge-danger">3 </div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">Order <div class="badge badge-pill ml-auto badge-primary">7 </div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">Delivery</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">Resource</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">Support</a>
+                      </div>
+                      <div class="nav-item nav-category">Social Networks</div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-facebook"></i></div>Facebook
+                        </a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-twitter"></i></div>Twitter
+                        </a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-linkedin"></i></div>Linkedin
+                        </a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link">
+                          <div class="icon-holder"><i class="mdi mdi-google-plus"></i></div>Google Plus
+                        </a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-airplay"></i>
+                  <span class="menu-title">Products</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Products</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-cash-usd"></i>Revenue<div class="badge badge-pill ml-auto badge-danger">16</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-content-copy"></i>Bills</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-chart-line"></i>IPO</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-monitor"></i>Tax Details</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-file-outline"></i>Invoices</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Accounts</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Notifications</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-wallet-travel"></i>
+                  <span class="menu-title">Finance</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Finance</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-cash-usd"></i>Orders<div class="badge badge-pill ml-auto badge-danger">2</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-format-page-break"></i>Reports</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-block-helper"></i>Cancelled</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-shield-outline"></i>Payments<div class="badge badge-pill ml-auto badge-success">8</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-chart-bar-stacked"></i>Statistics</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Accounts</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Notifications</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-tab"></i>
+                  <span class="menu-title">Accounting</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Accounting</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-refresh"></i>Recurring<div class="badge badge-pill ml-auto badge-danger">5</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-format-page-break"></i>Expenses<div class="badge badge-pill ml-auto badge-success">4</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-clock-outline"></i>Enstimates</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-credit-card"></i>Credit Notes</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-login-variant"></i>Sales</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Summary</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Statistics</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Manage</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-folder-outline"></i>
+                  <span class="menu-title">Sales</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Sales</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-refresh"></i>Sale Board<div class="badge badge-pill ml-auto badge-danger">8</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-format-page-break"></i>Sales reps</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-clock-outline"></i>Daily Dashboard</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-credit-card"></i>Summary Report</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-login-variant"></i>Total Sale & Rep</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Total Sale Reps</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Statistics</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Tools</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-border-all"></i>
+                  <span class="menu-title">Security</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Security</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-refresh"></i>Password</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-format-page-break"></i>Secure Notes</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-clock-outline"></i>Activity<div class="badge badge-pill ml-auto badge-primary">21</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-credit-card"></i>Backup</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-login-variant"></i>Recovery<div class="badge badge-pill ml-auto badge-success">23</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Users Audit</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Data Audit</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Security Alert</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-clipboard-outline"></i>
+                  <span class="menu-title">Application</span>
+                </a>
+                <div class="submenu">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Application</h5>
+                    <div class="submenu-toolbar">
+                      <ul>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-arrow-down-bold-box"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-tag"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-printer"></i></a></li>
+                        <li class="item"><a href="blank-page.html"><i class="mdi mdi-delete"></i></a></li>
+                      </ul>
+                    </div>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-presentation"></i>Project</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-presentation"></i>Trello</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-message-text"></i>Chat<div class="badge badge-pill ml-auto badge-primary">21</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-calendar"></i>Event Calendar</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-check-circle-outline"></i>Survey<div class="badge badge-pill ml-auto badge-success">23</div></a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Settings</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Need Help?</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Knowledge Base</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-item mt-auto settings-item-link">
+                <a href="#" class="nav-link">
+                  <i class="menu-icon mdi mdi-settings"></i>
+                  <span class="menu-title">Settings</span>
+                </a>
+                <div class="submenu bg-inverse-white">
+                  <div class="submenu-inner ps-enabled">
+                    <h5 class="submenu-category-heading">Settings</h5>
+                    <ul class="nav">
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-account-outline"></i>Employees</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-newspaper"></i>Appoinments</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-flask-empty-outline"></i>Services</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-map-marker-circle"></i>Location</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-codepen"></i>Customize</a>
+                      </div>
+                      <div class="nav-item">
+                        <a href="blank-page.html" class="nav-link"><i class="mdi mdi-help-circle-outline"></i>Help</a>
+                      </div>
+                    </ul>
+                    <ul class="nav settings-nav">
+                      <div class="nav-item nav-category">Support</div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Performance</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Overview</a>
+                      </div>
+                      <div class="nav-item">
+                        <a class="nav-link" href="#">Notifications</a>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row d-none d-sm-flex">
+              <div class="col-12 d-flex pb-4 pt-2">
+                <h4 class="page-title">Dashboard</h4>
+                <div class="nav d-none d-lg-flex dashboard-quick-link">
+                  <div class="nav-item"><a href="blank-page.html" class="nav-link"><i class="mdi mdi-content-save mr-2"></i>Save Report</a></div>
+                  <div class="nav-item"><a href="blank-page.html" class="nav-link"><i class="mdi mdi-file-pdf mr-2"></i>Export to PDF</a></div>
+                  <div class="nav-item"><a href="blank-page.html" class="nav-link"><i class="mdi mdi-email mr-2"></i>Send to Email</a></div>
+                </div>
+                <div class="btn-wrapper ml-auto">
+                  <button type="button" class="btn btn-outline-secondary btn-rounded mr-3">Manage</button>
+                  <button type="button" class="btn btn-primary btn-rounded">Add Customer</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-6 col-12 grid-margin grid-margin-md-0 stretch-card dashboard-kpi-cards">
+                        <div class="card">
+                          <div class="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div class="wrapper">
+                              <span class="d-flex align-items-center"><i class="mdi mdi-web text-warning mr-2 icon-sm"></i>Page Visits</span>
+                              <h2 class="mt-0 mb-0 font-weight-medium">22,490</h2>
+                              <p class="text-gray mb-0">13% From Last week</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12 grid-margin  grid-margin-md-0 stretch-card dashboard-kpi-cards">
+                        <div class="card">
+                          <div class="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div class="wrapper">
+                              <span class="d-flex align-items-center"><i class="mdi mdi-account-outline text-info mr-2 icon-sm"></i>Total Earning</span>
+                              <h2 class="mt-0 mb-0 font-weight-medium">$45,231</h2>
+                              <p class="text-gray mb-0">46% From Last week</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12 grid-margin grid-margin-sm-0 stretch-card dashboard-kpi-cards">
+                        <div class="card">
+                          <div class="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div class="wrapper">
+                              <span class="d-flex align-items-center"><i class="mdi mdi-cart-plus text-success mr-2 icon-sm"></i>Impression</span>
+                              <h2 class="mt-0 mb-0 font-weight-medium">82,490</h2>
+                              <p class="text-gray mb-0">34% From Last week</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12 stretch-card dashboard-kpi-cards">
+                        <div class="card">
+                          <div class="card-body d-flex justify-content-center flex-column align-items-center">
+                            <div class="wrapper">
+                              <span class="d-flex align-items-center"><i class="mdi mdi-clipboard-outline text-danger mr-2 icon-sm"></i>Site Income</span>
+                              <h2 class="mt-0 mb-0 font-weight-medium">$34,542</h2>
+                              <p class="text-gray mb-0">8% From Last week</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Website Audience</h4>
+                    <p class="w-75">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolorez</p>
+                    <div class="row pt-3">
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row mb-4 mb-md-0">
+                        <div class="chart-container bg-danger p-3 mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0">
+                          <canvas id="acquisition-bar_1" height="20" width="20"></canvas>
+                        </div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Bounce Rate</small>
+                          <h4 class="font-weight-bold mb-0">26.80%</h4>
+                        </div>
+                      </div>
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row mb-4 mb-md-0">
+                        <div class="chart-container bg-primary p-3 mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0">
+                          <canvas id="acquisition-bar_2" height="20" width="20"></canvas>
+                        </div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Sessions</small>
+                          <h4 class="font-weight-bold mb-0">9,065</h4>
+                        </div>
+                      </div>
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row">
+                        <div class="chart-container bg-info p-3 mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0">
+                          <canvas id="acquisition-bar_3" height="20" width="20"></canvas>
+                        </div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Page Views</small>
+                          <h4 class="font-weight-bold mb-0">83,123</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Store Visits</h4>
+                    <p class="w-75">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolorez</p>
+                    <div class="row pt-3">
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row mb-4 mb-md-0">
+                        <div class="mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0" id="circleProgress_1"></div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Total visitors</small>
+                          <h4 class="font-weight-bold mb-0">26.80%</h4>
+                        </div>
+                      </div>
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row mb-4 mb-md-0">
+                        <div class="mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0" id="circleProgress_2"></div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Visits Per Day</small>
+                          <h4 class="font-weight-bold mb-0">9,065</h4>
+                        </div>
+                      </div>
+                      <div class="col-md-4 d-flex align-items-center flex-md-column flex-lg-row">
+                        <div class="mr-3 mr-md-0 mr-lg-3 mb-md-2 mb-lg-0" id="circleProgress_3"></div>
+                        <div class="wrapper d-flex flex-column justify-content-center">
+                          <small class="font-weight-medium text-gray">Conversion</small>
+                          <h4 class="font-weight-bold mb-0">83,123</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body d-flex align-item-stretch">
+                    <div class="row">
+                      <div class="col-md-8 d-flex flex-column">
+                        <div class="wrapper">
+                          <div class="d-flex align-items-center">
+                            <h4 class="card-title mb-0">Realtime Statistics</h4>
+                            <div class="badge badge-pill badge-lg badge-danger my-auto ml-3 d-none d-lg-block">New</div>
+                          </div>
+                          <h2>24.456%</h2>
+                        </div>
+                        <canvas class="my-4 my-md-0 mt-md-auto w-100" id="realtime-statistics" height="330"></canvas>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="d-flex justify-content-between py-2 border-bottom mt-4 pt-5">
+                          <div class="wrapper">
+                            <p class="mb-0">Marketing</p>
+                            <h5 class="font-weight-medium">34%</h5>
+                          </div>
+                          <div class="wrapper d-flex flex-column align-items-center">
+                            <small class="text-muted mb-2">2019</small>
+                            <div class="badge badge-pill badge-danger">Mar</div>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                          <div class="wrapper">
+                            <p class="mb-0">Develpment</p>
+                            <h5 class="font-weight-medium">49%</h5>
+                          </div>
+                          <div class="wrapper d-flex flex-column align-items-center">
+                            <small class="text-muted mb-2">2019</small>
+                            <div class="badge badge-pill badge-warning">DVR</div>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                          <div class="wrapper">
+                            <p class="mb-0">Human Resources</p>
+                            <h5 class="font-weight-medium">75%</h5>
+                          </div>
+                          <div class="wrapper d-flex flex-column align-items-center">
+                            <small class="text-muted mb-2">2019</small>
+                            <div class="badge badge-pill badge-primary">H&R</div>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2">
+                          <div class="wrapper">
+                            <p class="mb-0">Performance</p>
+                            <h5 class="font-weight-medium">89%</h5>
+                          </div>
+                          <div class="wrapper d-flex flex-column align-items-center">
+                            <small class="text-muted mb-2">2019</small>
+                            <div class="badge badge-pill badge-success">H&R</div>
+                          </div>
+                        </div>
+                        <div class="wrapper mt-4 d-none d-lg-block">
+                          <small class="text-muted ml-auto d-none d-lg-block mb-4">Updated at 08.32pm, Aug 2019</small>
+                          <p class="text-muted mb-0">Note: These statistics are aggregates over all of your application's users. </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="row flex-grow w-100">
+                  <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Sales Prediction</h4>
+                        <div class="row">
+                          <div class="col-md-6 aligner-wrapper">
+                            <canvas class="my-4 my-md-auto w-100Sales Prediction" id="salesPrdictionDoughnutChart" height="250"></canvas>
+                            <div class="wrapper d-flex flex-column justify-content-center absolute absolute-center">
+                            </div>
+                          </div>
+                          <div class="col-md-6 legend-wrapper">
+                            <div class="d-flex flex-column justify-content-center">
+                              <div class="d-flex align-items-center">
+                                <div class="dot-indicator bg-primary mt-1 mr-2"></div>
+                                <h4 class="mb-0">5.34%</h4>
+                              </div>
+                              <small class="text-muted ml-3">Admin Dashbaord</small>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center border-top border-bottom py-2  mt-1 mb-1">
+                              <div class="d-flex align-items-center">
+                                <div class="dot-indicator bg-warning mt-1 mr-2"></div>
+                                <h4 class="mb-0">17%</h4>
+                              </div>
+                              <small class="text-muted ml-3">Website Design</small>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <div class="d-flex align-items-center">
+                                <div class="dot-indicator bg-success mt-1 mr-2"></div>
+                                <h4 class="mb-0">53%</h4>
+                              </div>
+                              <small class="text-muted ml-3">Mobile App</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-7">
+                            <h4 class="card-title font-weight-medium mb-3">Amount Due</h4>
+                            <h1 class="font-weight-medium mb-0">$5998</h1>
+                            <p class="text-muted">Milestone Completed</p>
+                            <p class="mb-0">Payment for next week</p>
+                          </div>
+                          <div class="col-md-5 d-flex align-items-end mt-4 mt-md-0">
+                            <canvas id="conversionBarChart" height="150"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body d-flex flex-column">
+                    <div class="wrapper">
+                      <div class="wrapper text-center">
+                        <img class="mb-4 rounded-circle" src="../assets/images/faces/face1.jpg" alt="profile image">
+                        <h4 class="font-weight-medium mb-0">Pin Jung-Eum</h4>
+                        <p class="text-muted">Sales Manager at QC Apps</p>
+                        <div class="d-flex justify-content-center">
+                          <button type="button" class="btn btn-info btn-rounded mr-3">Message</button>
+                          <button type="button" class="btn btn-primary btn-rounded">Compare</button>
+                        </div>
+                      </div>
+                      <h4 class="mt-5 mb-n5">Performance</h4>
+                    </div>
+                    <canvas class="mt-auto" id="performance-area-chart" height="250"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title mb-n4 d-none d-md-block">Orders</h4>
+                    <table id="order-listing" class="table table-borderless table-striped">
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Sales</th>
+                          <th>Status</th>
+                          <th>Earning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>57543-30</td>
+                          <td>435</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-primary mr-2"></div>Pending
+                          </td>
+                          <td>$235.00</td>
+                        </tr>
+                        <tr>
+                          <td>236345-31</td>
+                          <td>567</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-danger mr-2"></div>Canceled
+                          </td>
+                          <td>$805.00</td>
+                        </tr>
+                        <tr>
+                          <td>236234-32</td>
+                          <td>145</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-primary mr-2"></div>Pending
+                          </td>
+                          <td>$453.00</td>
+                        </tr>
+                        <tr>
+                          <td>325606-33</td>
+                          <td>453</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-danger mr-2"></div>Canceled
+                          </td>
+                          <td>$2305.00</td>
+                        </tr>
+                        <tr>
+                          <td>32643-34</td>
+                          <td>653</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-primary mr-2"></div>Pending
+                          </td>
+                          <td>$1405.00</td>
+                        </tr>
+                        <tr>
+                          <td>33466-35</td>
+                          <td>234</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-danger mr-2"></div>Canceled
+                          </td>
+                          <td>$8045.00</td>
+                        </tr>
+                        <tr>
+                          <td>34634-36</td>
+                          <td>567</td>
+                          <td class="d-flex align-items-center">
+                            <div class="dot-indicator bg-primary mr-2"></div>Pending
+                          </td>
+                          <td>$2146.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <p>© 2019 Staradmin Responsive Bootstrap 4 Dashboard Template</p>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="../assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../assets/js/shared/off-canvas.js"></script>
+    <script src="../assets/js/shared/hoverable-collapse.js"></script>
+    <script src="../assets/js/shared/misc.js"></script>
+    <script src="../assets/js/shared/settings.js"></script>
+    <script src="../assets/js/shared/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../assets/js/shared/widgets.js"></script>
+    <script src="../assets/js/demo_4/dashboard.js"></script>
+    <script src="../assets/js/shared/data-table.js"></script>
+    <!-- End custom js for this page -->
+  </body>
+</html>

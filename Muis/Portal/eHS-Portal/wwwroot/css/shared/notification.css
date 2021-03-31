@@ -1,0 +1,75 @@
+﻿.settings-panel .notification-list {
+  padding-left: 0;
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+}
+
+  .settings-panel .notification-list .list {
+    padding: 0.4rem 0.8rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+  }
+
+    .settings-panel .notification-list .list:last-child {
+      border-bottom: none;
+    }
+
+    .settings-panel .notification-list .list .profile {
+      position: relative;
+      margin-right: 1rem;
+    }
+
+      .settings-panel .notification-list .list .profile .img-xs {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 100%;
+      }
+
+      .settings-panel .notification-list .list .profile .indicator {
+        height: 0.75rem;
+        width: 0.75rem;
+        position: absolute;
+        top: 22px;
+        right: 0;
+        border: 0.13rem solid #ffffff;
+        border-radius: 100%;
+        background: #19d895;
+        display: none;
+      }
+
+    .settings-panel .notification-list .list .info {
+      margin-right: auto;
+    }
+
+      .settings-panel .notification-list .list .info p {
+        display: block;
+        margin-bottom: 0;
+      }
+
+        .settings-panel .notification-list .list .info p:first-child {
+          font-weight: 500;
+        }
+
+        .settings-panel .notification-list .list .info p:last-child {
+          opacity: 0.5;
+          font-size: 0.8rem;
+        }
+
+.settings-panel .notification-list .list.active {
+  background: #f0f5fa;
+}
+
+.settings-panel .notification-list .list:hover {
+  background: #f7fbff;
+}
+
+.settings-panel .notification-list .list.active .profile .indicator {
+  display: block;
+}

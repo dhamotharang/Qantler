@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Star Admin Pro Vue Template</title>
+    <link href="documentation.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div class="left-panel">
+      <h4 class="logo">Star Admin</h4>
+      <h6 class="title-label">Introduction</h6>
+      <ul class="left-menu">
+        <li><a href="#gettingstarted">Getting Started</a></li>
+        <li><a href="#filestructure">File Structure</a></li>
+      </ul>
+      <h6 class="title-label mg-t-40">HTML Structure</h6>
+      <ul class="left-menu">
+        <li><a href="#Default_Dashboard">01 - Default Dashboard</a></li>
+        <li><a href="#Default_2_Dashboard">02 - Default 2 Dashboard</a></li>
+        <li><a href="#Dark_Dashboard">03 - Dark Dashboard</a></li>
+        <li><a href="#Analytics_Dashboard">04 - Analytics Dashboard</a></li>
+        <li><a href="#Marketing_Dashboard">05 - Marketing Dashboard</a></li>
+        <li><a href="#CRM_Dashboard">06 - CRM Dashboard</a></li>
+        <li><a href="#Modern_Dashboard">07 - Modern Dashboard</a></li>
+        <li><a href="#E-commerce_Dashboard">08 - E-commerce Dashboard</a></li>
+        <li><a href="#Finance_Dashboard">09 - Finance Dashboard</a></li>
+        <li><a href="#Classic_Dashboard">10 - Classic Dashboard</a></li>
+        <li><a href="#Horizontal_Dashboard">11 - Horizontal Dashboard</a></li>
+      </ul>
+      <h6 class="title-label mg-t-40">Other Information</h6>
+      <ul class="left-menu">
+        <li><a href="#changelog">Changelog</a></li>
+        <li><a href="#support">Customer Support</a></li>
+      </ul>
+      <br><br>
+    </div><!-- left-panel -->
+    <div class="main-wrapper">
+      <div class="main-panel">
+        <h1 class="section-title" id="gettingstarted">Intoduction</h1>
+        <p>Star Admin is a responsive HTML template that is based on the CSS framework Bootstrap 4 and it is built with Sass. Sass compiler makes it easier to code and customize. If you are unfamiliar with Bootstrap or Sass, visit their website and read through the documentation. All of Bootstrap components have been modified to fit the style of Star Admin and provide a consistent look throughout the template.</p>
+        <p>Before you start working with the template, we suggest you go through the pages that are bundled with the theme. Most of the template example pages contain quick tips on how to create or use a component which can be really helpful when you need to create something on the fly.</p>
+        <p class="d-inline">
+          <strong>Note</strong>: We are trying our best to document how to use the template. If you think that something is missing from the documentation, please do not hesitate to tell us about it. If you have any questions or issues regarding this theme, please email us at :</p>
+        <a class="d-inline ml-2 text-info" href="mailto:support@bootstrapdash.com">support@bootstrapdash.com</a>
+        <h2 class="section-subtitle">Getting Started</h2>
+        <p>This part of the doc will help you to quick start your project and will give you a basic idea about how StarAdmin works.</p>
+        <h2 class="section-subtitle" id="filestructure">What's In The Box</h2>
+        <p>Once you have download the package you will see the following folder structure inside the folder.</p>
+        <div class="pre-wrapper">
+          <pre>
+StarAdmin Pro/
+├── Gulp-tasks/         // Contains Various Gulp tasks
+├── src/                // Contains the raw source code of HTML, javascript, scss, images etc.
+├   ├─ assets/          // Contains Javascript,SCSS,CSS,images,fonts
+├   ├─ demo_1/          // Contains HTML files for Default Layout
+├   ├─ demo_2/          // Contains HTML files for Default 2 Layout
+├   ├─ demo_3/          // Contains HTML files for Default Dark Layout
+├   ├─ demo_4/          // Contains HTML files for Analytics Dashboard
+├   ├─ demo_5/          // Contains HTML files for Marketing Dashboard
+├   ├─ demo_6/          // Contains HTML files for CRM Dashboard
+├   ├─ demo_7/          // Contains HTML files for Modern Dashboard
+├   ├─ demo_8/          // Contains HTML files for E-commerce Dashboard
+├   ├─ demo_9/          // Contains HTML files for Finance Dashboard
+├   ├─ demo_10/         // Contains HTML files for Classic Dashboard
+├   ├─ demo_11/         // Contains HTML files for Horizontal Layout
+├   ├─ docs/            // Template documentation
+├   ├─ index.html
+├── CHANGELOG.md
+├── gulpfile.js
+├── package.json
+        </pre>
+        </div><!-- pre-wrapper -->
+        <div class="alert"> We have bundled up the vendor files needed for demo purpose into a folder 'vendors', you may not need all those vendors in your application. If you want to make any change in the vendor package files, you need to change the src path for related tasks in the file gulpfile.js and run the task bundleVendors to rebuild the vendor files. </div>
+        <h2 class="section-subtitle" id="buildsetup">Installation</h2>
+        <p>You need to install package files/Dependencies for this project if you want to customize it. To do this, you must have <b>node and npm</b> installed in your computer. Follow these steps to get started.</p>
+        <ul>
+          <li>Install Nodejs from <a href="https://nodejs.org/" target="_blank">Nodejs Official Page</a></li>
+          <li>Open your terminal and navigate to the root folder of the project</li>
+          <li>Run <code>npm install -g gulp-cli</code></li>
+        </ul>
+        <p>The command installs Gulp-cli globally on your machine. Gulp will watch for changes to the SCSS files and automatically compile the files to CSS.</p>
+        <p>Next,</p>
+        <ul>
+          <li>Run <code>npm install</code> from the root directory of your project folder to install dependencies</li>
+          <li>After you have successfully completed <b>npm install</b>, then run <code>gulp serve</code> to run the template, and a new tab will be opened in your browser.</li>
+          <li>Now you are good to go and start customizing the template. :)</li>
+        </ul>
+        <hr>
+        <h1 class="section-title">HTML Structure</h1>
+        <h2 class="section-subtitle" id="Default_Dashboard">01 - Default Layout</h2>
+        <p>Below is the basic HTML structure default layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+  &lt;!-- Required meta tags --&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+  &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+  &lt;!-- plugins:css --&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin css for this page --&gt;
+  &lt;!-- End Plugin css for this page --&gt;
+  &lt;!-- inject:css --&gt;
+  &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Layout styles --&gt;
+  &lt;link rel="stylesheet" href="../assets/css/demo_1/style.css"&gt;
+  &lt;!-- End Layout styles --&gt;
+  &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class="container-scroller"&gt;
+    &lt;!-- navbar --&gt;
+    &lt;nav class="navbar"&gt;
+      ...
+    &lt;/nav&gt;
+    &lt;!-- navbar --&gt;
+    &lt;div class="container-fluid page-body-wrapper"&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="settings-panel"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;nav class="sidebar sidebar-offcanvas" id="sidebar"&gt;
+      &lt;/nav&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;div class="main-panel"&gt;
+        &lt;div class="content-wrapper"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- content-wrapper ends --&gt;
+        &lt;!-- footer --&gt;
+        &lt;footer class="footer"&gt;
+          ...
+        &lt;/footer&gt;
+        &lt;!-- footer --&gt;
+      &lt;/div&gt;
+      &lt;!-- main-panel ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- page-body-wrapper ends --&gt;
+  &lt;/div&gt;
+  &lt;!-- container-scroller --&gt;
+  &lt;!-- plugins:js --&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin js for this page--&gt;
+  &lt;!-- End plugin js for this page--&gt;
+  &lt;!-- inject:js --&gt;
+  &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Custom js for this page--&gt;
+  &lt;script src="../assets/js/demo_1/dashboard.js"&gt;&lt;/script&gt;
+  &lt;!-- End custom js for this page--&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+        <hr>
+        <h2 class="section-subtitle" id="Default_2_Dashboard">02 - Default 2 Dashboard</h2>
+        <p>Below is the basic HTML structure default 2 layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_2/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;!-- navbar --&gt;
+      &lt;nav class="navbar"&gt;
+        ...
+      &lt;/nav&gt;
+      &lt;!-- navbar --&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;!-- settings panel --&gt;
+        &lt;div class="settings-panel"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- settings panel --&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;nav class="sidebar" id="sidebar"&gt;
+
+        &lt;/nav&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;div class="content-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- partial:partials/_footer.html --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- partial --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/todolist.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_2/dashboard.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+        <hr>
+        <h2 class="section-subtitle" id="Dark_Dashboard">03 - Default Dark Layout</h2>
+        <p>Below is the basic HTML structure default dark layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+  &lt;!-- Required meta tags --&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+  &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+  &lt;!-- plugins:css --&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin css for this page --&gt;
+  &lt;!-- End Plugin css for this page --&gt;
+  &lt;!-- Layout styles --&gt;
+  &lt;link rel="stylesheet" href="../assets/css/demo_3/style.css"&gt;
+  &lt;!-- End Layout styles --&gt;
+  &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class="container-scroller"&gt;
+    &lt;!-- navbar --&gt;
+    &lt;nav class="navbar"&gt;
+      ...
+    &lt;/nav&gt;
+    &lt;!-- navbar --&gt;
+    &lt;div class="container-fluid page-body-wrapper"&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="settings-panel"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;nav class="sidebar sidebar-offcanvas" id="sidebar"&gt;
+      &lt;/nav&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;div class="main-panel"&gt;
+        &lt;div class="content-wrapper"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- content-wrapper ends --&gt;
+        &lt;!-- footer --&gt;
+        &lt;footer class="footer"&gt;
+          ...
+        &lt;/footer&gt;
+        &lt;!-- footer --&gt;
+      &lt;/div&gt;
+      &lt;!-- main-panel ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- page-body-wrapper ends --&gt;
+  &lt;/div&gt;
+  &lt;!-- container-scroller --&gt;
+  &lt;!-- plugins:js --&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin js for this page--&gt;
+  &lt;!-- End plugin js for this page--&gt;
+  &lt;!-- inject:js --&gt;
+  &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Custom js for this page--&gt;
+  &lt;script src="../assets/js/demo_1/dashboard.js"&gt;&lt;/script&gt;
+  &lt;!-- End custom js for this page--&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+        <hr>
+        <h2 class="section-subtitle" id="Analytics_Dashboard">04 - Analytics Dashboard</h2>
+        <p>Below is the basic HTML structure analytics dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+  &lt;!-- Required meta tags --&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+  &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+  &lt;!-- plugins:css --&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin css for this page --&gt;
+  &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+  &lt;!-- End Plugin css for this page --&gt;
+  &lt;!-- inject:css --&gt;
+  &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Layout styles --&gt;
+  &lt;link rel="stylesheet" href="../assets/css/demo_4/style.css"&gt;
+  &lt;!-- End Layout styles --&gt;
+  &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+&lt;/head&gt;
+
+&lt;body class="dark-theme sidebar-dark"&gt;
+  &lt;div class="container-scroller"&gt;
+    &lt;!-- navbar --&gt;
+    &lt;div class="navbar fixed-top"&gt;
+      ...
+    &lt;/div&gt;
+    &lt;!-- navbar --&gt;
+    &lt;!-- settings --&gt;
+    &lt;div class="right-sidebar-toggler-wrapper"&gt;
+      ...
+    &lt;/div&gt;
+    &lt;!-- settings --&gt;
+    &lt;div class="container-fluid page-body-wrapper"&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;div class="sidebar sidebar-offcanvas" id="sidebar-icon-only"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- sidebar --&gt;
+      &lt;div class="main-panel"&gt;
+        &lt;div class="content-wrapper"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- content-wrapper ends --&gt;
+        &lt;!-- footer --&gt;
+        &lt;footer class="footer"&gt;
+          ...
+        &lt;/footer&gt;
+        &lt;!-- footer --&gt;
+      &lt;/div&gt;
+      &lt;!-- main-panel ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- page-body-wrapper ends --&gt;
+  &lt;/div&gt;
+  &lt;!-- container-scroller --&gt;
+  &lt;!-- plugins:js --&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Plugin js for this page--&gt;
+  &lt;!-- End plugin js for this page--&gt;
+  &lt;!-- inject:js --&gt;
+  &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+  &lt;!-- endinject --&gt;
+  &lt;!-- Custom js for this page--&gt;
+  &lt;script src="../assets/js/shared/widgets.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/demo_4/dashboard.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/js/shared/data-table.js"&gt;&lt;/script&gt;
+  &lt;!-- End custom js for this page--&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+        <h2 class="section-subtitle" id="Marketing_Dashboard">05 - Marketing Dashboard</h2>
+        <p>Below is the basic HTML structure marketing dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css"&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_5/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body class="sidebar-dark"&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;!-- navbar --&gt;
+          &lt;div class="navbar fixed-top"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- navbar --&gt;
+          &lt;!-- settings panel --&gt;
+          &lt;div class="right-sidebar-toggler-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- settings panel --&gt;
+          &lt;div class="page-header-toolbar"&gt;
+            &lt;div class="nav"&gt;
+              &lt;div class="nav-item page-head-item dropdown"&gt;
+                &lt;small class="head-tittle"&gt;Dashboard&lt;/small&gt;
+                &lt;h4 class="page-heading font-weight-medium"&gt;Sales & Marketing &lt;i class="mdi mdi-chevron-down text-muted"&gt;&lt;/i&gt;&lt;/h4&gt;
+              &lt;/div&gt;
+              &lt;div class="nav-item"&gt;
+                &lt;small class="head-tittle"&gt;START DATE&lt;/small&gt;
+                &lt;p class="page-heading"&gt;Oct 10, 2018&lt;/p&gt;
+              &lt;/div&gt;
+              &lt;div class="nav-item"&gt;
+                &lt;small class="head-tittle"&gt;END DATE&lt;/small&gt;
+                &lt;p class="page-heading"&gt;Oct 10, 2018&lt;/p&gt;
+              &lt;/div&gt;
+              &lt;div class="nav-item"&gt;
+                &lt;small class="head-tittle"&gt;EVENT CATEGORY&lt;/small&gt;
+                &lt;p class="page-heading"&gt;All Categories&lt;i class="mdi mdi-chevron-down ml-1 text-muted"&gt;&lt;/i&gt;&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="content-wrapper"&gt;
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- partial:partials/_footer.html --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- partial --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/todolist.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_5/dashboard.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/demo_5/script.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+        <h2 class="section-subtitle" id="CRM_Dashboard">06 - CRM Dashboard</h2>
+        <p>Below is the basic HTML structure CRM dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_6/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;!-- top header--&gt;
+        &lt;div class="top-header"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- top header--&gt;
+        &lt;!-- settings panel--&gt;
+        &lt;div class="settings panel"&gt;
+          ...
+        &lt;/div&gt;
+        &lt;!-- settings panel--&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;div class="hero-banner"&gt;
+            &lt;!-- navbar --&gt;
+            &lt;div class="navbar"&gt;
+              ...
+            &lt;/div&gt;
+            &lt;!-- navbar --&gt;
+          &lt;/div&gt;
+          &lt;div class="content-wrapper container-wrapper-width"&gt;
+            &lt;!-- sidebar --&gt;
+            &lt;div class="sidebar-menu"&gt;
+              ...
+            &lt;/div&gt;
+            &lt;!-- sidebar --&gt;
+            &lt;div class="content-area"&gt;
+              &lt;div class="page-header"&gt;
+                &lt;h4 class="page-title"&gt;CRM Dashboard&lt;/h4&gt;
+                &lt;div class="page-header-content"&gt;
+                  &lt;div class="server-load"&gt;
+                    &lt;p&gt;Server Load&lt;/p&gt;
+                    &lt;div class="chart-wrapper"&gt;
+                      &lt;canvas id="server-load-data-chart" height="20" width="80"&gt;&lt;/canvas&gt;
+                    &lt;/div&gt;
+                    &lt;p class="font-weight-bold"&gt;50%&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class="dropdown mt-3 mt-sm-0 d-none d-sm-block"&gt;
+                    &lt;button class="btn dropdown-toggle" type="button" id="report-weeks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;Today : &lt;span class="text-white"&gt;Jan 23&lt;/span&gt;&lt;/button&gt;
+                    &lt;div class="dropdown-menu" aria-labelledby="report-weeks"&gt;
+                      &lt;a class="dropdown-item" href="#"&gt;Yesterday&lt;/a&gt;
+                      &lt;a class="dropdown-item" href="#"&gt;Last Week&lt;/a&gt;
+                      &lt;a class="dropdown-item" href="#"&gt;Last Month&lt;/a&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class="content-area-inner"&gt;
+                ...
+              &lt;/div&gt;
+              &lt;!-- content aside right --&gt;
+              &lt;div class="content-aside-right"&gt;
+                ...
+              &lt;/div&gt;
+              &lt;!-- content aside right --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/todolist.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_6/dashboard.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/demo_6/script.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle" id="Modern_Dashboard">07 - Modern Dashboard</h2>
+        <p>Below is the basic HTML structure modern dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_7/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;!-- navbar --&gt;
+      &lt;nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row"&gt;
+      &lt;/nav&gt;
+      &lt;!-- navbar --&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="settings-panel"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;nav class="sidebar sidebar-offcanvas dynamic-active-class-disabled" id="sidebar"&gt;
+          ...
+        &lt;/nav&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;div class="content-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- footer --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- footer --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/todolist.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_7/dashboard.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle" id="E-commerce_Dashboard">08 - E-commerce Dashboard</h2>
+        <p>Below is the basic HTML structure e-commerce dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_8/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;nav class="sidebar sidebar-offcanvas dynamic-active-class-disabled" id="sidebar"&gt;
+          ...
+        &lt;/nav&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;!-- navbar --&gt;
+          &lt;nav class="navbar col-lg-12 col-12 p-0 d-flex flex-row"&gt;
+            ...
+          &lt;/nav&gt;
+          &lt;!-- navbar --&gt;
+          &lt;!-- settings panel --&gt;
+          &lt;div class="settings-panel"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- settings panel --&gt;
+          &lt;div class="content-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- footer --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- footer --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;script src="../assets/js/shared/jq.tablesort.js"&gt;&lt;/script&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_8/dashboard.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle" id="Finance_Dashboard">09 - Finance Dashboard</h2>
+        <p>Below is the basic HTML structure finance dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css" /&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_9/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;div class="hero-banner"&gt;
+            &lt;!-- navbar --&gt;
+            &lt;div class="navbar"&gt;
+              ...
+            &lt;/div&gt;
+            &lt;!-- navbar --&gt;
+            &lt;!-- settings panel --&gt;
+            &lt;div class="settings-panel"&gt;
+              ...
+            &lt;/div&gt;
+            &lt;!-- settings panel --&gt;
+          &lt;/div&gt;
+          &lt;div class="content-wrapper container-wrapper-width"&gt;
+            &lt;!-- sidebar --&gt;
+            &lt;div class="sidebar-menu"&gt;
+              ...
+            &lt;/div&gt;
+            &lt;!-- sidebar --&gt;
+            &lt;div class="content-area"&gt;
+              &lt;div class="page-header"&gt;
+                &lt;div class="info-section"&gt;
+                  &lt;div class="d-flex align-items-center mb-2"&gt;
+                    &lt;h4 class="page-title"&gt;Hi, welcome back!&lt;/h4&gt;
+                    &lt;div class="dropdown"&gt;
+                      &lt;button class="btn dropdown-toggle" type="button" id="reportSummary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;Weekly&lt;/button&gt;
+                      &lt;div class="dropdown-menu" aria-labelledby="reportSummary"&gt;
+                        &lt;a class="dropdown-item" href="#"&gt;Daily&lt;/a&gt;
+                        &lt;a class="dropdown-item" href="#"&gt;Weekly&lt;/a&gt;
+                        &lt;a class="dropdown-item" href="#"&gt;Monthly&lt;/a&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;p class="mb-3 mb-md-0"&gt;Your customer Management dashboard template.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="page-header-content"&gt;
+                  &lt;div class="server-load d-block d-sm-flex"&gt;
+                    &lt;div class="server-stats d-flex flex-row align-items-end mr-5"&gt;
+                      &lt;div class="server-stats-title mr-4"&gt;
+                        &lt;p class="head-title"&gt;Memory Usage&lt;/p&gt;
+                        &lt;h3 class="text-white mb-0 stats-count font-weight-medium"&gt;32.44%&lt;/h3&gt;
+                      &lt;/div&gt;
+                      &lt;div class="wrapper"&gt;
+                        &lt;canvas id="server-load-data-chart-1" height="45" width="80"&gt;&lt;/canvas&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="server-stats d-flex flex-row align-items-end mt-4 mt-sm-0"&gt;
+                      &lt;div class="server-stats-title mr-4"&gt;
+                        &lt;p class="head-title"&gt;Disk Usage&lt;/p&gt;
+                        &lt;h3 class="text-white mb-0 stats-count font-weight-medium"&gt;52.40%&lt;/h3&gt;
+                      &lt;/div&gt;
+                      &lt;div class="wrapper"&gt;
+                        &lt;canvas id="server-load-data-chart-2" height="45" width="80"&gt;&lt;/canvas&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class="content-area-inner"&gt;
+                ...
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_9/dashboard.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/demo_9/script.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle" id="Classic_Dashboard">10 - Classic Dashboard</h2>
+        <p>Below is the basic HTML structure classic dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_10/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;!-- navbar --&gt;
+      &lt;nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row"&gt;
+        ...
+      &lt;/nav&gt;
+      &lt;!-- navbar --&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="settings-panel"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;nav class="sidebar sidebar-offcanvas dynamic-active-class-disabled" id="sidebar"&gt;
+          ...
+        &lt;/nav&gt;
+        &lt;!-- sidebar --&gt;
+        &lt;div class="main-panel"&gt;
+          &lt;div class="content-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- footer --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- footer --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/demo_10/dashboard.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle" id="Horizontal_Dashboard">11 - Horizontal Dashboard</h2>
+        <p>Below is the basic HTML structure horizontal dashboard layout of StarAdmin.</p>
+        <pre class="pre-wrapper">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;Star Admin Premium Bootstrap Admin Dashboard Template&lt;/title&gt;
+    &lt;!-- plugins:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/ionicons/css/ionicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/typicons/src/font/typicons.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css"&gt;
+    &lt;link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin css for this page --&gt;
+    &lt;!-- End Plugin css for this page --&gt;
+    &lt;!-- inject:css --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/shared/style.css"&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Layout styles --&gt;
+    &lt;link rel="stylesheet" href="../assets/css/demo_11/style.css"&gt;
+    &lt;!-- End Layout styles --&gt;
+    &lt;link rel="shortcut icon" href="../assets/images/favicon.png" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="container-scroller"&gt;
+      &lt;!-- horizontal navbar--&gt;
+      &lt;nav class="navbar horizontal-layout col-lg-12 col-12 p-0"&gt;
+        ...
+      &lt;/nav&gt;
+      &lt;!-- horizontal navbar--&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="settings-panel"&gt;
+        ...
+      &lt;/div&gt;
+      &lt;!-- settings panel --&gt;
+      &lt;div class="container-fluid page-body-wrapper"&gt;
+        &lt;div class="main-panel container"&gt;
+          &lt;div class="content-wrapper"&gt;
+            ...
+          &lt;/div&gt;
+          &lt;!-- content-wrapper ends --&gt;
+          &lt;!-- footer --&gt;
+          &lt;footer class="footer"&gt;
+            ...
+          &lt;/footer&gt;
+          &lt;!-- footer --&gt;
+        &lt;/div&gt;
+        &lt;!-- main-panel ends --&gt;
+      &lt;/div&gt;
+      &lt;!-- page-body-wrapper ends --&gt;
+    &lt;/div&gt;
+    &lt;!-- container-scroller --&gt;
+    &lt;!-- plugins:js --&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.base.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/vendors/js/vendor.bundle.addons.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Plugin js for this page--&gt;
+    &lt;!-- End plugin js for this page--&gt;
+    &lt;!-- inject:js --&gt;
+    &lt;script src="../assets/js/shared/off-canvas.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/hoverable-collapse.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/misc.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/shared/settings.js"&gt;&lt;/script&gt;
+    &lt;!-- endinject --&gt;
+    &lt;!-- Custom js for this page--&gt;
+    &lt;script src="../assets/js/shared/widgets.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/demo_11/dashboard.js"&gt;&lt;/script&gt;
+    &lt;script src="../assets/js/demo_11/script.js"&gt;&lt;/script&gt;
+    &lt;!-- End custom js for this page--&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        <h2 class="section-subtitle">Elements</h2>
+        <p>Custom styling classes for alerts, buttons, etc. are explained in the live preview of this template. Feel free to use it in your page. Any components that are beyond of this template, may submit a request and suggestion to our email at <a href="mailto:support@boostrapdash.com">support@boostrapdash.com</a></p>
+        <hr id="changelog">
+        <h2 class="section-subtitle">Credits</h2>
+        <div class="row">
+          <div class="col-6">
+            <ul>
+              <li> Ace editor <a href="https://ace.c9.io/" target="_blank">https://ace.c9.io/</a>
+              </li>
+              <li> Bootstrap <a href="https://getbootstrap.com/" target="_blank">https://getbootstrap.com/</a>
+              </li>
+              <li> Bootstrap Datepicker <a href="https://gitter.im/uxsolutions/bootstrap-datepicker" target="_blank">https://gitter.im/uxsolutions/bootstrap-datepicker</a>
+              </li>
+              <li> Bootstrap Maxlength <a href="http://mimo84.github.com/bootstrap-maxlength" target="_blank">http://mimo84.github.com/bootstrap-maxlength</a>
+              </li>
+              <li> C3 <a href="https://travis-ci.org/c3js/c3" target="_blank">https://travis-ci.org/c3js/c3</a>
+              </li>
+              <li> Chart.js <a href="https://www.chartjs.org/" target="_blank">https://www.chartjs.org/</a>
+              </li>
+              <li> Chartist <a href="https://gionkunz.github.io/chartist-js/" target="_blank">https://gionkunz.github.io/chartist-js/</a>
+              </li>
+              <li> Clipboard <a href="https://clipboardjs.com" target="_blank">https://clipboardjs.com</a>
+              </li>
+              <li> Codemirror <a href="https://codemirror.net/" target="_blank">https://codemirror.net/</a>
+              </li>
+              <li> Colcade <a href="https://github.com/desandro/colcade" target="_blank">https://github.com/desandro/colcade/</a>
+              </li>
+              <li> D3 <a href="https://d3js.org" target="_blank">https://d3js.org</a>
+              </li>
+              <li> Datatables.net <a href="https://datatables.net/" target="_blank">https://datatables.net/</a>
+              </li>
+              <li> Dragula <a href="https://bevacqua.github.io/dragula/" target="_blank">https://bevacqua.github.io/dragula/</a>
+              </li>
+              <li> Dropify <a href="http://jeremyfagis.github.io/dropify/" target="_blank">http://jeremyfagis.github.io/dropify/</a>
+              </li>
+              <li> Dropzone <a href="http://www.dropzonejs.com/" target="_blank">http://www.dropzonejs.com/</a>
+              </li>
+              <li> Flag icons <a href="http://lipis.github.io/flag-icon-css/" target="_blank">http://lipis.github.io/flag-icon-css/</a>
+              </li>
+              <li> Flot <a href="https://www.flotcharts.org/" target="_blank">https://www.flotcharts.org/</a>
+              </li>
+              <li> Font awesome <a href="https://fontawesome.com/" target="_blank">https://fontawesome.com/</a>
+              </li>
+              <li> Full calendar <a href="https://fullcalendar.io/" target="_blank">https://fullcalendar.io/</a>
+              </li>
+              <li> Gulp <a href="https://gulpjs.com/" target="_blank">https://gulpjs.com/</a>
+              </li>
+              <li> Icheck <a href="http://icheck.fronteed.com/" target="_blank">http://icheck.fronteed.com/</a>
+              </li>
+              <li> Inputmask <a href="http://robinherbots.github.io/Inputmask/" target="_blank">http://robinherbots.github.io/Inputmask/</a>
+              </li>
+              <li> Ion range slider <a href="http://ionden.com/a/plugins/ion.rangeSlider/en.html" target="_blank">http://ionden.com/a/plugins/ion.rangeSlider/en.html</a>
+              </li>
+              <li> JQuery <a href="https://jquery.com/" target="_blank">https://jquery.com/</a>
+              </li>
+              <li> JQuery asColorPicker <a href="https://github.com/thecreation/jquery-asColorPicker" target="_blank">https://github.com/thecreation/jquery-asColorPicker</a>
+              </li>
+              <li> JQuery bar rating <a href="http://antenna.io/demo/jquery-bar-rating/examples/" target="_blank">http://antenna.io/demo/jquery-bar-rating/examples/</a>
+              </li>
+              <li> JQuery context menu <a href="http://swisnl.github.io/jQuery-contextMenu/" target="_blank">http://swisnl.github.io/jQuery-contextMenu/</a>
+              </li>
+              <li> JQuery file upload <a href="http://hayageek.com/docs/jquery-upload-file.php" target="_blank">http://hayageek.com/docs/jquery-upload-file.php</a>
+              </li>
+              <li> JQuery Mapeal <a href="https://github.com/neveldo/mapael-maps" target="_blank">https://github.com/neveldo/mapael-maps</a>
+              </li>
+              <li> JQuery sparklin <a href="http://omnipotent.net/jquery.sparkline/" target="_blank">http://omnipotent.net/jquery.sparkline/</a>
+              </li>
+              <li> JQuery-steps <a href="http://www.jquery-steps.com/" target="_blank">http://www.jquery-steps.com/</a>
+              </li>
+              <li> JQuery Tags Input <a href="http://xoxco.com/projects/code/tagsinput/" target="_blank">http://xoxco.com/projects/code/tagsinput/</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <ul>
+              <li> JQuery Toast <a href="https://kamranahmed.info/toast" target="_blank">https://kamranahmed.info/toast</a>
+              </li>
+              <li> JQuery Validation <a href="https://jqueryvalidation.org/" target="_blank">https://jqueryvalidation.org/</a>
+              </li>
+              <li> JQuery Avgrund <a href="https://github.com/voronianski/jquery.avgrund.js" target="_blank">https://github.com/voronianski/jquery.avgrund.js</a>
+              </li>
+              <li> JQuery Repeater <a href="http://briandetering.net/repeater" target="_blank">http://briandetering.net/repeater</a>
+              </li>
+              <li> JSgrid <a href="http://js-grid.com/" target="_blank">http://js-grid.com/</a>
+              </li>
+              <li> JSgrid <a href="http://js-grid.com/" target="_blank">http://js-grid.com/</a>
+              </li>
+              <li> Justgage <a href="http://justgage.com/" target="_blank">http://justgage.com/</a>
+              </li>
+              <li> JVector Map <a href="http://jvectormap.com/" target="_blank">http://jvectormap.com/</a>
+              </li>
+              <li> Light gallery <a href="http://sachinchoolur.github.io/lightGallery/" target="_blank">http://sachinchoolur.github.io/lightGallery/</a>
+              </li>
+              <li> Material Design Icons <a href="https://materialdesignicons.com/" target="_blank">https://materialdesignicons.com/</a>
+              </li>
+              <li> Moment.js <a href="https://momentjs.com/" target="_blank">https://momentjs.com/</a>
+              </li>
+              <li> Morris.js <a href="https://momentjs.com/" target="_blank">https://momentjs.com/</a>
+              </li>
+              <li> NoUISlider <a href="https://refreshless.com/nouislider/" target="_blank">https://refreshless.com/nouislider/</a>
+              </li>
+              <li> Owl carousel <a href="https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html" target="_blank">https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html</a>
+              </li>
+              <li> Perfect scrollbar <a href="http://utatti.github.io/perfect-scrollbar/" target="_blank">http://utatti.github.io/perfect-scrollbar/</a>
+              </li>
+              <li> Popper.js <a href="https://popper.js.org/" target="_blank">https://popper.js.org/</a>
+              </li>
+              <li> Progressbar.js <a href="https://progressbarjs.readthedocs.io/en/latest/" target="_blank">https://progressbarjs.readthedocs.io</a>
+              </li>
+              <li> PWS Tabs <a href="https://alexchizhov.com/pwstabs/" target="_blank">https://alexchizhov.com/pwstabs/</a>
+              </li>
+              <li> Quill Editor <a href="https://quilljs.com/" target="_blank">https://quilljs.com/</a>
+              </li>
+              <li> Rapheal <a href="http://dmitrybaranovskiy.github.io/raphael/" target="_blank">http://dmitrybaranovskiy.github.io/raphael/</a>
+              </li>
+              <li> Select 2 <a href="https://select2.org/" target="_blank">https://select2.org/</a>
+              </li>
+              <li> Simple line icons <a href="http://simplelineicons.com/" target="_blank">http://simplelineicons.com/</a>
+              </li>
+              <li> SimpleMDE <a href="https://simplemde.com/" target="_blank">https://simplemde.com/</a>
+              </li>
+              <li> Summernote <a href="https://summernote.org/" target="_blank">https://summernote.org/</a>
+              </li>
+              <li> Sweetalert <a href="http://sweetalert.js.org" target="_blank">http://sweetalert.js.org</a>
+              </li>
+              <li> Tempusdominus-bootstrap-4 <a href="https://tempusdominus.github.io/bootstrap-4/" target="_blank">https://tempusdominus.github.io/bootstrap-4/</a>
+              </li>
+              <li> Themify icons <a href="https://themify.me/themify-icons" target="_blank">https://themify.me/themify-icons</a>
+              </li>
+              <li> TinyMCE <a href="https://www.tiny.cloud/" target="_blank">https://www.tiny.cloud/</a>
+              </li>
+              <li> TWBS pagination <a href="https://esimakin.github.io/twbs-pagination/" target="_blank">https://esimakin.github.io/twbs-pagination/</a>
+              </li>
+              <li> Typeahead <a href="https://twitter.github.io/typeahead.js/" target="_blank">https://twitter.github.io/typeahead.js/</a>
+              </li>
+              <li> Xeditable <a href="https://vitalets.github.io/x-editable/" target="_blank">https://vitalets.github.io/x-editable/</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr id="support">
+        <h2 class="section-subtitle">Customer Support</h2>
+        <p>We will assist you any problem you encounter while buidling your dashboard via Star Admin template</p>
+        <p>Email: <a href="mailto:support@bootstrapdash.com">support@bootstrapdash.com</a> </p>
+        <p>We use comment help form found <a href="https://www.bootstrapdash.com/support/">here</a> and email to manage customer support. We will respond to you as quickly as we can. Thank you.</p>
+        <br>
+        <hr>
+        <small>&copy; 2019. StarAdmin Documentation. All Rights Reserved. Created by: Bootstrapdash</small>
+      </div><!-- main-panel -->
+    </div><!-- main-wrapper -->
+  </body>
+</htmL>

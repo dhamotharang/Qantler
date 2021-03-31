@@ -1,0 +1,118 @@
+﻿<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="invoices card-body">
+                <h5 class="font-weight-bold mb-4">Invoice Details</h5>
+                <div id="invoices"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="payment-template" hidden>
+    <div id="invoiceMain">
+        <div class="invoice info {showinvoiceno}">
+            <div>
+                <p><b>Invoice No:</b>&nbsp;{invoiceno}</p>
+            </div>
+        </div>
+        <div class="invoice info {showissuedon}">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <p><b>Issued On:</b>&nbsp;{invoiceIssuedOn}</p>
+                </div>
+                <div class="col-sm-12 col-md-6 action {showviewrequest}">
+                    <a class="btn btn-inverse-primary btn-rounded" href="/request/details/{requestid}">View Request</a>
+                </div>
+            </div>
+        </div>
+        <div class="invoice header">
+            <div class="sno">
+                <p></p>
+            </div>
+            <div class="text">
+                <p>Fee Type</p>
+            </div>
+            <div class="qty">
+                <p>Qty</p>
+            </div>
+            <div class="unitPrice">
+                <p>Unit Price</p>
+            </div>
+            <div class="fee">
+                <p>Fee</p>
+            </div>
+            <div class="gst">
+                <p>GST({gst}%)</p>
+            </div>
+            <div class="total">
+                <p>Total</p>
+            </div>
+        </div>
+        <div class="invoiceBody">{invoicebody}</div>
+        <div class="invoice footer sub">
+            <p>Sub Total:</p>
+            <p class="value">{invoiceAmount}</p>
+        </div>
+    </div>
+
+    <div id="invoiceSection">
+        <div class="invoice section">
+            <div class="sno">
+                <p></p>
+            </div>
+            <div class="text">
+                <p>{section}</p>
+            </div>
+            <div class="qty">
+                <p></p>
+            </div>
+            <div class="unitPrice">
+                <p></p>
+            </div>
+            <div class="fee">
+                <p></p>
+            </div>
+            <div class="gst">
+                <p></p>
+            </div>
+            <div class="total">
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="invoiceItem">
+        <div class="invoice item">
+            <div class="sno">
+                <p>{invoiceItemSNo}</p>
+            </div>
+            <div class="text">
+                <p>{invoiceItemText}</p>
+            </div>
+            <div class="qty">
+                <p>{invoiceItemQty}</p>
+            </div>
+            <div class="unitPrice">
+                <p>{invoiceItemUnitPrice}</p>
+            </div>
+            <div class="fee">
+                <p>{invoiceItemFee}</p>
+            </div>
+            <div class="gst">
+                <p>{invoiceItemGST}</p>
+            </div>
+            <div class="total">
+                <p>{invoiceItemTotal}</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="invoiceFooterSummary">
+        <div class="invoice footer">
+            <p>Total Amount:</p>
+            <p class="value">{invoiceTotalValue}</p>
+        </div>
+    </div>
+</div>
+

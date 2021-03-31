@@ -1,0 +1,488 @@
+<kendo-pdf-export #pdf [imageResolution]="resolution" paperSize="A4" margin="4mm" [scale]=".5">
+  <app-sub-banner [title]="resource ? resource.title : 'Resources Detail'|translate" [description]="''">
+  </app-sub-banner>
+  <app-breadcrumbs
+    [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Resources'|translate,link:'/resources',active:false},{text: resource ? resource.title : 'Resources Detail'|translate,link:null,active:true}]">
+  </app-breadcrumbs>
+  <div id="resourceConvert" class="grey-bg pt-40 pb-40" *ngIf="resource;else noResource">
+    <app-share-modal [(display)]="showShare" [url]="getCurrentUrl()" [type]="'resource'"
+                     [data]="{id:resource.id,title:resource.title,description:resource.resourceDescription,image: resource.thumbnail,tags:  resource.keywords}">
+    </app-share-modal>
+
+    <div class="container">
+      <div class="share-dwnld">
+        <a href="javascript:;" (click)="showShareModal()" class="shr-dld"><span class="fa fa-share-alt"></span></a>
+        <a href="javascript:;" (click)="downloadResource(pdf)" class="shr-dld"><span class="fa fa-download"></span></a>
+        <a href="javascript:;" *ngIf="resource" (click)="makeRemixResource()" class="shr-dld"
+           title="{{'Remix Resource' | translate}}"><span class="fa fa-pencil"></span></a>
+        <a *ngIf="resource && !favoutireStatus" title="{{'Add to Favourites' | translate}}" href="javascript:;"
+           (click)="addToFavoutites()" class="shr-dld"><span class="fa fa-heart-o"></span></a>
+        <a *ngIf="resource && favoutireStatus" title="{{'Remove from Favourites' | translate}}" href="javascript:;"
+           (click)="removeFromFavourites()" class="shr-dld active"><span class="fa fa-heart"></span></a>
+      </div>
+      <div class="detail-content-main">
+
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{ resource.thumbnail}}" class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <div class="form-group mb-3" *ngIf="resource && resource.isRemix === true">
+                    <span (click)="showRemixedResource()"
+                          class="badge badge-primary fw-n remix-badge">{{'Remixed Resource' | translate}}
+                    </span>
+                  </div>
+                  <i class="ovel-dte" *ngIf="resource && resource.lastView != null">{{'Last Viewed on' | translate}}
+                    {{resource.lastView |
+                    date:'short'}}</i>
+                  <h4 class="mb-0">{{resource.title}} </h4>
+                  <div class="item-rating">
+                    <app-rating [allRating]="resource.allRatings" [rating]="resource.rating" [type]="'resource'"
+                                [id]="resource.id" (updateData)="rateResource()"></app-rating>
+                  </div>
+                  <!--item-rating-->
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-lg-6">
+
+
+            <div class="relative-area">
+              <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+              <div class="dec-paragraph">
+                <div [ngClass]="readmore ? 'more' : 'less'">
+                  <p class="dtl-p1 text-white-space-pre" style="word-break: break-word;">{{resource.resourceDescription}}</p>
+                </div>
+
+                <button *ngIf="!readmore && resource.resourceDescription && resource.resourceDescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore()">{{'Read more' | translate}}..
+                </button>
+                <button *ngIf="readmore && resource.resourceDescription && resource.resourceDescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore()">{{'View less' | translate}}..
+                </button>
+              </div>
+              <hr>
+              <div class="descr-cnt">
+                <p><span>{{'Category' | translate}}:</span><a href="javascript:;"
+                                                              (click)="filterCategory(resource.category.name)">
+                  {{getCurrentLang() === 'en' ? resource.category.name.trim() : resource.category.name_Ar}}</a>
+                </p>
+                <p><span>{{'Sub Category' | translate}}:</span>
+                  {{getCurrentLang() === 'en' ? resource.subCategory.name.trim() : resource.subCategory.name_Ar}}
+                </p>
+                <p><span>{{'Material Type' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                  resource.materialType.name : resource.materialType.name_Ar}} </p>
+                <p><span>{{'Author' | translate}}:</span><a
+                  routerLink="/user/profile/{{encService.set(resource.createdById)}}">{{resource.createdBy}}</a>
+                </p>
+                <p><span>{{'Date Added' | translate}}:</span> {{resource.createdOn|date}}</p>
+                <p><span>{{'Educational Standard' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                  resource.educationalStandard.standard : resource.educationalStandard.standard_Ar}}</p>
+                <p><span>{{'Educational Use' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                  resource.educationalUse.text : resource.educationalUse.text_Ar}}</p>
+                <p><span>{{'Level' | translate}}:</span> {{getCurrentLang() === 'en' ? resource.educationLevel.level :
+                  resource.educationLevel.level_Ar}}</p>
+                <p class="mb-0 wrap-all" *ngIf="resource.keywords && resource.keywords != 'false'">
+                  <span>{{'Keywords' | translate}}:</span>
+                  <em><a (click)="filterCategory(keyword.trim())" href="javascript:;"
+                         *ngFor="let keyword of resource.keywords.split(', ');let i=index">
+                    {{keyword.trim()}}{{((keyword.trim().length > 0) && (i < resource.keywords.split(', ').length - 1
+                    )) ? ', ' : ''}}
+                  </a></em>
+                </p>
+                <!--<p class="mb-0 wrap-all" *ngIf="!(resource.keywords && resource.keywords != 'false')">-->
+                <!--<span>{{'Keywords' | translate}}:</span>-->
+                <!--{{'Nil' | translate}}-->
+                <!--</p>-->
+                <div class="flex-table main-flex-table">
+                  <div class="flex-table-cell">
+                    <p><span>{{"Copyrights" |translate}}</span></p>
+                  </div>
+                  <div class="flex-table-cell">
+                    <div class="copy-flex">
+                      <div class="img-flex" *ngIf="resource.copyRight">
+                        <img *ngIf="resource.copyRight.media" src="{{resource.copyRight.media}}" class="img-fluid" alt="copyright images"
+                             tooltip="{{getCurrentLang() === 'en' ? resource.copyRight.title + ':' + ' ' + resource.copyRight.description : resource.copyRight.title_Ar + ':' + ' ' + resource.copyRight.description_Ar}}"
+                             container="body">
+                        <span *ngIf="!resource.copyRight.media" tooltip="{{getCurrentLang() === 'en' ? resource.copyRight.title + ':' + ' ' + resource.copyRight.description : resource.copyRight.title_Ar + ':' + ' ' + resource.copyRight.description_Ar}}" class="text-info">
+                          <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <!-- tooltip="{{getCurrentLang() === 'en' ?resource.copyRight.description:resource.copyRight.description_Ar}}"
+                      container="body" -->
+                      <div class="text-flex">
+                        <p><span class="truncate">
+                               </span></p>
+                               <!-- tooltip="{{getCurrentLang() === 'en' ?resource.copyRight.description:resource.copyRight.description_Ar}}"
+                               container="body">{{getCurrentLang() === 'en' ? resource.copyRight.title :
+                        resource.copyRight.title_Ar}} -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- badge :START-->
+              <div class="dtl-badge blue-type" *ngIf="resource && resource.communityBadge && !resource.moEBadge">
+                <img src="./assets/images/badge/blue-cc.svg" alt="blue-cc">
+              </div>
+
+              <div class="dtl-badge gold-type" *ngIf="resource && resource.communityBadge && !resource.moEBadge">
+                <img src="./assets/images/badge/gold-cc.svg" alt="gold-cc">
+              </div>
+              <!-- badge :START-->
+              <div class="dtl-badge blue-type" *ngIf="resource && resource.moEBadge">
+                <img src="./assets/images/badge/blue-ec.svg" alt="blue-ec">
+              </div>
+
+              <div class="dtl-badge gold-type" *ngIf="resource && resource.moEBadge">
+                <img src="./assets/images/badge/gold-ec.svg" alt="gold-ec">
+              </div>
+
+            </div> <!-- relative-area :: END-->
+
+
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="dtl-h3">{{'Objective' | translate}}</h3>
+            <hr>
+            <div class="panel-box mb-30 p-30">
+              <p class="text-white-space-pre" style="word-wrap: break-word;" [ngClass]="objectiveReadmore ? 'more' : 'less'"
+                 [innerHTML]="resource.objective"></p>
+            </div>
+          </div>
+        </div> <!-- Objective :END-->
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="panel-box p-30 mb-30">
+              <div
+                [ngStyle]="!contentReadMore ? {'height':'300px','overflow': 'hidden'} : {'height':'auto','overflow': 'visible'}">
+                <div [innerHtml]="resource.resourceContent" class="inner-container">
+                </div>
+              </div>
+              <button *ngIf="contentReadMore && resource.resourceContent && resource.resourceContent.length > 160"
+                      type="button" class="radmore-link" (click)="clickContentReadMore()">{{'View less' | translate}}..
+              </button>
+              <button *ngIf="!contentReadMore && resource.resourceContent && resource.resourceContent.length > 160"
+                      type="button" class="radmore-link" (click)="clickContentReadMore()">{{"Read more"|translate}}..
+              </button>
+              <hr>
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="javascript:;" *ngIf="!userId || (userId !== resource.createdById)" class="rprt"
+                     (click)="showReportAbuseModal()"><i
+                    class="fa fa-exclamation-circle"></i> {{"Report Abuse" | translate}}</a>
+                  <span *ngIf="!userId || (userId !== resource.createdById)" class="sprtr">|</span><span
+                  class="alnmt-rat mr-1">{{"Alignment Rating" | translate}} </span>
+                  <div class="alignment-rating">
+                    <bar-rating [rate]="getAlignmentRating()" (rateChange)="rateAlignment($event)" [max]="5">
+                    </bar-rating>
+                  </div>
+                  <!--alignment-rating-->
+                </div>
+                <!-- <div class="col-md-4">
+                  <button type="button" class="btn btn-primary text-uppercase mb-1 mr-1">
+                    {{resource.materialType.name}}
+                  </button>
+                  <button type="button" class="btn btn-primary text-uppercase mb-1 mr-1">{{resource.category.name}}
+                  </button>
+                  <button type="button" class="btn btn-primary text-uppercase">
+                    {{resource.subCategory.name}}
+                  </button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <app-recomended-articles></app-recomended-articles>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of getFiltered(resource.references);let i = index">
+                  <app-iframe-viewer [url]="item.urlReference"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                     *ngIf="resource && (!resource.references || (resource.references && getFiltered(resource.references).length === 0))">
+                  <p>{{"No Reference Links Found" | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Resource Files' |translate}}</h3>
+
+              <hr>
+              <div class="file-viewer-flex"
+                   *ngIf="resource && resource.resourceFiles && resource.resourceFiles.length > 0">
+                <app-file-viewer class="col-md-3" *ngFor="let item of resource.resourceFiles" [title]="resource.title"
+                                 [fileName]="item.fileName ? item.fileName : ''"
+                                 [url]="item.associatedFile"></app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                     *ngIf="resource && (!resource.resourceFiles || (resource.resourceFiles && resource.resourceFiles.length === 0))">
+                  <p>{{'No Resource Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{"Comments" | translate}}</h3>
+              <hr>
+              <div class="row" *ngIf="userId">
+                <div class="col-lg-12">
+                  <form [formGroup]="CommentResourceForm">
+                    <textarea class="form-control" rows="4" formControlName="comments"
+                              placeholder="{{'Leave your comment' | translate}}"></textarea>
+                    <br>
+                    <p
+                      *ngIf="(commentSubmitted || CommentResourceForm.controls.comments.touched) && CommentResourceForm.controls.comments.invalid"
+                      class="field-error">
+                      {{'Please enter a valid Comment' | translate}}.
+                    </p>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary text-uppercase fl-right"
+                              (click)="submitComment()">{{'Comment' | translate}}
+                      </button>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <ng-container *ngIf="resource">
+                <ng-container *ngFor="let item of resource.resourceComments;let i = index">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="{{item.commentorImage ?  item.commentorImage : 'assets/images/default-user.png'}}"
+                           class="img-prof">
+                    </div>
+                    <div class="col-md-10" *ngIf="!showCommentUpdateForm[i]">
+                      <p class="rec-art-athr">{{item.commentedBy}} </p>
+                      <p class="cmt-date">{{item.commentDate | date:'medium'
+                        }}</p>
+                      <p class="cmt-txt">{{item.comments}}</p>
+                      <a href="javascript:;" class="rprt mr-1" *ngIf="userId !== item.commentedById"
+                         (click)="showCommentReportAbuseModal(item.id)"><i class="fa fa-exclamation-circle"></i>
+                        {{'Report Abuse' | translate}}</a>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === item.commentedById"
+                              (click)="editComment(i)">
+                        {{'Edit Comment' | translate}}
+                      </button>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === item.commentedById"
+                              (click)="deleteComment(item)">
+                        {{'Delete Comment' | translate}}
+                      </button>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === resource.createdById"
+                              (click)="hideComment(item)">
+                        {{'Hide Comment' | translate}}
+                      </button>
+                    </div>
+                    <div class="col-md-10" *ngIf="showCommentUpdateForm[i]">
+                      <form [formGroup]="updateCommentResourceForm[i]">
+                        <textarea class="form-control" rows="4" formControlName="comments"
+                                  placeholder="{{'Leave your comment' | translate}}"></textarea>
+                        <br>
+                        <p
+                          *ngIf="(commentSubmitted || updateCommentResourceForm[i].controls.comments.touched) && updateCommentResourceForm[i].controls.comments.invalid"
+                          class="field-error">
+                          {{'Please enter a valid Comment' | translate}}.
+                        </p>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary text-uppercase fl-right"
+                                  (click)="submitUpdatedComment(i)">
+                            {{'Update Comment' | translate}}
+                          </button>
+                          <button type="submit" class="btn btn-primary text-uppercase fl-right mr-1"
+                                  (click)="cancelUpdatedComment(i)">{{'Cancel' | translate}}
+                          </button>
+                          <div class="clearfix"></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <hr>
+                </ng-container>
+              </ng-container>
+              <app-report-abuse [(display)]="showCommentReportAbuse" [type]="'ResourceComment'"
+                                [id]="getReportCommentId()"></app-report-abuse>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+    </div>
+    <app-report-abuse [(display)]="showReportAbuse" [type]="'Resource'" [id]="resource.id"></app-report-abuse>
+    <p-dialog header="{{'Alignment Rating' | translate}}" [(visible)]="showAlignmentRating"
+              [style]="{width: '400px', 'max-height':'500px'}" [modal]="true" [responsive]="true">
+      <form [formGroup]="resourceAlignmentRatingForm">
+        <div class="form-group">
+          <label for="" class="form-label">{{'Recommended Category' | translate}}</label>
+          <select class="form-control alt-bg" formControlName="categoryId" required>
+            <option value="0">{{'Select' | translate}}</option>
+            <option *ngFor="let item of categories" value="{{item.id}}">
+              {{getCurrentLang() === 'en' ? item.name : item.name_Ar}}
+            </option>
+          </select>
+          <p class="field-error"
+             *ngIf="(resourceAlignmentRatingForm.controls.categoryId.touched || alignmentFormSubmitted) && resourceAlignmentRatingForm.value.rating < 3 && !resourceAlignmentRatingForm.value.categoryId">
+            {{'Please select a valid category' | translate}}.
+          </p>
+        </div>
+        <div class="form-group">
+          <label for="" class="form-label">{{'Recommended Level' | translate}}</label>
+          <select class="form-control alt-bg" formControlName="levelId" required>
+            <option value="0">{{'Select' | translate}}</option>
+            <option *ngFor="let item of levels" value="{{item.id}}">
+              {{getCurrentLang() === 'en' ? item.levelText : item.levelText_Ar}}
+            </option>
+          </select>
+          <p class="field-error"
+             *ngIf="(resourceAlignmentRatingForm.controls.levelId.touched || alignmentFormSubmitted) && resourceAlignmentRatingForm.value.rating < 3 && !resourceAlignmentRatingForm.value.levelId">
+            {{'Please select a valid level' | translate}}.
+          </p>
+        </div>
+        <p-footer>
+          <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+                  (click)="SubmitAlignmentRating(resourceAlignmentRatingForm.value)">
+            {{'Submit' | translate}}
+          </button>
+        </p-footer>
+      </form>
+    </p-dialog>
+    <p-dialog header="{{'Remix History' | translate}}" [(visible)]="showRemixResource"
+              [contentStyle]="{'width':'800px','max-height':'800px'}" [modal]="true" [responsive]="true">
+      <div class="panel-box mb-30 remixHistorypopup" *ngIf="remixResource">
+        <div class="media resource-media">
+          <div class="img-block mr-3" (click)="openInNewTab('/resource/' + encService.set(remixResource.id))">
+            <img src="{{ remixResource.thumbnail}}" alt="" class="img-fluid">
+          </div>
+          <div class="media-body resource-media-body">
+            <div class="row">
+              <div class="col-lg-9">
+                <h6 class="resource-list-title"><a href="javascript:;"
+                                                   (click)="openInNewTab('/resource/' + encService.set(remixResource.id))">{{remixResource.title}}</a>
+                </h6>
+                <!--<em class="last-view-txt">Last viewed on 08 Mar 2019 </em>-->
+              </div>
+              <!--col-->
+              <div class="col-lg-3">
+                <app-rating [allRating]="remixResource.allRatings" [rating]="remixResource.rating" [type]="'resource'"
+                            [id]="remixResource.id" (updateData)="showRemixedResource()"></app-rating>
+              </div>
+              <!--col-->
+            </div>
+            <!--row-->
+            <ul class="resource-list-auth-date">
+              <li><strong>{{"Category" | translate}}:</strong> <em><a
+                (click)="filterCategory(remixResource.category.name)"
+                title="{{getCurrentLang() === 'en' ? remixResource.category.name : remixResource.category.name_Ar}}"
+                href="javascript:;"> {{getCurrentLang() === 'en' ? remixResource.category.name :
+                remixResource.category.name_Ar}}</a></em>
+              </li>
+              <li><strong>{{"Author" | translate}}:</strong> <a href="javascript:;"
+                                                                (click)="openInNewTab('/user/profile/' + encService.set(remixResource.createdById))"><em>{{remixResource.createdBy}}</em></a>
+              </li>
+              <li><i class="fa fa-calendar" aria-hidden="true"></i> {{remixResource.createdOn|date}}</li>
+            </ul>
+            <p class="mb-0 text-white-space-pre">
+              {{remixResource.resourceDescription}}</p>
+            <ul class="resource-list-links">
+              <li><a href="javascript:;" (click)="openInNewTab('/resource/' + encService.set(remixResource.id))">{{'Read
+                More' |
+                translate}}</a></li>
+              <li><a href="javascript:;" *ngIf="!userId || (userId !== remixResource.createdById)"
+                     (click)="showRemixReportAbuse = true"><i class="fa fa-exclamation-circle"
+                                                              aria-hidden="true"></i>
+                {{'Report Abuse' | translate}}</a></li>
+            </ul>
+            <app-report-abuse [(display)]="showRemixReportAbuse" [type]="'Resource'" [id]="remixResource.id">
+            </app-report-abuse>
+          </div>
+          <!--resource-media-body-->
+        </div>
+        <!--resource-media-->
+
+        <div class="resource-media-outer">
+          <p class="mb-0 wrap-all" *ngIf="remixResource.keywords && remixResource.keywords != 'false'">
+            <strong>{{'Keywords' | translate}}:</strong>
+            <em><a (click)="filterCategory(keyword.trim())" href="javascript:;"
+                   *ngFor="let keyword of remixResource.keywords.split(', ');let i=index">
+              {{keyword.trim()}}{{((keyword.trim().length > 0) && (i < remixResource.keywords.split(', ').length - 1 ))
+              ? ', ' : ''}}
+            </a></em>
+          </p>
+          <!--<p class="mb-0 wrap-all" *ngIf="!(remixResource.keywords && remixResource.keywords != 'false')"><strong>{{'Keywords'-->
+          <!--| translate}}:</strong>-->
+          <!--{{'Nil' | translate}}-->
+          <!--</p>-->
+          <ul class="resource-list-stats">
+            <li>
+              <p class="resource-list-stat-count">{{remixResource.viewCount ? remixResource.viewCount : 0}}</p>
+              <p class="resource-list-stat-title">{{'Visits' | translate}}</p>
+            </li>
+            <li>
+              <p class="resource-list-stat-count">{{remixResource.readingTime ? remixResource.readingTime : 0}} mins</p>
+              <p class="resource-list-stat-title">{{'Reading time' | translate}}</p>
+            </li>
+            <li>
+              <p class="resource-list-stat-count">{{remixResource.downloadCount ? remixResource.downloadCount : 0}}</p>
+              <p class="resource-list-stat-title">{{'Download Count' | translate}}</p>
+            </li>
+            <li>
+              <p class="resource-list-stat-count">{{remixResource.sharedCount ? remixResource.sharedCount : 0}}
+              </p>
+              <p class="resource-list-stat-title">{{'Shared Count' | translate}}</p>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <!--resource-media-outer-->
+
+      </div>
+    </p-dialog>
+
+    <p-dialog header="{{(resource && resource.copyRight)? resource.copyRight.title:''}}" [(visible)]="showRights"
+              [contentStyle]="{'max-height':'600px'}" [width]="600">
+      <div class="img-thumpnail">
+        <img *ngIf="resource.copyRight.media" src="{{resource.copyRight.media}}" class="img-fluid mb-3"
+             alt="copyright images">
+      </div>
+      <p>{{resource.copyRight.description}}</p>
+    </p-dialog>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+  <div class="fix-cteg-btn btn btn-primary text-uppercase" (click)="showCategoriesModal()">{{'Categories' | translate}}
+  </div>
+
+  <ng-template #noResource>
+    <div class="grey-bg pt-40 pb-40 text-center">
+      <p *ngIf="resourceLoaded">{{'Failed to load resource' | translate}}.</p>
+    </div>
+  </ng-template>
+  <app-categories-modal [(display)]="showCategories"></app-categories-modal>
+</kendo-pdf-export>

@@ -1,0 +1,432 @@
+<app-sub-banner [title]="course ? course.title : 'Course Detail'|translate"
+                [description]="course ? course.resourceDescription : ''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate ,link:'/',active:false},{text: 'Courses'|translate,link:'/courses',active:false},{text: course ? course.title : 'Course Detail'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40" *ngIf="course;else noCourse">
+  <app-share-modal [(display)]="showShare" [url]="getCurrentUrl()" [type]="'course'" [data]="{id:course.id,title:course.title,description:course.resourceDescription,image: course.thumbnail,tags:
+  course.keywords}">
+  </app-share-modal>
+
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+      <div class="share-dwnld">
+        <a href="javascript:;" (click)="showShareModal()" class="shr-dld"><span class="fa fa-share-alt"></span></a>
+        <a href="javascript:;" (click)="downloadResource()" class="shr-dld"><span class="fa fa-download"></span></a>
+        <a *ngIf="course && !favoutireStatus" title="{{'Add to Favourites' | translate}}" href="javascript:;"
+           (click)="addToFavoutites()" class="shr-dld"><span class="fa fa-heart-o"></span></a>
+        <a *ngIf="course && favoutireStatus" title="{{'Remove from Favourites' | translate}}" href="javascript:;"
+           (click)="removeFromFavourites()" class="shr-dld active"><span class="fa fa-heart"></span></a>
+      </div>
+      <div class="detail-content-main">
+
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{ course.thumbnail}}" class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <i class="ovel-dte" *ngIf="course.lastView != null">{{'Last Viewed on' | translate}} {{course.lastView
+                    |
+                    date:'short'}}</i>
+                  <h4 class="mb-0">{{course.title}} </h4>
+                  <div class="item-rating">
+                    <app-rating [allRating]="course.allRatings" [rating]="course.rating" [type]="'course'"
+                                [id]="course.id" (updateData)="rateCourse()"></app-rating>
+                  </div>
+                  <!--item-rating-->
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br><br>
+          </div>
+          <div class="col-lg-6">
+            <div class="relative-area">
+              <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+              <hr>
+
+              <div class="dec-paragraph">
+                <div [ngClass]="readmore ? 'more' : 'less'">
+                  <p class="dtl-p1 text-white-space-pre"  style="word-break: break-word;">{{course.courseDescription}}</p>
+                </div>
+                <button *ngIf="!readmore && course.courseDescription && course.courseDescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore()">{{'Read more' | translate}}..
+                </button>
+                <button *ngIf="readmore && course.courseDescription && course.courseDescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore()">{{'View less' | translate}}..
+                </button>
+              </div>
+              <hr>
+              <div class="descr-cnt">
+                <p><span>{{'Category' | translate}}:</span><a href="javascript:;"
+                                                              (click)="filterCategory(course.category.name)">
+                  {{getCurrentLang() === 'en' ? course.category.name.trim() : course.category.name_Ar}}</a>
+                </p>
+                <p><span>{{'Sub Category' | translate}}:</span>
+                  {{getCurrentLang() === 'en' ? course.subCategory.name.trim() : course.subCategory.name_Ar}}
+                </p>
+                <p><span>{{'Author' | translate}}:</span><a
+                  routerLink="/user/profile/{{encService.set(course.createdById)}}">{{course.createdBy}}</a>
+                </p>
+                <p><span>{{'Date Added' | translate}}:</span> {{course.createdOn|date}}</p>
+                <p><span>{{'Educational Standard' | translate}}:</span>
+                  {{getCurrentLang() === 'en' ? course.educationalStandard.standard :
+                  course.educationalStandard.standard_Ar}}
+                </p>
+                <p><span>{{'Educational Use' | translate}}:</span>
+                  {{getCurrentLang() === 'en' ? course.educationalUse.text : course.educationalUse.text_Ar}}</p>
+                <p><span>{{'Level' | translate}}:</span>
+                  {{getCurrentLang() === 'en' ? course.educationLevel.level : course.educationLevel.level_Ar}}</p>
+                <p class="mb-0 wrap-all" *ngIf="course.keywords && course.keywords != 'false'">
+                  <span>{{'Keywords' | translate}}:</span>
+                  <em><a (click)="filterCategory(keyword.trim())" href="javascript:;"
+                         *ngFor="let keyword of course.keywords.split(', ');let i=index">
+                    {{keyword.trim()}}{{((keyword.trim().length > 0) && (i < course.keywords.split(', ').length - 1
+                    )) ? ', ' : ''}}
+                  </a></em>
+                </p>
+
+
+                <div class="flex-table main-flex-table">
+                  <div class="flex-table-cell">
+                    <p><span>{{"Copyrights" |translate}}</span></p>
+                  </div>
+                  <div class="flex-table-cell">
+                    <div class="copy-flex">
+                      <div class="img-flex" *ngIf="course.copyRight">
+                        <img *ngIf="course.copyRight.media" src="{{course.copyRight.media}}" class="img-fluid" alt="copyright images"
+                             tooltip="{{getCurrentLang() === 'en' ? course.copyRight.title + ':' + ' ' + course.copyRight.description  : course.copyRight.title_Ar + ':' + ' ' + course.copyRight.description_Ar}}"
+                             container="body">
+                        <span *ngIf="!course.copyRight.media" tooltip="{{getCurrentLang() === 'en' ? course.copyRight.title + ':' + ' ' + course.copyRight.description  : course.copyRight.title_Ar + ':' + ' ' + course.copyRight.description_Ar}}" class="text-info">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <!-- tooltip="{{getCurrentLang() === 'en' ?course.copyRight.description:course.copyRight.description_Ar}}"
+                      container="body" -->
+                      <div class="text-flex">
+                        <p><span class="truncate"> </span>
+                           <!-- tooltip="{{getCurrentLang() === 'en' ?course.copyRight.description:course.copyRight.description_Ar}}"
+                          container="body">{{getCurrentLang() === 'en' ? course.copyRight.title :
+                          course.copyRight.title_Ar}} -->
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="dtl-badge blue-type" *ngIf="course && course.communityBadge && !course.moEBadge">
+                  <img src="./assets/images/badge/blue-cc.svg" alt="blue-cc">
+                </div>
+
+                <div class="dtl-badge gold-type" *ngIf="course && course.communityBadge && !course.moEBadge">
+                  <img src="./assets/images/badge/gold-cc.svg" alt="gold-cc">
+                </div>
+                <!-- badge :START-->
+                <div class="dtl-badge blue-type" *ngIf="course && course.moEBadge">
+                  <img src="./assets/images/badge/blue-ec.svg" alt="blue-ec">
+                </div>
+
+                <div class="dtl-badge gold-type" *ngIf="course && course.moEBadge">
+                  <img src="./assets/images/badge/gold-ec.svg" alt="gold-ec">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <a *ngIf="!courseEnrolled && testDataLoaded" href="javascript:;" class="btn btn-primary text-uppercase"
+                   (click)="enrollCourse()">{{'enroll for the course' | translate}}</a>
+                <a *ngIf="courseEnrolled && courseTest" class="btn btn-primary text-uppercase"
+                   routerLink="/take-test/{{course.id}}">{{'Take test' | translate}}</a>
+              </div>
+              <!-- badge :START-->
+
+            </div>
+
+          </div>
+        </div>
+        <!--<div class="row">-->
+        <!--<div class="col-lg-12">-->
+        <!--<h3 class="dtl-h3">Objective</h3>-->
+        <!--<hr>-->
+        <!--<div class="panel-box mb-30 p-30">-->
+        <!--<p>Add description here</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div> &lt;!&ndash; Objective :END&ndash;&gt;-->
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="panel-box p-30 mb-30">
+              <div
+                [ngStyle]="!contentReadMore ? {'height':'300px','overflow': 'hidden'} : {'height':'auto','overflow': 'visible'}">
+                <div [innerHtml]="course.courseContent" class="inner-container">
+                </div>
+              </div>
+              <button *ngIf="contentReadMore && course.courseContent && course.courseContent.length > 160" type="button"
+                      class="radmore-link" (click)="clickContentReadMore()">{{'View less' | translate}}..
+              </button>
+              <button *ngIf="!contentReadMore && course.courseContent && course.courseContent.length > 160"
+                      type="button" class="radmore-link" (click)="clickContentReadMore()">{{'Read more' | translate}}..
+              </button>
+              <a href="javascript:;" *ngIf="!userId || (userId !== course.createdById)" class="rprt" (click)="showReportAbuseModal()"><i
+                class="fa fa-exclamation-circle"></i> {{'Report Abuse' | translate}}</a>
+            </div>
+
+            <div class="course-section" *ngIf="courseResources && courseResources.length > 0">
+              <ng-container *ngFor="let section of courseResources">
+
+                <h3 class="dtl-h3">{{section.name}}</h3>
+                <hr>
+                <ng-container *ngFor="let item of section.courseResources">
+                  <div class="panel-box {{i != courseResources.length - 1 ? 'mb-30' : ''}}">
+
+                    <div class="media resource-media">
+                      <div class="img-block mr-3">
+                        <img src="{{item.thumbnail}}" alt="" class="img-fluid">
+                      </div>
+                      <div class="media-body resource-media-body">
+                        <div class="row">
+                          <div class="col-lg-9">
+                            <h6 class="resource-list-title"><a target="_blank"
+                                                               href="/resource/{{encService.set(item.id)}}">{{item.title}}</a>
+                            </h6>
+                            <!--<em class="last-view-txt">Last viewed on 08 Mar 2019 </em>-->
+                          </div>
+                          <!--col-->
+                          <div class="col-lg-3">
+                            <app-rating [allRating]="item.allRatings" [rating]="item.rating" [type]="'resource'"
+                                        [id]="item.id" (updateData)="rateCourse()"></app-rating>
+                          </div>
+                          <!--col-->
+                        </div>
+                        <!--row-->
+                        <ul class="resource-list-auth-date">
+                          <li>
+                            <strong>{{'Category' | translate}}:</strong> <em><a href="javascript:;"
+                                                                                (click)="filterCategory(item.category.name)">{{getCurrentLang()
+                            === 'en' ? item.category.name.trim() : item.category.name_Ar}}</a></em>
+                          </li>
+                          <li><strong>{{'Author' | translate}}:</strong> <em><a
+                            routerLink="/user/profile/{{encService.set(item.createdById)}}">{{item.createdBy}}</a></em>
+                          </li>
+                          <li><i class="fa fa-calendar" aria-hidden="true"></i> {{item.createdOn|date}}</li>
+                        </ul>
+                        <p class="mb-0 text-white-space-pre">
+                          {{item.resourceDescription}}
+                        </p>
+                        <ul class="resource-list-links">
+                          <li><a routerLink="/resource/{{encService.set(item.id)}}">{{'Read more' | translate}}</a></li>
+                          <li><a href="javascript:;" *ngIf="!userId || (userId !== item.createdById)"  (click)="showResourceReportAbuse[i] = true"><i
+                            class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            {{'Report Abuse' | translate}}</a></li>
+                        </ul>
+                        <app-report-abuse [(display)]="showResourceReportAbuse[i]" [type]="'Resource'" [id]="item.id">
+                        </app-report-abuse>
+                      </div>
+                      <!--resource-media-body-->
+                    </div>
+                    <!--resource-media-->
+
+                    <div class="resource-media-outer">
+                      <p class="mb-0 wrap-all" *ngIf="item.keywords && item.keywords != 'false'">
+                        <strong>{{'Keywords' | translate}}:</strong>
+                        <em><a (click)="filterCategory(keyword.trim())" href="javascript:;"
+                               *ngFor="let keyword of item.keywords.split(', ');let i=index">
+                          {{keyword.trim()}}{{((keyword.trim().length > 0) && (i < item.keywords.split(', ').length - 1
+                          )) ? ', ' : ''}}
+                        </a></em>
+                      </p>
+                      <!--<p class="mb-0 wrap-all" *ngIf="!(item.keywords && item.keywords != 'false')">-->
+                      <!--<strong>{{'Keywords' | translate}}:</strong>-->
+                      <!--{{'Nil' | translate}}-->
+                      <!--</p>-->
+                      <ul class="resource-list-stats">
+                        <li>
+                          <p class="resource-list-stat-count">{{item.viewCount ? item.viewCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Visits' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.readingTime ? item.readingTime : 0}} mins</p>
+                          <p class="resource-list-stat-title">{{'Reading time' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.downloadCount ? item.downloadCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Download Count' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.sharedCount ? item.sharedCount : 0}}
+                          </p>
+                          <p class="resource-list-stat-title">{{'Shared Count' | translate}}</p>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <!--resource-media-outer-->
+
+
+                  </div>
+                  <!--panel-box-->
+                </ng-container>
+              </ng-container>
+            </div>
+            <!--course-section-->
+
+          </div>
+          <!--col-->
+
+          <div class="col-lg-4">
+            <app-recomended-articles></app-recomended-articles>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of getFiltered(course.references);let i = index">
+                  <app-iframe-viewer [url]="item.urlReference"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                     *ngIf="course && (!course.references || (course.references && getFiltered(course.references).length === 0))">
+                  <p>{{'No Reference Links Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Course Files' | translate}}</h3>
+              <hr>
+              <div class="file-viewer-flex"
+                   *ngIf="course && course.associatedFiles && course.associatedFiles.length > 0">
+                <app-file-viewer class="col-md-3" *ngFor="let item of course.associatedFiles" [title]="course.title"
+                                 [fileName]="item.fileName ? item.fileName : ''"
+                                 [url]="item.associatedFile"></app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                     *ngIf="course && (!course.associatedFiles || (course.associatedFiles && course.associatedFiles.length === 0))">
+                  <p>{{'No Resource Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Comments' | translate}}</h3>
+              <hr>
+              <div class="row" *ngIf="userId">
+                <div class="col-lg-12">
+                  <form [formGroup]="CommentCourseForm">
+                    <textarea class="form-control" rows="4" formControlName="comments"
+                              placeholder="{{'Leave your comment' | translate}}"></textarea>
+                    <br>
+                    <p
+                      *ngIf="(commentSubmitted || CommentCourseForm.controls.comments.touched) && CommentCourseForm.controls.comments.invalid"
+                      class="field-error">
+                      {{'Please enter a valid Comment' | translate}}.
+                    </p>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary text-uppercase fl-right"
+                              (click)="submitComment()">{{'Comment' |translate}}
+                      </button>
+                      <div class="clearfix"></div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <ng-container *ngIf="course">
+                <ng-container *ngFor="let item of course.courseComments;let i = index">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="{{item.commentorImage ?  item.commentorImage : 'assets/images/default-user.png'}}"
+                           class="img-prof">
+                    </div>
+                    <div class="col-md-10" *ngIf="!showCommentUpdateForm[i]">
+                      <p class="rec-art-athr">{{item.commentedBy}} </p>
+                      <p class="cmt-date">{{item.commentDate | date:'medium' }}</p>
+                      <p class="cmt-txt">{{item.comments}}</p>
+                      <a href="javascript:;" class="rprt mr-1" *ngIf="userId !== item.commentedById"
+                         (click)="showCommentReportAbuseModal(item.id)"><i class="fa fa-exclamation-circle"></i>
+                        {{'Report Abuse' | translate}}</a>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === item.commentedById"
+                              (click)="editComment(i)">
+                        {{'Edit Comment' | translate}}
+                      </button>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === item.commentedById"
+                              (click)="deleteComment(item)">
+                        {{'Delete Comment' | translate}}
+                      </button>
+                      <button class="btn btn-primary mr-1" *ngIf="userId === course.createdById"
+                              (click)="hideComment(item)">
+                        {{'Hide Comment' | translate}}
+                      </button>
+                    </div>
+                    <div class="col-md-10" *ngIf="showCommentUpdateForm[i]">
+                      <form [formGroup]="updateCommentCourseForm[i]">
+                        <textarea class="form-control" rows="4" formControlName="comments"
+                                  placeholder="{{'Leave your comment' | translate}}"></textarea>
+                        <br>
+                        <p
+                          *ngIf="(commentSubmitted || updateCommentCourseForm[i].controls.comments.touched) && updateCommentCourseForm[i].controls.comments.invalid"
+                          class="field-error">
+                          {{'Please enter a valid Comment' | translate}}.
+                        </p>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary text-uppercase fl-right"
+                                  (click)="submitUpdatedComment(i)">{{'Update Comment' | translate}}
+                          </button>
+                          <button type="submit" class="btn btn-primary text-uppercase fl-right mr-1"
+                                  (click)="cancelUpdatedComment(i)">{{'Cancel' | translate}}
+                          </button>
+                          <div class="clearfix"></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <hr>
+                </ng-container>
+              </ng-container>
+              <app-report-abuse [(display)]="showCommentReportAbuse" [type]="'CourseComment'"
+                                [id]="getReportCommentId()"></app-report-abuse>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-dialog header="{{(course && course.copyRight)? course.copyRight.title:''}}" [(visible)]="showRights"
+                [contentStyle]="{'max-height':'600px'}" [width]="600">
+        <div class="img-thumpnail">
+          <img *ngIf="course.copyRight.media" src="{{course.copyRight.media}}" class="img-fluid mb-3"
+               alt="copyright images">
+        </div>
+        <p>{{course.copyRight.description}}</p>
+      </p-dialog>
+      <div class="clearfix"></div>
+    </div>
+    <!--container-->
+    <app-report-abuse [(display)]="showReportAbuse" [type]="'Course'" [id]="course.id"></app-report-abuse>
+  </div>
+  <!--grey-bg-->
+
+  <!--grey-bg-->
+  <div class="fix-cteg-btn btn btn-primary text-uppercase" (click)="showCategoriesModal()">{{'Categories' |
+    translate}}
+  </div>
+</div>
+<ng-template #noCourse>
+  <div class="grey-bg pt-40 pb-40">
+    <p *ngIf="courseLoaded">{{'Failed to load course' | translate}}.</p>
+  </div>
+</ng-template>
+<app-categories-modal [(display)]="showCategories"></app-categories-modal>

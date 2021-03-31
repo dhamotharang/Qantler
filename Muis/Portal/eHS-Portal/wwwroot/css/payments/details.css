@@ -1,0 +1,114 @@
+﻿#fileuploader,
+.fileuploader,
+.ajax-file-upload-container {
+  display: none;
+}
+
+.notes .event .event-alert {
+  background-color: #f4f4f4 !important;
+  width: 95% !important;
+}
+
+.notes .attachments,
+.create-notes .attachments {
+  overflow: auto;
+}
+
+  .notes .attachments .item,
+  .create-notes .attachments .item {
+    padding: 10px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: inline-flex !important;
+    background-color: #ffffff;
+  }
+
+    .notes .attachments .item .thumb,
+    .create-notes .attachments .item .thumb {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+      .notes .attachments .item .thumb i,
+      .create-notes .attachments .item .thumb i {
+        font-size: 30px;
+        margin: 0;
+        color: #212529;
+      }
+
+    .notes .attachments .item .details,
+    .create-notes .attachments .item .details {
+      margin-right: 6px;
+    }
+
+      .notes .attachments .item .details p.file-name,
+      .create-notes .attachments .item .details p.file-name {
+        display: block;
+        margin-bottom: 0;
+        margin-top: 2px;
+        color: #212529;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+
+      .notes .attachments .item .details .buttons,
+      .create-notes .attachments .item .details .buttons {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+        .notes .attachments .item .details .buttons .file-size,
+        .create-notes .attachments .item .details .buttons .file-size {
+          margin-right: 10px;
+          margin-bottom: 0px;
+          font-size: 0.875rem;
+        }
+
+        .notes .attachments .item .details .buttons a:last-child,
+        .create-notes .attachments .item .details .buttons a:last-child {
+          margin-right: 0;
+        }
+
+.create-notes .upload-btn {
+  margin-top: 12px;
+}
+
+.notes .placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 16px;
+}
+
+  .notes .placeholder span {
+    text-align: center;
+  }
+
+  .notes .placeholder button {
+    align-self: center;
+    margin-top: 32px;
+  }
+
+.form-group.horizontal .col-form-label
+{
+  width : 120px !important;
+}
+
+@media (min-width: 576px) {
+  .modal.attachmentsModal .modal-dialog {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 768px) {
+  .checklist-modal .modal-dialog,
+  .review-modal .modal-dialog,
+  .create-notes .modal-dialog {
+    max-width: 60%;
+  }
+}

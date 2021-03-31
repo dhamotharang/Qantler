@@ -1,0 +1,11 @@
+﻿#Clisting_filter label {
+  margin-bottom: 0;
+}
+
+#Clisting_filter {
+  padding: 20px 20px 0;
+}
+
+.dataTables_scrollBody {
+  min-height: 53vh;
+}

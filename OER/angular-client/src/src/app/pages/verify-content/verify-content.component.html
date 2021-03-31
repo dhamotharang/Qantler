@@ -1,0 +1,403 @@
+<app-sub-banner [title]="'View Content' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs [items]="[{text: 'Home'|translate,link:'/',active:false}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40" *ngIf="!dataLoadFailed">
+  <ng-container *ngIf="+type === 1 && course">
+    <div class="container">
+      <div class="detail-content-main">
+        <div class="row">
+          <div class="col-md-12 mb-30">
+            <div class="verify-btn">
+
+             
+            <button *ngIf="contentApprovalId > 0 || (contentApprovalId === 0 && checkType > 0 )" pButton
+                    icon="pi pi-times" label="{{'Reject' | translate}}" style="float: right" type="button"
+                    (click)="rejectItem('course')" class=" ml-1 ui-button-danger">
+            </button>
+            <button *ngIf="contentApprovalId > 0 || (contentApprovalId === 0 && checkType > 0 )" pButton
+                    icon="pi pi-check" label="{{'Approve' | translate}}" style="float: right" type="button"
+                    (click)="approveItem('course')" class=" ml-1 ui-button-success">
+            </button>
+            <button *ngIf="contentApprovalId > 0" pButton icon="pi pi-list" label="{{'QRC Management' | translate}}"
+                    style="float: right" (click)="goToQRC()" type="button" class=" ml-1 ui-button-primary">
+            </button>
+            <button *ngIf="contentApprovalId === 0 && checkType === 1" pButton icon="pi pi-list"
+                    label="{{'Community Check' | translate}}" style="float: right" (click)="gotoCommunity()"
+                    type="button"
+                    class=" ml-1 ui-button-primary">
+            </button>
+            <button *ngIf="contentApprovalId === 0 && checkType === 2" pButton icon="pi pi-list"
+                    label="{{'Senstivity Check' | translate}}" style="float: right" (click)="gotoSensitivity()"
+                    type="button"
+                    class=" ml-1 ui-button-primary">
+            </button>
+            <button *ngIf="contentApprovalId === 0 && checkType === 3" pButton icon="pi pi-list"
+                    label="{{'Expert Check' | translate}}" style="float: right" (click)="gotoExpert()" type="button"
+                    class=" ml-1 ui-button-primary">
+            </button>
+          </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{ course.thumbnail}}" class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <h4 class="mb-0">{{course.title}} </h4>
+                  <!--item-rating-->
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br><br>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+            <hr>
+            <p class="dtl-p1 text-white-space-pre">{{course.courseDescription}}</p>
+
+            <div class="descr-cnt">
+              <p><span>{{'Category' | translate}}:</span> {{getCurrentLang() === 'en' ? course.category.name :
+                course.category.name_Ar}}</p>
+              <p><span>{{'Sub Category' | translate}}:</span> {{getCurrentLang() === 'en' ? course.subCategory.name :
+                course.subCategory.name_Ar}}</p>
+              <p><span>{{'Author' | translate}}:</span><a
+                routerLink="/user/profile/{{encService.set(course.createdById)}}">{{course.createdBy}}</a>
+              </p>
+              <p><span>{{'Date Added' | translate}}:</span> {{course.createdOn|date}}</p>
+              <p><span>{{'Educational Standard' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                course.educationalStandard.standard : course.educationalStandard.standard_Ar}}</p>
+              <p><span>{{'Educational Use' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                course.educationalUse.text : course.educationalUse.text_Ar}}</p>
+              <p><span>{{'Level' | translate}}:</span> {{getCurrentLang() === 'en' ? course.educationLevel.level :
+                course.educationLevel.level_Ar}}</p>
+              <p><span>{{'Date Added' | translate}}:</span> {{course.createdOn|date}}</p>
+              <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                {{course.keywords != 'false' ? course.keywords : ''}}</p>
+            </div>
+            <div class="form-group" *ngIf="testAvaialble">
+              <a class="btn btn-primary text-uppercase" target="_blank" href="/verify-test/{{course.id}}"
+                 *ngIf="courseTest">
+                {{'Preview test' | translate}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <div [innerHtml]="course.courseContent">
+              </div>
+            </div>
+
+            <div class="course-section" *ngIf="courseResources && courseResources.length > 0">
+              <ng-container *ngFor="let section of courseResources">
+
+                <h3 class="dtl-h3">{{section.name}}</h3>
+                <hr>
+
+                <ng-container *ngFor="let item of section.courseResources">
+                  <div class="panel-box {{i != courseResources.length - 1 ? 'mb-30' : ''}}">
+
+                    <div class="media resource-media">
+                      <div class="img-block mr-3">
+                        <img src="{{ item.thumbnail}}" alt="" class="img-fluid">
+                      </div>
+                      <div class="media-body resource-media-body">
+                        <div class="row">
+                          <div class="col-lg-9">
+                            <h6 class="resource-list-title"><a target="_blank"
+                                                               href="/resource/{{encService.set(item.id)}}">{{item.title}}</a>
+                            </h6>
+                          </div>
+                          <!--col-->
+                          <!--col-->
+                        </div>
+                        <!--row-->
+                        <ul class="resource-list-auth-date">
+                          <li><strong>{{'Category' | translate}}:</strong> <em><a
+                            href="javascript:;">{{getCurrentLang() === 'en' ? item.category.name :
+                            item.category.name_Ar}}</a></em>
+                          </li>
+                          <li><strong>{{'Author' | translate}}:</strong> <em><a
+                            routerLink="/user/profile/{{encService.set(item.createdById)}}">{{item.createdBy}}</a></em>
+                          </li>
+                          <li><i class="fa fa-calendar" aria-hidden="true"></i> {{item.createdOn|date}}</li>
+                        </ul>
+                        <p class="mb-0 text-white-space-pre">
+                          {{item.resourceDescription}}
+                        </p>
+                        <ul class="resource-list-links">
+                          <li><a routerLink="/resource/{{encService.set(item.id)}}">{{'Read More' | translate}}</a></li>
+                        </ul>
+                        <app-report-abuse [(display)]="showResourceReportAbuse[i]" [type]="'Resource'" [id]="item.id">
+                        </app-report-abuse>
+                      </div>
+                      <!--resource-media-body-->
+                    </div>
+                    <!--resource-media-->
+
+                    <div class="resource-media-outer">
+                      <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                        {{item.keywords != 'false' ? item.keywords : 'Nil'|translate}}</p>
+                      <ul class="resource-list-stats">
+                        <li>
+                          <p class="resource-list-stat-count">{{item.viewCount ? item.viewCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Visits' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.readingTime ? item.readingTime : 0}} mins</p>
+                          <p class="resource-list-stat-title">{{'Reading time' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.downloadCount ? item.downloadCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Download Count' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.sharedCount ? item.sharedCount : 0}}
+                          </p>
+                          <p class="resource-list-stat-title">{{'Shared Count' | translate}}</p>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <!--resource-media-outer-->
+
+
+                  </div>
+                  <!--panel-box-->
+                </ng-container>
+
+
+              </ng-container>
+            </div>
+            <!--course-section-->
+
+          </div>
+          <!--col-->
+
+        </div>
+        <!--row-->
+
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of getFiltered(course.references);let i = index">
+                  <app-iframe-viewer [url]="item.urlReference"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                     *ngIf="course && (!course.references || (course.references && getFiltered(course.references).length === 0))">
+                  <p>{{'No Reference Links Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Course Files' | translate}}</h3>
+              <hr>
+              <div class="file-viewer-flex"
+                   *ngIf="course && course.associatedFiles && course.associatedFiles.length > 0">
+                <app-file-viewer class="col-md-3" *ngFor="let item of course.associatedFiles" [title]="course.title"
+                                 [fileName]="item.fileName ? item.fileName : ''"
+                                 [url]="item.associatedFile"></app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                     *ngIf="course && (!course.associatedFiles || (course.associatedFiles && course.associatedFiles.length === 0))">
+                  <p>{{'No Course Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <!--container-->
+  </ng-container>
+  <ng-container *ngIf="+type === 2 && resource">
+    <div class="container">
+      <div class="detail-content-main">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="verify-btn">
+              <button
+                *ngIf="contentApprovalId > 0 || (contentApprovalId === 0 && checkType > 0 )" pButton icon="pi pi-times"
+                label="{{'Reject' | translate}}" type="button" (click)="rejectItem('resource')"
+                class=" ml-1 ui-button-danger">
+              </button>
+              <button *ngIf="contentApprovalId > 0 || (contentApprovalId === 0 && checkType > 0 )" pButton
+                      icon="pi pi-check" label="{{'Approve' | translate}}" type="button"
+                      (click)="approveItem('resource')"
+                      class=" ml-1 ui-button-success">
+              </button>
+              <button *ngIf="contentApprovalId > 0" pButton icon="pi pi-list" label="{{'QRC Management' | translate}}"
+                      (click)="goToQRC()" type="button" class=" ml-1 ui-button-primary">
+              </button>
+              <button *ngIf="contentApprovalId === 0 && checkType === 1" pButton icon="pi pi-list"
+                      label="{{'Community Check' | translate}}" (click)="gotoCommunity()" type="button"
+                      class=" ml-1 ui-button-primary">
+              </button>
+              <button *ngIf="contentApprovalId === 0 && checkType === 2" pButton icon="pi pi-list"
+                      label="{{'Senstivity Check' | translate}}" (click)="gotoSensitivity()" type="button"
+                      class=" ml-1 ui-button-primary">
+              </button>
+              <button *ngIf="contentApprovalId === 0 && checkType === 3" pButton icon="pi pi-list"
+                      label="{{'Expert Check' | translate}}" (click)="gotoExpert()" type="button"
+                      class=" ml-1 ui-button-primary">
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{ resource.thumbnail}}" class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <div class="form-group mb-3" *ngIf="resource && resource.isRemix === true">
+                    <span class="badge badge-primary fw-n remix-badge">{{'Remixed Resource' | translate}}
+                    </span>
+                  </div>
+                  <h4 class="mb-0">{{resource.title}} </h4>
+                  <!--item-rating-->
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+            <p class="text-white-space-pre">{{resource.resourceDescription}}</p>
+            <hr>
+
+            <div class="descr-cnt">
+              <p><span>{{'Category' | translate}}:</span> {{getCurrentLang() === 'en' ? resource.category.name :
+                resource.category.name_Ar}}</p>
+              <p><span>{{'Sub Category' | translate}}:</span> {{getCurrentLang() === 'en' ? resource.subCategory.name :
+                resource.subCategory.name_Ar}}</p>
+              <p><span>{{'Material Type' | translate}}:</span> {{getCurrentLang() === 'en' ? resource.materialType.name
+                : resource.materialType.name_Ar}} </p>
+              <p><span>{{'Author' | translate}}:</span><a
+                routerLink="/user/profile/{{encService.set(resource.createdById)}}">{{resource.createdBy}}</a>
+              </p>
+              <p><span>{{'Date Added' | translate}}:</span> {{resource.createdOn|date}}</p>
+              <p><span>{{'Educational Standard' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                resource.educationalStandard.standard : resource.educationalStandard.standard_Ar}}</p>
+              <p><span>{{'Educational Use' | translate}}:</span> {{getCurrentLang() === 'en' ?
+                resource.educationalUse.text : resource.educationalUse.text_Ar}}</p>
+              <p><span>{{'Level' | translate}}:</span> {{getCurrentLang() === 'en' ? resource.educationLevel.level :
+                resource.educationLevel.level_Ar}}</p>
+              <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                {{resource.keywords != 'false' ? resource.keywords : ''}}</p>
+              <p><span>{{'Copyrights' | translate}}</span></p>
+              <div class="copy-flex">
+                <div class="img-flex" *ngIf="resource.copyRight && resource.copyRight.Media">
+                  <img src="{{resource.copyRight.Media}}" class="img-fluid" alt="copyright images">
+                </div>
+                <div class="text-flex">
+                  <p><a href="javascript:;" (click)="showcopyrightDetails()">{{getCurrentLang() === 'en' ?
+                    resource.copyRight.title : resource.copyRight.title_Ar}}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="dtl-h3">{{'Objective' | translate}}</h3>
+            <hr>
+            <div class="panel-box mb-30 p-30" style="word-wrap:break-word;">
+              <p [innerHTML]="resource.objective" class="text-white-space-pre"></p>
+            </div>
+          </div>
+        </div> <!-- Objective :END-->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <div [innerHtml]="resource.resourceContent" class="inner-container "></div>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of getFiltered(resource.references);let i = index">
+                  <app-iframe-viewer [url]="item.urlReference"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                     *ngIf="resource && (!resource.references || (resource.references && getFiltered(resource.references).length === 0))">
+                  <p>{{'No Reference Links Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Resource Files' | translate}}</h3>
+
+              <hr>
+              <div class="file-viewer-flex"
+                   *ngIf="resource && resource.resourceFiles && resource.resourceFiles.length > 0">
+                <app-file-viewer class="col-md-3" *ngFor="let item of resource.resourceFiles" [title]="resource.title"
+                                 [fileName]="item.fileName ? item.fileName : ''"
+                                 [url]="item.associatedFile"></app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                     *ngIf="resource && (!resource.resourceFiles || (resource.resourceFiles && resource.resourceFiles.length === 0))">
+                  <p>{{'No Resource Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <p-dialog header="{{(resource && resource.copyRight)? resource.copyRight.title:''}}" [(visible)]="showRights"
+                [contentStyle]="{'max-height':'600px'}" [width]="600">
+        <div class="img-thumpnail">
+          <img *ngIf="resource.copyRight.media" src="{{resource.copyRight.media}}" class="img-fluid mb-3"
+               alt="copyright images">
+        </div>
+        <p>{{resource.copyRight.description}}</p>
+      </p-dialog>
+    </div>
+  </ng-container>
+  <!-- Modal add-->
+  <p-dialog [(visible)]="showRejectModal" (onHide)="closeRejectionReason()" [modal]="true" [responsive]="true"
+            header="{{'Reason for rejection' | translate}}" [style]="{width: '500px'}"
+            [contentStyle]="{'max-height':'500px'}">
+    <form>
+      <div class="form-group">
+        <textarea class="form-control" rows="10" name="rejectReason" [(ngModel)]="rejectReason" pInputTextarea
+                  autoResize="autoResize"></textarea>
+        <p *ngIf="(submitRejectForm && rejectReason.length < 0)" class="field-error">
+          {{'Please enter a valid reason' | translate}}
+        </p>
+      </div>
+    </form>
+    <p-footer>
+      <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+              (click)="submitRejectionReport()">{{'Submit' | translate}}
+      </button>
+    </p-footer>
+  </p-dialog>
+</div>
+<div class="grey-bg pt-40 pb-40" *ngIf="dataLoadFailed">
+  <p class="text-center">{{'Failed to load Content' | translate}}</p>
+</div>

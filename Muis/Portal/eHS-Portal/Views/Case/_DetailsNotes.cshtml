@@ -1,0 +1,45 @@
+﻿<div class="modal fade create-notes" id="createNotesModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label">Add Notes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="remarks">Notes</label>
+                    <textarea class="form-control" rows="5" maxlength="4000" placeholder="Enter your notes here." required></textarea>
+                    <label class="error mt-2 text-danger" for="firstname">Please enter your notes</label>
+                </div>
+                <div class="attachments">
+                </div>
+                <div class="upload">
+                    <button type="button" class="btn btn-info btn-fw upload-btn">
+                        <i class="mdi mdi-upload"></i>Attachment
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submitBtn" type="button" class="btn btn-outline-primary">Submit</button>
+            </div>
+            <div class="fileuploader">
+            </div>
+        </div>
+    </div>
+
+    <div class="templates">
+        <div class="attachment item">
+            <div class="thumb">
+                <i class="mdi mdi-paperclip"></i>
+            </div>
+            <div class="details">
+                <p class="file-name">{fileName}</p>
+                <div class="buttons">
+                    <p class="file-size">{fileSize}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

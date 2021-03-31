@@ -1,0 +1,19 @@
+<p-dialog header="{{'Categories' | translate}}" [(visible)]="display" (onHide)="closeModel()" [width]="500"
+          [contentStyle]="{'max-height':'500px', 'overflow':'auto'}" [modal]="true" [responsive]="true">
+  <p-accordion>
+    <p-accordionTab header="{{getCurrentLang() === 'en' ? item.name : item.name_Ar}}" *ngFor="let item of categories">
+      <ng-container *ngFor="let subItem of subCategories">
+        <div class="grid clearfix" *ngIf="item.id === subItem.categoryId">
+          <p-checkbox [(ngModel)]="selectedSubCategories" name="{{'subCategories' | translate}}" value="{{subItem.id}}"
+                      label="{{getCurrentLang() === 'en' ? subItem.name : subItem.name_Ar}}">
+          </p-checkbox>
+        </div>
+      </ng-container>
+    </p-accordionTab>
+  </p-accordion>
+  <p-footer>
+    <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+            (click)="submitModal()">{{"Apply" | translate}}
+    </button>
+  </p-footer>
+</p-dialog>

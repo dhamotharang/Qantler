@@ -1,0 +1,71 @@
+﻿.bg-success {
+  background-color: #008355 !important;
+}
+
+.tab-solid-danger .nav-link.active {
+  background: #008355 !important;
+}
+
+.sidebar {
+  background: #008355 !important;
+}
+
+  .sidebar .sidebar-inner > .nav {
+    padding-bottom: 0px;
+  }
+
+    .sidebar .sidebar-inner > .nav .brand-logo {
+      background: #fff !important;
+      padding: 0px;
+    }
+
+      .sidebar .sidebar-inner > .nav .brand-logo a {
+        padding: 7px 5px;
+      }
+
+        .sidebar .sidebar-inner > .nav .brand-logo a img {
+          width: 90px;
+          padding: 0px;
+        }
+
+    .sidebar .sidebar-inner > .nav > .nav-item > .nav-link .menu-title {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item > .nav-link .menu-icon {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item .submenu .submenu-inner .nav .nav-item .nav-link .icon-holder {
+      background-image: linear-gradient(to bottom, #008f5d, #008355);
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item:not(.brand-logo) > .nav-link:after {
+      background: #008355 !important;
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item.active > .nav-link:after {
+      background: #fff !important;
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item:not(.brand-logo):not(.active):hover > .nav-link {
+      background: #00754c;
+    }
+
+    .sidebar .sidebar-inner > .nav > .nav-item .submenu.bg-inverse-white .submenu-category-heading,
+    .sidebar .sidebar-inner > .nav > .nav-item .submenu .submenu-inner .nav .nav-item.nav-category,
+    .sidebar .sidebar-inner > .nav > .nav-item .submenu.bg-inverse-white .nav .nav-item .nav-link {
+      color: #222;
+    }
+
+      .sidebar .sidebar-inner > .nav > .nav-item .submenu.bg-inverse-white .nav .nav-item .nav-link:hover {
+        color: #008355
+      }
+
+      .sidebar .sidebar-inner > .nav > .nav-item .submenu.bg-inverse-white .nav .nav-item .nav-link.active {
+        color: #008355
+      }
+
+.footer {
+  background: #fff;
+}

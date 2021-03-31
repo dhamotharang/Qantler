@@ -1,0 +1,13 @@
+﻿@media (min-width: 576px) {
+  .filter .modal-dialog {
+    max-width: 500px;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .filter .modal-lg,
+  .filter .modal-xl {
+    max-width: 50%;
+  }
+}

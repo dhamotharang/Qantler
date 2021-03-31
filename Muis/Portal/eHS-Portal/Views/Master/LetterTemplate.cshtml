@@ -1,0 +1,69 @@
+﻿@model eHS.Portal.Model.LetterTemplate;
+
+@{
+  ViewData["Title"] = "Letter Template";
+}
+
+@section CSS {
+  <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+  <link rel="stylesheet" href="~/css/master/letterTemplate.css" />
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+    <h4 class="page-title">Letter Template</h4>
+  </div>
+}
+
+@section Toolbar {
+  <div class="quick-link-wrapper">
+    <ul class="quick-links ml-auto">
+      <li><a id="save" href="javascript:void(0)">Save</a></li>
+    </ul>
+  </div>
+}
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group horizontal  master-type">
+          <strong class="col-form-label">Type: </strong>
+          <div class="col-form-field col-md-6 col-sm-8 col-xs-12">
+            <select id="letterTypeSelect" class="select-single select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+              <option value="400">Show Cause</option>
+              <option value="401">FOC</option>
+              <option value="402">Warning</option>
+              <option value="403">Compound</option>
+              <option value="404">Suspension</option>
+              <option value="405">Immediate Suspension</option>
+              <option value="406">Revocation</option>
+            </select>
+          </div>
+        </div>
+        <hr />
+        <div class="form-group horizontal  master-type">
+          <strong class=" col-form-label" style="width:66px !important">Keywords: </strong>
+          <div class="col-form-label keyword">
+            <p>@Model.Keyword</p>
+          </div>
+        </div>
+        <div class="body">
+          <textarea id="tinyMce">
+                    </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+  </script>
+  <script src="~/plugins/tinymce/tinymce.min.js"></script>
+  <script src="~/js/master/letterTemplate.js"></script>
+  <script src="~/plugins/select2/select2.min.js"></script>
+}
+

@@ -1,0 +1,27 @@
+﻿<div class="modal fade reinstate" id="reinstateModal" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Re-instate</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-3 col-lg-2 col-form-label">Reason :</label>
+          <div class="col-sm-9 col-lg-5">
+            <select id="reasonSelect" class="select-single select2-hidden-accessible" style="width:100%">
+            </select>
+            <label class="error mt-2 text-danger">Reason is required.</label>
+          </div>
+        </div>
+        <p>Notes (Optional):</p>
+        <div class="mb-2 bg-inverse-info">
+          <textarea rows="3" class="form-control bg-transparent border-0 notes" placeholder="Enter some notes here. (e.g. reasons for re-instate the application)"></textarea>
+        </div>       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-seconday" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-primary submit">Re-instate</button>
+      </div>
+    </div>
+  </div>
+</div>

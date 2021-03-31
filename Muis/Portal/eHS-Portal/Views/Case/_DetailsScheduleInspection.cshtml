@@ -1,0 +1,58 @@
+﻿<div class="modal fade schedule" id="ScheduleInspectionModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ScheduleInspectionModalLabel">Schedule an Inspection</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-lg-2 col-form-label">Premise :</label>
+                    <div class="col-sm-3 col-lg-3">
+                        <select id="premisesSelect" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                        </select>
+                        <label class="error mt-2 text-danger error-premises">Premise is required</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-lg-2 col-form-label">Start Time :</label>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="input-group date" id="timepicker-start" data-target-input="nearest">
+                            <div class="input-group" data-target="#timepicker-start" data-toggle="datetimepicker">
+                                <input type="text" class="form-control datetimepicker-input timepicker-start" data-target="#timepicker-start" required />
+                                <div class="input-group-addon input-group-append">
+                                    <i class="mdi mdi-clock input-group-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="error mt-2 text-danger error-timepicker-start">Start time is required</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-lg-2 col-form-label">End Time :</label>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="input-group date" id="timepicker-end" data-target-input="nearest">
+                            <div class="input-group" data-target="#timepicker-end" data-toggle="datetimepicker">
+                                <input type="text" class="form-control datetimepicker-input timepicker-end" data-target="#timepicker-end" required />
+                                <div class="input-group-addon input-group-append">
+                                    <i class="mdi mdi-clock input-group-text"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="error mt-2 text-danger error-timepicker-end">End time is required</label>
+                    </div>
+                </div>
+                <p>Notes (Optional):</p>
+                <div class="mb-2 bg-inverse-info">
+                    <textarea rows="3" class="form-control bg-transparent border-0 notes" placeholder="Enter some notes here. (e.g. key notes you might consider when conducting the inspection)"></textarea>
+                </div>
+                <div class="col-12">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary schedule-button">Schedule</button>
+            </div>
+        </div>
+    </div>
+</div>

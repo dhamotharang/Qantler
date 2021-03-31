@@ -1,0 +1,81 @@
+﻿@using Core.Util;
+
+@model eHS.Portal.Model.RFA;
+
+@{ ViewData["Title"] = "RFA Details"; }
+
+@section CSS {
+    <link rel="stylesheet" href="~/css/rfa/details.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">RFA Details</h4>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            @if (@Model.Status == eHS.Portal.Model.RFAStatus.PendingReview
+              && (  @Model.RaisedBy.ToString().Equals(@User.FindFirstValue(ClaimTypes.Name))
+                 || PermissionUtil.HasPermission(@User.FindFirstValue("Permissions"), 21, Access.Active)))
+            {
+                <li>
+                    <a id="action-close" href="javascript:void(0);">Close</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <partial name="_DetailsMain.cshtml" model="@Model" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <partial name="_DetailsCustomer.cshtml" model="@Model.Request" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <partial name="_DetailsChecklist.cshtml" model="@Model" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        @if (Model.LineItems?.FirstOrDefault(e => e.Replies?.FirstOrDefault(r => r.Attachments?.Count() > 0) != null) != null)
+        {
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsAttachments.cshtml" model="@Model" />
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <partial name="_DetailsActivities.cshtml" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="/Views/Shared/_ChecklistTemplate.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+          app.page.id = @Model.ID;
+          app.page.model = @Html.Raw(Json.Serialize(@Model));
+    </script>
+
+    <script src="~/js/rfa/_detailsMain.js"></script>
+    <script src="~/js/rfa/_detailsActivities.js"></script>
+    <script src="~/js/rfa/_detailsChecklist.js"></script>
+    <script src="~/js/rfa/_detailsAttachments.js"></script>
+    <script src="~/js/rfa/details.js"></script>
+}

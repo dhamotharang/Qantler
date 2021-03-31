@@ -1,0 +1,77 @@
+﻿<div class="modal fade filter" id="filterModal" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Advanced Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form class="form">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Permissions</label>
+                  <div class="col-sm-9">
+                    <select id="permissions" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%">
+                      <option value="0">Request.Read</option>
+                      <option value="1">Request.Review</option>
+                      <option value="2">Request.Approve</option>
+                      <option value="3">Request.Invoice</option>
+                      <option value="4">Request.Issuance</option>
+                      <option value="5">Request.Reassign</option>
+                      <option value="6">Request.Escalate.Action</option>
+                      <option value="7">Request.Status.Override</option>
+                      <option value="8">PeriodicInspection.Read</option>
+                      <option value="9">PeriodicInspection.ReadWrite</option>
+                      <option value="10">Mufti.Read</option>
+                      <option value="11">Mufti.Acknowledge</option>
+                      <option value="12">Mufti.Comments.ReadWrite</option>
+                      <option value="13">Payment.Read</option>
+                      <option value="14">Payment.ReadWrite</option>
+                      <option value="15">TransactionCode.Read</option>
+                      <option value="16">TransactionCode.ReadWrite</option>
+                      <option value="17">User.Read</option>
+                      <option value="18">User.ReadWrite</option>
+                      <option value="19">System.Read</option>
+                      <option value="20">System.ReadWrite</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Request Types</label>
+                  <div class="col-sm-9">
+                    <select id="requestTypes" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%">
+                      <option value="0">New</option>
+                      <option value="1">Renewal</option>
+                      <option value="2">HC01</option>
+                      <option value="3">HC02</option>
+                      <option value="4">HC03</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Clusters</label>
+                  <div class="col-sm-9">
+                    <select id="clusters" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Status</label>
+                  <div class="col-sm-9">
+                    <select id="status" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                      <option value="0">Active</option>
+                      <option value="1">In-Active</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button id="apply" type="button" class="btn btn-outline-primary">Apply</button>
+                <button id="clear" type="button" class="btn btn-outline-secondary">Clear</button>
+                <button id="close" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

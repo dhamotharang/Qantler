@@ -1,0 +1,204 @@
+@import '~@ngx-share/button/themes/material/material-light-theme.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~css-star-rating/css/star-rating.min.css';
+
+.br-default .br-units {
+  align-items: center
+}
+
+.br-default .br-unit {
+  margin-right: 5px;
+  font-size: 23px;
+  height: 18px;
+  width: 18px
+}
+
+.br-default .br-unit:after {
+  content: "\2605";
+  color: #d2d2d2
+}
+
+.br-default .br-selected:after {
+  color: #EDB867
+}
+
+.br-default .br-active:after {
+  color: #EDB867
+}
+
+.ui-calendar {
+  width: 100%;
+}
+
+.text-white-space-pre {
+  white-space: pre-wrap;
+  text-align: justify;
+}
+
+.ui-calendar.ui-calendar-w-btn input.ui-inputtext {
+  width: calc(100% - 2.357em);
+  border-color: #d5d5d5;
+  padding: 0.543em;
+}
+
+.ui-calendar.ui-calendar-w-btn input.ui-inputtext:enabled:hover:not(.ui-state-error) {
+  border-color: #d5d5d5;
+}
+
+.ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
+  border: 1px solid #d5d5d5;
+  border-left: 0;
+  background: transparent;
+  color: #212529;
+  height: 38px;
+}
+
+.ui-accordion-content .grid {
+  display: block;
+  padding: 8px 0;
+}
+
+body .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a,
+body .ui-chkbox .ui-chkbox-box.ui-state-active {
+  background-color: #ba9a3a !important;
+  border-color: #ba9a3a !important;
+}
+
+body .blue .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a,
+body .blue .ui-chkbox .ui-chkbox-box.ui-state-active {
+  background-color: #1a3464 !important;
+  border-color: #1a3464 !important;
+}
+
+.close_btn_preview {
+  position: absolute;
+  top: -45px;
+  right: 15px;
+  display: inline-block;
+}
+
+body .ui-button-primary .ui-button {
+  background-color: #ba9a3a !important;
+  border-color: #ba9a3a !important;
+}
+
+body .blue .ui-button-primary .ui-button {
+  background-color: #1a3464 !important;
+  border-color: #1a3464 !important;
+}
+
+body .ui-rating .pi-star {
+  color: #ba9a3a !important;
+}
+
+body .blue .ui-rating .pi-star {
+  color: #1a3464 !important;
+}
+
+body .ui-rating .pi-star-o {
+  color: #a1a1a1 !important;
+}
+
+body .resource-list-rating .ui-rating .pi-star {
+  color: #FFFFFF !important;
+}
+
+body .resource-list-rating .ui-rating .pi-star-o {
+  color: #FFFFFF !important;
+}
+
+body .ui-rating .pi-star:hover,
+body .ui-rating .pi-star-o:hover {
+  color: #91772f !important;
+}
+
+body .resource-list-rating .ui-rating .pi-star:hover,
+body .resource-list-rating .ui-rating .pi-star-o:hover {
+  color: #333 !important;
+}
+
+.wrap-all {
+  word-break: break-all;
+  white-space: normal;
+}
+
+.image {
+  display: block;
+}
+
+.image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+body .ui-fieldset .ui-fieldset-legend a {
+  padding: 0.2em 0.5em;
+  font-size: 18px;
+}
+
+.inner-container h1,
+.inner-container h2,
+.inner-container h3,
+.inner-container h4 {
+  font-family: "CronosPro", sans-serif;
+}
+
+.inner-container p {
+  font-family: "CronosPro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #121212;
+}
+
+.inner-container h1 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.inner-container h2 {
+  font-size: 18.5px;
+  font-weight: bold;
+}
+
+.inner-container h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.inner-container h4 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.inner-container .row.title,
+.inner-container .row.column-builder {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+body .scaling .ui-dialog {
+  transform: translate(calc(-50% + 0px), calc(-50% + 0px)) !important;
+  width: 40em !important;
+}
+
+body .scaling .ui-dialog .ui-dialog-content {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
+}
+
+.user-side-panel.stickIt .overflow-scroll {
+  display: block;
+  max-height: 432px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 20px;
+  margin-right: -20px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}

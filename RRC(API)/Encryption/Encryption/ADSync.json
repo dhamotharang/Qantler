@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+
+  "ldapConnectionString": "Qt.K2Dev",
+  "sqlServerConnectionString": "Data Source=QtK2DEV\\SQLEXPRESS;database=RulersCourt;Integrated Security = true;",
+  "binddn": "K2Dev\\Qtadmin",
+  "bindpassword": "QtOmronAd01!",
+  "searchBase": "OU=rrcUsers,DC=Qt,DC=K2Dev",
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=", //Do not change this
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg==" //Do not change this
+  }
+}

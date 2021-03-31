@@ -1,0 +1,37 @@
+<app-sub-banner [title]="'Announcements' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home' | translate,link:'/',active:false},{text: 'Announcements' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="panel-box p-30 mb-30">
+          <ng-container *ngIf="getFilteredAnnouncements().length > 0">
+            <ng-container *ngFor="let item of getFilteredAnnouncements();let i = index">
+              <p-fieldset legend="{{item.updatedOn | date:'short'}} {{ ' '}}" [styleClass]="getStyle(item)"
+                [collapsed]=true [toggleable]="true">
+                <div style="overflow: auto;" [innerHtml]="getCurrentLang() === 'en' ? item.text : item.text_Ar"></div>
+              </p-fieldset>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="getFilteredAnnouncements().length === 0">
+            <div class="alert alert-light text-center" role="alert">
+              {{"No Active Announcements" | translate}}
+            </div>
+          </ng-container>
+          <div class="mt-4">
+            <p-paginator *ngIf="totalCount > pageSize" [rows]="pageSize" [totalRecords]="totalCount"
+              (onPageChange)="paginate($event)"></p-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="EnyimMemcachedCore" Version="2.4.4" />
+    <PackageReference Include="NLog" Version="4.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Core\Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DBScripts\" />
+    <Folder Include="Smtp\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Provider\" />
+  </ItemGroup>
+</Project>

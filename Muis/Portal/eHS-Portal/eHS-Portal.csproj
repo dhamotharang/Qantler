@@ -1,0 +1,95 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>eHS.Portal</RootNamespace>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>35555c09-8a2b-42de-90da-cbc12aeb7691</UserSecretsId>
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\eHS-Portal.Model\eHS-Portal.Model.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.EventBus\Core.EventBus.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core\Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Mime" Version="3.1.0" />
+    <PackageReference Include="IronPdf" Version="2020.10.2" />
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="EnyimMemcachedCore" Version="2.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\css\customer\" />
+    <Folder Include="wwwroot\css\shared\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\css\fonts\" />
+    <Folder Include="Hubs\" />
+    <Folder Include="Configs\" />
+    <Folder Include="wwwroot\css\request\" />
+    <Folder Include="EventHandlers\" />
+    <Folder Include="Views\Error\" />
+    <Folder Include="wwwroot\plugins\datatables.net-editor\" />
+    <Folder Include="wwwroot\plugins\datatables.net-editor-bs4\" />
+    <Folder Include="wwwroot\plugins\datatables.net-select\" />
+    <Folder Include="wwwroot\plugins\datatables.net-buttons-bs4\" />
+    <Folder Include="wwwroot\plugins\datatables.net-select-bs4\" />
+    <Folder Include="wwwroot\plugins\datatables.net-scroller\" />
+    <Folder Include="Services\Request\" />
+    <Folder Include="wwwroot\plugins\jquery-ui-widget\" />
+    <Folder Include="wwwroot\plugins\print.js\" />
+    <Folder Include="wwwroot\plugins\sweetalert2\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\RFA\" />
+    <Folder Include="Events\" />
+    <Folder Include="Services\Checklist\" />
+    <Folder Include="Services\Master\" />
+    <Folder Include="Services\Emails\" />
+    <Folder Include="Services\Certificate\" />
+    <Folder Include="wwwroot\css\mufti\" />
+    <Folder Include="Models\Batch\" />
+    <Folder Include="Views\Batch\" />
+    <Folder Include="wwwroot\js\batch\" />
+    <Folder Include="wwwroot\css\certificate\" />
+    <Folder Include="wwwroot\css\batch\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\js\payments\" />
+    <Folder Include="Views\Payments\" />
+    <Folder Include="Models\Payments\" />
+    <Folder Include="Services\Payment\" />
+    <Folder Include="wwwroot\css\payments\" />
+    <Folder Include="Services\Bill\" />
+    <Folder Include="Views\User\" />
+    <Folder Include="wwwroot\js\user\" />
+    <Folder Include="wwwroot\css\user\" />
+    <Folder Include="Models\User\" />
+    <Folder Include="Services\Auth\" />
+    <Folder Include="wwwroot\css\home\" />
+    <Folder Include="Infrastructure\Filters\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Providers\" />
+    <Folder Include="Infrastructure\Interceptors\" />
+    <Folder Include="Infrastructure\Middlewares\" />
+    <Folder Include="Services\Code\" />
+    <Folder Include="Services\Customer\" />
+    <Folder Include="Models\RFA\" />
+    <Folder Include="Views\RFA\" />
+    <Folder Include="Views\PeriodicInspection\" />
+    <Folder Include="wwwroot\js\periodicInspection\" />
+    <Folder Include="Services\Statistics\" />
+  </ItemGroup>
+</Project>

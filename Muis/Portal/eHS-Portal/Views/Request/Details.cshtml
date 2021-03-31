@@ -1,0 +1,294 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using eHS.Portal.Model;
+
+@model eHS.Portal.Models.Request.DetailsModel;
+
+@{ ViewData["Title"] = "Request Details"; }
+
+@section CSS {
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/fullcalendar/fullcalendar.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/icheck/all.css" />
+    <link rel="stylesheet" href="~/css/certificate/certificate.css" />
+    <link rel="stylesheet" href="~/css/request/details.css" />
+    <link rel="stylesheet" href="~/plugins/icheck/all.css" />
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">Halal Certification</h4>
+        <div class="quick-link-wrapper">
+            <ul class="quick-links">
+            </ul>
+        </div>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            @{ var isEscalateActive = Model.Data.EscalateStatus == EscalateStatus.Open;
+                var escalateText = isEscalateActive ? "Escalate Action" : "Escalate";
+
+<li id="action-escalate" class="d-none">
+    <a id="escalate" data-toggle="modal" data-target="#EscalateModal"
+       href="javascript:void(0);">@Html.Raw(escalateText)</a>
+</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="row actions">
+    <div class="md-stepper btn-group toolbar-item" role="group">
+        <div class="md-stepper-horizontal">
+            <div class="md-step" data-step="0">
+                <div class="md-step-circle"><i class="mdi mdi-badge-account"></i></div>
+                <div class="md-step-title">Review</div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step" data-step="1">
+                <div class="md-step-circle"><i class="mdi mdi-account-search"></i></div>
+                <div class="md-step-title">Site Inspection  </div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step" data-step="2">
+                <div class="md-step-circle"><i class="mdi mdi-account-multiple-check"></i></div>
+                <div class="md-step-title">Approval</div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step" data-step="3">
+                <div class="md-step-circle"><i class="mdi mdi-account-tie-outline"></i></div>
+                <div class="md-step-title">Mufi</div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step" data-step="4">
+                <div class="md-step-circle"><i class="mdi mdi-account-cash"></i></div>
+                <div class="md-step-title">Payment</div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+            <div class="md-step" data-step="5">
+                <div class="md-step-circle"><i class="mdi mdi-certificate-outline"></i></div>
+                <div class="md-step-title">Issuance</div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+        </div>
+    </div>
+    <div id="dropdown-menu" class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuActions" data-toggle="dropdown"> Actions </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton5">
+            <a id="dropdown-save" class="dropdown-item d-none" href="javascript:void(0)">Save</a>
+
+            @{ if (@Model.Data.Status == RequestStatus.KIV)
+                {
+    <a id="dropdown-menu-endkiv" class="dropdown-item d-none" href="javascript:void(0)">End KIV</a> }
+else
+{
+    if (@Model.Data.Status == RequestStatus.Open)
+    {
+<a id="dropdown-menu-rfa" class="dropdown-item d-none" data-toggle="modal" data-target="#newRfaModal" data-backdrop="static" data-keyboard="false" href="javascript:void(0)">Raise an RFA</a>
+                    <a id="dropdown-menu-schedule" class="dropdown-item d-none" data-toggle="modal" href="javascript:void(0)" data-target="#ScheduleInspectionModal">Schedule audit inspection</a>
+                                        <a id="dropdown-menu-recommend" class="dropdown-item d-none" data-toggle="modal" data-target="#reviewModal" href="javascript:void(0)">Submit Recommendations</a>
+                                                            <a id="dropdown-menu-reassign" class="dropdown-item d-none" data-toggle="modal" data-target="#reassignModal" href="javascript:void(0)">Re-assign</a> }
+
+                                                        if (@Model.Data.Status == RequestStatus.PendingReviewApproval && @Model.Data.AssignedTo == @Model.CurrentUserID)
+                                                        {
+                                        <a id="dropdown-menu-review-recommend" class="dropdown-item d-none" data-toggle="modal" data-target="#reviewApprovalModal" href="javascript:void(0)">Review Recommendation</a> }
+
+                                    if (@Model.Data.Status == RequestStatus.ForInspection
+                                        && Model.Data.StatusMinor == RequestStatusMinor.InspectionDone)
+                                    {
+                    <a id="dropdown-menu-recommend" class="dropdown-item d-none" data-toggle="modal" data-target="#reviewModal" href="javascript:void(0)">Submit Recommendations</a> }
+
+                if (@Model.Data.Status == RequestStatus.PendingApproval)
+                {
+<a id="dropdown-menu-reaudit" class="dropdown-item d-none" data-toggle="modal" data-target="#reauditModal" href="javascript:void(0)">Re-audit</a>
+                    <a id="dropdown-menu-approve" class="dropdown-item d-none" data-toggle="modal" data-target="#approvalModal" href="javascript:void(0)">Approve/Reject</a> }
+
+                if (@Model.Data.Status == RequestStatus.PendingBill
+                    && @Model.Data.StatusMinor == RequestStatusMinor.BillReady)
+                {
+<a id="dropdown-menu-payment" class="dropdown-item d-none" href="javascript:void(0)">Proceed to Payment</a> }
+
+if (@Model.Data.Status == RequestStatus.Draft)
+{
+<a id="dropdown-menu-proceedforreview" class="dropdown-item d-none" href="javascript:void(0)">Proceed for Review</a> }
+
+if (@Model.Data.Status == RequestStatus.Expired)
+{
+<a id="dropdown-menu-reinstate" class="dropdown-item d-none" data-toggle="modal" data-target="#reinstateModal" href="javascript:void(0)">Re-instate</a> }
+
+if (Model.Data.Status < RequestStatus.Closed)
+{
+<a id="dropdown-menu-notes" class="dropdown-item" data-toggle="modal" data-target="#createNotesModal" href="javascript:void(0)">Add Notes</a> }
+
+if (@Model.Data.Status != RequestStatus.ForInspection
+&& @Model.Data.Status < RequestStatus.Closed
+&& @Model.Data.Status != RequestStatus.PendingPayment)
+{
+<a id="dropdown-menu-kiv" class="dropdown-item d-none" data-toggle="modal" data-target="#KIVModal" data-backdrop="static" data-keyboard="false" href="javascript:void(0)">KIV</a> }
+}
+
+if (@Model.Data.Status != RequestStatus.ForInspection
+&& @Model.Data.Status < RequestStatus.Closed
+&& @Model.Data.Status != RequestStatus.PendingPayment)
+{
+<div class="dropdown-divider d-none"></div> }
+
+if ((@Model.Data.Type == RequestType.New
+|| @Model.Data.Type == RequestType.Renewal
+|| (@Model.Data.Type == RequestType.HC02 && @Model.Data.LineItems?.FirstOrDefault(e => e.Scheme == Scheme.FoodManufacturing) != null)
+|| @Model.Data.Type == RequestType.HC03)
+&& @Model.Data.Status >= RequestStatus.Approved
+&& @Model.Data.Status <= RequestStatus.Closed)
+{
+<a id="dropdown-menu-certificate" class="dropdown-item" data-toggle="modal" data-target="#certificatePreviewModal" href="javascript:void(0)">View Certificate</a> } }
+
+            <a id="dropdown-menu-checklist" class="dropdown-item" data-toggle="modal" data-target="#checklistModal" href="javascript:void(0)">View Checklist</a>
+            <a id="dropdown-menu-attachments" class="dropdown-item" data-toggle="modal" data-target="#attachmentsModal" href="javascript:void(0)">View all Attachments</a>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <partial name="_DetailsMain.cshtml" />
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsActivities.cshtml" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsRFA.cshtml" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsRelated.cshtml" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsCase.cshtml" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_DetailsExport.cshtml" />
+<partial name="_DetailsAttachments.cshtml" />
+<partial name="_DetailsReviewModal.cshtml" />
+<partial name="_DetailsReviewApprovalModal.cshtml" />
+<partial name="_DetailsApprovalModal.cshtml" />
+<partial name="_DetailsEscalateModal.cshtml" />
+<partial name="_DetailsExtendRFAModal.cshtml" />
+<partial name="_DetailsChecklistModal.cshtml" />
+<partial name="_DetailsNewRFA.cshtml" />
+<partial name="_DetailsScheduleInspectionModal.cshtml" />
+<partial name="_DetailsKIVModal.cshtml" />
+<partial name="_DetailsReauditModal.cshtml" />
+<partial name="_DetailsReassignModal.cshtml" />
+<partial name="_DetailsCertificatePreview.cshtml" />
+<partial name="_DetailsInvoiceAddLineItemModal.cshtml" />
+<partial name="_DetailsTransactionCodeModal.cshtml" />
+<partial name="_DetailsCreateNotes.cshtml" />
+<partial name="_DetailsReinstateModal.cshtml" />
+
+<partial name="/Views/Shared/_ComposeEmail.cshtml" />
+<partial name="/Views/Shared/_ViewEmail.cshtml" />
+<partial name="/Views/Shared/_SelectOfficer.cshtml" />
+<partial name="/Views/Shared/_SelectCode.cshtml" />
+<partial name="/Views/Shared/_CreateCode.cshtml" />
+<partial name="/Views/Shared/_SelectCustomer.cshtml" />
+<partial name="/Views/Shared/_CreateCustomer.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.id = @Model.ID;
+        app.page.model = @Html.Raw(JsonConvert.SerializeObject(
+            @Model.Data,
+            new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            }));
+    </script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/jquery-file-upload/jquery.uploadfile.min.js"></script>
+    <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/plugins/inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="~/plugins/icheck/icheck.min.js"></script>
+    <script src="~/js/calendar.js"></script>
+    <script src="~/js/numberUtil.js"></script>
+    <script src="~/js/shared/_composeEmail.js"></script>
+    <script src="~/js/shared/_viewEmail.js"></script>
+    <script src="~/js/shared/_selectOfficer.js"></script>
+    <script src="~/js/shared/_createCode.js"></script>
+    <script src="~/js/shared/_selectCode.js"></script>
+    <script src="~/js/shared/_createCustomer.js"></script>
+    <script src="~/js/shared/_selectCustomer.js"></script>
+    <script src="~/js/certificate/templates.js"></script>
+    <script src="~/js/certificate/product.js"></script>
+    <script src="~/js/certificate/certificate.js"></script>
+    <script src="~/js/request/_detailsMain.js"></script>
+    <script src="~/js/request/_detailsRelated.js"></script>
+    <script src="~/js/request/_detailsMenu.js"></script>
+    <script src="~/js/request/_detailsIngredients.js"></script>
+    <script src="~/js/request/_detailsRFA.js"></script>
+    <script src="~/js/request/_detailsNewRFA.js"></script>
+    <script src="~/js/request/_detailsActivities.js"></script>
+    <script src="~/js/request/_detailsExport.js"></script>
+    <script src="~/js/request/_detailsAttachments.js"></script>
+    <script src="~/js/request/_detailsReviewModal.js"></script>
+    <script src="~/js/request/_detailsReviewApprovalModal.js"></script>
+    <script src="~/js/request/_detailsApprovalModal.js"></script>
+    <script src="~/js/request/_detailsWorkflow.js"></script>
+    <script src="~/js/request/_DetailsEscalateModal.js"></script>
+    <script src="~/js/request/_detailsExtendRFAModal.js"></script>
+    <script src="~/js/request/_detailsChecklistModal.js"></script>
+    <script src="~/js/request/_detailsScheduleInspectionModal.js"></script>
+    <script src="~/js/request/_detailsKIVModal.js"></script>
+    <script src="~/js/request/_detailsReauditModal.js"></script>
+    <script src="~/js/request/_detailsReassignModal.js"></script>
+    <script src="~/js/request/_detailsCertificatePreview.js"></script>
+    <script src="~/js/request/_detailsFinance.js"></script>
+    <script src="~/js/request/_detailsInvoiceAddLineItem.js"></script>
+    <script src="~/js/request/_detailsTransactionCode.js"></script>
+    <script src="~/js/request/_detailsNotes.js"></script>
+    <script src="~/js/request/_detailsCreateNotes.js"></script>
+    <script src="~/js/request/_detailsReinstateModal.js"></script>
+    <script src="~/js/request/_helpers.js"></script>
+    <script src="~/js/shared/customer/_assignOfficer.js"></script>
+    <script src="~/js/request/details.js"></script>
+    <script src="~/plugins/icheck/icheck.min.js"></script>
+    <script src="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+}

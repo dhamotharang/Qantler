@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم إستلام رسالة جديدة {{ArService}} {{ArReferenceNumber}} للدعوة المرسلة من {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+{{EnService}} {{ReferenceNumber}} has been replied to the invitation sent by {{EnFromName}}.
+Best Regards

@@ -1,0 +1,252 @@
+﻿@using eHS.Portal.Model;
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using System.Linq;
+
+@model eHS.Portal.Model.Case;
+
+@{ ViewData["Title"] = "Case Details"; }
+
+@section CSS {
+    <link rel="stylesheet" href="~/css/case/details.css" />
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/fullcalendar/fullcalendar.min.css" />
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header mr-2">
+        <h4 class="page-title">Case Details</h4>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            <li id="add-notes-link" class="d-none">
+                <a onclick="app.page.initNote()" data-toggle="modal" data-target="#createNotesModal" href="javascript:void(0)">Add Notes</a>
+            </li>
+            <li id="add-Inspection" class="d-none">
+                <a class="show-inspection" data-toggle="modal" href="javascript:void(0)" data-target="#ScheduleInspectionModal">Schedule Inspection</a>
+            </li>
+            <li id="add-draft-letter" class="d-none">
+                <a id="show-draft-Letter" class="action-letter" data-type-id="400" href="javascript:void(0)">Draft Show Cause</a>
+            </li>
+            <li id="add-acknowledgeShowCause" class="d-none">
+                <a onclick="app.page.initAcknowledgeCause()" data-toggle="modal" href="javascript:void(0)" data-target="#AcknowledgeCauseModal">Acknowledge Show Cause</a>
+            </li>
+            <li id="add-foc" class="d-none">
+                <a id="show-foc" class="action-letter" data-type-id="401" href="javascript:void(0)">Draft FOC</a>
+            </li>
+            <li id="add-focReview" class="d-none">
+                <a id="show-focReview" class="action-letter" data-type-id="401" href="javascript:void(0)">Review FOC</a>
+            </li>
+            <li id="add-focDecision" class="d-none">
+                <a id="show-focDecision" data-toggle="modal" href="javascript:void(0)" data-target="#FOCDecisionModal">FOC Decision</a>
+            </li>
+            @if (Model.Sanction == Sanction.Warning)
+            {
+                <li id="add-sanction" class="d-none">
+                    <a id="show-sanction" class="action-letter" data-type-id="402" href="javascript:void(0)">Draft Warning Letter</a>
+                </li>
+            }
+            else if (Model.Sanction == Sanction.Compound)
+            {
+                <li id="add-sanction" class="d-none">
+                    <a id="show-sanction" class="action-letter" data-type-id="403" href="javascript:void(0)">Draft Compound Letter</a>
+                </li>
+            }
+            else if (Model.Sanction == Sanction.Suspension)
+            {
+                <li id="add-sanction" class="d-none">
+                    <a id="show-sanction" class="action-letter" data-type-id="404" href="javascript:void(0)">Draft Suspension Letter</a>
+                </li>
+            }
+            else if (Model.Sanction == Sanction.Revocation)
+            {
+                <li id="add-sanction" class="d-none">
+                    <a id="show-sanction" class="action-letter" data-type-id="406" href="javascript:void(0)">Draft Revocation Letter</a>
+                </li>
+            }
+            else if (Model.Sanction == Sanction.ImmediateSuspension)
+            {
+                <li id="add-sanction" class="d-none">
+                    <a id="show-sanction" class="action-letter" data-type-id="405" href="javascript:void(0)">Draft Immediate Suspension Letter</a>
+                </li>
+            }
+            @if (Model.Sanction == Sanction.Compound && Model.Status == CaseStatus.PendingPayment
+               && (Model.MinorStatus == null || Model.MinorStatus == CaseMinorStatus.PaymentRejected))
+            {
+                <li>
+                    <a id="add-payment" data-toggle="modal" href="javascript:void(0)" data-target="#PaymentModal">Add Payment</a>
+                </li>
+            }
+            <li id="add-collectcertificate" class="d-none">
+                <a id="show-collectcertificate" data-toggle="modal" href="javascript:void(0)" data-target="#CollectCertificateModal">Collect Certificate</a>
+            </li>
+            <li id="add-reinstate" class="d-none">
+                <a class="show-inspection" data-toggle="modal" href="javascript:void(0)" data-target="#ScheduleInspectionModal">Schedule Reinstate Inspection</a>
+            </li>
+            <li id="add-reinstateDecision" class="d-none">
+                <a id="show-reinstateDecision" data-toggle="modal" href="javascript:void(0)" data-target="#ReinstateDecisionModal">Reinstate Decision</a>
+            </li>
+            <li id="add-caseAppeal" class="d-none">
+                <a id="show-caseAppeal" data-toggle="modal" href="javascript:void(0)" data-target="#CaseAppealModal">Submit Appeal</a>
+            </li>
+            <li id="add-appealDecision" class="d-none">
+                <a id="show-appealDecision" data-toggle="modal" href="javascript:void(0)" data-target="#AppealDecisionModal">Appeal Decision</a>
+            </li>
+            <li id="add-fileCaseToCourt" class="d-none">
+                <a id="show-fileCaseToCourt" data-toggle="modal" href="javascript:void(0)" data-target="#FileCaseToCourtModal">File Case to Legal</a>
+            </li>
+            <li id="add-caseVerdict" class="d-none">
+                <a id="show-caseVerdict" data-toggle="modal" href="javascript:void(0)" data-target="#VerdictModal">Record Verdict</a>
+            </li>
+            <li id="add-caseDismiss" class="d-none">
+                <a id="show-caseDismiss" data-toggle="modal" href="javascript:void(0)" data-target="#DismissModal">Dismiss</a>
+            </li>
+            <li id="add-caseImmediatesuspension" class="d-none">
+                <a id="show-caseImmediatesuspension" data-toggle="modal" href="javascript:void(0)" data-target="#ImmediateSuspensionModal">Immediate Suspension</a>
+            </li>
+            <li id="add-caseReinstateCertificate" class="d-none">
+                <a id="show-caseReinstateCertificate" data-toggle="modal" href="javascript:void(0)" data-target="#ReinstateCertificateModal">Reinstate Certificate</a>
+            </li>
+            <li id="add-caseClose" class="d-none">
+                <a id="show-caseClose" data-toggle="modal" href="javascript:void(0)" data-target="#caseCloseModal">Close</a>
+            </li>
+            <li id="add-caseReopen" class="d-none">
+                <a id="show-caseReopen" data-toggle="modal" href="javascript:void(0)" data-target="#caseReopenModal">Reopen</a>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <partial name="_DetailsMain.cshtml" model="@Model" />
+            </div>
+        </div>
+        @if (Model.Activities != null && Model.Activities.Count > 0)
+        {
+            <partial name="_DetailsActivities.cshtml" model="@Model.Activities" />
+        }
+    </div>
+    <div class="col-md-4">
+        @if (Model.SanctionInfos != null && Model.SanctionInfos.OrderByDescending(x => x.ID).FirstOrDefault().Type == SanctionInfoType.Final)
+        {
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsPenalty.cshtml" model="@Model.SanctionInfos.Where(x=>x.Type == SanctionInfoType.Final).OrderByDescending(x=>x.ID).FirstOrDefault()" />
+                </div>
+            </div>
+        }
+
+        @if (Model.SanctionInfos != null && Model.SanctionInfos.Where(x => x.Type == SanctionInfoType.Recommended).OrderByDescending(x => x.ID).FirstOrDefault().Type == SanctionInfoType.Recommended)
+        {
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsPenalty.cshtml" model="@Model.SanctionInfos.Where(x=>x.Type == SanctionInfoType.Recommended).OrderByDescending(x=>x.ID).FirstOrDefault()" />
+                </div>
+            </div>
+        }
+
+        @if (Model.ReportedBy != null)
+        {
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsReportedBy.cshtml" model="@Model.ReportedBy" />
+                </div>
+            </div>
+        }
+
+        @if (Model.OffenderID != null)
+        {
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsOffender.cshtml" model="@Model" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<partial name="_DetailsNotes.cshtml" />
+<partial name="_DetailsScheduleInspection.cshtml" />
+<partial name="_DetailsAcknowledgeCause.cshtml" model="@Model.Certificates" />
+<partial name="_DetailsRevertFOC.cshtml" />
+<partial name="_DetailsFOCDecision.cshtml" model="@Model.Certificates" />
+<partial name="_DetailsPayment.cshtml" />
+<partial name="_DetailsCollectCertification.cshtml" />
+<partial name="_DetailsReinstateDecision.cshtml" />
+<partial name="_DetailsAppeal.cshtml" />
+<partial name="_DetailsAppealDecision.cshtml" />
+<partial name="_DetailsCourt.cshtml" />
+<partial name="_DetailsVerdict.cshtml" />
+<partial name="_DetailsDismiss.cshtml" />
+<partial name="_DetailsReinstateCertificate.cshtml" />
+<partial name="_DetailsImmediateSuspension.cshtml" />
+<partial name="_DetailsReopen.cshtml" />
+<partial name="_DetailsClose.cshtml" />
+<partial name="/Views/Shared/_ComposeLetter.cshtml" />
+<partial name="/Views/Shared/_viewLetter.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+      app.page.id = @Model.ID;
+      app.page.model = @Html.Raw(JsonConvert.SerializeObject(
+            @Model,
+            new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            }));
+    </script>
+    <script src="~/plugins/jquery-file-upload/jquery.uploadfile.min.js"></script>
+    <script src="~/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/js/calendar.js"></script>
+    <script src="~/js/numberUtil.js"></script>
+    <script src="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/plugins/inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="~/plugins/signature-pad/signature_pad.min.js"></script>
+
+    <script src="~/js/shared/_composeLetter.js"></script>
+    <script src="~/js/shared/_viewLetter.js"></script>
+    <script src="~/js/shared/_fileHelper.js"></script>
+
+    <script src="~/js/case/_helpers.js"></script>
+    <script src="~/js/case/_detailsNotes.js"></script>
+    <script src="~/js/case/_detailsScheduleInspection.js"></script>
+    <script src="~/js/case/_detailsShowCause.js"></script>
+    <script src="~/js/case/_detailsFOCLetter.js"></script>
+    <script src="~/js/case/_detailsAcknowledgeCause.js"></script>
+    <script src="~/js/case/_detailsFOCReview.js"></script>
+    <script src="~/js/case/_detailsFOCRevert.js"></script>
+    <script src="~/js/case/_detailsFOCDecision.js"></script>
+    <script src="~/js/case/_detailsSanctionLetter.js"></script>
+    <script src="~/js/case/_detailsPayment.js"></script>
+    <script src="~/js/case/_DetailsCollectCertification.js"></script>
+    <script src="~/js/case/_detailsReinstateDecision.js"></script>
+    <script src="~/js/case/_detailsAppeal.js"></script>
+    <script src="~/js/case/_detailsAppealDecision.js"></script>
+    <script src="~/js/case/_detailsCourt.js"></script>
+    <script src="~/js/case/_detailsVerdict.js"></script>
+    <script src="~/js/case/_detailsDismiss.js"></script>
+    <script src="~/js/case/_detailsImmediateSuspension.js"></script>
+    <script src="~/js/case/_DetailsReinstateCertificate.js"></script>
+    <script src="~/js/case/_detailsClose.js"></script>
+    <script src="~/js/case/_detailsReopen.js"></script>
+    <script src="~/js/case/details.js"></script>
+}

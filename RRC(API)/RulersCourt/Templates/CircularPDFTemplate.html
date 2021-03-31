@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding:2px;
+        }
+
+        .pdfpara-right {
+            text-align: right;
+            font-family: Arial;
+            margin-right: 50px;
+            margin-left: 50px;
+            font-size: 20px;
+        }
+
+        .pdfpara-left {
+            text-align: left;
+            font-family: Arial;
+            margin-right: 50px;
+            margin-left: 50px;
+            font-size: 20px;
+        }
+
+        .pdfpara-center {
+            text-align: center;
+            font-family: Arial;
+            margin-right: 50px;
+            margin-left: 50px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="pdfpara-right">{{RefNoValue}}</p>
+    <p class="pdfpara-right">{{Date}}</p>
+
+    <p class="clear"></p>
+    <p class="pdfpara-center">{{TitleValue}}</p>
+
+    <p class="clear"></p>
+    <p class="pdfpara-right">{{DescValue}}</p>
+
+    <p class="clear"></p>
+    <p class="pdfpara-left">{{ApproverNameValue}}</p>
+    <p class="pdfpara-left"><img style="display:{{ShowApproverSignature}};" src="{{ApproverSignatureValue}}" width="200" height="50" /></p>
+
+</body>
+</html>

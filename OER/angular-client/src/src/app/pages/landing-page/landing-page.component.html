@@ -1,0 +1,359 @@
+<div class="site-banner">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-7">
+        <h1 class="banner-main-head">{{"landing_3"|translate}}</h1>
+        <h2 class="banner-tagline" *ngIf="banner.pageContent && getCurrentLang() === 'en'"  [innerHtml]="banner.pageContent| safe: 'html'"></h2>
+        <h2 class="banner-tagline" *ngIf="banner.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="banner.pageContent_Ar| safe: 'html'"></h2>
+        <div class="banner-search mb-4">
+          <input type="text" class="form-control" [(ngModel)]="query" (keyup.enter)="search()" placeholder="{{'Search'|translate}}">
+          <button (click)="search()" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+        <!--banner-search-->
+
+        <a href="javascript:;" class="adv-search-link" (click)="showAdvSearch()">{{'Advanced_Search'|translate}}</a>
+        <p-dialog header="{{'Advanced_Search'|translate}}" [(visible)]="advSearch" (onHide)="clearAdvancedSearch()"
+          [contentStyle]="{'overflow-x':'hidden', 'max-height':'700px'}" [width]="800" [modal]="true">
+          <div class="advSearch">
+            <div class="form-group">
+              <Label class="form-label">{{'Keywords' |translate}} </Label>   <!--<span class="text-danger">*</span> -->
+              <input type="text" [(ngModel)]="advancedQuery" name="advancedQuery" (keyup.enter)="advanceSearch()"
+                class="form-control form-control-lg alt-bg"
+                placeholder="{{'Resource name or Course name' | translate}}">
+              <p class="field-error"></p>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Categories' | translate}}</label>
+                  <select class="form-control alt-bg" name="{{'selectedCategories' | translate}}"
+                    [(ngModel)]="selectedCategories" (change)="handleCategoryChange($event.target.value)">
+                    <option value="" selected>{{'Any' | translate}}</option>
+                    <option *ngFor="let item of categories" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.name : item.name_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Sub Categories' | translate}}</label>
+                  <select class="form-control alt-bg" name="selectedSubCategories" [(ngModel)]="selectedSubCategories">
+                    <option value="" selected>{{'Any' |translate}}</option>
+                    <option *ngFor="let item of filteredSubCategories" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.name : item.name_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Educational Standard' | translate}}</label>
+                  <select class="form-control alt-bg" name="selectedEducationalStandards"
+                    [(ngModel)]="selectedEducationalStandards">
+                    <option value="" selected>{{'Any' |translate}}</option>
+                    <option *ngFor="let item of educationalStandards" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.standard : item.standard_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Educational_Use'|translate}}</label>
+                  <select class="form-control alt-bg" name="selectedEducationalUses"
+                    [(ngModel)]="selectedEducationalUses">
+                    <option value="" selected>{{'Any' |translate}}</option>
+                    <option *ngFor="let item of educationalUses" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.text : item.text_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Level' | translate}}</label>
+                  <select class="form-control alt-bg" name="selectedLevels" [(ngModel)]="selectedLevels">
+                    <option value="" selected>{{'Any' |translate}}</option>
+                    <option *ngFor="let item of levels" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.levelText : item.levelText_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">{{'Copyrights' | translate}}</label>
+                  <select class="form-control alt-bg" name="selectedCopyrights" [(ngModel)]="selectedCopyrights">
+                    <option value="" selected>{{'Any' |translate}}</option>
+                    <option *ngFor="let item of copyrights" value="{{item.id}}">
+                      {{getCurrentLang() === 'en' ? item.title : item.title_Ar}}</option>
+                  </select>
+                  <p class="field-error"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p-footer>
+            <button type="reset" class="btn btn-light text-uppercase pull-left" (click)="clearAdvancedSearch()">
+              {{'Clear'|translate}}
+            </button>
+            <button type="button" class="btn btn-primary text-uppercase" (click)="advanceSearch()">
+              {{'Search'|translate}}
+            </button>
+          </p-footer>
+        </p-dialog>
+        <div class="clearfix"></div>
+
+        <div class="d-flex">
+          <a class="media banner-icon-link" href="javascript:;" *ngIf="!loggedIn" (click)="signUp()">
+            <img src="assets/images/join-icon.svg" class="mr-3" alt="" width="45">
+            <span class="media-body">
+              <h5 class="mt-0">{{"Join Us"|translate}}<span>{{"NOW" | translate}}</span></h5>
+            </span>
+          </a>
+
+          <a class="media banner-icon-link" href="javascript:;" routerLink="courses">
+            <img src="assets/images/courses-icon.svg" class="mr-3" alt="" width="45">
+            <span class="media-body">
+              <h5 class="mt-0">{{"View Our" | translate}}<span>{{"Courses"|translate}}</span></h5>
+            </span>
+          </a>
+          <a class="media banner-icon-link" href="javascript:;" routerLink="resources">
+            <img src="assets/images/courses-icon.svg" class="mr-3" alt="" width="45">
+            <span class="media-body">
+              <h5 class="mt-0">{{"View Our" | translate}}<span>{{"Resources" | translate}}</span></h5>
+            </span>
+          </a>
+        </div>
+
+      </div>
+      <!--col-->
+
+      <div class="col-lg-5 banner-illus">
+        <img src="assets/images/banner-illus.svg" alt="" class="img-fluid">
+      </div>
+      <!--col-->
+
+    </div>
+    <!--row-->
+  </div>
+  <!--container-->
+</div>
+<!--site-banner-->
+
+<section class="create-res-sec">
+  <div class="create-res-sec-sub">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-7">
+
+
+          <div class="create-slider">
+            <owl-carousel [options]="{items: 1, dots: false, nav: true,
+            autoplay:true}" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+              <div class="item">
+                <h2 class="create-slider-head cr-sldr-hd-mob">{{'Create Resource' |translate}}</h2>
+                <p class="create-slider-desc">
+                  <span *ngIf="resourceCarousel.pageContent && getCurrentLang() === 'en'"  [innerHtml]="resourceCarousel.pageContent| safe: 'html'"></span>
+                  <span *ngIf="resourceCarousel.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="resourceCarousel.pageContent_Ar| safe: 'html'"></span>
+                </p>
+                <a href="javascript:;" routerLink="resources/create" class="create-slider-btn mt-2">{{'Create Resource'
+                |translate}}</a>
+              </div>
+              <div class="item">
+                <h2 class="create-slider-head">{{'Create Course' |translate}}</h2>
+                <p class="create-slider-desc">
+                  <span *ngIf="courseCarousel.pageContent && getCurrentLang() === 'en'"  [innerHtml]="courseCarousel.pageContent| safe: 'html'"></span>
+                  <span *ngIf="courseCarousel.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="courseCarousel.pageContent_Ar| safe: 'html'"></span>
+                </p>
+                <a href="javascript:;" routerLink="courses/create" class="create-slider-btn mt-2">{{'Create Course'
+                |translate}}</a>
+              </div>
+            </owl-carousel>
+          </div>
+          <!--create-slide-->
+
+        </div>
+        <!--col-->
+        <br><br>
+        <div class="col-lg-5">
+          <img src="assets/images/slide-side-illus.svg" alt="" class="img-fluid">
+        </div>
+        <!--col-->
+
+      </div>
+      <!--row-->
+
+      <div class="video-block">
+        <!--video block-->
+        <h4 class="vd-hdng">{{"landing_7" | translate}} <span>{{"landing_17" |translate}}</span></h4>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="panel-box p-30 mb-30 vd-box-txt">
+              <img src="assets/images/clapperboard.svg" class="mr-3" alt="" width="65">
+              <h2 class="vd-txt-hdng">{{"LET'S GET STARTED" | translate}}</h2>
+              <p class="vd-txt-p">
+                <span  *ngIf="videoDescription.pageContent && getCurrentLang() === 'en'"  [innerHtml]="videoDescription.pageContent| safe: 'html'"></span>
+                <span  *ngIf="videoDescription.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="videoDescription.pageContent_Ar| safe: 'html'"></span>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="vd-main">
+              <div class="video-player">
+                <img src="assets/images/vd-bg.jpg" alt="" class="img-fluid">
+                <a data-fancybox class="video-play-button" href="{{videoDescription.videoLink}}">
+                  <span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--video block-->
+    </div>
+  </div>
+  <!--container-->
+</section>
+<section class="crte-course">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2">
+        <img src="assets/images/online-education.svg" class="mr-3" alt="">
+      </div>
+      <div class="col-lg-10">
+        <h2 class="create-slider-head">{{"At a Glance" | translate}}</h2>
+        <p class="vd-txt-p">
+          <span *ngIf="glanceDescription.pageContent && getCurrentLang() === 'en'"  [innerHtml]="glanceDescription.pageContent| safe: 'html'"></span>
+          <span *ngIf="glanceDescription.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="glanceDescription.pageContent_Ar| safe: 'html'"></span>        
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row contri-bg">
+      <div class="col-md-3">
+        <div class="contri-box1 contri-box1-hdng-mob1">
+          <h2 class="create-slider-head">{{"landing_10" | translate}}</h2>
+          <p class="vd-txt-p">
+            <span *ngIf="featuresDescription.pageContent && getCurrentLang() === 'en'"  [innerHtml]="featuresDescription.pageContent| safe: 'html'"></span>
+            <span *ngIf="featuresDescription.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="featuresDescription.pageContent_Ar| safe: 'html'"></span>          
+          </p>
+        </div>
+        <div class="contri-box1 contri-box1-mob">
+          <img src="assets/images/group.svg" class="mr-3" alt="" width="100">
+          <h2>{{"CONTRIBUTORS" | translate}}</h2>
+          <h1>{{getContributorCount()}}</h1>
+        </div>
+      </div>
+      <div class="col-md-6">
+
+      </div>
+      <div class="col-md-3">
+        <div class="contri-box1">
+          <img src="assets/images/instruction.svg" class="mr-3" alt="" width="100">
+          <h2>{{"COURSES" | translate}}</h2>
+          <h1>{{getCoursesCount()}}</h1>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="contri-box1">
+          <img src="assets/images/hired.svg" class="mr-3" alt="" width="100">
+          <h2>{{"RESOURCES" | translate}}</h2>
+          <h1>{{getResourcesCount()}}</h1>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="contri-box1 contri-box1-hdng-mob">
+          <h2 class="create-slider-head">{{"landing_10" | translate}}</h2>
+          <p class="vd-txt-p">
+            <span *ngIf="featuresDescription.pageContent && getCurrentLang() === 'en'"  [innerHtml]="featuresDescription.pageContent| safe: 'html'"></span>
+            <span *ngIf="featuresDescription.pageContent_Ar && getCurrentLang() === 'ar'"  [innerHtml]="featuresDescription.pageContent_Ar| safe: 'html'"></span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="contri-box1">
+          <img src="assets/images/website.svg" class="mr-3" alt="" width="100">
+          <h2>{{"VISITS" | translate}}</h2>
+          <h1>{{getVisitorsCount()}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="pop-reso-main"
+  *ngIf="(initData != null && initData.topContributors.length > 0) || (initData != null && initData.topReviewers.length > 0)">
+  <div class="container">
+    <div class="text-center pop-res">
+      <h2 class="vd-txt-hdng">{{"landing_12" | translate}}</h2>
+      <p class="vd-txt-p">{{"landing_13" | translate}}</p>
+    </div>
+    <ng-container *ngIf="initData != null && initData.topContributors.length > 0">
+      <h3>{{"landing_14" | translate}}</h3>
+      <div class="row">
+        <ng-container *ngFor="let item of initData.topContributors;let i = index">
+          <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" *ngIf="i < 4">
+            <div class="pop-res-box-main">
+              <div class="pop-res-box-img">
+                <div class="img" [ngStyle]="{ 'background-image': 'url(' + (item.photo ?  item.photo :
+                  'assets/images/default-user-big.png') + ')'}">
+                </div>
+
+              </div>
+              <div class="pop-res-box1">
+                <div class="row">
+                  <div class="col-9 col-sm-10">
+
+                    <p class="vd-txt-p truncate mb-0">{{item.userName}}</p>
+                  </div>
+                  <div class="col-3 col-sm-2">
+                    <a routerLink="/user/profile/{{encService.set(item.id)}}" class="pop-res-btn"><i
+                        class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="initData != null && initData.topReviewers.length > 0">
+      <h3>{{"landing_15" | translate}}</h3>
+      <div class="row">
+        <ng-container *ngFor="let item of initData.topReviewers;let i = index">
+          <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" *ngIf="i < 4">
+            <div class="pop-res-box-main">
+              <div class="pop-res-box-img">
+                <div class="img" [ngStyle]="{ 'background-image': 'url(' + (item.photo ?  item.photo :
+                  'assets/images/default-user-big.png') + ')'}">
+                </div>
+
+              </div>
+              <div class="pop-res-box1">
+                <div class="row">
+                  <div class="col-9 col-sm-10">
+
+                    <p class="vd-txt-p truncate mb-0">{{item.userName}}</p>
+                  </div>
+                  <div class="col-3 col-sm-2">
+                    <a routerLink="/user/profile/{{encService.set(item.id)}}" class="pop-res-btn"><i
+                        class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+  </div>
+</section>

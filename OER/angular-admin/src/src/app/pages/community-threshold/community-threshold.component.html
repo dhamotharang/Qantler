@@ -1,0 +1,60 @@
+<section class="content-header">
+  <h1>
+    Community Threshold Settings
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Community Threshold Settings</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <form action="">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Community Threshold Settings</h3>
+
+      </div>
+      <div class="box-body">
+
+        <div class="panel-box p-30">
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="">Approval Threshold</label>
+                <input type="number" class="form-control" name="approval" [(ngModel)]="approval">
+                <span class="help-block" *ngIf="approval < 3 || approval > 1000">Approval Threshold should be between 3 and 1000</span>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="">Rejection Threshold</label>
+                <input type="number" class="form-control" name="rejection" [(ngModel)]="rejection">
+                <span class="help-block" *ngIf="rejection < 3 || rejection > 1000">Rejection Threshold should be between 3 and 1000</span>
+              </div>
+            </div>
+          </div>
+          <!-- row : END -->
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button class="btn btn-primary pull-right"
+                [disabled]="(approval < 3 || approval > 1000) || (rejection < 3 || rejection > 1000)"
+                (click)="UpdateData()">
+          Submit
+        </button>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>
+<!-- /.content -->
+

@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - eHS Portal</title>
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    @RenderSection("CSS", required: false)
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+    <div class="container-scroller">
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand brand-logo" href="/home/startup">
+                    <img src="~/images/mhs_logo.png" alt="logo" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="/home/startup">
+                    <img src="~/images/Dashboar-MUIS-logo-symbol.png" alt="logo" />
+                </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                <ul class="navbar-nav">
+                    @RenderSection("NavbarTitle", required: false)
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    @RenderSection("Toolbar", required: false)
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="container-fluid page-body-wrapper">
+            <div class="right-sidebar-toggler-wrapper">
+                <div class="sidebar-toggler notification" id="notification-toggler">
+                    <i class="mdi mdi-bell"></i>
+                    <span class="indicator"></span>
+                </div>
+            </div>
+            <partial name="_Notification.cshtml" />
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <partial name="_LayoutMenu.cshtml" />
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 MUIS eHS. All rights reserved.</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+
+    <script src="~/js/vendor.bundle.base.js"></script>
+    <script src="~/js/plugins/off-canvas.js"></script>
+    <script src="~/js/plugins/hoverable-collapse.js"></script>
+    <script src="~/js/plugins/misc.js"></script>
+    <script src="~/plugins/moment/moment.js"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        app.identity = {
+            id: '@Html.Raw(User.FindFirstValue(ClaimTypes.NameIdentifier))',
+            name: '@Html.Raw(User.FindFirstValue(ClaimTypes.Name))',
+            email: '@Html.Raw(User.FindFirstValue(ClaimTypes.Email))',
+            designation: '@Html.Raw(User.FindFirstValue("Designation"))',
+            permissions: '@Html.Raw(User.FindFirstValue("Permissions"))'
+        }
+    </script>
+    <script src="~/js/shared/_menu.js"></script>
+    <script src="~/js/shared/_notification.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

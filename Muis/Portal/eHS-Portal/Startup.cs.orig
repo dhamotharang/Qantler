@@ -1,0 +1,254 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Autofac;
+using Core.EventBus;
+using Core.EventBus.RabbitMQ;
+using eHS.Portal.Client;
+using eHS.Portal.Configs;
+using eHS.Portal.EventHandlers;
+using eHS.Portal.Events;
+using eHS.Portal.Hubs;
+using eHS.Portal.Mocks;
+using eHS.Portal.Services;
+using eHS.Portal.Services.RFA;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+
+namespace eHS.Portal
+<<<<<<< HEAD
+{
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
+    {
+      Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie();
+
+      services.AddControllersWithViews()
+        .AddNewtonsoftJson(options =>
+        {
+          options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        });
+      services.AddSignalR();
+
+      RegisterAppServices(services);
+      RegisterEventBus(services);
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+        app.UseHsts();
+      }
+      app.UseHttpsRedirection();
+      app.UseStaticFiles();
+      app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
+      app.UseRouting();
+
+      app.UseAuthentication();
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        endpoints.MapHub<SignalRHub>("/signalRHub");
+      });
+
+      ConfigureEventBus(app);
+    }
+
+    void RegisterAppServices(IServiceCollection services)
+    {
+      services.AddSingleton<ISignalRClient, SignalRClient>()
+        .AddSingleton<IRequestService, RequestService>()
+        .AddSingleton<IJobOrderService, JobOrderService>()
+        .AddSingleton<IRFAService, MockRFAService>()
+        .AddSingleton<ApiClient>();
+
+      services.Configure<UrlConfig>(Configuration.GetSection("UrlConfig"));
+    }
+
+    void RegisterEventBus(IServiceCollection services)
+    {
+      var eventBusConfig = Configuration.GetSection("EventBus").Get<EventBusConfig>();
+
+      if (eventBusConfig.Provider.Equals("rabbitmq"))
+      {
+        services.AddSingleton<IRabbitMQConnection>(sp =>
+        {
+          var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQConnection>>();
+          var factory = new ConnectionFactory
+          {
+            HostName = eventBusConfig.Host,
+            DispatchConsumersAsync = false,
+            UserName = eventBusConfig.UserName,
+            Password = eventBusConfig.Password
+          };
+
+          return new DefaultRabbitMQConnection(factory, logger, eventBusConfig.RetryCount);
+        });
+
+        services.AddSingleton<IEventBus, RabbitMQEventBus>(sp =>
+        {
+          var connection = sp.GetRequiredService<IRabbitMQConnection>();
+          var lifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+          var logger = sp.GetRequiredService<ILogger<RabbitMQEventBus>>();
+          var subsManager = sp.GetRequiredService<ISubscriptionManager>();
+
+          return new RabbitMQEventBus(connection, logger, lifetimeScope, subsManager,
+            eventBusConfig.ClientName, eventBusConfig.RetryCount);
+        });
+      }
+
+      services.AddSingleton<OnNotificationSentEventHandler>();
+      services.AddSingleton<ISubscriptionManager, DefaultSubscriptionManager>();
+      // Register event handlers here
+    }
+
+    void ConfigureEventBus(IApplicationBuilder app)
+    {
+      var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+      eventBus.Subscribe<OnNotificationSentEvent, OnNotificationSentEventHandler>();
+      // Subscribe event & handlers here
+    }
+=======
+{
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
+    {
+      Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie();
+
+      services.AddControllersWithViews()
+        .AddNewtonsoftJson(options =>
+        {
+          options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        });
+      services.AddSignalR();
+
+      RegisterAppServices(services);
+      RegisterEventBus(services);
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+        app.UseHsts();
+      }
+      app.UseHttpsRedirection();
+      app.UseStaticFiles();
+      app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
+      app.UseRouting();
+
+      app.UseAuthentication();
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        endpoints.MapHub<SignalRHub>("/signalRHub");
+      });
+
+      ConfigureEventBus(app);
+    }
+
+    void RegisterAppServices(IServiceCollection services)
+    {
+      services.AddSingleton<ISignalRClient, SignalRClient>()
+        .AddSingleton<IRequestService, RequestService>()
+        .AddSingleton<IRFAService, RFAService>()
+        .AddSingleton<ApiClient>();
+
+      services.Configure<UrlConfig>(Configuration.GetSection("UrlConfig"));
+    }
+
+    void RegisterEventBus(IServiceCollection services)
+    {
+      var eventBusConfig = Configuration.GetSection("EventBus").Get<EventBusConfig>();
+
+      if (eventBusConfig.Provider.Equals("rabbitmq"))
+      {
+        services.AddSingleton<IRabbitMQConnection>(sp =>
+        {
+          var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQConnection>>();
+          var factory = new ConnectionFactory
+          {
+            HostName = eventBusConfig.Host,
+            DispatchConsumersAsync = false,
+            UserName = eventBusConfig.UserName,
+            Password = eventBusConfig.Password
+          };
+
+          return new DefaultRabbitMQConnection(factory, logger, eventBusConfig.RetryCount);
+        });
+
+        services.AddSingleton<IEventBus, RabbitMQEventBus>(sp =>
+        {
+          var connection = sp.GetRequiredService<IRabbitMQConnection>();
+          var lifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+          var logger = sp.GetRequiredService<ILogger<RabbitMQEventBus>>();
+          var subsManager = sp.GetRequiredService<ISubscriptionManager>();
+
+          return new RabbitMQEventBus(connection, logger, lifetimeScope, subsManager,
+            eventBusConfig.ClientName, eventBusConfig.RetryCount);
+        });
+      }
+
+      services.AddSingleton<OnNotificationSentEventHandler>();
+      services.AddSingleton<ISubscriptionManager, DefaultSubscriptionManager>();
+      // Register event handlers here
+    }
+
+    void ConfigureEventBus(IApplicationBuilder app)
+    {
+      var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+      eventBus.Subscribe<OnNotificationSentEvent, OnNotificationSentEventHandler>();
+      // Subscribe event & handlers here
+    }
+>>>>>>> develop
+  }
+}

@@ -1,0 +1,107 @@
+<app-sub-banner [title]="'QRC Management'|translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Dashboard'|translate,link:'/dashboard',active:false},{text: 'QRC Management'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9"> 
+        <b>{{'Categories' | translate}}</b>
+        <div class="orc-flex scroll">
+          <div class="orc-flex-column">
+            <div class="item {{category === 0 ? 'active' : ''}}">
+              <span class="ellipsis" tooltip="{{'Approved' | translate}}"
+                    container="body">{{'Approved' | translate}}</span>
+              <input type="radio" name="qrc-name" value="Approved" (click)="getCategory(0)">
+            </div>
+          </div>
+          <div class="orc-flex-column" *ngFor="let item of qrcs">
+            <div class="item {{qrc === item.id ? 'active' : ''}}">
+              <span class="ellipsis" tooltip="{{getCurrentLang() === 'en' ? item.categoryName : item.categoryNameAr}}" container="body">{{getCurrentLang() === 'en' ? item.categoryName : item.categoryNameAr}}</span>
+              <input type="radio" name="qrc-name" value="{{item.id}}" (click)="getCategory(item.categoryId)">
+            </div>
+          </div> <!-- loop :END-->
+        </div>
+        <div class="orc-flex scroll" *ngIf="qrcs.length === 0">
+          <div class="orc-flex-column">
+            <div class="item">
+              <span class="ellipsis" tooltip="{{'No Categories Found' | translate}}" container="body">{{'No Categories Found' | translate}}</span>
+              <input type="radio" name="qrc-name" value="No QRC Found">
+            </div>
+          </div> <!-- loop :END-->
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered th-bg tbl-pad dt-table">
+            <thead>
+            <tr>
+              <th scope="col" style="width: 100px;">{{'Date' | translate}}</th>
+              <th scope="col">{{'Title/Name' | translate}}</th>
+              <th scope="col" style="width: 250px;">{{'Type' | translate}}</th>
+              <th scope="col" class="no-sort text-center" style="width: 260px;">{{'Action' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of requests">
+              <td>{{item.createdOn|date}}</td>
+              <td>{{item.title}}</td>
+              <td *ngIf="item.contentType === 1">{{'Course' | translate }}</td>
+              <td *ngIf="item.contentType === 2">{{'Resource' | translate}}</td>
+              <td class="text-center" *ngIf="item.contentType === 1">
+                <button href="javascript:;" class="btn-view btn-action"
+                        (click)="navigateToVerify(item.contentType,item.contentId,item.contentApprovalId)">
+                  {{'View' | translate}}
+                </button>
+                <button *ngIf="category !=0"class="btn-approve btn-action" (click)="ApproveCourse(item)">{{'Approve' | translate}}
+                </button>
+                <button *ngIf="category !=0" class="btn-reject btn-action" (click)="rejectCourse(item)">{{'Reject' | translate}}</button>
+              </td>
+              <td class="text-center" *ngIf="item.contentType === 2">
+                <button href="javascript:;" class="btn-view btn-action"
+                        (click)="navigateToVerify(item.contentType,item.contentId,item.contentApprovalId)">
+                  {{'View' | translate}}
+                </button>
+                <button *ngIf="category !=0" class="btn-approve btn-action" (click)="ApproveResource(item)">{{'Approve' | translate}}
+                </button>
+                <button *ngIf="category !=0" class="btn-reject btn-action" (click)="rejectResource(item)">{{'Reject' | translate}}</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <ng-container *ngIf="requests.length === 0">
+            <p style="margin-top: -1rem;">{{'No items Found' | translate}}</p>
+          </ng-container>
+          <hr *ngIf="totalRows && totalRows > pageSize">
+          <p-paginator *ngIf="totalRows && totalRows > pageSize" [rows]="pageSize" [first]="pageStart"
+                       [totalRecords]="totalRows" (onPageChange)="pageChange($event)"></p-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal add-->
+<p-dialog [(visible)]="showRejectModal" (onHide)="closeRejectionReason()" [modal]="true" [responsive]="true"
+          header="{{'Reason for rejection' | translate}}" [style]="{width: '500px'}"
+          [contentStyle]="{'max-height':'500px'}">
+  <form>
+    <div class="form-group">
+      <textarea class="form-control" rows="10" name="rejectReason" [(ngModel)]="rejectReason" pInputTextarea
+                autoResize="autoResize"></textarea>
+      <p *ngIf="(submitRejectForm && rejectReason === null)" class="field-error">
+        {{'Please enter a valid reason' | translate}}
+      </p>
+    </div>
+  </form>
+  <p-footer>
+    <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+            (click)="submitRejectionReport()">{{'Submit' | translate}}
+    </button>
+  </p-footer>
+</p-dialog>

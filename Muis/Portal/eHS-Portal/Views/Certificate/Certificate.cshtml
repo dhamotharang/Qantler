@@ -1,0 +1,31 @@
+﻿@using eHS.Portal.Model;
+
+@model eHS.Portal.Models.Certificates.CertificateModel;
+
+@{
+    Layout = "_Basic";
+    ViewData["Title"] = Html.Raw("Certificate - " + Model.Title);
+}
+
+@section CSS {
+    <link rel="stylesheet" href="~/css/certificate/certificate.css" />
+
+}
+
+<div class="certificate">
+    <div class="body">
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script src="~/js/certificate/templates.js"></script>
+    <script src="~/js/certificate/product.js"></script>
+    <script src="~/js/certificate/certificate.js"></script>
+
+    <script type="text/javascript">
+        var model = @Html.Raw(Json.Serialize(Model));
+        certificate.render(model);
+    </script>
+}

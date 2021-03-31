@@ -1,0 +1,110 @@
+﻿@using eHS.Portal.Model;
+
+@model eHS.Portal.Models.Payments.DetailsModel;
+
+@{ ViewData["Title"] = "Payment Details"; }
+
+@section CSS {
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/fullcalendar/fullcalendar.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="~/css/payments/details.css" />
+}
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">Payment Details</h4>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper" id="actionMenu">
+        <ul class="quick-links ml-auto">
+            <li>
+                <a id="approveButton" href="javascript:void(0);">Approve</a>
+            </li>
+            <li>
+                <a id="rejectButton" href="javascript:void(0);">Reject</a>
+            </li>
+            <li>
+                <a id="notesButton" data-toggle="modal" data-target="#createNotesModal" href="javascript:void(0)">Add Notes</a>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="payment">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_DetailsInfo.cshtml" model="@Model.Data" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_DetailsBank.cshtml" model="@Model.Data" />
+                </div>
+            </div>
+            <div class="row" id="contactInfo">
+                <div class="col-md-12">
+                    <partial name="_DetailsContactInfo.cshtml" model="@Model.Data" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_DetailsInvoices.cshtml" model="@Model.Data" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_DetailsNotes.cshtml" model="@Model.Data" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <partial name="_DetailsActivities.cshtml" model="@Model.Data" />
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<partial name="_DetailsCreateNote.cshtml" />
+<partial name="_DetailsOfflinePaymentModal.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.id = @Model.ID;
+        app.page.model = @Html.Raw(Json.Serialize(@Model.Data));
+        app.page.model.request = @Html.Raw(Json.Serialize(@Model.Request));
+    </script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/jquery-file-upload/jquery.uploadfile.min.js"></script>
+    <script src="~/js/calendar.js"></script>
+    <script src="~/js/shared/_selectOfficer.js"></script>
+    <script src="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+    <script src="~/js/payments/details.js"></script>
+    <script src="~/js/payments/_detailsInfo.js"></script>
+    <script src="~/js/payments/_detailsBank.js"></script>
+    <script src="~/js/payments/_detailsContactInfo.js"></script>
+    <script src="~/js/payments/_detailsInvoices.js"></script>
+    <script src="~/js/payments/_detailsNotes.js"></script>
+    <script src="~/js/payments/_detailsCreateNotes.js"></script>
+    <script src="~/js/payments/_detailsActivities.js"></script>
+    <script src="~/js/payments/_common.js"></script>
+    <script src="~/js/payments/_detailsOfflinePaymentModal.js"></script>
+}

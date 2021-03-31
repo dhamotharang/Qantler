@@ -1,0 +1,12 @@
+.logo-lg {
+  width: auto;
+  margin: 0 auto;
+  height: 50px;
+}
+
+.logo-lg img {
+  display: block;
+  width: auto;
+  height: 50px;
+  margin: 0 auto;
+}

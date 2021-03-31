@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم تسجيل مخالفة مرورية مرتبطة بطلبك  {{ArReferenceNumber}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+Fine has been issued against your request {{EnService}} {{ReferenceNumber}}.
+Best Regards

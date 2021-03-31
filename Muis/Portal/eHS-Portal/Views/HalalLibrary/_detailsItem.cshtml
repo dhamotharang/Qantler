@@ -1,0 +1,66 @@
+﻿<div class="modal fade" id="HalallibraryDetailModal" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+      </div>
+      <div class="modal-body">
+        <form class="form">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input id="detailName" type="text" maxlength="255" class="form-control form-control-lg">
+              <label class="error mt-2 text-danger">Name is required</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Brand</label>
+            <div class="col-sm-9">
+              <input id="detailBrand" type="text" maxlength="255" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Supplier</label>
+            <div class="col-sm-9">
+              <select id="detailSupplier" class="select-single select2-hidden-accessible" style="width: 78%" aria-hidden="true">
+              </select>
+              <button id="supplierAdd" type="button" onclick="app.page.item.addSupplier()" class="btn btn-inverse-primary btn-fw"> Add </button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Certifying Body</label>
+            <div class="col-sm-9">
+              <select id="detailCertifyingBody" class="select-single select2-hidden-accessible" style="width:78%" aria-hidden="true">
+              </select>
+              <button id="certifyingBodyAdd" onclick="app.page.item.addCertifyingBody()" type="button" class="btn btn-inverse-primary btn-fw"> Add </button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Risk Category</label>
+            <div class="col-sm-9">
+                <select id="detailRiskCategory" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                    <option value="100">Low</option>
+                    <option value="200">Medium-Low Risk</option>
+                    <option value="300">Medium-High Risk</option>
+                    <option value="400">High Risk</option>
+                    <option value="500">Non-Halal</option>
+                    <option value="999">Uncategorized</option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Verified</label>
+            <div class="icheck-flat col-sm-9">
+              <input type="checkbox" id="detailIsVerified">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="saveButton" onclick="app.page.item.save()" type="button" class="btn btn-outline-primary">Save</button>
+        <button id="deleteButton" onclick="app.page.item.delete()" type="button" class="btn btn-outline-danger">Delete</button>
+        <button id="cancelButton" onclick="app.page.item.close()" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

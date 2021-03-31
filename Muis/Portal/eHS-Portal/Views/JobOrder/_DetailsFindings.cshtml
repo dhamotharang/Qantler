@@ -1,0 +1,31 @@
+﻿@model IList<eHS.Portal.Model.Findings>;
+
+<div class="card findings">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Findings</h5>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs tab-solid tab-solid-danger" role="tablist">
+                </ul>
+                <div class="tab-content tab-content-solid">
+                </div>
+                <div class="conclusion">
+                    <p>GENERAL REMARKS</p>
+                    <p class="remarks"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="findings-template" hidden>
+    <li class="nav-item">
+        <a class="nav-link {active}" id="tab-{id}" data-toggle="tab" href="#pane-{id}" role="tab">{text}</a>
+    </li>
+
+    <div class="tab-pane fade" id="pane-{id}" role="tabpanel">
+    </div>
+
+    <div class="checklist">
+    </div>
+</div>

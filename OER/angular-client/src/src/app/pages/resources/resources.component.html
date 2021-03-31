@@ -1,0 +1,348 @@
+<app-sub-banner [title]="'Resources'|translate" [description]="'landing_2'|translate">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Resources'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40">
+  <div class="container">
+
+    <div class="panel-box mb-30 search-filter-box">
+      <form>
+        <div class="d-flex search-filter-row">
+          <div class="form-group flex-grow-1 search-col">
+            <label for="" class="form-label">{{"Search"|translate}}</label>
+            <input class="form-control" name="ressrch" [(ngModel)]="queryString">
+            <p *ngIf="showQueryErrorMsg" class="field-error">
+              {{'Please enter a valid query' | translate}}.</p>
+          </div>
+          <div class="form-group res-sort-pad sort-col">
+            <label for="" class="form-label">{{'Sort By' | translate}}</label>
+            <select class="form-control" [(ngModel)]="querySortBy" (change)="sort()" name="ressrt">
+              <option value="">{{'Select' | translate}}</option>
+              <option value="title">{{'Title' | translate}}</option>
+              <option value="rating">{{'Rating' | translate}}</option>
+              <option value="createdOn" selected>{{'Latest' | translate}}</option>
+            </select>
+          </div>
+          <div class="form-group search-btn-col">
+            <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit"
+                    (click)="search()">{{"Search"|translate}}
+            </button>
+          </div>
+          <div class="form-group clear-btn-col ml-3">
+            <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+              {{"Clear"|translate}}
+            </button>
+          </div>
+        </div>
+        <!--d-flex-->
+      </form>
+    </div>
+    <!--panel-box-->
+
+    <div class="row">
+
+      <div class="col-lg-4">
+
+        <div class="panel-box mb-30 ref-filt-box">
+
+          <div class="ref-filt-head">
+            <p class="ref-filt-head-txt">{{'Refine your search' | translate}}</p>
+            <div class="ref-filt-head-icon">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!--ref-filt-head-->
+          <div class="filter-accordion">
+            <h3 class="section-name">{{'Classification' | translate}}</h3>
+            <p-accordion>
+              <p-accordionTab header="{{'Educational Standards' | translate}}">
+                <ng-container *ngFor="let item of educationalStandards">
+                  <p-checkbox name="categories" (onChange)="fliter()" [(ngModel)]="selectedEducationalStandard"
+                              value="{{item.id}}"
+                              label="{{getCurrentLang() === 'en' ? item.standard : item.standard_Ar}}">
+                  </p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <!--ref-filt-head-->
+          <div class="filter-accordion">
+            <p-accordion>
+              <p-accordionTab header="{{'Educational Uses' | translate}}">
+                <ng-container *ngFor="let item of educationalUses">
+                  <p-checkbox name="categories" (onChange)="fliter()" [(ngModel)]="selectedEducationalUse"
+                              value="{{item.id}}"
+                              label="{{getCurrentLang() === 'en' ? item.text : item.text_Ar}}"></p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <!--ref-filt-head-->
+          <div class="filter-accordion">
+            <p-accordion>
+              <p-accordionTab header="{{'Educational Level' | translate}}">
+                <ng-container *ngFor="let item of levels">
+                  <p-checkbox name="categories" (onChange)="fliter()" [(ngModel)]="selectedLevel" value="{{item.id}}"
+                              label="{{getCurrentLang() === 'en' ? item.levelText : item.levelText_Ar}}"></p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <!--ref-filt-head-->
+          <div class="filter-accordion">
+            <p-accordion>
+              <p-accordionTab header="{{'Material Type' | translate}}">
+                <ng-container *ngFor="let item of materialTypes">
+                  <p-checkbox name="categories" (onChange)="fliter()" [(ngModel)]="selectedMaterialType"
+                              value="{{item.id}}"
+                              label="{{getCurrentLang() === 'en' ? item.name : item.name_Ar }}"></p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <!--ref-filt-head-->
+          <div class="filter-accordion">
+            <p-accordion>
+              <p-accordionTab header="{{'Copyrights' | translate}}">
+                <ng-container *ngFor="let item of copyrights">
+                  <p-checkbox name="categories" (onChange)="fliter()" [(ngModel)]="selectedCopyright"
+                              value="{{item.id}}"
+                              label="{{getCurrentLang() === 'en' ? item.title : item.title_Ar}}"></p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <!--ref-filt-head-->
+          <br>
+          <div class="filter-accordion">
+            <h3 class="section-name">{{'Subject' | translate}}</h3>
+            <p-accordion>
+              <p-accordionTab header="{{getCurrentLang() === 'en' ? item.name : item.name_Ar}}"
+                              *ngFor="let item of categories">
+                <ng-container *ngFor="let subItem of subCategories">
+                  <p-checkbox *ngIf="item.id === subItem.categoryId" name="{{'subCategories' | translate}}"
+                              (onChange)="fliter()" [(ngModel)]="selectedSubCategories" value="{{subItem.id}}"
+                              label="{{getCurrentLang() === 'en' ? subItem.name : subItem.name_Ar}}"></p-checkbox>
+                </ng-container>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+        </div>
+        <!--panel-box-->
+        <div class="form-group mt-3 mb-0">
+          <button class="btn btn-dark text-uppercase" (click)="clearSearch()" type="button">
+            {{'Clear Search' | translate}}
+          </button>
+        </div>
+
+      </div>
+      <!--col-->
+
+      <div class="col-lg-8">
+        <div class="search-history">
+          <div class="oer-chip" *ngFor="let item of selectedEducationalStandard;let i = index">
+               <span class="truncate">
+                 {{getEducationalStandardName(item)}}
+               </span>
+            <button type="button" (click)="removeEducationalStandard(item,i)"><i class="fa fa-times"
+                                                                                 aria-hidden="true"></i></button>
+          </div> <!-- oer-chip-loop-->
+          <div class="oer-chip" *ngFor="let item of selectedEducationalUse;let i = index">
+               <span class="truncate">
+                 {{getEducationalUseName(item)}}
+               </span>
+            <button type="button" (click)="removeEducationalUse(item,i)"><i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div> <!-- oer-chip-loop-->
+          <div class="oer-chip" *ngFor="let item of selectedLevel;let i = index">
+               <span class="truncate">
+                 {{getLevelName(item)}}
+               </span>
+            <button type="button" (click)="removeLevel(item,i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div> <!-- oer-chip-loop-->
+          <div class="oer-chip" *ngFor="let item of selectedMaterialType;let i = index">
+               <span class="truncate">
+                 {{getMaterialTypeName(item)}}
+               </span>
+            <button type="button" (click)="removeMaterialType(item,i)"><i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div> <!-- oer-chip-loop-->
+          <div class="oer-chip" *ngFor="let item of selectedCopyright;let i = index">
+               <span class="truncate">
+                 {{getCopyrightName(item)}}
+               </span>
+            <button type="button" (click)="removeCopyright(item,i)"><i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div> <!-- oer-chip-loop-->
+          <div class="oer-chip" *ngFor="let item of selectedSubCategories;let i = index">
+               <span class="truncate">
+                 {{getSubCategoryName(item)}}
+               </span>
+            <button type="button" (click)="removeSubCategory(item,i)"><i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div> <!-- oer-chip-loop-->
+        </div> <!-- search-history :END -->
+        <ng-container *ngFor="let item of resources;let i = index">
+          <div *ngIf="item.isapproved === true"
+               class="panel-box {{i != resources.length - 1 ? 'mb-30' : ''}} list-page-badge-with-badge">
+            <!-- badge :START-->
+            <div class="dtl-badge blue-type" *ngIf="item && item.communitybadge && !item.moebadge">
+              <img src="./assets/images/badge/blue-cc.svg" alt="blue-cc">
+            </div>
+
+            <div class="dtl-badge gold-type" *ngIf="item && item.communitybadge && !item.moebadge">
+              <img src="./assets/images/badge/gold-cc.svg" alt="gold-cc">
+            </div>
+            <!-- badge :START-->
+            <div class="dtl-badge blue-type" *ngIf="item && item.moebadge">
+              <img src="./assets/images/badge/blue-ec.svg" alt="blue-ec">
+            </div>
+
+            <div class="dtl-badge gold-type" *ngIf="item && item.moebadge">
+              <img src="./assets/images/badge/gold-ec.svg" alt="gold-ec">
+            </div>
+
+
+            <div class="media resource-media">
+              <div class="img-block mr-3" (click)="router.navigateByUrl('/resource/' + encService.set(item.id))">
+                <img src="{{ item.thumbnail}}" alt="" class="img-fluid">
+              </div>
+              <div class="media-body resource-media-body">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <h6 class="resource-list-title"><a
+                      routerLink="/resource/{{encService.set(item.id)}}">{{item.title}}</a></h6>
+                  </div>
+                  <!--col-->
+                  <div class="col-lg-3">
+                    <app-rating [allRating]="item.allratings ? item.allratings : getParsed(item.allrating)"
+                                [rating]="item.rating" [type]="'resource'" [id]="item.id"
+                                (updateData)="fliter()"></app-rating>
+                  </div>
+                  <!--col-->
+                </div>
+                <!--row-->
+                <ul class="resource-list-auth-date">
+                  <li><strong>{{'Category' | translate}}:</strong> <em><a (click)="filterCategory(item.category)"
+                                                                          title="{{getCurrentLang() === 'en' ? item.name : item.name_ar}}"
+                                                                          href="javascript:;">
+                    {{getCurrentLang() === 'en' ? item.name : item.name_ar}}</a></em>
+                  </li>
+                  <li><strong>{{'Author' | translate}}:</strong> <a
+                    routerLink="/user/profile/{{encService.set(item.createdby)}}"><em> {{item.createdbyname}}</em></a>
+                  </li>
+                  <li><i class="fa fa-calendar" aria-hidden="true"></i> {{item.createdon|date}}</li>
+                </ul>
+                <div class="dec-paragraph">
+                  <div [ngClass]="readmore[i] ? 'more' : 'less'" style="word-break: break-word;">
+                    <p class="mb-0 text-white-space-pre">
+                      {{item.resourcedescription}}
+                    </p>
+                  </div>
+                </div>
+                <button *ngIf="!readmore[i] && item.resourcedescription && item.resourcedescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore(i)">{{'Read more' | translate}}..
+                </button>
+                <button *ngIf="readmore[i] && item.resourcedescription && item.resourcedescription.length > 160"
+                        type="button" class="radmore-link" (click)="clickreadmore(i)">{{'View less' | translate}}..
+                </button>
+                <ul class="resource-list-links">
+                  <li><a routerLink="/resource/{{encService.set(item.id)}}">{{'Read more' | translate}}</a></li>
+                  <li><a href="javascript:;" *ngIf="!userId || (userId !== item.createdby)"
+                         (click)="showReportAbuse[i] = true"><i class="fa fa-exclamation-circle"
+                                                                aria-hidden="true"></i>
+                    {{'Report Abuse' | translate}}</a></li>
+                </ul>
+                <div class="row">
+                  <div class="col-xs-12 col-md-8">
+                    <div class="flex-table mt-3 main-flex-table">
+                      <div class="flex-table-cell">
+                        <p><b>{{"Copyrights" |translate}}</b></p>
+                      </div>
+                      <div class="flex-table-cell">
+                        <div class="copy-flex">
+                          <div style="width:25%" *ngIf="item.copyrightid && item.copyrightmedia"> <!-- class="img-flex" -->
+                            <img src="{{item.copyrightmedia}}"  alt="copyright images" class="img-fluid"
+                                 tooltip="{{getCurrentLang() === 'en' ? item.copyrighttitle + ':' + ' ' + item.copyrightdescription  : item.copyrighttitle_ar + ':' + ' ' + item.copyrightdescription_ar}}"
+                                 container="body"
+                                   >
+                          </div>
+                          <div class="text-flex">
+                            <p><span class="truncate">
+                                    </span>
+                                    <!-- tooltip="{{getCurrentLang() === 'en' ?item.copyrightdescription:item.copyrightdescription_ar}}"
+                                    container="body">{{getCurrentLang() === 'en' ? item.copyrighttitle : item.copyrighttitle_ar}} -->
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <app-report-abuse [(display)]="showReportAbuse[i]" [type]="'Resource'" [id]="item.id">
+                </app-report-abuse>
+              </div>
+              <!--resource-media-body-->
+            </div>
+            <!--resource-media-->
+
+            <!--container-->
+            <div class="resource-media-outer">
+              <p class="mb-0 wrap-all" *ngIf="item.keywords && item.keywords != 'false'"><strong>{{'Keywords' |
+                translate}}:</strong>
+                <em><a (click)="filterCategory(keyword.trim())" href="javascript:;"
+                       *ngFor="let keyword of item.keywords.split(', ');let i=index">
+                  {{keyword.trim()}}{{((keyword.trim().length > 0) && (i < item.keywords.split(', ').length - 1 )) ? ','
+                  : ''}}
+                </a></em>
+              </p>
+              <!--<p class="mb-0 wrap-all" *ngIf="!(item.keywords && item.keywords != 'false')"><strong>{{'Keywords' |-->
+              <!--translate}}:</strong>-->
+              <!--{{'Nil' | translate}}-->
+              <!--</p>-->
+              <ul class="resource-list-stats">
+                <li>
+                  <p class="resource-list-stat-count">{{item.viewcount ? item.viewcount : 0}}</p>
+                  <p class="resource-list-stat-title">{{'Visits' | translate}}</p>
+                </li>
+                <li>
+                  <p class="resource-list-stat-count">
+                    {{item.readingtime ? item.readingtime : 0}} {{'mins' |translate}}</p>
+                  <p class="resource-list-stat-title">{{'Reading time' | translate}}</p>
+                </li>
+                <li>
+                  <p class="resource-list-stat-count">{{item.downloadcount ? item.downloadcount : 0}}</p>
+                  <p class="resource-list-stat-title">{{'Download Count' | translate}}</p>
+                </li>
+                <li>
+                  <p class="resource-list-stat-count">{{item.sharedcount ? item.sharedcount : 0}}
+                  </p>
+                  <p class="resource-list-stat-title">{{'Shared Count' | translate}}</p>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <!--resource-media-outer-->
+
+          </div>
+          <!--panel-box-->
+        </ng-container>
+        <ng-container *ngIf="totalResultCount === 0">
+          <p class="text-center">{{'No Results Found' | translate}}</p>
+        </ng-container>
+        <hr *ngIf="totalResultCount && totalResultCount > pageSize">
+        <p-paginator *ngIf="totalResultCount && totalResultCount > pageSize" [rows]="pageSize" [first]="pageStart"
+                     [totalRecords]="totalResultCount" (onPageChange)="pageChange($event)"></p-paginator>
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

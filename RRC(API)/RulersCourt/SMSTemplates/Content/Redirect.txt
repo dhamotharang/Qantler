@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تمت إعادة توجيه {{ArService}} {{ArReferenceNumber}} بواسطة {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}}, 
+{{EnService}} {{ReferenceNumber}} has been Redirected by {{EnFromName}}.
+Best Regards

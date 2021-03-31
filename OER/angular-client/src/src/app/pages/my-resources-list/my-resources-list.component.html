@@ -1,0 +1,147 @@
+<app-sub-banner [title]="'My Resources'|translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Dashboard'|translate,link:'/dashboard',active:false},{text: 'My Resources'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+
+        <div class="panel-box p-30">
+
+          <ul class="nav nav-fill panel-tabs panel-top-nav" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link  {{type === 'draft' ? 'active' : ''}}" data-toggle="tab" href="#tab1" role="tab">
+                <i class="fa fa-th" aria-hidden="true"></i> {{'Drafts' | translate}} ({{getDraftCount()}})
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  {{type === 'submitted' ? 'active' : ''}}" data-toggle="tab" href="#tab2" role="tab">
+                <i class="fa fa-user-circle" aria-hidden="true"></i> {{'Submitted' | translate}}
+                ({{getSubmittedCount()}})
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  {{type === 'published' ? 'active' : ''}}" data-toggle="tab" href="#tab3" role="tab">
+                <i class="fa fa-cog" aria-hidden="true"></i> {{'Published' | translate}} ({{getApprovedCount()}})
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content pt-30">
+
+            <div class="tab-pane {{type === 'draft' ? 'active' : ''}}" id="tab1" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-bordered th-bg tbl-pad dt-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="width: 125px;">{{'Date' | translate}}</th>
+                      <th scope="col">{{'Title/Name' | translate}}</th>
+                      <th scope="col" class="no-sort text-center" style="width: 280px;">{{'Action' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of resources">
+                      <tr *ngIf="item.isDraft && !item.isApproved">
+                        <td>{{item.createdOn | date:'mediumDate'}}</td>
+                        <td>{{item.title}}</td>
+                        <td class="text-center">
+                          <a routerLink="/resources/create/{{encService.set(item.id)}}"
+                            class="btn-view btn-action">{{'Edit' | translate}}</a>
+                          <button (click)="deleteResource(item.id)" class="btn-reject btn-action">{{'Delete' |
+                          translate}}
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div>
+            <!--tab1-->
+
+            <div class="tab-pane {{type === 'submitted' ? 'active' : ''}}" id="tab2" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-bordered th-bg tbl-pad dt-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="width: 125px;">{{'Date' | translate}}</th>
+                      <th scope="col">{{'Title/Name' | translate}}</th>
+                      <th scope="col" class="no-sort text-center" style="width: 300px;">{{'Action' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of resources">
+                      <tr *ngIf="!item.isDraft && !item.isApproved">
+                        <td>{{item.createdOn | date:'mediumDate'}}</td>
+                        <td>{{item.title}}</td>
+                        <td class="text-center">
+                          <a target="_blank" href="/verify-content/2/{{item.id}}/{{encService.set(0)}}/0/{{encService.set('NA')}}"
+                            class="btn-view btn-action">View</a>
+                          <button (click)="withDrawResource(item.id)" class="btn-reject btn-action">{{"Withdraw Resource"
+                          | translate}}<span tooltip="{{'Withdrawn resource will be moved to Drafts' | translate}}"
+                              placement="top" class="text-info"><i class="fa fa-info-circle"
+                                aria-hidden="true"></i></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div>
+            <!--tab2-->
+
+            <div class="tab-pane {{type === 'published' ? 'active' : ''}}" id="tab3" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-bordered th-bg tbl-pad dt-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="width: 125px;">{{'Date' | translate}}</th>
+                      <th scope="col">{{'Title/Name' | translate}}</th>
+                      <th scope="col" class="no-sort text-center" style="width: 280px;">{{'Action' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of resources">
+                      <tr *ngIf="!item.isDraft && item.isApproved">
+                        <td>{{item.createdOn | date:'mediumDate'}}</td>
+                        <td>{{item.title}}</td>
+                        <td class="text-center">
+                          <a routerLink="/resource/{{encService.set(item.id)}}"
+                            class="btn-view btn-action mr-1">{{'View' | translate}}</a>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--tab3-->
+
+          </div>
+          <!--tab-content-->
+
+        </div>
+        <!--panel-box-->
+
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

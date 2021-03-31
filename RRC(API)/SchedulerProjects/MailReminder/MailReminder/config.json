@@ -1,0 +1,14 @@
+{
+  "sqlServerConnectionString": "gPc8nHG/FN9Qym9uuUjHxrTNvprcGNGVZ5s5Uz+N4z6v4v5Lp5iRBk3tPSFM49u457MRnhCLV3NsF5JDTxMmIGiLSB7NTMdYOJQwJe58o3I=",
+  "fromAddress": "Zn/Kv7zztZJXk2/wK9gDg5Y3Al8aCGBNM76PdhOmacw=",
+  "smtpuser": "Zn/Kv7zztZJXk2/wK9gDg5Y3Al8aCGBNM76PdhOmacw=",
+  "smtppassword": "U07QfLEqYZqfpx6ptIxkaQ==",
+  "smtphost": "bMrlRQ8QhiYJR98OzL5mxA==",
+  "SMTPPort": "nTOmHgTFSqJmD3eAlBbPIA==",
+  "EnableSsl": "6D/kRcSbE6ZaDb47hTwNKQ==",
+  "Url": "y1j1m01PlSohhjhKEVW0m5UJHSx0md4qeDlx6qFhU83csc+I9A22QePZJR9tUjcBluTMddB0DVNAzMG0fJlzAA==",
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=",
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg=="
+  }
+}

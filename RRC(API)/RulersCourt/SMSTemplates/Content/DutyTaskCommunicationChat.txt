@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم إرسال رسالة جديدة لك خاصة بالمهمة {{ArService}} {{ArReferenceNumber}} من قِبل {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+{{EnService}} {{ReferenceNumber}} has been Mentioned you by {{EnFromName}}.
+Best Regards

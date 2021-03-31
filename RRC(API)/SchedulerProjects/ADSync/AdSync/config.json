@@ -1,0 +1,12 @@
+{
+  "exclude": [ "n9pWgDuNRaP+6sPVAAu46g==", "X7mF20p9jt5g9wFmq4M7DAMiLAHGnCR8942cZpnk6Ys=", "FFYmcyVCUhphUfUGhAOCVTSZ0kXJNaGQGDTreoPXAlw=", "etl828ji4E4rtcLrxLg+QA==", "CvUurYatq8ICHEj41wp9uQ==", "9DT+LTVWlyLc/22AWCWTMg==" ],
+  "ldapConnectionString": "4hHDWXNhdBga9XWsXA1dgQ==",
+  "sqlServerConnectionString": "gPc8nHG/FN9Qym9uuUjHxrTNvprcGNGVZ5s5Uz+N4z6v4v5Lp5iRBk3tPSFM49u457MRnhCLV3NsF5JDTxMmIINhCD9r8tBxRvHj2MZ6wxI=",
+  "binddn": "Ln2KN4B9KcPDFhV/3FYJCw==",
+  "bindpassword": "hPZ+RsEVTXtm8k54BEtkww==",
+  "searchBase": "wddQ3e3RwckVdebOpmXCnHGpCkjzj47NyOeYMYaE8EM=",
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=",
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg=="
+  }
+}

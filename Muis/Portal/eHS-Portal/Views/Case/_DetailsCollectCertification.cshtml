@@ -1,0 +1,44 @@
+﻿<div class="modal fade collectcertificate" id="CollectCertificateModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" id="name" required />
+                    <label class="error mt-2 text-danger">Please enter name</label>
+                </div>
+                <div class="form-group">
+                    <span>
+                        <span>I, name above, hereby acknowledge that I have returned the original Muis Halal certificate(s), the details of which are listed above, on behalf of my company / establishment </span>
+                        <u id="offender-Name"></u>
+                        <span>as a result of the </span>
+                        <span id="sanction-name"></span>
+                        <span>that has been imposed upon us.</span>
+                    </span>
+                </div>
+                <div id="signature-pad" class="form-group signature-pad">
+                    <div class="signature-pad--body">
+                        <canvas></canvas>
+                    </div>
+                    <div class="signature-pad--footer">
+                        <div class="description" style="display: flex;">
+                            <button id="clearBtn" type="button" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2">Clear</button>
+                            <span class="signAbove">Sign above</span>
+                        </div>
+                    </div>
+                    <label class="error mt-2 text-danger signAboveError">Signature is required</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary close" data-dismiss="modal">Discard</button>
+                <button id="submitBtn" type="button" class="btn btn-outline-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

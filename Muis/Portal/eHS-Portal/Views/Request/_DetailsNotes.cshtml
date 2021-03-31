@@ -1,0 +1,47 @@
+﻿<div class="row notes">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="horizontal-timeline">
+                </div>
+                <div class="placeholder d-none">
+                    <span class="text-muted">No notes added yet.</span>
+                    <span class="text-muted add">Tap "Add Notes" to add new notes.</span>
+                    <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw add" data-toggle="modal" data-target="#createNotesModal">
+                        <i class="mdi mdi-plus"></i>Add Notes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="templates" hidden>
+        <section class="time-frame">
+            <h4 class="section-time-frame">{text}</h4>
+        </section>
+
+        <div class="event">
+            <p class="event-text">{user}</p>
+            <div class="event-alert">{text}</div>
+            {attachments}
+            <div class="event-info">{time}</div>
+        </div>
+
+        <div class="attachments">
+
+        </div>
+
+        <div class="attachment item">
+            <div class="thumb">
+                <i class="mdi mdi-paperclip"></i>
+            </div>
+            <div class="details">
+                <p class="file-name">{fileName}</p>
+                <div class="buttons">
+                    <p class="file-size">{fileSize}</p>
+                    <a href="/api/file/{fileID}?fileName={fileName}" class="download" download="{fileName}">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

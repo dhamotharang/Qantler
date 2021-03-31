@@ -1,0 +1,17 @@
+<ngx-spinner [color]="'#f0f0f0'" bdOpacity=0.9 bdColor="#f0f0f0" size="medium" type="ball-fussion" [fullScreen]="true">
+</ngx-spinner>
+<p-confirmDialog #cd class="scaling {{getLangClass()}} " [styleClass]="getThemeClass()"
+                 header="{{'Confirmation' | translate}}"
+                 icon="pi pi-exclamation-triangle" blockScroll="true">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" label="{{'No' | translate}}" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="{{'Yes' | translate}}" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<p-toast position="top-center" key="toast" [style]="{marginTop: '100px'}" [styleClass]="getLangClass()"></p-toast>
+<app-header *ngIf="GoodToGo"></app-header>
+<div class="content-area flex-shrink-0 ui-rtl {{getThemeClass()}} {{getLangClass()}}" dir="{{getLangDir()}}">
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="GoodToGo"></app-footer>
+</div>

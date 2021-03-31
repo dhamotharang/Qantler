@@ -1,0 +1,237 @@
+<app-sub-banner [title]="'User Profile' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Dashboard' | translate,link:'/dashboard',active:false},{text: 'User Profile' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="public-profile">
+          <div class="panel-box">
+            <div class="info-flex">
+              <div class="title">
+                <div class="profile-photo">
+                  <img src="{{user && user.photo ?  user.photo : 'assets/images/default-user.png'}}"
+                       class="img-fluid"/>
+                </div>
+              </div>
+              <div class="description first">
+                <h3>{{user ? user.title ? user.title.name : '' : ''}} {{user ? user.firstName : ''}}
+                  {{user ? user.middleName : ''}} {{user ? user.lastName : ''}}</h3>
+                <p>{{user ? user.profileDescription : ''}}</p>
+                <!-- <a routerLink="/dashboard/profile/edit" class="btn btn-primary btn-sm edit-prof-btn">{{'Edit Profile' |
+                  translate}}</a>  
+                  <br>  <br>
+                  <a href="javascript:;" class="edit-prof-btn" (click)="toChangePassword()">{{'Changepassword' | translate}}</a> -->
+                <div class="container">
+                  <div class="row edit-prof-btn">
+                <a routerLink="/dashboard/profile/edit" class="btn btn-primary btn-sm">{{'Edit Profile' |
+                  translate}}</a>    
+                </div>   
+                <br><br>
+                <div class="row edit-prof-btn">     
+                <a href="javascript:;" (click)="ResetPassword()">{{'Resetpassword' | translate}}</a>
+              </div> 
+              </div>
+                
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex">
+              <div class="title">
+                <h3>{{'Basic Information' | translate}}</h3>
+              </div>
+              <div class="description">
+                <p><b>{{'Email' | translate}}</b>: {{user ? user.email ? user.email : '' : ''}}</p>
+                <p><b>{{'Country' | translate}}</b>: {{user ? user.country ? user.country.name : '' : ''}}</p>
+                <p><b>{{'State' | translate}}</b>: {{user ? user.state ? user.state.name : '' : ''}}</p>
+                <p><b>{{'Gender' | translate}}</b>: {{user ? user.gender ? user.gender.name : '' : ''}}</p>
+                <p><b>{{'Date Of Birth' | translate}}</b>:
+                  <span *ngIf="user && user.dateOfBirth">{{ user.dateOfBirth| date:'mediumDate' }}</span>
+                </p>
+                <p><b>{{'Portal Language Preference' | translate}}</b>:
+                  {{user ? user.portalLanguage ? user.portalLanguage.name : '' : ''}}
+                </p>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex" *ngIf="user && user.userEducations">
+              <div class="title">
+                <h3>{{'Educational Qualifications' | translate}}</h3>
+              </div>
+              <div class="description">
+                <div class="table-responsive">
+                  <table class="table table-sm" *ngIf="user && user.userEducations">
+                    <thead>
+                    <tr>
+                      <th scope="col">{{'University / School' | translate}}</th>
+                      <th scope="col">{{'Major' | translate}}</th>
+                      <th scope="col">{{'Grade' | translate}}</th>
+                      <th scope="col">{{'From' | translate}}</th>
+                      <th scope="col">{{'To' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of user.userEducations">
+                      <td>{{item.universitySchool}}</td>
+                      <td>{{item.major}}</td>
+                      <td>{{item.grade}}</td>
+                      <td>{{item.fromDate | date:'mediumDate'}}</td>
+                      <td>{{item.toDate | date:'mediumDate'}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex" *ngIf="user && user.userCertifications">
+              <div class="title">
+                <h3>{{'Certifications' | translate}}</h3>
+              </div>
+              <div class="description">
+                <div class="table-responsive">
+                  <table class="table table-sm" *ngIf="user && user.userCertifications">
+                    <thead>
+                    <tr>
+                      <th scope="col">{{'Certification Name' | translate}}</th>
+                      <th scope="col">{{'Year' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of user.userCertifications">
+                      <td>{{item.certificationName}}</td>
+                      <td>{{item.year}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex" *ngIf="user && user.userExperiences">
+              <div class="title">
+                <h3>{{'Experiences' | translate}}</h3>
+              </div>
+              <div class="description">
+                <div class="table-responsive">
+                  <table class="table table-sm" *ngIf="user && user.userExperiences">
+                    <thead>
+                    <tr>
+                      <th scope="col">{{'Organization Name' | translate}}</th>
+                      <th scope="col">{{'Designation' | translate}}</th>
+                      <th scope="col">{{'From' | translate}}</th>
+                      <th scope="col">{{'To' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of user.userExperiences">
+                      <td>{{item.organizationName}}</td>
+                      <td>{{item.designation}}</td>
+                      <td>{{item.fromDate | date:'mediumDate'}}</td>
+                      <td *ngIf="item.toDate">{{item.toDate | date:'mediumDate'}}</td>
+                      <td *ngIf="!item.toDate">Current</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex" *ngIf="user && user.subjectsInterested">
+              <div class="title">
+                <h3>{{'Subjects Interested' | translate}}</h3>
+              </div>
+              <div *ngIf="getCurrentLang()=='en'" class="description">
+                <p><b>{{user && subjectsInterested}}</b></p>
+              </div>
+              <div *ngIf="getCurrentLang()=='ar'" class="description">
+                <p><b>{{user && subjectsInterestedAr}}</b></p>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex languages" *ngIf="user && user.userLanguages">
+              <div class="title">
+                <h3>{{'Known Languages' | translate}}</h3>
+              </div>
+              <div class="description">
+                <div class="table-responsive">
+                  <table class="table table-sm" *ngIf="user && user.userLanguages">
+                    <thead>
+                    <tr>
+                      <th scope="col">{{'Language' | translate}}</th>
+                      <th scope="col">{{'Speak' | translate}}</th>
+                      <th scope="col">{{'Read' | translate}}</th>
+                      <th scope="col">{{'Write' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of user.userLanguages">
+                      <td>{{item.language.name}}</td>
+                      <td><span class="badge badge-pill badge-primary" *ngIf="item.isSpeak"><i class="fa fa-check"
+                                                                                               aria-hidden="true"></i></span>
+                        <span class="badge badge-pill badge-dark" *ngIf="!item.isSpeak"> <i class="fa fa-times"
+                                                                                            aria-hidden="true"></i></span>
+
+                      </td>
+                      <td><span class="badge badge-pill badge-primary" *ngIf="item.isRead"><i class="fa fa-check"
+                                                                                              aria-hidden="true"></i></span>
+                        <span class="badge badge-pill badge-dark" *ngIf="!item.isRead"> <i class="fa fa-times"
+                                                                                           aria-hidden="true"></i></span>
+                      </td>
+                      <td><span class="badge badge-pill badge-primary" *ngIf="item.isWrite"><i class="fa fa-check"
+                                                                                               aria-hidden="true"></i></span>
+                        <span class="badge badge-pill badge-dark" *ngIf="!item.isWrite"> <i class="fa fa-times"
+                                                                                            aria-hidden="true"></i></span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <!-- info flex :END -->
+            <!-- ====================  Next Section ====================-->
+            <div class="info-flex" *ngIf="user && user.userSocialMedias">
+              <div class="title">
+                <h3>{{'Social Media' | translate}}</h3>
+              </div>
+              <div class="description">
+                <div class="table-responsive">
+                  <table class="table table-sm" *ngIf="user && user.userSocialMedias">
+                    <thead>
+                    <tr>
+                      <th scope="col">{{'Platforms' | translate}}</th>
+                      <th scope="col">{{'URL' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of user.userSocialMedias">
+                      <td>{{getCurrentLang() === 'en' ? item.socialMedia.name : item.socialMedia.name_Ar}}</td>
+                      <td *ngIf="item.socialMedia.name !== 'Whats App'"><a
+                        href="{{item.url.startsWith('http') ? item.url : 'https://' + item.url}}">{{item.url}}</a></td>
+                      <td *ngIf="item.socialMedia.name === 'Whats App'"><a href="{{'tel:' + item.url}}">{{item.url}}</a>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <!-- info flex :END -->
+          </div>
+        </div> <!-- public profile :END-->
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

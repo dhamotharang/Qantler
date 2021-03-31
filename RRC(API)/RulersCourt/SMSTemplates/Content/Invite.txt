@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تمت إرسال دعوة لحضور {{ArService}} {{ArReferenceNumber}} بواسطة {{ArFromName}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+{{EnService}} {{ReferenceNumber}} has been Invited by {{EnFromName}}.
+Best Regards

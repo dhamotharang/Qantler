@@ -1,0 +1,32 @@
+﻿@model IList<eHS.Portal.Model.Attendee>
+
+<div class="card widget attendees">
+    <div class="card-body">
+        <div class="wrapper">
+            <h5 class="font-weight-bold mb-3">Attendees</h5>
+            <div class="list">
+                @foreach (var attendee in @Model)
+                {
+                    <div class="item">
+                        <span class="img-xs rounded-circle text-white text-avatar"></span>
+                        <div class="wrapper pl-2">
+                            <p class="mb-0 text-gray font-weight-bold name">@attendee.Name</p>
+                            <p class="mb-0 text-gray designation">@attendee.Designation</p>
+                        </div>
+                        <div class="pl-3">
+                            @if (attendee.Start ?? false)
+                            {
+                                <span class="opening">Opening</span>
+                            }
+
+                            @if (attendee.End ?? false)
+                            {
+                                <span class="closing">Closing</span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

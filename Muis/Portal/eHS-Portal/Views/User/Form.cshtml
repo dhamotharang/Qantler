@@ -1,0 +1,564 @@
+﻿@model eHS.Portal.Models.User.FormModel;
+
+@{ ViewData["Title"] = Model.IsEdit ? "Edit User" : "Create User"; }
+
+@section CSS {
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/icheck/all.css" />
+    <link rel="stylesheet" href="~/css/user/common.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">@Html.Raw(Model.IsEdit ? "Edit User" : "Create User")</h4>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            <li><a id="saveButton" href="javascript:void(0)">Save</a></li>
+        </ul>
+    </div>
+}
+
+<div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="row basic">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row name">
+                                <label class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input id="name" type="text" class="form-control form-control-lg" maxlength="150">
+                                    <label class="error mt-2 text-danger">Name is required</label>
+                                </div>
+                            </div>
+                            <div class="form-group row desig">
+                                <label class="col-sm-3 col-form-label">Designation</label>
+                                <div class="col-sm-9">
+                                    <input id="desig" type="text" class="form-control form-control-lg" maxlength="150">
+                                    <label class="error mt-2 text-danger">Designation is required</label>
+                                </div>
+                            </div>
+                            <div class="form-group row email">
+                                <label class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input id="email" type="text" class="form-control form-control-lg" maxlength="88">
+                                        <div class="input-group-append bg-success">
+                                            <span class="input-group-text text-white">@Html.Raw("@muis.gov.sg")</span>
+                                        </div>
+                                    </div>
+                                    <label class="error mt-2 text-danger"></label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <select id="status" class="select-single select2-hidden-accessible" style="width:100%">
+                                        <option value="0">Active</option>
+                                        <option value="1">In-Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row role">
+                                <label class="col-sm-3 col-form-label">Role</label>
+                                <div class="col-sm-9">
+                                    <select id="role" class="select-single select2-hidden-accessible" style="width:100%">
+                                        <option></option>
+                                        <option value="100">Certificate Auditor</option>
+                                        <option value="101">RFA Support</option>
+                                        <option value="150">Supervisor</option>
+                                        <option value="200">Approving Officer</option>
+                                        <option value="300">Finance Officer</option>
+                                        <option value="400">Issuance Officer</option>
+                                        <option value="500">Periodic Inspector</option>
+                                        <option value="600">HOD</option>
+                                        <option value="700">Mufti</option>
+                                        <option value="800">System Admin</option>
+                                    </select>
+                                    <label class="error mt-2 text-danger">Role is required</label>
+                                </div>
+                            </div>
+                            <div class="form-group row clusters d-none">
+                                <label class="col-sm-3 col-form-label">Clusters</label>
+                                <div class="col-sm-9">
+                                    <select id="clusters" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row basic request-types d-none">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body form-group">
+                            <h5 class="font-weight-bold mb-4">Type of Request</h5>
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <div class="icheck-flat">
+                                        <input type="checkbox" class="request-type" data-id="0" id="request-type-0">
+                                        <div class="info">
+                                            <span class="label">
+                                                New
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="icheck-flat">
+                                        <input type="checkbox" class="request-type" data-id="1" id="request-type-1">
+                                        <div class="info">
+                                            <span class="label">
+                                                Renewal
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="icheck-flat">
+                                        <input type="checkbox" class="request-type" data-id="3" id="request-type-3">
+                                        <div class="info">
+                                            <span class="label">
+                                                HC02
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="icheck-flat">
+                                        <input type="checkbox" class="request-type" data-id="4" id="request-type-4">
+                                        <div class="info">
+                                            <span class="label">
+                                                HC03
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="icheck-flat">
+                                        <input type="checkbox" class="request-type" data-id="5" id="request-type-5">
+                                        <div class="info">
+                                            <span class="label">
+                                                HC04
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row basic">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="font-weight-bold mb-4">Permissions</h5>
+                            <div>
+                                <p class="font-weight-bold mb-2">Request</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="0" id="permissions-0">
+                                    <div class="info">
+                                        <span class="label">Request.Read</span>
+                                        <span class="description">
+                                            Allows the user to view all request applications. Does not allow to manage application.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="1" id="permissions-1">
+                                    <div class="info">
+                                        <span class="label">Request.Review</span>
+                                        <span class="description">
+                                            Allows the user to review menu, review ingredients, raise new RFA, schedule site audit inspection
+                                            & provide recommendation.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="21" id="permissions-21">
+                                    <div class="info">
+                                        <span class="label">Request.RFA.Support</span>
+                                        <span class="description">
+                                            Allows the user to support to view and review RFA being raised by officers.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="22" id="permissions-22">
+                                    <div class="info">
+                                        <span class="label">Request.Review.Approval</span>
+                                        <span class="description">
+                                            Allows the user to review or override request recommended for rejection which consist of composing the rejection email.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="2" id="permissions-2">
+                                    <div class="info">
+                                        <span class="label">Request.Approve</span>
+                                        <span class="description">
+                                            Allows the user to view reviews provided by the reviewer, view recommendation & approve the request.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="3" id="permissions-3">
+                                    <div class="info">
+                                        <span class="label">Request.Invoice</span>
+                                        <span class="description">
+                                            Allows the user to manage request invoice.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="4" id="permissions-4">
+                                    <div class="info">
+                                        <span class="label">Request.Issuance</span>
+                                        <span class="description">
+                                            Allows the user to print & manage certificate issuance for approved applications.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="5" id="permissions-5">
+                                    <div class="info">
+                                        <span class="label">Request.Reassign</span>
+                                        <span class="description">
+                                            Allows the user to re-assign the request to other officers
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="6" id="permissions-6">
+                                    <div class="info">
+                                        <span class="label">Request.Escalate.Action</span>
+                                        <span class="description">
+                                            Allows the user to manage escalated requests.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="7" id="permissions-7">
+                                    <div class="info">
+                                        <span class="label">Request.Status.Override</span>
+                                        <span class="description">
+                                            Allows the user to override or revert status of the application.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Periodic Inspection</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="8" id="permissions-8">
+                                    <div class="info">
+                                        <span class="label">PeriodicInspection.Read</span>
+                                        <span class="description">
+                                            Allow users to view periodic inspections. Does not allow to manage periodic inspection job orders.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="9" id="permissions-9">
+                                    <div class="info">
+                                        <span class="label">PeriodicInspection.ReadWrite</span>
+                                        <span class="description">
+                                            Allow user to view, schedule and manage periodic inspection job orders.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Mufti</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="10" id="permissions-10">
+                                    <div class="info">
+                                        <span class="label">Mufti.Read</span>
+                                        <span class="description">
+                                            Allows the users the view certificate to be acknowledge. Does not allow to acknowledge.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="11" id="permissions-11">
+                                    <div class="info">
+                                        <span class="label">Mufti.Acknowledge</span>
+                                        <span class="description">
+                                            Allows the user to view, provide comments & acknowledge certificates.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="12" id="permissions-12">
+                                    <div class="info">
+                                        <span class="label">Mufti.Comments.ReadWrite</span>
+                                        <span class="description">
+                                            Allows user to provide comments or clarifications to Mufti batch.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Finance</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="13" id="permissions-13">
+                                    <div class="info">
+                                        <span class="label">Finance.Read</span>
+                                        <span class="description">
+                                            Allows the user to read payment transactions made by customers. Does not allow to manage any
+                                            payment transaction.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="14" id="permissions-14">
+                                    <div class="info">
+                                        <span class="label">Finance.ReadWrite</span>
+                                        <span class="description">
+                                            Allows the user to view & manage payment transactions.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="15" id="permissions-15">
+                                    <div class="info">
+                                        <span class="label">TransactionCode.Read</span>
+                                        <span class="description">
+                                            Allows the user to view finance transaction codes. Does not allow to manage transaction codes.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="16" id="permissions-16">
+                                    <div class="info">
+                                        <span class="label">TransactionCode.ReadWrite</span>
+                                        <span class="description">
+                                            Allows the user to view & manage price for finance transaction codes.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">User</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="17" id="permissions-17">
+                                    <div class="info">
+                                        <span class="label">User.Read</span>
+                                        <span class="description">
+                                            Allows the user to view list of users registered to system. Does not allow to manage user info.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="18" id="permissions-18">
+                                    <div class="info">
+                                        <span class="label">User.ReadWrite</span>
+                                        <span class="description">
+                                            Allows the user to view, create new user & manage user info.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Halal Library</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="40" id="permissions-40">
+                                    <div class="info">
+                                        <span class="label">HalalLibrary.Read</span>
+                                        <span class="description">
+                                            Allows the user to view Halal Library. Does not allow to manage Halal Library info.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="41" id="permissions-41">
+                                    <div class="info">
+                                        <span class="label">HalalLibrary.ReadWrite</span>
+                                        <span class="description">
+                                            Allows the user to view & manage Halal Library.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Case</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="23" id="permissions-23">
+                                    <div class="info">
+                                        <span class="label">Case.Read</span>
+                                        <span class="description">
+                                            Allows user to view enforcement cases. Does not allow user to manage enforcement cases.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="24" id="permissions-24">
+                                    <div class="info">
+                                        <span class="label">Case.ReadWrite</span>
+                                        <span class="description">
+                                            Allows user to manage enforcement cases.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="31" id="permissions-31">
+                                    <div class="info">
+                                        <span class="label">Case.FOCReviewer</span>
+                                        <span class="description">
+                                            Allows user to review FOC composed by an enforcement officer. System automatically assigned to this user when an FOC has been submitted for review.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Customer</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="50" id="permissions-50">
+                                    <div class="info">
+                                        <span class="label">Customer.Read</span>
+                                        <span class="description">
+                                            Allows user to view customer/certificate informations. Does not allow user to manage customer info.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="51" id="permissions-61">
+                                    <div class="info">
+                                        <span class="label">Customer.ReadWrite</span>
+                                        <span class="description">
+                                            Allows user to view and manage customer/certificate informations. (e.g. update customer code/group code).
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">System</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="19" id="permissions-19">
+                                    <div class="info">
+                                        <span class="label">System.Read</span>
+                                        <span class="description">
+                                            Allows user the view system configuration. Does not allow to manage system configurations.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="20" id="permissions-20">
+                                    <div class="info">
+                                        <span class="label">System.ReadWrite</span>
+                                        <span class="description">
+                                            Allows user the view and manage system configurations.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-weight-bold mt-4 mb-2">Customer</p>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="50" id="permissions-50">
+                                    <div class="info">
+                                        <span class="label">Customer.Read</span>
+                                        <span class="description">
+                                            Allows the users the view customer. Does not allow to manage customer.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission">
+                                <div class="icheck-flat">
+                                    <input type="checkbox" class="permission" data-id="51" id="permissions-51">
+                                    <div class="info">
+                                        <span class="label">Customer.ReadWrite</span>
+                                        <span class="description">
+                                            Allows user the view and manage customer.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <partial name="_Activities.cshtml" />
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/plugins/icheck/icheck.min.js"></script>
+    <script src="~/plugins/inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="~/js/user/_activities.js"></script>
+    <script src="~/js/user/form.js"></script>
+}

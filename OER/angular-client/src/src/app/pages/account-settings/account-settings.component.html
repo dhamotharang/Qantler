@@ -1,0 +1,36 @@
+<app-sub-banner [title]="'Account Settings' | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home' | translate,link:'/',active:false},{text: 'Account Settings' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="panel-box p-30 mb-30 min-height">
+          <p> {{"Please note that you can" | translate}} <b>{{"DeleteAccountText" | translate}}</b></p>
+          <div class="checkbox-inline mt-15">
+            <p-checkbox name="groupname" [(ngModel)]="checked" label="I agree and give consent to delete my account.">
+            </p-checkbox>
+          </div>
+          <hr>
+          <div class="text-right">
+            <button type="submit" [disabled]="!checked" (click)="deleteAccount()" class="btn btn-primary">
+              {{"Delete Account Permanently" | translate}}
+            </button>
+          </div>
+        </div>
+        <!--panel-box-->
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

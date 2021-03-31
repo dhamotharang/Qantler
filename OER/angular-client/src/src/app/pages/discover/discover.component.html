@@ -1,0 +1,78 @@
+<app-sub-banner [title]="'Discover'|translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Discover'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40">
+  <div class="container">
+    <div class="row mb-4">
+      <div *ngFor="let item of resources" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-3">
+        <div class="blog">
+
+          <div class="img-viewer">
+            <div class="img"
+                 (click)="router.navigateByUrl(item.contentType === 1 ? '/course/' + getEncodeed(item.id) :  '/resource/' + getEncodeed(item.id))"
+                 [ngStyle]="{ 'background-image': 'url(' + (item.thumbnail ?  item.thumbnail : 'assets/images/pop-res1.jpg') + ')'}">
+            </div>
+          </div>
+          <div class="content">
+
+            <h4 class="resource-list-title"><span class="truncate">
+              <a [routerLink]="item.contentType === 1 ? '/course/' + getEncodeed(item.id) :  '/resource/' + getEncodeed(item.id)"
+                 >{{item.title}}</a>
+              </span>
+              <!-- <a href="router.navigateByUrl(item.contentType === 1 ? '/course/' + getEncodeed(item.id) :  '/resource/' + getEncodeed(item.id))"></a> -->
+            </h4>
+            <p class="res-co-box-desc truncate">{{ truncate(item.description, 100, '…') }}
+            </p>
+            <div class="flex-table mt-3" *ngIf="item.cTitle">
+              <div class="flex-table-cell">
+                <p><b>{{"Copyrights" |translate}}</b></p>
+              </div>
+              <div class="flex-table-cell">
+                <div class="copy-flex">
+                  <div class="img-flex" *ngIf="item.cTitle">
+                    <img *ngIf="item.media" src="{{item.media}}" class="img-fluid" alt="copyright images"
+                    tooltip="{{getCurrentLang() === 'en' ? item.cTitle + ':' + ' ' + item.cDesc  : item.cTitleAr + ':' + ' ' + item.cDescAr}}"
+                    container="body">
+                    <span *ngIf="!item.media" tooltip="{{getCurrentLang() === 'en' ? item.cTitle + ':' + ' ' + item.cDesc  : item.cTitleAr + ':' + ' ' + item.cDescAr}}" class="text-info">
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </span>
+                    
+                    <!-- tooltip="{{getCurrentLang() === 'en' ?item.cDesc:item.cDescAr}}"
+                    container="body"> -->
+                  </div>
+                  <div class="text-flex">
+                    <p><span class="truncate" >
+                      <!-- tooltip="{{getCurrentLang() === 'en' ?item.cDesc:item.cDescAr}}"
+                      container="body">{{getCurrentLang() === 'en' ? item.cTitle:item.cTitleAr}} -->
+                    </span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+               <div class="row mt-2">
+                 <div class="col">
+                  <a i18n
+                  [routerLink]="item.contentType === 1 ? '/course/' + getEncodeed(item.id) :  '/resource/' + getEncodeed(item.id) "
+                  class="btn btn-primary text-uppercase">{{"Read more" | translate}}</a>
+                 </div>
+                 <div class="col">
+                  <div class="rating-discover">
+                    <app-rating [allRating]="item.allratings ? item.allratings : null"
+                    [type]="item.contentType === 2 ? 'resource' : 'course'" [id]="item.id"
+                    (updateData)="getRatings(resources)"></app-rating>
+                  </div> <!-- rating-discover : Block-->
+                 </div>
+               </div>
+          </div>
+        </div>
+      </div> <!-- loop this Item-->
+    </div>
+    <p-paginator *ngIf="totalRowCount && totalRowCount > pageSize" [rows]="pageSize" [totalRecords]="totalRowCount"
+                 (onPageChange)="pageChange($event)"></p-paginator>
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

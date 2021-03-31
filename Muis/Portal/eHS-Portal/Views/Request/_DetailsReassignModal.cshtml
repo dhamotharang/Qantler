@@ -1,0 +1,28 @@
+﻿<div class="modal fade reassign" id="reassignModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label">Re-assign</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group horizontal to">
+                    <label class="col-form-label">To :</label>
+                    <div class="col-form-field">
+                        <input type="text" class="form-control" id="to" required readonly>
+                        <label class="error mt-2 text-danger">To is required.</label>
+                    </div>
+                    <span class="col-form-icon mdi mdi-magnify ml-2 search" data-toggle="modal" data-target="#selectOfficerModal" />
+                </div>
+                <p>Notes:</p>
+                <div class="form-group mb-2">
+                    <textarea rows="5" class="form-control notes" maxlength="2000" placeholder="Enter some notes here. (e.g. reasons for re-assigning the application)"></textarea>
+                    <label class="error mt-2 text-danger">Notes is required.</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary submit">Re-assign</button>
+            </div>
+        </div>
+    </div>
+</div>

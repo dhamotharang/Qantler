@@ -1,0 +1,94 @@
+﻿.map {
+  width: 100%;
+  height: 100%;
+}
+
+  .map path.red {
+    fill: #f44336;
+  }
+
+  .map path.pink {
+    fill: #e91e63;
+  }
+
+  .map path.purple {
+    fill: #9c27b0;
+  }
+
+  .map path.deep-purple {
+    fill: #673ab7;
+  }
+
+  .map path.indigo {
+    fill: #3f51b5;
+  }
+
+  .map path.blue {
+    fill: #2196f3;
+  }
+
+  .map path.light-blue {
+    fill: #03a9f4;
+  }
+
+  .map path.cyan {
+    fill: #00bcd4;
+  }
+
+  .map path.teal {
+    fill: #009688;
+  }
+
+  .map path.green {
+    fill: #4caf50;
+  }
+
+  .map path.light-green {
+    fill: #8bc34a;
+  }
+
+  .map path.lime {
+    fill: #cddc39;
+  }
+
+  .map path.yellow {
+    fill: #ffeb3b;
+  }
+
+  .map path.amber {
+    fill: #ffc107;
+  }
+
+  .map path.orange {
+    fill: #ff9800;
+  }
+
+  .map path.deep-orange {
+    fill: #ff5722;
+  }
+
+  .map path.brown {
+    fill: #795548;
+  }
+
+  .map path.grey {
+    fill: #9e9e9e;
+  }
+
+  .map path.blue-grey {
+    fill: #607d8b;
+  }
+
+  .map path.selected {
+    fill: #008355;
+  }
+
+  .map .geo:not(.readonly) path:hover {
+    fill: rgba(0, 131, 85, 0.9);
+    cursor: pointer;
+  }
+
+  .map path.disabled, 
+  .map path.readonly {
+    pointer-events: none;
+  }

@@ -1,0 +1,124 @@
+﻿@model eHS.Portal.Models.Case.IndexModel;
+
+@{
+    ViewData["Title"] = "Case";
+}
+
+@section CSS {
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/datatables.net-select-bs4/select.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+
+    <link rel="stylesheet" href="~/css/case/index.css" />
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">Case</h4>
+        <div class="quick-link-wrapper">
+            <ul class="quick-links">
+            </ul>
+        </div>
+    </div>
+}
+
+@section Toolbar {
+    <div class="quick-link-wrapper">
+        <ul class="quick-links ml-auto">
+            <li><a id="" href="/case/create">Create</a></li>
+            <li><a id="filterButton" data-toggle="modal" data-target="#filterModal" href="javascript:void(0)">Advanced Filter</a></li>
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="JCase" class="table hover">
+                        <thead class="d-none">
+                            <tr>
+                                <th>id</th>
+                            </tr>
+                        </thead>
+                        <tfoot />
+                        <tbody />
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_IndexFilter.cshtml" />
+
+<div class="template d-none">
+    <div class="item">
+        <div class="tickets-date-group {group-name-show}"><i class="mdi mdi-calendar"></i>{group-name}</div>
+        <div onclick="app.page.toDetails({ID})" class="tickets-card row">
+            <div class="tickets-details col-md-12">
+                <div class="wrapper row">
+                    <h5 class="mr-3">#{ID} - {offenceType}</h5>
+                    <div class="badge badge-{status-color} mr-3">{status}</div>
+                    <div class="badge badge-outline-danger {sanction-show}">{sanctionValue}</div>
+                </div>
+                <div class="wrapper text-muted row">
+                    <strong class="item-value d-flex align-items-center mr-2">{type}</strong>
+                    <div class="d-flex mr-2">
+                        <span class="{managed-by-show}">Managed By</span>
+                        <span class="item-value d-flex align-items-center {managed-by-show}">
+                            <span class="assignee-avatar rounded-circle bg-{managedBy-random-color} text-white text-avatar"> {managedByInitial} </span>
+                            <span>{managedByValue}</span>
+                        </span>
+                    </div>
+                    <div class="d-flex mr-2">
+                        <span class="{assigned-to-show}">Assigned to</span>
+                        <span class="item-value d-flex align-items-center {assigned-to-show}">
+                            <span class="assignee-avatar rounded-circle bg-{assignedTo-random-color} text-white text-avatar"> {assignedToInitial} </span>
+                            <span>{assignedToValue}</span>
+                        </span>
+                    </div>
+                    <div class="d-flex mr-2">
+                        <span><i class="mdi mdi-clock-outline"></i>{time}</span>
+                    </div>
+                    <div class="d-flex mr-2">
+                        <span class="{reported-by-show}">Reported By</span>
+                        <span class="item-value d-flex align-items-center {reported-by-show}">
+                            <span class="assignee-avatar rounded-circle bg-{reportedBy-random-color} text-white text-avatar"> {reportedByInitial} </span>
+                            <span>{reportedByValue}</span>
+                        </span>
+                    </div>
+                    <div class="d-flex mr-2">
+                        <span class="{offender-show}">Offender</span>
+                        <span class="item-value d-flex align-items-center {offender-by-show}">
+                            <span class="assignee-avatar rounded-circle bg-{offender-random-color} text-white text-avatar"> {offenderInitial} </span>
+                            <span>{offenderValue}</span>
+                        </span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="{source-show}">Source</span>
+                        <span class="item-value {source-show}">{sourceValue}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+    </script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-select/dataTables.select.min.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+
+    <script src="~/js/case/_indexFilter.js"></script>
+    <script src="~/js/case/index.js"></script>
+}

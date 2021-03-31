@@ -1,0 +1,88 @@
+<app-sub-banner *ngIf="content" [title]="slug | translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs *ngIf="content"
+                 [items]="[{text: 'Home'|translate,link:'/',active:false},{text: slug | translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40 min-height">
+  <div class="container">
+    <div>
+      <span *ngIf="content && getCurrentLang() === 'en'"  [innerHtml]="content| safe: 'html'"></span>
+      <span *ngIf="content && getCurrentLang() === 'ar'"  [innerHtml]="content_Ar| safe: 'html'"></span> 
+    </div>
+    <div *ngIf="slug === 'Contact Us'" class="mt-5">
+      <form [formGroup]="contactForm">
+        <div class="contact-form row">
+          <div class="col-xs-12 col-md-6">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.firstName.touched) && contactForm.controls.firstName.invalid) ? 'is-invalid' : ''}}">
+              <label for="firstName">{{'First Name' | translate}} <span class="mdt">*</span></label>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+              <span class="field-error"
+                    *ngIf="(contactFormSubmitted || contactForm.controls.firstName.touched) && contactForm.controls.firstName.invalid">
+                {{'Make_Profile_Val_Msg_2' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.lastName.touched) && contactForm.controls.lastName.invalid) ? 'is-invalid' : ''}}">
+              <label for="lastName">{{'Last Name' | translate}} <span class="mdt">*</span></label>
+              <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+              <span class="field-error"
+                    *ngIf="(contactFormSubmitted || contactForm.controls.lastName.touched) && contactForm.controls.lastName.invalid">
+                {{'Make_Profile_Val_Msg_3' | translate}}
+              </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.email.touched) && contactForm.controls.email.invalid) ? 'is-invalid' : ''}}">
+              <label for="email">{{'Email' | translate}} <span class="mdt">*</span></label>
+              <input type="email" class="form-control" id="email" formControlName="email" required>
+              <span class="field-error"
+                    *ngIf="(contactFormSubmitted || contactForm.controls.email.touched) && contactForm.controls.email.invalid">
+                {{'Please enter a valid Email' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.telephone.touched) && contactForm.controls.telephone.invalid) ? 'is-invalid' : ''}}">
+              <label for="phone">{{'Telephone' | translate}} <span class="mdt">*</span></label>
+              <input type="tel" class="form-control" id="phone" formControlName="telephone" required><span
+              class="field-error"
+              *ngIf="(contactFormSubmitted || contactForm.controls.telephone.touched) && contactForm.controls.telephone.invalid">
+              {{'Please enter a valid Phone' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.subject.touched) && contactForm.controls.subject.invalid) ? 'is-invalid' : ''}}">
+              <label for="subject">{{'Subject' | translate}} <span class="mdt">*</span></label>
+              <input type="text" class="form-control" id="subject" formControlName="subject" required>
+              <span class="field-error"
+                    *ngIf="(contactFormSubmitted || contactForm.controls.subject.touched) && contactForm.controls.subject.invalid">
+                {{'Make_Profile_Val_Msg_21' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div
+              class="form-group {{((contactFormSubmitted || contactForm.controls.message.touched) && contactForm.controls.message.invalid) ? 'is-invalid' : ''}}">
+              <label for="message">{{'Message' | translate}} <span class="mdt">*</span></label>
+              <textarea name="" id="message" rows="5" class="form-control" formControlName="message"></textarea>
+              <span class="field-error"
+                    *ngIf="(contactFormSubmitted || contactForm.controls.message.touched) && contactForm.controls.message.invalid">
+                {{'Please enter a valid Message' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <button type="submit" (click)="submitContactForm(contactForm)" class="btn btn-primary btn-lg"><i
+                class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                {{'Submit' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,804 @@
+<app-sub-banner [title]="'Create a Profile'|translate"
+                [description]="">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home' | translate,link:'/',active:false},{text: 'Create a Profile'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40">
+  <div class="container">
+    <p-messages key="message" [(value)]="msgs"></p-messages>
+    <div class="alert alert-light alert-dismissible fade show" role="alert">
+      {{'Make_Profile_message_1'|translate}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="panel-box p-30 mb-30">
+      <progress-bar [color]="'#ba9a3a'" [progress]="getProgress()"></progress-bar>
+      <br>
+
+      <form [formGroup]="ProfileForm">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="contri-box" style="max-width: 100%;
+padding: 10px 15px 5px;">
+                <label class="chk-container" tabindex="18">{{'i_am_Contributor'|translate}}
+                  <input type="checkbox" (click)="showDialog()" formControlName="contributor" pButton>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group ">
+              <label for="" class="form-label">{{'Title'|translate}} <span class="text-danger">*</span></label>
+              <select
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.title.touched) && ProfileForm.controls.title.invalid) ? ' is-invalid' : ''}}"
+                formControlName="title" tabindex="1">
+                <option>{{'Select'|translate}}</option>
+                <option *ngFor="let item of titles" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                  item.name_Ar}}
+                </option>
+              </select>
+              <p *ngIf="(formSubmitted || ProfileForm.controls.title.touched) && ProfileForm.controls.title.invalid"
+                 class="field-error">
+                {{'Make_Profile_Val_Msg_1'|translate}}</p>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="" class="form-label">{{'First Name'|translate}} <span class="text-danger">*</span></label>
+              <input
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.firstName.touched) && ProfileForm.controls.firstName.invalid) ? 'is-invalid' : ''}}"
+                formControlName="firstName" required tabindex="2" (change)="patchName()">
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.firstName.touched) && ProfileForm.controls.firstName.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_2'|translate}}</p>
+              <ng-container *ngIf="(ProfileForm.controls.firstName.errors | json) != 'null'">
+                <p class="field-error" *ngIf="ProfileForm.controls.firstName.errors.maxlength != null">
+                  {{'Make_Profile_message_4'|translate}}
+                  {{ProfileForm.controls.firstName.errors.maxlength.requiredLength}}</p>
+              </ng-container>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Middle Name'|translate}}</label>
+              <input
+                class="form-control alt-bg  {{((formSubmitted || ProfileForm.controls.middleName.touched) && ProfileForm.controls.middleName.invalid) ? ' is-invalid' : ''}}"
+                formControlName="middleName" tabindex="3" (change)="patchName()">
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.middleName.touched) && ProfileForm.controls.middleName.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_3'|translate}}</p>
+              <ng-container *ngIf="(ProfileForm.controls.middleName.errors | json) != 'null'">
+                <p class="field-error" *ngIf="ProfileForm.controls.middleName.errors.maxlength != null">
+                  {{'Make_Profile_message_4'|translate}}{{ProfileForm.controls.middleName.errors.maxlength.requiredLength}}</p>
+              </ng-container>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Last Name'|translate}} <span class="text-danger">*</span></label>
+              <input
+                class="form-control alt-bg  {{((formSubmitted || ProfileForm.controls.lastName.touched) && ProfileForm.controls.lastName.invalid) ? ' is-invalid' : ''}}"
+                formControlName="lastName" required tabindex="4" (change)="patchName()">
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.lastName.touched) && ProfileForm.controls.lastName.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_4'|translate}}</p>
+              <ng-container *ngIf="(ProfileForm.controls.lastName.errors | json) != 'null'">
+                <p class="field-error" *ngIf="ProfileForm.controls.lastName.errors.maxlength != null">
+                  {{'Make_Profile_message_4'|translate}}
+                  {{ProfileForm.controls.lastName.errors.maxlength.requiredLength}}</p>
+              </ng-container>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Country'|translate}} <span class="text-danger">*</span></label>
+              <select
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.country.touched) && ProfileForm.controls.country.invalid) ? 'is-invalid' : ''}}"
+                (change)="countryChange($event.target.value)" formControlName="country" tabindex="5">
+                <option value>{{'Select'|translate}}</option>
+                <option *ngFor="let item of countries" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                  item.name_Ar}}
+                </option>
+              </select>
+              <p *ngIf="(formSubmitted || ProfileForm.controls.country.touched) && ProfileForm.controls.country.invalid"
+                 class="field-error">
+                {{'Make_Profile_Val_Msg_5'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="" class="form-label">{{'State'|translate}} <span class="text-danger">*</span></label>
+              <select
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.state.touched) && ProfileForm.controls.state.invalid) ? 'is-invalid' : ''}}"
+                formControlName="state" tabindex="6">
+                <option value>{{'Select'|translate}}</option>
+                <option *ngFor="let item of filteredStates" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name
+                  : item.name_Ar}}
+                </option>
+              </select>
+              <p *ngIf="(formSubmitted || ProfileForm.controls.state.touched) && ProfileForm.controls.state.invalid"
+                 class="field-error">
+                {{'Make_Profile_Val_Msg_6'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Gender'|translate}} <span class="text-danger">*</span></label>
+              <select
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.gender.touched) && ProfileForm.controls.gender.invalid) ? 'is-invalid' : ''}}"
+                formControlName="gender" required tabindex="7">
+                <option value="">{{'Select'|translate}}</option>
+                <option *ngFor="let item of genders" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                  item.name_Ar}}
+                </option>
+              </select>
+              <p *ngIf="(formSubmitted || ProfileForm.controls.gender.touched) && ProfileForm.controls.gender.invalid"
+                 class="field-error">
+                {{'Make_Profile_Val_Msg_7'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="dob" class="form-label">{{'Date Of Birth'|translate}} <span
+                class="text-danger">*</span></label>
+              <p-calendar formControlName="dob" [maxDate]="dobValidDate" [yearRange]="yearRange"
+                          [yearNavigator]="true" [monthNavigator]="true" [dateFormat]="'dd/mm/yy'" [dataType]="'string'"
+                          [inputStyleClass]="((formSubmitted || ProfileForm.controls.dob.touched) && ProfileForm.controls.dob.invalid) ? 'is-invalid' : ''"
+                          [showIcon]="true" tabindex="8"></p-calendar>
+              <p *ngIf="(formSubmitted || ProfileForm.controls.dob.touched) && ProfileForm.controls.dob.invalid"
+                 class="field-error">
+                {{'Make_Profile_Val_Msg_8'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Portal Language Preference'|translate}} <span
+                class="text-danger">*</span></label>
+              <select
+                class="form-control alt-bg no-select-scroll {{((formSubmitted || ProfileForm.controls.portalLang.touched) && ProfileForm.controls.portalLang.invalid) ? 'is-invalid' : ''}}"
+                formControlName="portalLang" tabindex="9">
+                <option value="">{{'Select'|translate}}</option>
+                <option *ngFor="let item of portalLanguages" value="{{item.id}}">{{item.name}}
+                </option>
+              </select>
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.portalLang.touched) && ProfileForm.controls.portalLang.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_9'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Add Profile Description'|translate}}</label>
+              <textarea
+                class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.profileDesc.touched) && ProfileForm.controls.profileDesc.invalid) ? 'is-invalid' : ''}}"
+                formControlName="profileDesc" rows="8" tabindex="10"></textarea>
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.profileDesc.touched)  && ProfileForm.controls.profileDesc.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_10'|translate}}
+              </p>
+              <ng-container *ngIf="(ProfileForm.controls.profileDesc.errors | json) != 'null'">
+                <p class="field-error" *ngIf="ProfileForm.controls.profileDesc.errors.maxlength != null">
+                  {{'Make_Profile_message_4'|translate}}
+                  {{ProfileForm.controls.profileDesc.errors.maxlength.requiredLength}}</p>
+              </ng-container>
+            </div>
+          </div>
+          <!--col-->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Upload Profile Photo'|translate}}&nbsp;<span
+                tooltip="Only files with 'jpg', 'jpeg', 'png', 'bmp' extension are allowed and max file size should be 4MB"
+                placement="top" class="text-info"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+              </label>
+
+              <div class="kv-avatar" style="width:200px">
+                <div class="file-input">
+                  <div class="file-preview">
+                    <div class="file-drop-zone file-drop-zone-nojs">
+                      <img src="{{imgURL}}" class="preview-image"/>
+                      <input *ngIf="imgURL === defaultImage" type="file" id="file" name="file" class="inputfile"
+                             accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp"
+                             (change)="handleFileInput($event.target.files)">
+                      <label for="file" class="btn btn-djblue" *ngIf="imgURL == defaultImage"> <i
+                        class="fa fa-folder-open"></i><span>{{'Upload image'|translate}}</span></label>
+                      <label class="btn btn-djblue" *ngIf="imgURL != defaultImage" (click)="removePhoto()">
+                        <i class="fa fa-times"></i><span>{{'Remove'|translate}}</span></label>
+                    </div>
+                  </div>
+                </div>
+                <progress-bar *ngIf="profileImageUploadStatus === 'Uploading'" [color]="'#ba9a3a'"
+                              [progress]="profileImageUploadPercentage" [style]="{'height': '20px'}">
+                </progress-bar>
+              </div>
+              <p *ngIf="formSubmitted && ProfileForm.controls.photo.invalid" class="field-error">
+                {{'Make_Profile_Val_Msg_11'|translate}}
+              </p>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="form-sub-sec">{{'Educational Qualifications'|translate}}</div>
+        <div formArrayName="qualifications"
+             *ngFor="let item of ProfileForm.get('qualifications')['controls']; let i = index">
+          <ng-container [formGroupName]="i">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="" class="form-label">{{'University / School'|translate}}</label>
+                  <input type="text"
+                         class="form-control alt-bg {{(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.universitySchool.touched) && ProfileForm.controls.qualifications.controls[i].controls.universitySchool.invalid ? 'is-invalid' : ''}}"
+                         formControlName="universitySchool">
+                  <p
+                    *ngIf="(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.universitySchool.touched) && ProfileForm.controls.qualifications.controls[i].controls.universitySchool.invalid"
+                    class="field-error">
+                    {{'Make_Profile_Val_Msg_12'|translate}}
+                  </p>
+                  <ng-container
+                    *ngIf="(ProfileForm.controls.qualifications.controls[i].controls.universitySchool.errors | json) != 'null'">
+                    <p class="field-error"
+                       *ngIf="ProfileForm.controls.qualifications.controls[i].controls.universitySchool.errors.maxlength != null">
+                      {{'Make_Profile_message_4'|translate}}
+                      {{ProfileForm.controls.qualifications.controls[i].controls.universitySchool.errors.maxlength.requiredLength}}
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <!--col-->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="" class="form-label">{{'Major'|translate}}</label>
+                  <input type="text"
+                         class="form-control alt-bg  {{(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.major.touched) && ProfileForm.controls.qualifications.controls[i].controls.major.invalid ? 'is-invalid' : ''}}"
+                         formControlName="major">
+                  <p
+                    *ngIf="(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.major.touched) && ProfileForm.controls.qualifications.controls[i].controls.major.invalid"
+                    class="field-error">
+                    {{'Make_Profile_Val_Msg_13'|translate}}
+                  </p>
+                  <ng-container
+                    *ngIf="(ProfileForm.controls.qualifications.controls[i].controls.major.errors | json) != 'null'">
+                    <p class="field-error"
+                       *ngIf="ProfileForm.controls.qualifications.controls[i].controls.major.errors.maxlength != null">
+                      {{'Make_Profile_message_4'|translate}}
+                      {{ProfileForm.controls.qualifications.controls[i].controls.major.errors.maxlength.requiredLength}}
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <!--col-->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="" class="form-label">{{'Grade'|translate}}</label>
+                  <input type="text"
+                         class="form-control alt-bg  {{(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.grade.touched) && ProfileForm.controls.qualifications.controls[i].controls.grade.invalid ? 'is-invalid' : ''}}"
+                         formControlName="grade">
+                  <p
+                    *ngIf="(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.grade.touched) && ProfileForm.controls.qualifications.controls[i].controls.grade.invalid"
+                    class="field-error">
+                    {{'Make_Profile_Val_Msg_14'|translate}}
+                  </p>
+                  <ng-container
+                    *ngIf="(ProfileForm.controls.qualifications.controls[i].controls.grade.errors | json) != 'null'">
+                    <p class="field-error"
+                       *ngIf="ProfileForm.controls.qualifications.controls[i].controls.grade.errors.maxlength != null">
+                      {{'Make_Profile_message_4'|translate}}
+                      {{ProfileForm.controls.qualifications.controls[i].controls.grade.errors.maxlength.requiredLength}}
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <!--col-->
+            </div>
+            <!--row-->
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="from" class="form-label">{{'From'|translate}}</label>
+                  <p-calendar formControlName="fromDate" [yearNavigator]="true" [monthNavigator]="true"
+                              [dataType]="'string'"
+                              [maxDate]="ProfileForm.controls.qualifications.controls[i].controls.toDate.value ?  educationDates[i].to : today"
+                              [yearRange]="yearRange" [showIcon]="true"
+                              (onBlur)="EduFromChange(i,$event.target.value)"
+                              (onSelect)="EduFromSelect(i,$event)"></p-calendar>
+                  <p
+                    *ngIf="(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.fromDate.touched) && ProfileForm.controls.qualifications.controls[i].controls.fromDate.invalid"
+                    class="field-error">
+                    {{'Make_Profile_Val_Msg_15'|translate}}
+                  </p>
+                </div>
+              </div>
+              <!--col-->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="to" class="form-label">{{'To'|translate}}</label>
+                  <p-calendar formControlName="toDate" [yearNavigator]="true" [monthNavigator]="true"
+                              [dataType]="'string'"
+                              [minDate]="ProfileForm.controls.qualifications.controls[i].controls.fromDate.value ? educationDates[i].from : today"
+                              [yearRange]="yearRange" [showIcon]="true"
+                              (onBlur)="EduToChange(i,$event.target.value)"
+                              (onSelect)="EduToSelect(i,$event)"></p-calendar>
+                  <p
+                    *ngIf="(formSubmitted || ProfileForm.controls.qualifications.controls[i].controls.toDate.touched) && ProfileForm.controls.qualifications.controls[i].controls.toDate.invalid"
+                    class="field-error">
+                    {{'Make_Profile_Val_Msg_16'|translate}}
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6" *ngIf="ProfileForm.controls.qualifications.controls.length > 0">
+                <div class="btn-repeat-add">
+                    <button class="btn btn-outline-danger" type="button" (click)="removeQualification(i)"
+                    ><i class="fa fa-trash-o" aria-hidden="true"></i>
+              {{'Remove'|translate}}
+            </button>
+                </div>
+
+              </div>
+              <!--col-->
+            </div>
+            <!--row-->
+          </ng-container>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <a href="javascript:;" (click)="addEducation()" class="clone-field" tabindex="12">
+                {{'+ Add Education'|translate}}</a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="form-sub-sec">{{'Certification'|translate}}</div>
+        <ng-container formArrayName="certifications"
+                      *ngFor="let item of ProfileForm.get('certifications')['controls']; let i = index">
+          <div class="row" [formGroupName]="i">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Certification Name'|translate}}</label>
+                <input type="text"
+                       class="form-control alt-bg {{(formSubmitted || ProfileForm.controls.certifications.controls[i].controls.certificationName.touched) && ProfileForm.controls.certifications.controls[i].controls.certificationName.invalid ? 'is-invalid' : ''}}"
+                       formControlName="certificationName">
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.certifications.controls[i].controls.certificationName.touched) && ProfileForm.controls.certifications.controls[i].controls.certificationName.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_17'|translate}}
+                </p>
+                <ng-container
+                  *ngIf="(ProfileForm.controls.certifications.controls[i].controls.certificationName.errors | json) != 'null'">
+                  <p class="field-error"
+                     *ngIf="ProfileForm.controls.certifications.controls[i].controls.certificationName.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}
+                    {{ProfileForm.controls.certifications.controls[i].controls.certificationName.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Year'|translate}}</label>
+                <select
+                  class="form-control alt-bg {{(formSubmitted || ProfileForm.controls.certifications.controls[i].controls.year.touched) && ProfileForm.controls.certifications.controls[i].controls.year.invalid ? 'is-invalid' : ''}}"
+                  formControlName="year">
+                  <option value="">{{'Select'|translate}}</option>
+                  <option *ngFor="let item of years" value="{{item}}">{{item}}</option>
+                </select>
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.certifications.controls[i].controls.year.touched) && ProfileForm.controls.certifications.controls[i].controls.year.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_18'|translate}}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="ProfileForm.controls.certifications.controls.length > 0">
+              <div  class="btn-repeat-add">
+                  <button class="btn btn-outline-danger" type="button" (click)="removeCertification(i)"
+                  ><i class="fa fa-trash-o" aria-hidden="true"></i> {{'Remove'|translate}}
+          </button>
+              </div>
+
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+        </ng-container>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <a href="javascript:;" (click)="addCertification()" class="clone-field" tabindex="13">
+                {{'+ Add Certification'|translate}}
+              </a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="form-sub-sec">{{'Experience'|translate}}</div>
+
+        <ng-container formArrayName="experiences"
+                      *ngFor="let item of ProfileForm.get('experiences')['controls']; let i = index">
+          <div [formGroupName]="i" class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Organization Name'|translate}}</label>
+                <input type="text"
+                       class="form-control alt-bg {{(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.organizationName.touched) && ProfileForm.controls.experiences.controls[i].controls.organizationName.invalid ? 'is-invalid' : ''}}"
+                       formControlName="organizationName">
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.organizationName.touched) && ProfileForm.controls.experiences.controls[i].controls.organizationName.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_19'|translate}}
+                </p>
+                <ng-container
+                  *ngIf="(ProfileForm.controls.experiences.controls[i].controls.organizationName.errors | json) != 'null'">
+                  <p class="field-error"
+                     *ngIf="ProfileForm.controls.experiences.controls[i].controls.organizationName.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}
+                    {{ProfileForm.controls.experiences.controls[i].controls.organizationName.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Designation'|translate}}</label>
+                <input type="text"
+                       class="form-control alt-bg {{(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.designation.touched) && ProfileForm.controls.experiences.controls[i].controls.designation.invalid ? 'is-invalid' : ''}}"
+                       formControlName="designation">
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.designation.touched) && ProfileForm.controls.experiences.controls[i].controls.designation.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_20'|translate}}
+                </p>
+                <ng-container
+                  *ngIf="(ProfileForm.controls.experiences.controls[i].controls.designation.errors | json) != 'null'">
+                  <p class="field-error"
+                     *ngIf="ProfileForm.controls.experiences.controls[i].controls.designation.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}
+                    {{ProfileForm.controls.experiences.controls[i].controls.designation.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="" class="form-label">{{'From'|translate}}</label>
+                <p-calendar formControlName="fromDate" [yearNavigator]="true" [monthNavigator]="true"
+                            [dataType]="'string'"
+                            [maxDate]="experienceDates[i].to"
+                            [yearRange]="yearRange" [showIcon]="true" (onBlur)="ExpFromChange(i,$event.target.value)"
+                            (onSelect)="ExpFromSelect(i,$event)"></p-calendar>
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.fromDate.touched) && ProfileForm.controls.experiences.controls[i].controls.fromDate.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_15'|translate}}
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-3" *ngIf="!ProfileForm.controls.experiences.controls[i].controls.current.value">
+              <div class="form-group">
+                <label for="" class="form-label">{{'To'|translate}}</label>
+                <p-calendar formControlName="toDate" [yearNavigator]="true" [monthNavigator]="true"
+                            [dataType]="'string'"
+                            [minDate]="experienceDates[i].from"
+                            [yearRange]="yearRange" [showIcon]="true"
+                            (onBlur)="ExpToChange(i,$event.target.value)"
+                            (onSelect)="ExpToSelect(i,$event)"></p-calendar>
+                <p
+                  *ngIf="(formSubmitted || ProfileForm.controls.experiences.controls[i].controls.toDate.touched) && ProfileForm.controls.experiences.controls[i].controls.toDate.invalid"
+                  class="field-error">
+                  {{'Make_Profile_Val_Msg_16'|translate}}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="chk-container" tabindex="19">{{'Current'|translate}}
+                  <input type="checkbox" (change)="setCurrent(i)" formControlName="current">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-12 text-right" *ngIf="ProfileForm.controls.experiences.controls.length > 0">
+              <button class="btn btn-outline-danger" type="button" (click)="removeExperience(i)"><i
+                class="fa fa-trash-o" aria-hidden="true"></i> {{'Remove'|translate}}
+              </button>
+            </div>
+          </div>
+
+          <!--row-->
+        </ng-container>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <a href="javascript:;" (click)="addExperience()" class="clone-field" tabindex="14">
+                {{'+ Add Experience'|translate}}</a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="" class="form-label">{{'Subjects that you are interested'|translate}} <span
+                class="text-danger">*</span></label>
+              <p-multiSelect [options]="categories" formControlName="interestedSubjects" dataKey="id"
+                             defaultLabel="{{'Choose' | translate}}"
+                             [style]="{'width':'100%'}" styleClass="tagtxtbox alt-bg"
+                             optionLabel="{{getCurrentLang() === 'en' ? 'name' : 'name_Ar'}}"></p-multiSelect>
+              <p
+                *ngIf="(formSubmitted || ProfileForm.controls.interestedSubjects.touched) && ProfileForm.controls.interestedSubjects.invalid"
+                class="field-error">
+                {{'Make_Profile_Val_Msg_21'|translate}}
+              </p>
+              <ng-container *ngIf="(ProfileForm.controls.interestedSubjects.errors | json) != 'null'">
+                <p class="field-error" *ngIf="ProfileForm.controls.interestedSubjects.errors.maxlength != null">
+                  {{'Make_Profile_message_4'|translate}}
+                  {{ProfileForm.controls.interestedSubjects.errors.maxlength.requiredLength}}</p>
+              </ng-container>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="form-sub-sec">{{'Language'|translate}}</div>
+        <ng-container formArrayName="languages"
+                      *ngFor="let item of ProfileForm.get('languages')['controls']; let i = index">
+          <div [formGroupName]="i" class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Language'|translate}}</label>
+                <input type="text"
+                       class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.languages.controls[i].controls.language.touched) &&  ProfileForm.controls.languages.controls[i].controls.language.invalid) ? 'is-invalid' : ''}}"
+                       formControlName="language">
+                <p
+                  *ngIf="((formSubmitted || ProfileForm.controls.languages.controls[i].controls.language.touched) &&  ProfileForm.controls.languages.controls[i].controls.language.invalid)"
+                  class="field-error">{{'Make_Profile_Val_Msg_22'|translate}}</p>
+                <ng-container
+                  *ngIf="(ProfileForm.controls.languages.controls[i].controls.language.errors | json) != 'null'">
+                  <p class="field-error"
+                     *ngIf="ProfileForm.controls.languages.controls[i].controls.language.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}
+                    {{ProfileForm.controls.languages.controls[i].controls.language.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="txt-side-chk">
+                  <div class="form-check form-check-inline">
+                    <label class="chk-container">{{'Speak'|translate}}
+                      <input type="checkbox" name="checkbox{{i}}speak" id="checkbox{{i}}speak"
+                             formControlName="isSpeak">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="chk-container">{{'Read'|translate}}
+                      <input type="checkbox" name="checkbox{{i}}read" id="checkbox{{i}}read" formControlName="isRead">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="chk-container">{{'Write'|translate}}
+                      <input type="checkbox" name="checkbox{{i}}write" id="checkbox{{i}}write"
+                             formControlName="isWrite">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+                <!--txt-side-chk-->
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-2" *ngIf="ProfileForm.controls.languages.controls.length > 0">
+              <div class="btn-repeat-add">
+                  <button class="btn btn-outline-danger" type="button" (click)="removeLanguage(i)"
+                  ><i class="fa fa-trash-o" aria-hidden="true"></i> {{'Remove'|translate}}
+          </button>
+              </div>
+
+
+            </div>
+          </div>
+          <!--row-->
+        </ng-container>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <a href="javascript:;" (click)="addLanguage()" class="clone-field" tabindex="16">
+                {{'+ Add Language'|translate}}</a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="form-sub-sec">{{'Social Media'|translate}}</div>
+        <ng-container formArrayName="socialLinks"
+                      *ngFor="let item of ProfileForm.get('socialLinks')['controls']; let i = index">
+          <div [formGroupName]="i" class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="" class="form-label">{{'Social Media'|translate}}</label>
+                <select
+                  class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.socialLinks.controls[i].controls.socialMediaId.touched) &&  ProfileForm.controls.socialLinks.controls[i].controls.socialMediaId.invalid) ? 'is-invalid' : ''}}"
+                  formControlName="socialMediaId">
+                  <option value="">{{'Select'|translate}}</option>
+                  <option *ngFor="let item of socialMedias" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name
+                    : item.name_Ar}}
+                  </option>
+                </select>
+                <p
+                  *ngIf="((formSubmitted || ProfileForm.controls.socialLinks.controls[i].controls.socialMediaId.touched) &&  ProfileForm.controls.socialLinks.controls[i].controls.socialMediaId.invalid)"
+                  class="field-error">{{'Make_Profile_Val_Msg_23'|translate}}</p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="" class="form-label">{{'URL'|translate}}</label>
+                <input type="text"
+                       class="form-control alt-bg {{((formSubmitted || ProfileForm.controls.socialLinks.controls[i].controls.url.touched) &&  ProfileForm.controls.socialLinks.controls[i].controls.url.invalid) ? 'is-invalid' : ''}}"
+                       formControlName="url">
+                <p
+                  *ngIf="((formSubmitted || ProfileForm.controls.socialLinks.controls[i].controls.url.touched) &&  ProfileForm.controls.socialLinks.controls[i].controls.url.invalid)"
+                  class="field-error">{{'Make_Profile_Val_Msg_24'|translate}}</p>
+                <ng-container
+                  *ngIf="(ProfileForm.controls.socialLinks.controls[i].controls.url.errors | json) != 'null'">
+                  <p class="field-error"
+                     *ngIf="ProfileForm.controls.socialLinks.controls[i].controls.url.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}
+                    {{ProfileForm.controls.socialLinks.controls[i].controls.url.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4" *ngIf="ProfileForm.controls.socialLinks.controls.length > 0">
+              <div class="btn-repeat-add">
+                  <button class="btn btn-outline-danger" type="button" (click)="removeSocialLink(i)"
+                  ><i class="fa fa-trash-o" aria-hidden="true"></i> {{'Remove'|translate}}</button>
+              </div>
+            </div>
+          </div>
+          <!--row-->
+        </ng-container>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <a href="javascript:;" (click)="addSocialMedia()" class="clone-field" tabindex="17">
+                {{'+ Add Social Media'|translate}}</a>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <div class="form-group" (click)="showTerms()">
+              <label class="chk-container" tabindex="19">{{'I agree to the'|translate}} <a href="javascript:;"
+                                                                                           class="terms-chk-txt">
+                {{'Terms of Use'|translate}} <span class="text-danger">*</span></a>
+                <input type="checkbox" formControlName="agreed"
+                       class="{{(formSubmitted && ProfileForm.controls.agreed.value === false) ? 'is-invalid' : ''}}">
+                <span class="checkmark"></span>
+              </label>
+              <p class="field-error" *ngIf="(formSubmitted && ProfileForm.controls.agreed.value != true)">
+                {{'Make_Profile_Val_Msg_25'|translate}}</p>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <button type="button" (click)="submitProfile(ProfileForm)" class="btn btn-primary text-uppercase"
+                      tabindex="20">{{'Submit'|translate}}
+              </button>
+            </div>
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+      </form>
+
+    </div>
+    <!--panel-box-->
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->
+
+<p-dialog header="{{'i_am_Contributor'|translate}}" [(visible)]="display" [modal]="true" [responsive]="true"
+          (onHide)="checkContributorAcceptance()" [style]="{width: '600px', minWidth: '200px'}" [minY]="70"
+          [maximizable]="true"
+          [baseZIndex]="10000">
+  <div class="form-group">
+    <label class="chk-container">{{'Make_Profile_message_5'|translate}}
+      <input type="checkbox" [(ngModel)]="contributorAcceptance">
+      <span class="checkmark"></span>
+    </label>
+  </div>
+  <div class="form-group">
+    <label class="chk-container">{{'Make_Profile_message_6'|translate}}
+      <input type="checkbox" [(ngModel)]="contributorDeclaration">
+      <span class="checkmark"></span>
+    </label>
+  </div>
+  <p-footer>
+    <button type="button" class="btn btn-primary" (click)="display = false">{{'Submit'|translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="display = false">{{'Cancel'|translate}}</button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog header="{{'I agree to the'|translate}} {{'Terms of Use'|translate}}" [(visible)]="terms" [modal]="true"
+          [responsive]="true" [closable]="false"
+          [style]="{width: '600px', minWidth: '200px', 'max-height':'500px', 'overflow':'auto'}" [minY]="70"
+          [maximizable]="true" [baseZIndex]="10000" focusTrap="false" [focusOnShow]="false">
+  <div [innerHtml]="(getCurrentLang() === 'en' ? termsContent :termsContent_Ar)"></div>
+  <p-footer>
+    <button type="button" class="btn btn-primary" (click)="acceptAgreement(true)">{{'Agree'|translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="acceptAgreement(false)">{{'Cancel'|translate}}</button>
+  </p-footer>
+</p-dialog>

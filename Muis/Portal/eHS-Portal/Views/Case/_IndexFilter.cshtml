@@ -1,0 +1,103 @@
+﻿<div class="modal fade filter" id="filterModal" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Advanced Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Case ID #</label>
+                        <div class="col-sm-9">
+                            <input id="filterID" type="text" class="form-control form-control-lg" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Source</label>
+                        <div class="col-sm-9">
+                            <select id="filterSourceSelect" class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+                                <option value="0">Request</option>
+                                <option value="1">JobOrder</option>
+                                <option value="2">Social Media</option>
+                                <option value="3">iFAQ</option>
+                                <option value="4">Internal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Type of Offence</label>
+                        <div class="col-sm-9">
+                            <select id="filterOffenceType" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%" aria-hidden="true">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Assigned To</label>
+                        <div class="col-sm-9">
+                            <select id="filterAssignedTo" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%" aria-hidden="true">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Managed By</label>
+                        <div class="col-sm-9">
+                            <select id="filterManagedBy" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%" aria-hidden="true">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select id="filterStatusSelect" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%" aria-hidden="true">
+                                <option value="100">Open</option>
+                                <option value="200">Pending Inspection</option>
+                                <option value="300">Pending Show Cause</option>
+                                <option value="600">Pending FOC</option>
+                                <option value="400">Show Cause For Approval</option>
+                                <option value="500">Pending Acknowledgement</option>
+                                <option value="700">FOC For Approval</option>
+                                <option value="800">Pending SanctionLetter</option>
+                                <option value="900">Pending Payment</option>
+                                <option value="1000">Certificate Collection</option>
+                                <option value="1100">Pending ReinstateInspection</option>
+                                <option value="1200">Pending Appeal</option>
+                                <option value="1300">Closed</option>
+                                <option value="1400">Dismissed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">From</label>
+                        <div class="col-sm-9">
+                            <div id="datepicker-from" class="input-group date datepicker">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon input-group-append border-left">
+                                    <span class="mdi mdi-calendar input-group-text"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">To</label>
+                        <div class="col-sm-9">
+                            <div id="datepicker-to" class="input-group date datepicker">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon input-group-append border-left">
+                                    <span class="mdi mdi-calendar input-group-text"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="filterApplyButton" type="button" class="btn btn-outline-primary">Apply</button>
+                <button id="filterClearButton" type="button" class="btn btn-outline-secondary">Clear</button>
+                <button id="filterCloseButton" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

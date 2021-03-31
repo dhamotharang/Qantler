@@ -1,0 +1,74 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model eHS.Portal.Models.Settings.SettingsModel
+
+@{
+  ViewData["Title"] = "Settings Details";
+}
+
+@section CSS {
+  <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+  <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/request/details.css" />
+  <link rel="stylesheet" href="~/css/settings/index.css" />
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+    <h4 class="page-title">System Config</h4>
+    <div class="quick-link-wrapper">
+      <ul class="quick-links">
+      </ul>
+    </div>
+  </div>
+}
+
+@section Toolbar {
+  <div class="quick-link-wrapper">
+    <ul class="quick-links ml-auto">
+      <ul class="quick-links ml-auto">
+        <li><a id="settingUpdate" class="btn-update" href="javascript:void(0)">Save</a></li>
+      </ul>
+    </ul>
+  </div>
+}
+
+<form id="form1" name="form1">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <div class="row">
+        <partial name="_detailsRequest.cshtml" />
+      </div>
+      <div class="row">
+        <partial name="_detailsIdentity.cshtml" />
+        <partial name="_detailsJobOrder.cshtml" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <partial name="_detailsActivities.cshtml" />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+@section Scripts
+{
+  <script type="text/javascript">
+  app.page.id = @Model.ID;
+  app.page.model = @Html.Raw(JsonConvert.SerializeObject(
+            @Model.Data,
+  new JsonSerializerSettings
+  {
+    ContractResolver = new DefaultContractResolver
+    {
+      NamingStrategy = new CamelCaseNamingStrategy()
+    }
+  }));
+  </script>
+  <script src="~/plugins/inputmask/jquery.inputmask.bundle.js"></script>
+  <script src="~/js/settings/details.js"></script>
+  <script src="~/js/settings/_detailsActivities.js"></script>
+}

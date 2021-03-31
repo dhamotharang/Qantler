@@ -1,0 +1,13 @@
+﻿.preview-modal .modal-dialog {
+  width: 816px;
+  padding: 8px;
+}
+
+.preview-modal .modal-content {
+  background: transparent !important;
+  border: none;
+}
+
+  .preview-modal .modal-content .modal-body {
+    padding: 0px !important;
+  }

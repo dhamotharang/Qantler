@@ -1,0 +1,319 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Master Data Management
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Master Data Management</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <form action="">
+
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Master Data Management</h3>
+      </div>
+      <p-toast position="center"></p-toast>
+      <div class="box-body">
+
+        <div class="container-fluid">
+          <div class="row">
+              <form class="ng-untouched ng-pristine ng-valid">
+                <div class="d-flex search-filter-row">
+              <div class="row">
+                <div class="col-md-4">
+              <label for="" class="">Search</label>
+              <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+            </div>
+            <div class="col-md-1">
+              <div class="form-group search-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                  Clear
+                </button>
+              </div>
+            </div>
+              </div>
+            <!-- <div class="col-xs-6"> 
+            <div class="form-group search-btn-col">
+              <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                Search
+              </button>
+            </div>
+            <div class="form-group clear-btn-col ml-3">
+              <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+               Clear
+              </button>
+            </div>
+            </div> -->
+                </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label for="Category">Choose Master</label>
+                <select class="form-control" id="Category" (change)="updateOptions($event)">
+                  <option value="Category" selected> Category Master</option>
+                  <option value="Sub Category"> Sub Category Master</option>
+                  <option value="Education"> Education Master</option>
+                  <option value="Professions"> Professions Master</option>
+                  <option value="Copyright"> Copyright Master</option>
+                  <option value="Materials"> Materials Master</option>
+                  <option value="EducationalStandard"> Educational Standard Master</option>
+                  <option value="EducationalUse">Educational Use Master</option>
+                  <option value="EducationLevel">Educational Level Master</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="Master Data Management">
+              <thead>
+              <tr>
+                <th id="title" data-toggle="tooltip" title="Sort By Title" (click)="Clickingevent($event, 1)">Title
+                  <span *ngIf="spanColNo==='asc-1' && Clickfield==='title'" id="title"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo==='desc-1' && Clickfield==='title'" id="title" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="artitle" data-toggle="tooltip" title="Sort By ArabicTitle" (click)="Clickingevent($event, 2)"> Arabic Title
+                  <span *ngIf="spanColNo==='asc-2' && Clickfield==='artitle'" id="artitle"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo==='desc-2' && Clickfield==='artitle'" id="artitle" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="category" *ngIf="type==='Sub Category'" data-toggle="tooltip" title="Sort By Category" (click)="Clickingevent($event, 3)">Category
+                  <span *ngIf="spanColNo==='asc-3' && Clickfield==='category'" id="category"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo==='desc-3' && Clickfield==='category'" id="category" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="desc" *ngIf="type=='Copyright'" data-toggle="tooltip" title="Sort By Description" (click)="Clickingevent($event, 4)">Description
+                  <span *ngIf="spanColNo=='asc-4' && Clickfield=='desc'" id="desc"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-4' && Clickfield=='desc'" id="desc" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="ardesc" *ngIf="type=='Copyright'" data-toggle="tooltip" title="Sort By ArabicDescription" (click)="Clickingevent($event, 5)">Arabic Description
+                  <span *ngIf="spanColNo=='asc-5' && Clickfield=='ardesc'" id="ardesc"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-5' && Clickfield=='ardesc'" id="ardesc" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>            
+                <th id="remix" *ngIf="type=='Copyright'" data-toggle="tooltip" title="Sort By RemixProtection" (click)="Clickingevent($event, 6)">Remix Protection
+                  <span *ngIf="spanColNo=='asc-6' && Clickfield=='remix'" id="remix"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-6' && Clickfield=='remix'" id="remix" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="res" *ngIf="type=='Copyright'" data-toggle="tooltip" title="Sort By ResourceProtection" (click)="Clickingevent($event, 7)">Resource Protection
+                  <span *ngIf="spanColNo=='asc-7' && Clickfield=='res'" id="res"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-7' && Clickfield=='res'" id="res" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="weight" data-toggle="tooltip" title="Sort By Weight" (click)="Clickingevent($event, 8)">Weight
+                  <span *ngIf="spanColNo=='asc-8' && Clickfield=='weight'" id="weight"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-8' && Clickfield=='weight'" id="weight" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="status" class="setStatusWidth" data-toggle="tooltip" title="Sort By Status" (click)="Clickingevent($event, 9)">Status
+                  <span *ngIf="spanColNo=='asc-9' && Clickfield=='status'" id="status"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-9' && Clickfield=='status'" id="status" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="createdby" class="setCreatedWidth" data-toggle="tooltip" title="Sort By CreatedBy" (click)="Clickingevent($event, 10)">Created By
+                  <span *ngIf="spanColNo=='asc-10' && Clickfield=='createdby'" id="createdby"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-10' && Clickfield=='createdby'" id="createdby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>        
+                </th>
+                <th id="action" class="setActionWidth">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of catList">
+                <td *ngIf="type!='EducationalStandard' && type!='Copyright' && type!='EducationLevel' ">{{item.name}}
+                </td>
+                <td *ngIf="type!='EducationalStandard' && type!='Copyright' && type!='EducationLevel' ">
+                  {{item.name_Ar}}
+                </td>
+                <td *ngIf="type=='Copyright'">{{item.title}}</td>
+                <td *ngIf="type=='Copyright'">{{item.title_Ar}}</td>
+                <td *ngIf="type=='EducationalStandard'">{{item.standard}}</td>
+                <td *ngIf="type=='EducationalStandard'">{{item.standard_Ar}}</td>
+                <td *ngIf="type=='EducationLevel'">{{item.level}}</td>
+                <td *ngIf="type=='EducationLevel'">{{item.level_Ar}}</td>
+                <td *ngIf="type=='Sub Category'">{{item.categoryName}}</td>
+                <td *ngIf="type=='Copyright'">{{item.description}}</td>
+                <td *ngIf="type=='Copyright'">{{item.description_Ar}}</td>
+                <td *ngIf="type=='Copyright'">{{item.protected}}</td>
+                <td *ngIf="type=='Copyright'">{{item.isResourceProtect}}</td>
+                <td>{{item.weight}}</td>
+                <td>{{item.active ? 'Active' : 'Inactive'}}</td>
+                <td>{{item.createdBy}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" (click)="showCatDialog(item)">Edit</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteCat(item)">Delete</button>
+                </td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-right">
+        <div class="box-footer">
+          <p-paginator *ngIf="catList.length > 0" #pp [rows]="10" [totalRecords]="length"
+                       (onPageChange)="paginateCat($event)"></p-paginator>
+          <button type="button" class="btn btn-primary" (click)="addNew()">Add
+            New
+          </button>
+        </div>
+      </div>
+      <p-dialog header="{{ catItem?'Edit ':'Add '}} {{type}}" [(visible)]="cat_display" [width]="600"
+                [contentStyle]="{'overflow':'auto', 'max-height':'80vh'}" [modal]="true" appendTo="body">
+        <form [formGroup]="catForm" (submit)="catItem?updateCat(catForm.value):submitCat(catForm.value)">
+
+          <div
+            class="form-group {{((!catForm.controls['Name'].valid && (!catForm.controls['Name'].untouched || catForm.controls['Name'].dirty)))? 'has-error' : 'material'}} ">
+            <label for="page-title"> Add Title</label>
+            <input type="text" name="page-title" class="form-control" formControlName="Name">
+            <span class="help-block"
+                  *ngIf="!catForm.controls['Name'].valid && (!catForm.controls['Name'].untouched || catForm.controls['Name'].dirty)">Please enter valid title</span>
+            <ng-container *ngIf="(catForm.controls.Name.errors | json) != 'null'">
+              <span class="help-block" *ngIf="catForm.controls.Name.errors.maxlength != null">Maximum
+                characters allowed is {{catForm.controls.Name.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+          <div
+            class="form-group {{((!catForm.controls['name_Ar'].valid && (!catForm.controls['name_Ar'].untouched || catForm.controls['name_Ar'].dirty)))? 'has-error' : 'material'}}">
+            <label for="page-title"> Add Arabic Title</label>
+            <input type="text" name="page-title" class="form-control" formControlName="name_Ar">
+            <span class="help-block"
+                  *ngIf="!catForm.controls['name_Ar'].valid && (!catForm.controls['name_Ar'].untouched || catForm.controls['name_Ar'].dirty)">Please enter valid  Arabic Title</span>
+            <ng-container *ngIf="(catForm.controls.name_Ar.errors | json) != 'null'">
+              <span class="help-block" *ngIf="catForm.controls.name_Ar.errors.maxlength != null">Maximum
+                characters allowed is {{catForm.controls.name_Ar.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+          <div *ngIf="catItem"
+            class="form-group {{((!catForm.controls['active'].valid && (!catForm.controls['active'].untouched || catForm.controls['active'].dirty)))? 'has-error' : 'material'}}">
+            <label for="page-title"> Active</label>
+            <select class="form-control" id="role" formControlName="active">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+            <span class="help-block"
+                  *ngIf="!catForm.controls['active'].valid && (!catForm.controls['active'].untouched || catForm.controls['active'].dirty)">Please select active/inactive</span>
+          </div>
+          <div class="grid" *ngIf="type=='Sub Category'">
+            <div class="form-group material">
+              <label for="page-title"> Category</label>
+              <select class="form-control" id="role" formControlName="categoryId">
+                <option *ngFor="let item of categoryList" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="help-block" role="alert"
+                 *ngIf="!catForm.controls['categoryId'].valid && (!catForm.controls['categoryId'].untouched || catForm.controls['categoryId'].dirty)">
+              Please enter valid category
+            </div>
+          </div>
+          <div class="grid" *ngIf="type=='Copyright'">
+            <div
+              class="form-group {{((!catForm.controls['protected'].valid && (!catForm.controls['protected'].untouched || catForm.controls['protected'].dirty)))? 'has-error' : 'material'}}">
+              <label for="protected"> Remix Protection</label>
+              <select class="form-control" id="protected" formControlName="protected">
+                <option value="true" selected>True</option>
+                <option value="false">False</option>
+              </select>
+              <span class="help-block"
+                    *ngIf="!catForm.controls['protected'].valid && (!catForm.controls['protected'].untouched || catForm.controls['protected'].dirty)">Please select true/false</span>
+            </div>
+            <div
+              class="form-group {{((!catForm.controls['isResourceProtect'].valid && (!catForm.controls['isResourceProtect'].untouched || catForm.controls['isResourceProtect'].dirty)))? 'has-error' : 'material'}}">
+              <label for="protected"> Resource Protection</label>
+              <select class="form-control" id="isResourceProtect" formControlName="isResourceProtect">
+                <option value="true" selected>True</option>
+                <option value="false">False</option>
+              </select>
+              <span class="help-block"
+                    *ngIf="!catForm.controls['isResourceProtect'].valid && (!catForm.controls['isResourceProtect'].untouched || catForm.controls['isResourceProtect'].dirty)">Please select true/false</span>
+            </div>
+            <div
+              class="form-group {{((!catForm.controls['description'].valid && (!catForm.controls['description'].untouched || catForm.controls['description'].dirty)))? 'has-error' : 'material'}}">
+              <label for="page-title"> Description</label>
+              <textarea id="description" class="form-control" formControlName="description"
+                        placeholder="Description Content here ..." rows="6"></textarea>
+              <ng-container *ngIf="(catForm.controls.description.errors | json) != 'null'">
+                  <span class="help-block" *ngIf="catForm.controls.description.errors.maxlength != null">Maximum
+                    characters allowed is {{catForm.controls.description.errors.maxlength.requiredLength}}</span>
+              </ng-container>
+            </div>
+
+            <div
+              class="form-group {{((!catForm.controls['description_Ar'].valid && (!catForm.controls['description_Ar'].untouched || catForm.controls['description_Ar'].dirty)))? 'has-error' : 'material'}}">
+              <label for="page-title">Arabic Description</label>
+              <textarea id="description" class="form-control" formControlName="description_Ar"
+                        placeholder="Description Content here ..." rows="6"></textarea>
+              <ng-container *ngIf="(catForm.controls.description_Ar.errors | json) != 'null'">
+                    <span class="help-block" *ngIf="catForm.controls.description_Ar.errors.maxlength != null">Maximum
+                      characters allowed is {{catForm.controls.description_Ar.errors.maxlength.requiredLength}}</span>
+              </ng-container>
+            </div>
+            <div class="has-error" *ngIf="uploadError">
+              <span class="help-block">Only jpg, png and bmp files are allowed</span>
+            </div>
+            <div class="fileupload" *ngIf="!catForm.controls['media'].value">
+              <input type=file accept="image/*" id="file" name="file" class="inputfile"
+                     (input)="handleFileInput($event.target.files)">
+              <button class="btn btn-primary">Upload File</button>
+            </div>
+
+            <div class="mt-1 mb-1 clearfix" *ngIf="!catForm.controls['media'].value">
+              <p-progressBar *ngIf="thumbnailImageUploadStatus === 'Uploading'"
+                             [value]="courseImageUploadPercentage">
+              </p-progressBar>
+            </div>
+            <div class="file-preview mt-1 mb-1 clearfix">
+              <a href="{{ catForm.controls['media'].value}}" target="_blank" class="btn btn-link"
+                 *ngIf="catForm.controls['media'].value">Copyright File </a>
+              <span class="item-action" *ngIf="catForm.controls['media'].value">
+                    <button (click)="removeFile()"
+                            class="btn btn-danger btn-xs" title="Remove Item"><i class="fa fa-trash-o"
+                                                                                 aria-hidden="true"></i></button></span>
+            </div>
+          </div>
+
+          <div
+            class="form-group {{((!catForm.controls['weight'].valid && (!catForm.controls['weight'].untouched || catForm.controls['weight'].dirty)))? 'has-error' : 'material'}} ">
+            <label for="page-title"> Add Weight</label>
+            <input type="text" (keypress)="numberOnly($event)" autocomplete="off" name="page-title" class="form-control" formControlName="weight">
+            <span class="help-block"
+                  *ngIf="!catForm.controls['weight'].valid && (!catForm.controls['weight'].untouched || catForm.controls['weight'].dirty)">Please enter weight</span>
+            <ng-container *ngIf="(catForm.controls.weight.errors | json) != 'null'">
+              <span class="help-block" *ngIf="catForm.controls.weight.errors.max != null">Maximum
+                value allowed is {{weightMaxValue}}</span>
+            </ng-container>
+            <ng-container *ngIf="weightDuplicateCheck(catForm.controls.weight)" >
+              <span class="help-block" style="color:red"> Weight already exists. Please enter different value.
+               </span>
+            </ng-container>
+          </div>
+
+          <p-footer>
+            <button type="button" (click)="cat_display=false;catItem=null;" class="btn btn-secondary">Cancel</button>
+            <button type="submit" [disabled]="catForm.invalid || weightDuplicate" class="btn btn-primary pull-right">Save</button>
+          </p-footer>
+        </form>
+      </p-dialog>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>
+<!-- /.content -->

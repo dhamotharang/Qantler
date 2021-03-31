@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding:2px;
+        }
+
+        .pdfpara {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+		table.pdftable td, table.pdftable th {
+			border-width: 1px;
+			border-color: #000000;
+			border-style: solid;
+			padding: 15px;
+		}
+
+		table.pdftable td.normalTd-right {			
+			text-align: right;
+		}
+
+		table.pdftable td.normalTd-full {
+			text-align: right;
+		}
+
+		table.pdftable td.greyTd-right {
+			background-color: #b6b6ff;
+			text-align: right;
+		}
+
+		table.pdftable td.greyTd-center {
+			background-color: #b6b6ff;
+			text-align: center;
+		}
+		
+		
+		table.pdfhalftable {
+            width: 50%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+		table.pdfhalftable td, table.pdfhalftable th {
+			border-width: 1px;
+			border-color: #000000;
+			border-style: solid;
+			padding: 15px;
+		}
+
+		table.pdfhalftable td.normalTd-right {
+			width: 50%;
+			text-align: right;
+		}
+
+		table.pdfhalftable td.normalTd-full {
+			text-align: right;
+		}
+
+		table.pdfhalftable td.greyTd-right {
+			background-color: #b6b6ff;
+			text-align: right;
+		}
+
+		table.pdfhalftable td.greyTd-center {
+			background-color: #b6b6ff;
+			text-align: center;
+		}
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="pdfpara">{{CAFVTitle}}</p>
+    <table class="pdfhalftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right">{{RefNoValue}}</td>
+                <td class="greyTd-right">: {{RefNoLabel}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <p></p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="greyTd-center" colspan="2">{{ReqDetails}}</td>
+                <td class="greyTd-center" colspan="2">: {{VisitDetails}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{NameValue}}</td>
+                <td class="greyTd-right">: {{NameLabel}}</td>
+				<td class="normalTd-right">{{DayValue}}</td>
+                <td class="greyTd-right">: {{DayLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{PhNoValue}}</td>
+                <td class="greyTd-right">: {{PhNoLabel}}</td>
+				<td class="normalTd-right">{{DateValue}}</td>
+                <td class="greyTd-right">: {{DateLabel}}</td>
+            </tr>
+			<tr>
+                <td class="normalTd-right">{{ReqTypeValue}}</td>
+                <td class="greyTd-right">: {{ReqTypeLabel}}</td>
+				<td class="normalTd-right">{{LocValue}}</td>
+                <td class="greyTd-right">: {{LocLabel}}</td>
+            </tr>
+			<tr>
+                <td class="normalTd-right">{{PrepByValue}}</td>
+                <td class="greyTd-right">: {{PrepByLabel}}</td>
+				<td class="normalTd-right">{{ReqByalue}}</td>
+                <td class="greyTd-right">: {{ReqByLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{VisitObjValue}}</td>
+                <td class="greyTd-right">: {{VisitObjLabel}}</td>
+            </tr>
+			<tr>
+                <td class="greyTd-center" colspan="4">{{NotesLabel}}</td>
+            </tr>
+			<tr>
+                <td class="normalTd-right" colspan="4">{{NotesValue}}</td>
+            </tr>
+			<tr>
+                <td class="normalTd-right" colspan="3">{{AttachmentValue}}</td>
+                <td class="greyTd-right">: {{AttachmentLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+	<p class="clear">
+	<table class="pdftable">
+        <tbody>            
+            <tr>
+                <td class="normalTd-right" style="display:{{ShowCTdEmpty}};">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="normalTd-right" style="display:{{ShowCTdImage}};"><img style="display:{{ShowCreatorSignature}};" src="{{CreatorSignatureValue}}" width="200" height="50" /></td>
+                <td class="greyTd-right">: {{CreatorSignLabel}}</td>
+				<td class="normalTd-right">{{CreatorValue}}</td>
+                <td class="greyTd-right">: {{CreatorLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" style="display:{{ShowATdEmpty}};">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="normalTd-right" style="display:{{ShowATdImage}};"><img style="display:{{ShowApproverSignature}};" src="{{ApproverSignatureValue}}" width="200" height="50" /></td>
+                <td class="greyTd-right">: {{ApproverSignLabel}}</td>
+				<td class="normalTd-right">{{ApproverValue}}</td>
+                <td class="greyTd-right">: {{ApproverLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

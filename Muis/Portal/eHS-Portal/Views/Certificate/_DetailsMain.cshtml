@@ -1,0 +1,89 @@
+﻿<div class="row">
+    <div class="col-md-12 grid-margin">
+        <ul class="nav nav-tabs tab-solid tab-solid-danger" role="tablist" id="certificate-menu">
+            <li class="nav-item">
+                <a class="nav-link active" id="main-tab-details" data-toggle="tab" href="#main-content-details" role="tab" data-type="main">Main</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-none" id="main-tab-menu" data-toggle="tab" href="#main-content-menu" role="tab" data-type="menu">Menu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-none" id="main-tab-ingredients" data-toggle="tab" href="#main-content-ingredients" role="tab" data-type="ingredients">Ingredients</a>
+            </li>
+        </ul>
+        <div class="tab-content tab-content-solid">
+            <div class="tab-pane fade active show" id="main-content-details" role="tabpanel" aria-labelledby="tab-5-1">
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div id="certificate-details-container" class="card">
+                            <div class="card-body">
+                                <h5 class="font-weight-bold mb-4">Certificate Details</h5>
+                                <div class="row">
+                                    <div class="col-md-6 info certificate">
+                                        <p class="mb-1 number"><strong>Certificate # : </strong><span id="number"></span></p>
+                                        <p class="mb-1 status"><strong>Status : </strong><span class="text-dark"><span id="status"></span></span></p>
+                                        <p class="mb-1 scheme"><strong>Scheme : </strong><span id="scheme"></span></p>
+                                        <p class="mb-1 subscheme"><strong>Sub Scheme : </strong><span id="subscheme"></span></p>
+                                    </div>
+                                    <div class="col-md-6 info certificate-other">
+                                        <p class="mb-1 serialNo"><strong>Serial No : </strong><span id="serialNo"></span></p>
+                                        <p class="mb-1 suspendeduntil"><strong>Suspended Until : </strong><span id="suspendeduntil"></span></p>
+                                        <p class="mb-1 issuedon"><strong>Issued On : </strong><span id="issuedon"></span></p>
+                                        <p class="mb-1 expireson"><strong>Expires On : </strong><span id="expireson"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row premises d-none">
+                    <div class="col-md-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="font-weight-bold mb-4">Premise</h5>
+                                <div class="container">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row halal-team d-none">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="font-weight-bold mb-4">Halal Team</h5>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="main-content-menu" role="tabpanel">
+                <partial name="_DetailsMenu.cshtml" />
+            </div>
+            <div class="tab-pane fade" id="main-content-ingredients" role="tabpanel">
+                <partial name="_DetailsIngredients.cshtml" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="templates" id="addHalalTeam" hidden>
+    <div class="col-4  d-flex team-row halal-item">
+        <div class=" col-1 img-sm rounded-circle bg-{color} text-white text-avatar">{name}</div>
+        <div class="col-11">
+            <p class="mb-n1 font-weight-semibold halal-content">{u_name}</p>
+            <small>{designation}</small>
+        </div>
+        <div class="tooltip-data col-10 p-3 border rounded">
+            <ul class="list-unstyled m-0">
+                <li><b>{u_name}</b>&nbsp;&nbsp;&nbsp;<span class="text-danger">{isCertified}</span></li>
+                <li>{designation}</li>
+                <li>{altID}</li>
+                <li>{joinedOn}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+

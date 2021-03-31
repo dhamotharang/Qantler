@@ -1,0 +1,1 @@
+﻿alter table [dbo].[CopyrightMaster] alter column [Description_Ar] nvarchar(max)

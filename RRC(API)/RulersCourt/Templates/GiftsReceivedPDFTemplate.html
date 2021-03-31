@@ -1,0 +1,87 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding:2px;
+        }
+
+        .pdfpara {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+		table.pdftable td, table.pdftable th {
+			border-width: 1px;
+			border-color: #000000;
+			border-style: solid;
+			padding: 15px;
+		}
+
+		table.pdftable td.normalTd-right {			
+			text-align: right;
+		}
+
+		table.pdftable td.normalTd-full {
+			text-align: right;
+		}
+
+		table.pdftable td.greyTd-right {
+			background-color: #b6b6ff;
+			text-align: right;
+		}
+
+		table.pdftable td.greyTd-center {
+			background-color: #b6b6ff;
+			text-align: center;
+		}
+		
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="pdfpara">{{GiftsTitle}}</p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right">{{RefNoValue}}</td>
+                <td class="greyTd-right">: {{RefNoLabel}}</td>
+                <td class="normalTd-right">{{CreatorValue}}</td>
+                <td class="greyTd-right">: {{CreatorLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{GiftTypeValue}}</td>
+                <td class="greyTd-right">: {{GiftTypeLabel}}</td>
+                <td class="normalTd-right">{{DateValue}}</td>
+                <td class="greyTd-right">: {{DateLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{ReceivedFromValue}}</td>
+                <td class="greyTd-right">: {{ReceivedFromLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{PurchasedFromValue}}</td>
+                <td class="greyTd-right">: {{PurchasedFromLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{ReceivingDateValue}}</td>
+                <td class="greyTd-right">: {{ReceivingDateLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

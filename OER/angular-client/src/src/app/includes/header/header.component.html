@@ -1,0 +1,221 @@
+<div class="search-box  {{getThemeClass()}} {{getLangClass()}}" [ngClass]="showSearchBox?'is-visible':''">
+  <div class="container">
+    <div class="d-flex">
+      <div class="flex-grow-1">
+        <input #input type="text" class="search-txtbox" (keyup.enter)="search()" [(ngModel)]="query"
+               placeholder="{{'Search'|translate}}..." autofocus>
+      </div>
+      <button class="search-box-btn" (click)="search()" tooltip="{{'Search'|translate}}"><i class="fa fa-search"
+                                                                                            aria-hidden="true"></i>{{"Search"|translate}}
+      </button>
+      <a href="javascript:;" (click)="closeSearch()" id="search-close">Close</a>
+    </div>
+  </div>
+  <!--container-->
+</div>
+<!--search-box-->
+<div *ngIf="tempSpinner &&  showSpinner" class="hintloader">
+  <div><i class="fa fa-spinner fa-spin"></i><span>{{'Loading Help' | translate}}</span></div>
+</div>
+<header class="site-header  {{getThemeClass()}}  {{getLangClass()}}">
+  <div class="container">
+
+    <div class="site-header-inner">
+      <div *ngIf="getLanguage() === 'en'">
+        <ul class="header-top-links when-english">
+          <li class="theme-sel-icon">
+            <a href="javascript:;" (click)="handleThemeBox(true)" tooltip="{{'Change color theme' | translate}}"><i
+              class="fa fa-paint-brush" aria-hidden="true"></i></a>
+            <div *ngIf="themeBox" class="theme-sel-box">
+              <div class="theme-sel-box-head">
+                {{"Select Theme" | translate}}
+                <a href="javascript:;" (click)="handleThemeBox(false)"><i class="fa fa-times"
+                                                                          aria-hidden="true"></i></a>
+              </div>
+              <div class="theme-circ-cont">
+                <div class="theme-circ gd" (click)="updateTheme('gold')"></div>
+                <div class="theme-circ bl" (click)="updateTheme('blue')"></div>
+              </div>
+            </div>
+          </li>
+          <li><a href="javascript:;" (click)="showSearch()" id="search-trigger" class="search"
+                 tooltip="{{'Search' | translate}}"><i class="fa fa-search" aria-hidden="true"></i></a>
+          </li>
+          <li *ngIf="loggedIn" class="notifications"><a href="javascript:;" (click)="handleNotificationBox(true)"
+                                                        tooltip="{{'My Notifications' | translate}}"><i
+            class="fa fa-bell-o" aria-hidden="true"></i><span style="top: -30%;position: relative;left: -14%;">{{unReadNotifications}}</span>
+            {{notificationCount ? notificationCount : ''}}</a>
+            <div *ngIf="notificationBox" class="theme-sel-box">
+              <div class="theme-sel-box-head">
+                {{"My Notifications" | translate}}
+                <a href="javascript:;" (click)="handleNotificationBox(false)"><i class="fa fa-times"
+                                                                                 aria-hidden="true"></i></a>
+              </div>
+              <div class="theme-circ-cont">
+                <div class="notification-container">
+                  <div class="notification-list {{item.isRead ? '' : 'new'}}" *ngFor="let item of notifications">
+                    <a href="javascript:;" (click)="clickAction(item)">
+                      <p class="ellipsis">{{item.messageType}} </p> </a>
+                      <div class="not-type"  *ngIf="item.content.length > 200"> 
+                        <div *ngIf="!showMore && notifyNo == item.id">  <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{ item.content | slice:0:200}} </a> <span>...</span> 
+                        <a style=" text-transform: none; color:  #1a3464;cursor: pointer; "  (click)="lessMoreItem(item,1)">{{"See more" | translate}} </a></div>
+                        <div *ngIf="showMore && notifyNo == item.id"> <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{item.content}}   </a>
+                          <a style=" text-transform: none; color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,2)">{{"See less" | translate}}</a></div>
+                        <div *ngIf="notifyNo != item.id">  <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{ item.content | slice:0:200}} </a> <span >...</span> 
+                            <a  style=" text-transform: none; color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,1)">{{"See more" | translate}} </a></div></div>
+                      <div class="not-type" *ngIf="item.content.length < 200"> <a href="javascript:;" style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{item.content }}   </a></div>
+                  </div> <!-- notifiation Loop :END-->
+                </div><!-- notifiation Container :END-->
+                <a href="javascript:;" (click)="handleNotificationBox(false)" routerLink="/dashboard/my-notifications">
+                  {{"View All" | translate}}</a>
+              </div>
+            </div>
+          </li>
+          <li class="announcement" style="margin-left: 5px !important;"><a routerLink="/dashboard/announcements" tooltip="{{'Announcements' | translate}}"><i
+            class="fa fa-bullhorn" aria-hidden="true"></i></a>
+          <li class="announcement"><a href="javascript:;" (click)="updateHelpStatus()"
+                                      tooltip="{{'Help' | translate}}"><i class="fa fa-question" aria-hidden="true"></i></a>
+          </li>
+          <li class="signup" *ngIf="!loggedIn"><a href="javascript:;" (click)="signUp()">
+            <i class="fa fa-lock" aria-hidden="true"></i>{{"SIGN UP"|translate}}</a></li>
+          <li class="signin" *ngIf="!loggedIn"><a href="javascript:;" (click)="signIn()">{{"SIGN IN"|translate}}</a>
+          </li>
+          <li class="dashboard" title="{{'Dashboard' | translate}}" *ngIf="loggedIn"
+              tooltip="{{userName != '' ? userName : 'Dashboard' | translate }}"><a routerLink="/dashboard"
+                                                                                    class="truncate">{{userName != '' ?
+            userName : 'Dashboard' | translate }}</a></li>
+          <li *ngIf="loggedIn"><a href="javascript:;" (click)="logout()">{{'Logout' | translate}}</a>
+          </li>
+          <li *ngIf="getLanguage() === 'en'" class="lang"><a href="javascript:;" (click)="switchLaguage('ar')">عربي</a>
+          </li>
+          <li *ngIf="getLanguage() === 'ar'" class="lang"><a href="javascript:;"
+                                                             (click)="switchLaguage('en')">English</a>
+          </li>
+
+        </ul>
+      </div>
+      <div *ngIf="getLanguage() === 'ar'">
+        <ul class="header-top-links when-arabic">
+          
+          <li *ngIf="getLanguage() === 'ar'" class="lang"><a href="javascript:;"
+                                                             (click)="switchLaguage('en')">English</a>
+          </li>
+          <li *ngIf="getLanguage() === 'en'" class="lang"><a href="javascript:;" (click)="switchLaguage('ar')">عربي</a>
+          </li>
+          <li *ngIf="loggedIn"><a href="javascript:;" (click)="logout()">{{'Logout' | translate}}</a>
+          </li>
+          <li class="dashboard" title="{{'Dashboard' | translate}}" *ngIf="loggedIn"
+              tooltip="{{userName != '' ? userName : 'Dashboard' | translate }}"><a routerLink="/dashboard"
+                                                                                    class="truncate">{{userName != '' ?
+            userName : 'Dashboard' | translate }}</a></li>
+          <li class="signup" *ngIf="!loggedIn"><a href="javascript:;" (click)="signUp()">
+            <i class="fa fa-lock" aria-hidden="true"></i>{{"SIGN UP"|translate}}</a></li>
+          <li class="signin" *ngIf="!loggedIn"><a href="javascript:;" (click)="signIn()">{{"SIGN IN"|translate}}</a>
+          </li>
+          <li class="announcement"><a href="javascript:;" (click)="updateHelpStatus()" title="{{'Help' | translate}}"
+                                      tooltip="{{'Help' | translate}}"><i class="fa fa-question" aria-hidden="true"></i></a>
+          </li>
+          <li class="announcement"><a routerLink="/dashboard/announcements" title="{{'Announcements' | translate}}"
+                                      tooltip="{{'Announcements' | translate}}"><i class="fa fa-bullhorn"
+                                                                                   aria-hidden="true"></i></a></li>
+          <li *ngIf="loggedIn" class="notifications"><a href="javascript:;" (click)="handleNotificationBox(true)"
+                                                        title="{{'My Notifications' | translate}}"
+                                                        tooltip="{{'My Notifications' | translate}}"><i
+            class="fa fa-bell-o" aria-hidden="true"></i><span style="top: -30%;position: relative;left: -14%;">{{unReadNotifications}}</span>
+            {{notificationCount ? notificationCount : ''}}</a>
+            <div *ngIf="notificationBox" class="theme-sel-box">
+              <div class="theme-sel-box-head">
+                {{"My Notifications" | translate}}
+                <a href="javascript:;" (click)="handleNotificationBox(false)"><i class="fa fa-times"
+                                                                                 aria-hidden="true"></i></a>
+              </div>
+              <div class="theme-circ-cont">
+                <div class="notification-container">
+                  <div class="notification-list {{item.isRead ? '' : 'new'}}" *ngFor="let item of notifications">
+                    <!-- <a href="javascript:;" (click)="clickAction(item)">
+                      <p class="ellipsis">{{item.messageType | translate}}</p>
+                      <span class="not-type">{{item.content | translate}} </span>
+                    </a> -->
+                    <a href="javascript:;" (click)="clickAction(item)">
+                      <p class="ellipsis">{{item.messageType | translate}} </p> </a>
+                      <div class="not-type" *ngIf="item.content.length > 200">
+                        <div *ngIf="!showMore && notifyNo == item.id">  <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{ (item.content | translate ) | slice:0:200}} </a> <span>...</span> 
+                        <a style=" color:  #1a3464;cursor: pointer; "  (click)="lessMoreItem(item,1)"> {{"See more" | translate}} </a></div>
+                        <div *ngIf="showMore && notifyNo == item.id"> <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{item.content | translate  }}   </a>
+                          <a style="color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,2)">{{"See less" | translate}} </a></div>
+                          <div *ngIf="notifyNo != item.id">  <a href="javascript:;"  style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{ (item.content | translate ) | slice:0:200}} </a> <span >...</span> 
+                            <a style="color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,1)">{{"See more" | translate}} </a></div></div>
+                      <div class="not-type" *ngIf="item.content.length < 200"> <a href="javascript:;" style=" text-transform: none; color: #7b7b7b;" (click)="clickAction(item)">{{item.content | translate }}   </a></div>
+                  </div> <!-- notifiation Loop :END-->
+                </div><!-- notifiation Container :END-->
+                <a href="javascript:;" (click)="handleNotificationBox(false)" routerLink="/dashboard/my-notifications">
+                  {{"View All" | translate}}</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="javascript:;" (click)="showSearch()" id="search-trigger" class="search"
+                 title="{{'Search' | translate}}" tooltip="{{'Search' | translate}}"><i class="fa fa-search"
+                                                                                        aria-hidden="true"></i></a>
+          </li>
+          <li class="theme-sel-icon">
+            <a href="javascript:;" (click)="handleThemeBox(true)" title="{{'Change color theme' | translate}}"
+               tooltip="{{'Change color theme' | translate}}"><i class="fa fa-paint-brush" aria-hidden="true"></i></a>
+            <div *ngIf="themeBox" class="theme-sel-box">
+              <div class="theme-sel-box-head">
+                {{"Select Theme" | translate}}
+                <a href="javascript:;" (click)="handleThemeBox(false)"><i class="fa fa-times"
+                                                                          aria-hidden="true"></i></a>
+              </div>
+              <div class="theme-circ-cont">
+                <div class="theme-circ gd" (click)="updateTheme('gold')"></div>
+                <div class="theme-circ bl" (click)="updateTheme('blue')"></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+      <nav class="navbar navbar-expand-lg">
+
+        <a class="navbar-brand" routerLink="/">
+          <img srcset="assets/images/header-logo@0.5x.png, assets/images/header-logo@0.75x.png, assets/images/header-logo@1.5x.png, assets/images/header-logo@2x.png, assets/images/header-logo@3x.png" src="assets/images/header-logo.svg"  alt="Manara" class="webkit-browser">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link discover" routerLink="discover">{{"Discover"|translate}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link resources" routerLink="resources">{{"Resources"|translate}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link courses" routerLink="courses">{{"Courses"|translate}}</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle create" href="javascript:;" id="navbarDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{"Create"|translate}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" routerLink="resources/create">{{"Create Resource"|translate}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" routerLink="courses/create">{{"Create Course"|translate}}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+    <!--site-header-inner-->
+
+  </div>
+  <!--container-->
+</header>

@@ -1,0 +1,369 @@
+﻿.background .display-info {
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+.attachments {
+  overflow: auto;
+}
+
+  .attachments .item {
+    padding: 10px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: inline-flex !important;
+    background-color: #ffffff;
+  }
+
+    .attachments .item .thumb {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+      .attachments .item .thumb i {
+        font-size: 30px;
+        margin: 0;
+        color: #212529;
+      }
+
+    .attachments .item .details {
+      margin-right: 6px;
+    }
+
+      .attachments .item .details p.file-name {
+        display: block;
+        margin-bottom: 0;
+        margin-top: 2px;
+        color: #212529;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+
+      .attachments .item .details .buttons {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+        .attachments .item .details .buttons .file-size {
+          margin-right: 10px;
+          margin-bottom: 0px;
+          font-size: 0.875rem;
+        }
+
+        .attachments .item .details .buttons a:last-child {
+          margin-right: 0;
+          font-size: 0.875rem;
+        }
+
+.list-item {
+  padding: 12px 0;
+}
+
+  .list-item:first-child {
+    padding-top: 0px;
+  }
+
+.premises {
+  font-size: 0.875rem;
+  padding-top: 20px;
+}
+
+.premises-scheme {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+
+.file-icon {
+  height: 77px;
+  width: 69px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  .file-icon:not(:first-child) {
+    margin-left: 10px !important;
+  }
+
+.mdi-file-word {
+  font-size: 43px !important;
+}
+
+.file-icon-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 10px;
+}
+
+.event-alert {
+  width: 100% !important;
+}
+
+.event-text {
+  font-size: 0.875rem;
+}
+
+.address-code {
+  color: red;
+  font-weight: 600;
+}
+
+.notes .event .event-alert {
+  background-color: #f4f4f4 !important;
+  width: 95% !important;
+}
+
+.create-notes .attachments,
+.acknowledge-cause .attachments,
+.foc-decision .attachments,
+.payment .attachments,
+.reinstate-decision .attachments,
+.case-appeal .attachments,
+.file-case-to-court .attachments,
+.case-verdict .attachments,
+.case-dismiss .attachments,
+.case-immediate-suspension .attachments,
+.case-reopen .attachments,
+.case-close .attachments {
+  overflow: auto;
+}
+
+  .create-notes .attachments .item,
+  .acknowledge-cause .attachments .item,
+  .foc-decision .attachments .item,
+  .payment .attachments .item,
+  .reinstate-decision .attachments .item,
+  .case-appeal .attachments .item,
+  .file-case-to-court .attachments .item,
+  .case-verdict .attachments .item,
+  .case-dismiss .attachments .item,
+  .case-immediate-suspension .attachments .item,
+  .case-reopen .attachments .item,
+  .case-close .attachments .item {
+    padding: 10px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: inline-flex !important;
+    background-color: #ffffff;
+  }
+
+    .create-notes .attachments .item .thumb,
+    .acknowledge-cause .attachments .item .thumb,
+    .foc-decision .attachments .item .thumb,
+    .payment .attachments .item .thumb,
+    .reinstate-decision .attachments .item .thumb,
+    .case-appeal .attachments .item .thumb,
+    .file-case-to-court .attachments .item .thumb,
+    .case-verdict .attachments .item .thumb,
+    .case-dismiss .attachments .item .thumb,
+    .case-immediate-suspension .attachments .item .thumb,
+    .case-reopen .attachments .item .thumb,
+    .case-close .attachments .item .thumb {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+      .create-notes .attachments .item .thumb i,
+      .acknowledge-cause .attachments .item .thumb i,
+      .foc-decision .attachments .item .thumb i,
+      .payment .attachments .item .thumb i,
+      .reinstate-decision .attachments .item .thumb i,
+      .case-appeal .attachments .item .thumb i,
+      .file-case-to-court .attachments .item .thumb i,
+      .case-verdict .attachments .item .thumb i,
+      .case-dismiss .attachments .item .thumb i,
+      .case-immediate-suspension .attachments .item .thumb i,
+      .case-reopen .attachments .item .thumb i,
+      .case-close .attachments .item .thumb i {
+        font-size: 30px;
+        margin: 0;
+        color: #212529;
+      }
+
+    .create-notes .attachments .item .details,
+    .acknowledge-cause .attachments .item .details,
+    .foc-decision .attachments .item .details,
+    .payment .attachments .item .details,
+    .reinstate-decision .attachments .item .details,
+    .case-appeal .attachments .item .details,
+    .file-case-to-court .attachments .item .details,
+    .case-verdict .attachments .item .details,
+    .case-dismiss .attachments .item .details,
+    .case-immediate-suspension .attachments .item .details,
+    .case-reopen .attachments .item .details,
+    .case-close .attachments .item .details {
+      margin-right: 6px;
+    }
+
+      .create-notes .attachments .item .details p.file-name,
+      .acknowledge-cause .attachments .item .details p.file-name,
+      .foc-decision .attachments .item .details p.file-name,
+      .payment .attachments .item .details p.file-name,
+      .reinstate-decision .attachments .item .details p.file-name,
+      .case-appeal .attachments .item .details p.file-name,
+      .file-case-to-court .attachments .item .details p.file-name,
+      .case-verdict .attachments .item .details p.file-name,
+      .case-dismiss .attachments .item .details p.file-name,
+      .case-immediate-suspension .attachments .item .details p.file-name,
+      .case-reopen .attachments .item .details p.file-name,
+      .case-close .attachments .item .details p.file-name {
+        display: block;
+        margin-bottom: 0;
+        margin-top: 2px;
+        color: #212529;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+
+      .create-notes .attachments .item .details .buttons,
+      .acknowledge-cause .attachments .item .details .buttons,
+      .foc-decision .attachments .item .details .buttons,
+      .payment .attachments .item .details .buttons,
+      .reinstate-decision .attachments .item .details .buttons,
+      .case-appeal .attachments .item .details .buttons,
+      .file-case-to-court .attachments .item .details .buttons,
+      .case-verdict .attachments .item .details .buttons,
+      .case-dismiss .attachments .item .details .buttons,
+      .case-immediate-suspension .attachments .item .details .buttons
+      .case-reopen .attachments .item .details .buttons,
+      .case-close .attachments .item .details .buttons {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+        .create-notes .attachments .item .details .buttons .file-size,
+        .acknowledge-cause .attachments .item .details .buttons .file-size,
+        .foc-decision .attachments .item .details .buttons .file-size,
+        .payment .attachments .item .details .buttons .file-size,
+        .reinstate-decision .attachments .item .details .buttons .file-size,
+        .case-appeal .attachments .item .details .buttons .file-size,
+        .file-case-to-court .attachments .item .details .buttons .file-size,
+        .case-verdict .attachments .item .details .buttons .file-size,
+        .case-dismiss .attachments .item .details .buttons .file-size,
+        .case-immediate-suspension .attachments .item .details .buttons .file-size,
+        .case-reopen .attachments .item .details .buttons .file-size,
+        .case-close .attachments .item .details .buttons .file-size {
+          margin-right: 10px;
+          margin-bottom: 0px;
+          font-size: 0.875rem;
+        }
+
+
+        .create-notes .attachments .item .details .buttons a:last-child,
+        .acknowledge-cause .attachments .item .details .buttons a:last-child,
+        .foc-decision .attachments .item .details .buttons a:last-child,
+        .payment .attachments .item .details .buttons a:last-child,
+        .reinstate-decision .attachments .item .details .buttons a:last-child,
+        .case-appeal .attachments .item .details .buttons a:last-child,
+        .file-case-to-court .attachments .item .details .buttons a:last-child,
+        .case-verdict .attachments .item .details .buttons a:last-child,
+        .case-dismiss .attachments .item .details .buttons a:last-child,
+        .case-immediate-suspension .attachments .item .details .buttons a:last-child,
+        .case-reopen .attachments .item .details .buttons a:last-child,
+        .case-close .attachments .item .details .buttons a:last-child {
+          margin-right: 0;
+        }
+
+.create-notes .upload-btn,
+.acknowledge-cause .upload-btn,
+.foc-decision .upload-btn,
+.payment .upload-btn,
+.reinstate-decision .upload-btn,
+.case-appeal .upload-btn,
+.file-case-to-court .upload-btn,
+.case-verdict .upload-btn,
+.case-dismiss .upload-btn,
+.case-immediate-suspension .upload-btn,
+.case-reopen .upload-btn,
+.case-close .upload-btn {
+  margin-top: 12px;
+}
+
+.notes .placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 16px;
+}
+
+  .notes .placeholder span {
+    text-align: center;
+  }
+
+  .notes .placeholder button {
+    align-self: center;
+    margin-top: 32px;
+  }
+
+.create-notes .modal-dialog,
+.acknowledge-cause .modal-dialog,
+.foc-decision .modal-dialog,
+.collectcertificate .modal-dialog,
+.reinstate-decision .modal-dialog,
+.appeal-decision .modal-dialog,
+.file-case-to-court .modal-dialog,
+.case-appeal .modal-dialog,
+.case-verdict .modal-dialog,
+.case-dismiss .modal-dialog,
+.case-immediate-suspension .modal-dialog,
+.reinstateCertificate .modal-dialog,
+.case-reopen .modal-dialog,
+.case-close .modal-dialog {
+  max-width: 60%;
+}
+
+#fileuploader,
+.fileuploader,
+.ajax-file-upload-container {
+  display: none;
+}
+
+.has-error {
+  border-color: #ff6258 !important
+}
+
+label.error {
+  font-size: .875rem;
+}
+
+.acknowledge-cause #amount,
+.foc-decision #amount,
+.payment #amount {
+  text-align: left !important;
+}
+
+canvas {
+  border: 1px solid #dee2e6;
+}
+
+.signAbove {
+  font-size: 0.875rem;
+  font-weight: 100;
+  width: 100%;
+  text-align: center;
+}
+
+.signAboveError {
+  text-align: center;
+  margin-left: 50px;
+}
+
+.navbar {
+  padding-right: 30px !important
+}
+
+.modal-dialog .attachments {
+  padding-bottom: 8px;
+}

@@ -1,0 +1,11 @@
+<p-dialog header="{{'Share' | translate}}" [(visible)]="display" (onHide)="closeModel()"
+          [style]="{width: '600px', 'max-height':'500px'}">
+  <share-buttons [theme]="'material-light'" (opened)="logShareContent($event)"
+                 [include]="['facebook','twitter','linkedin','google','pinterest','reddit','tumblr','mix','vk','telegram','messenger','whatsapp','xing','line','sms','email','copy']"
+                 [show]="5" [url]="url" [title]="data.title" [description]="data.description" [image]="data.image"
+                 [tags]="data.tags"></share-buttons>
+  <p-footer>
+    <button type="button" class="btn btn-primary text-uppercase" (click)="closeModel()">{{"Cancel" | translate}}
+    </button>
+  </p-footer>
+</p-dialog>

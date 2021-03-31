@@ -1,0 +1,42 @@
+﻿<div class="modal fade invoice-add-lineitem" id="invoiceAddLineItemModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="label">Invoice Add Line Item</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group horizontal col-form-field code">
+                    <label class="col-form-label">Item :</label>
+                    <div class="col-form-field">
+                        <input type="text" class="form-control" id="code" required readonly>
+                        <label class="error mt-2 text-danger">Item is required.</label>
+                    </div>
+                    <span class="col-form-icon mdi mdi-magnify ml-2 search" data-toggle="modal" data-target="#selectTransactionCodeModal" />
+                </div>
+                <div class="form-group horizontal col-form-field qty">
+                    <label class="col-form-label">Quantity :</label>
+                    <div class="col-form-field">
+                        <input type="text" class="form-control" id="quantity" maxlength="5" data-inputmask="'alias': 'decimal', 'groupSeparator': ','" inputmode="numeric" required>
+                        <label class="error mt-2 text-danger">Quantity is required.</label>
+                    </div>
+                    <span class="col-form-icon mdi ml-2" />
+                </div>
+                <div class="form-group horizontal col-form-field unit-price">
+                    <p class="price"></p>
+                    <div class="icheck-flat">
+                        <input tabindex="5" type="checkbox" id="reverse">
+                        <label for="reverse">Reverse</label>
+                    </div>
+                </div>
+                <div class="horizontal total">
+                    <span>Calculated Amount:&nbsp;</span>
+                    <span class="font-weight-bold amount"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary dismiss" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary submit">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

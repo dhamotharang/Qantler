@@ -1,0 +1,97 @@
+﻿tr.escalated {
+  background-color: #ff625820;
+}
+
+table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
+  background-color: #00835520;
+}
+
+table.dataTable.hover tbody > tr.selected:hover,
+table.dataTable.hover tbody > tr > .selected:hover,
+table.dataTable.display tbody > tr.selected:hover,
+table.dataTable.display tbody > tr > .selected:hover {
+  background-color: #00835520;
+}
+
+.quick-links li a {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.dataTables_scrollBody {
+  min-height: 60vh;
+}
+
+.modal.review .info {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 0rem !important;
+}
+
+  .modal.review .info .id {
+    width: 60px;
+  }
+
+  .modal.review .info .premise {
+    flex: 2;
+    display: none;
+  }
+
+  .modal.review .info .action {
+    margin-left: auto;
+  }
+
+    .modal.review .info .action a {
+      font-size: 0.65rem;
+    }
+
+.modal.review .premise-long {
+  display: block;
+}
+
+.modal.review .divider {
+  border-top: 1px solid #dee2e6;
+}
+
+.modal.review .section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+  .modal.review .section a {
+    margin-left: auto;
+  }
+
+@media (min-width: 576px) {
+  .filter .modal-dialog {
+    max-width: 500px;
+    margin: 30px auto;
+  }
+
+  .modal.review .modal-dialog {
+    max-width: 85%;
+  }
+}
+
+@media (min-width: 992px) {
+  .filter .modal-lg,
+  .filter .modal-xl {
+    max-width: 50%;
+  }
+
+  .modal.review .modal-dialog {
+    max-width: 70%;
+  }
+
+  .modal.review .info {
+    margin-bottom: 1rem !important;
+  }
+
+    .modal.review .info .premise {
+      display: block;
+    }
+
+  .modal.review .premise-long {
+    display: none;
+  }
+}

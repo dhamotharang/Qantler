@@ -1,0 +1,34 @@
+﻿<div class="card premises">
+    <div class="card-body">
+        <h5 class="font-weight-bold mb-4">Premises</h5>
+        <div class="row">
+            <div class="loader jumping-dots-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="container">
+            </div>
+            <div class="widget-placeholder d-none">
+                <span class="text-muted">No data available.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="certificate-container-template" hidden>
+    <div class="certificate-container">
+        <p>{premisetext}</p>
+        <div class="certificate-list">
+        </div>
+    </div>
+
+    <div class="certificate-item">
+        <a href="/certificate/details/{id}"><span class="font-weight-bold">{number}</span></a>
+        <span>{scheme}</span>
+        <span class="badge {status-color}">{status}</span>
+        <span class="{display-until}"><b>Suspended Until:</b> {untilon}</span>
+        <span class="{display-issuedon}"><b>Issued On:</b> {issuedon}</span>
+        <span class="{display-expires}"><b>Expires On:</b> {expireson}</span>
+    </div>
+</div>

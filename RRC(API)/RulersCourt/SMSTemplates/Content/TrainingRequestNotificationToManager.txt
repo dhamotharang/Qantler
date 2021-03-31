@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+إذا كنت قد حضرت بالفعل التدريب ، فيرجى تحميل الشهادة كدليل على الحضور.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+Proof of attendance has been uploaded by {{EnFromName}}.
+Best Regards

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <settings>
+    <key name="SPServerType" value="Online" description="Online or OnPrem" />
+    <key name="SPServerURL" value="https://qantler.sharepoint.com" description="SharePoint Site URL Only Server (No Site Collection and Web)" />
+    <key name="SPSiteURL" value="/sites/MasterTheme/" description="SharePoint Site URL including Web" />
+    <key name="SPDomain" value="qantler.com" description="Domain value required for OnPrem" />
+    <key name="SPUserID" value="vasu.shan@qantler.com" description="Make sure given User ID having permission to read list and library" />
+    <key name="SPPassword" value="" description="Provide password in clear text" />
+    <key name="SQLConnectionString" value="server=.\sqlexpress;initial catalog=easymiger;user id=appuser;password=P@ssw0rd;" description="SQL server connection string, Make sure given User ID having permission to create tables" />
+    <key name="AttachmentPath" value="H:\EasyMiger" description="Make sure current user having full permission in this folder." />
+    <key name="RunFromCache" value="Yes" description="Continue from ending point incase any interuption while processing" />
+    <key name="RecordProcessingCount" value="50" description="Item count of fetch data from list" />
+
+    <!--<key name="" value="" description="" />-->
+  </settings>
+
+  <!--Default fields for list is ID[Bigint],Title[Varchar],Created[Datetime],CreatedBy[Varchar],
+  Modified[DateTime],ModifiedBy[Varchar],AttachmentPath[Varchar] -->
+
+
+  <content type="List" subtype="GenericList" name="MigrationMaster" description="" ismasterlist="Yes">
+    <fileds>
+
+    </fileds>
+  </content>
+
+  <content type="List" subtype="GenericList" name="MigrationList" description="" ismasterlist="No">
+    <fileds>
+      <field name="Age" fieldtype="Number" datatype="bigint"  />
+      <field name="Gender" fieldtype="Choice" datatype="nvarchar(20)"  />
+      <field name="Manager" fieldtype="User" datatype="nvarchar(100)"  />
+      <field name="DOB" fieldtype="Datetime" datatype="Datetime"  />
+      <field name="Other_x0020_Remarks" fieldtype="Note" datatype="nvarchar(max)"  />
+      <field name="FacebookID" fieldtype="Url" datatype="nvarchar(500)"  />
+      <field name="Certified" fieldtype="Boolean" datatype="bit"  />
+      <field name="Home_x0020_Town" fieldtype="Lookup" datatype="nvarchar(max)"  />
+      <field name="Currency" fieldtype="Currency" datatype="nvarchar(max)"  />
+    </fileds>
+  </content>
+
+  <content type="Library" subtype="DocumentLibrary" name="MigrationLibrary" description="" ismasterlist="No">
+    <fileds>
+
+    </fileds>
+  </content>
+  
+  
+
+  <!--<field name="test" fieldtype="Text" datatype="nvarchar(max)" />-->
+
+  <!--Default fields for Library is ID[Bigint],Title[Varchar],Type[Varchar],Size[Varchar],Path[Varchar],Created[Datetime],CreatedBy[Varchar],Modified[DateTime],ModifiedBy[Varchar] -->
+  <!--<content type="Library" subtype="DocumentLibrary" name="" description="">
+    <fileds>
+
+    </fileds>
+  </content>-->
+
+</configuration>
+

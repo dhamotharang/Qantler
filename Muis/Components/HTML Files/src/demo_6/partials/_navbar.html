@@ -1,0 +1,116 @@
+<div class="navbar">
+  <div class="container-wrapper-width">
+    <div class="row w-100">
+      <div class="col-2 col-md-4 navbar-col order-md-1">
+        <a href="index.html" class="brand-logo">
+          <img src="../assets/images/logo_6.svg" alt="logo">
+        </a>
+        <a href="index.html" class="brand-logo-mini">
+          <img src="../assets/images/logo-mini_6.svg" alt="logo">
+        </a>
+      </div>
+      <div class="d-none d-md-block col-md-4 navbar-col order-md-0">
+        <ul class="nav">
+          <li class="nav-item dropdown project-dropdown">
+            <a class="nav-link dropdown-toggle pl-0" id="projectDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <span class="title-text font-weight-bold ml-0">Current Project</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-left navbar-dropdown pb-0" aria-labelledby="projectDropdown">
+              <a class="dropdown-item">All Project<span class="badge badge-pill badge-danger">1</span><i class="dropdown-item-icon mdi mdi-backup-restore"></i></a>
+              <a class="dropdown-item">Completed Project<i class="dropdown-item-icon mdi mdi-check-circle-outline"></i></a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="mdi mdi-dns-outline"></i>
+              <span class="title-text">POS</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-10 col-md-4 navbar-col order-md-3">
+        <ul class="nav navbar-nav-right ml-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="mdi mdi-magnify"></i>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <i class="mdi mdi-settings-outline"></i>
+              <span class="count bg-info"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+              <a class="dropdown-item py-3 border-bottom">
+                <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-alert m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0"> Just now </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-settings m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                  <p class="font-weight-light small-text mb-0"> Private message </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="mdi mdi-circle-slice-3"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown dropdown-h-style-1 pb-0" aria-labelledby="notificationDropdown">
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-printer"></i>Print Invoice</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-content-copy"></i>Copy</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-file-document-edit-outline"></i>CSV</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-share-outline"></i>Share</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <img class="img-xs rounded-circle" src="assets/images/faces/face1.jpg" alt="Profile image">
+              <span class="profile-text">Allen Moreno</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <div class="dropdown-header text-center">
+                <img class="img-md rounded-circle" src="assets/images/faces/face1.jpg" alt="Profile image">
+                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
+                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+              </div>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary"></i> Messages</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary"></i> Activity</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary"></i> FAQ</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary"></i>Sign Out</a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-md-none align-self-center" type="button">
+          <span class="mdi mdi-menu"></span>
+        </button>
+        <button class="chat-toggler d-md-none align-self-center" type="button">
+          <span class="mdi mdi-dots-vertical"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

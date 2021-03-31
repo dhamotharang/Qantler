@@ -1,0 +1,95 @@
+﻿@model List<eHS.Portal.Model.Activity>
+@using eHS.Portal.Model;
+
+<div class="row notes activity">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="horizontal-timeline">
+                    @{
+                        var list = Model.OrderByDescending(x => x.CreatedOn.Value).GroupBy(x => x.CreatedOn.Value.Date).ToDictionary(x => x.Key, x => x.Select(v => v).ToList());
+                        foreach (var item in list)
+                        {
+                            <section class="time-frame">
+                                <h4 class="section-time-frame d-none">@item.Key</h4>
+                                @foreach (var activity in item.Value)
+                                {
+                                    <div class="event" data-type="@activity.Type">
+                                        <div class="row event-text">
+                                            <div class="col-md-auto col-xs-12">
+                                                <strong>@activity.Action</strong>
+                                            </div>
+                                            <div class="col-md-auto col-xs-12">
+                                                @if (activity.Type == ActivityType.JobOrder && activity.RefID != null)
+                                                {
+                                                    <a class="" href="/jobOrder/details/@activity.RefID">View Job Order</a>
+                                                }
+                                                else if (activity.Type == ActivityType.Payment && activity.RefID != null)
+                                                {
+                                                    <a class="" href="/payments/details/@activity.RefID">View Payment</a>
+                                                }
+                                            </div>
+                                        </div>
+                                        @if (activity.Notes != null && activity.Notes != "undefined")
+                                        {
+                                            <div class="event-alert">@Html.Raw(@activity.Notes)</div>
+                                        }
+
+                                        @if (activity.Attachments != null)
+                                        {
+                                            <div class="attachments">
+                                                @foreach (var attachment in activity.Attachments)
+                                                {
+                                                    <div class="attachment item">
+                                                        <div class="thumb">
+                                                            <i class="mdi mdi-paperclip"></i>
+                                                        </div>
+                                                        <div class="details">
+                                                            <p class="file-name">@attachment.FileName</p>
+                                                            <div class="buttons">
+                                                                <p class="file-size file-size-format d-none">@attachment.Size</p>
+                                                                <a href="/api/file/@attachment.FileID?fileName=@attachment.FileName" class="download" download="@attachment.FileName">Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+
+                                        @if (activity.Letters != null)
+                                        {
+                                            <div class="file-icon-wrapper letter @activity.Type">
+                                                @foreach (var letter in activity.Letters)
+                                                {
+                                                    <div class="btn btn-outline-primary file-icon" data-id="@letter.ID" data-type="@letter.Type"
+                                                         data-type-id="@((int)letter.Type)" activity-id="@activity.ID" data-status="@letter.Status">
+                                                        <i class="mdi mdi-file-word">
+                                                        </i>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        <div class="event-info">
+                                            @if (@activity.User != null)
+                                            {
+                                                @activity.User.Name<span class="mr-1">,</span>
+                                            }
+                                            <span class="activity-time d-none">@activity.CreatedOn.Value.UtcDateTime</span>
+                                        </div>
+                                    </div>
+                                }
+                            </section>
+                        }
+                    }
+                </div>
+                <div class="placeholder d-none">
+                    <span class="text-muted">No notes added yet.</span>
+                    <span class="text-muted add">Tap "Add Notes" to add new notes.</span>
+                    <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw add" data-toggle="modal" data-target="#createNotesModal">
+                        <i class="mdi mdi-plus"></i>Add Notes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

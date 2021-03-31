@@ -1,0 +1,712 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Angular Client App documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Angular Client App documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>RecomendedArticlesComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/common/recomended-articles/recomended-articles.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-recomended-articles</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./recomended-articles.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./recomended-articles.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encService">encService</a>
+                            </li>
+                            <li>
+                                <a href="#resources">resources</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#router">router</a>
+                            </li>
+                            <li>
+                                <a href="#storageUrl">storageUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#sub">sub</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getUserRecommendedContent">getUserRecommendedContent</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(encService: <a href="../injectables/EncService.html">EncService</a>, profileService: <a href="../injectables/ProfileService.html">ProfileService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>encService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EncService.html" target="_self" >EncService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>profileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProfileService.html" target="_self" >ProfileService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserRecommendedContent"></a>
+                    <span class="name">
+                        <b>
+                            getUserRecommendedContent
+                        </b>
+                        <a href="#getUserRecommendedContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserRecommendedContent()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:34</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:30</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="encService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            encService</b>
+                            <a href="#encService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/EncService.html" target="_self" >EncService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="resources"></a>
+                        <span class="name">
+                            <b>
+                            resources</b>
+                            <a href="#resources"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:15</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="router"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            router</b>
+                            <a href="#router"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="storageUrl"></a>
+                        <span class="name">
+                            <b>
+                            storageUrl</b>
+                            <a href="#storageUrl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:16</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sub"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            sub</b>
+                            <a href="#sub"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/common/recomended-articles/recomended-articles.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+import {ResourceService} from &#x27;../../services/resource.service&#x27;;
+import {environment} from &#x27;../../../environments/environment&#x27;;
+import {ProfileService} from &#x27;../../services/profile.service&#x27;;
+import {Subscription} from &#x27;rxjs&#x27;;
+import {EncService} from &#x27;../../services/enc.service&#x27;;
+import {Router} from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-recomended-articles&#x27;,
+  templateUrl: &#x27;./recomended-articles.component.html&#x27;,
+  styleUrls: [&#x27;./recomended-articles.component.css&#x27;]
+})
+export class RecomendedArticlesComponent implements OnInit, OnDestroy {
+  resources: any;
+  storageUrl: string;
+  private sub: Subscription;
+
+  constructor(public encService: EncService, private profileService: ProfileService, public router: Router) {
+  }
+
+  ngOnInit() {
+    this.resources &#x3D; [];
+    this.sub &#x3D; this.profileService.getUserDataUpdate().subscribe(() &#x3D;&gt; {
+      this.getUserRecommendedContent();
+    });
+    this.getUserRecommendedContent();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  getUserRecommendedContent() {
+    this.profileService.getUserRecommendedContent(1, 8).subscribe((res) &#x3D;&gt; {
+      if (res.hasSucceeded) {
+        this.resources &#x3D; res.returnedObject;
+      }
+    });
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;panel-box p-30 mb-30&quot;&gt;
+  &lt;h3 class&#x3D;&quot;dtl-h3&quot;&gt;{{&quot;Recommended Article&quot; | translate}}&lt;/h3&gt;
+  &lt;hr&gt;
+  &lt;ng-container *ngFor&#x3D;&quot;let item of resources;let i&#x3D;index&quot;&gt;
+    &lt;div class&#x3D;&quot;row&quot; *ngIf&#x3D;&quot;i &lt; 4 &amp;&amp; item.contentType &#x3D;&#x3D;&#x3D; 1&quot;&gt;
+      &lt;div class&#x3D;&quot;col-lg-4 col-md-2 col-sm-2&quot; (click)&#x3D;&quot;router.navigateByUrl(&#x27;/course/&#x27; + encService.set(item.id))&quot;&gt;
+        &lt;img src&#x3D;&quot;{{item.thumbnail ?  item.thumbnail : &#x27;assets/images/res-co1.jpg&#x27;}}&quot; class&#x3D;&quot;img-fluid&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-8 col-md-10 col-sm-10&quot;&gt;
+        &lt;a class&#x3D;&quot;rec-art-txt&quot; routerLink&#x3D;&quot;/course/{{encService.set(item.id)}}&quot;&gt;{{item.title}}&lt;/a&gt;
+        &lt;!--&lt;p class&#x3D;&quot;rec-art-athr&quot;&gt;{{item.createdBy}}&lt;/p&gt;--&gt;
+        &lt;p class&#x3D;&quot;rec-art-decr&quot;&gt;&lt;span class&#x3D;&quot;ellipsis&quot;&gt;{{item.description}}&lt;/span&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;row&quot; *ngIf&#x3D;&quot;i &lt; 4 &amp;&amp; item.contentType &#x3D;&#x3D;&#x3D; 2&quot;&gt;
+      &lt;div class&#x3D;&quot;col-lg-4 col-md-2 col-sm-2&quot; (click)&#x3D;&quot;router.navigateByUrl(&#x27;/resource/&#x27; + encService.set(item.id))&quot;&gt;
+        &lt;img src&#x3D;&quot;{{item.thumbnail ?  item.thumbnail : &#x27;assets/images/res-co1.jpg&#x27;}}&quot; class&#x3D;&quot;img-fluid&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-8 col-md-10 col-sm-10&quot;&gt;
+        &lt;a class&#x3D;&quot;rec-art-txt&quot; routerLink&#x3D;&quot;/resource/{{encService.set(item.id)}}&quot;&gt;{{item.title}}&lt;/a&gt;
+        &lt;!--&lt;p class&#x3D;&quot;rec-art-athr&quot;&gt;{{item.createdBy}}&lt;/p&gt;--&gt;
+        &lt;p class&#x3D;&quot;rec-art-decr&quot;&gt;&lt;span class&#x3D;&quot;ellipsis&quot;&gt;{{item.description}}&lt;/span&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;hr *ngIf&#x3D;&quot;i &lt; 3&quot;&gt;
+  &lt;/ng-container&gt;
+
+&lt;/div&gt;
+&lt;!--panel-box--&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./recomended-articles.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="panel-box p-30 mb-30">  <h3 class="dtl-h3">{{"Recommended Article" | translate}}</h3>  <hr>  <ng-container *ngFor="let item of resources;let i=index">    <div class="row" *ngIf="i < 4 && item.contentType === 1">      <div class="col-lg-4 col-md-2 col-sm-2" (click)="router.navigateByUrl(\'/course/\' + encService.set(item.id))">        <img src="{{item.thumbnail ?  item.thumbnail : \'assets/images/res-co1.jpg\'}}" class="img-fluid">      </div>      <div class="col-lg-8 col-md-10 col-sm-10">        <a class="rec-art-txt" routerLink="/course/{{encService.set(item.id)}}">{{item.title}}</a>        <!--<p class="rec-art-athr">{{item.createdBy}}</p>-->        <p class="rec-art-decr"><span class="ellipsis">{{item.description}}</span></p>      </div>    </div>    <div class="row" *ngIf="i < 4 && item.contentType === 2">      <div class="col-lg-4 col-md-2 col-sm-2" (click)="router.navigateByUrl(\'/resource/\' + encService.set(item.id))">        <img src="{{item.thumbnail ?  item.thumbnail : \'assets/images/res-co1.jpg\'}}" class="img-fluid">      </div>      <div class="col-lg-8 col-md-10 col-sm-10">        <a class="rec-art-txt" routerLink="/resource/{{encService.set(item.id)}}">{{item.title}}</a>        <!--<p class="rec-art-athr">{{item.createdBy}}</p>-->        <p class="rec-art-decr"><span class="ellipsis">{{item.description}}</span></p>      </div>    </div>    <hr *ngIf="i < 3">  </ng-container></div><!--panel-box--></div>'
+    var COMPONENTS = [{'name': 'AccountSettingsComponent', 'selector': 'app-account-settings'},{'name': 'AnnouncementsComponent', 'selector': 'app-announcements'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BreadcrumbsComponent', 'selector': 'app-breadcrumbs'},{'name': 'CategoriesModalComponent', 'selector': 'app-categories-modal'},{'name': 'CommunityCheckComponent', 'selector': 'app-community-check'},{'name': 'CourseDetailComponent', 'selector': 'app-course-detail'},{'name': 'CoursesComponent', 'selector': 'app-courses'},{'name': 'CreateCourseComponent', 'selector': 'app-create-course'},{'name': 'CreateResourceComponent', 'selector': 'app-create-resource'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DashboardSideMenuComponent', 'selector': 'app-dashboard-side-menu'},{'name': 'DiscoverComponent', 'selector': 'app-discover'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'FavouritesComponent', 'selector': 'app-favourites'},{'name': 'FileViewerComponent', 'selector': 'app-file-viewer'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'IFrameViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'LandingPageComponent', 'selector': 'app-landing-page'},{'name': 'MakeProfileComponent', 'selector': 'app-make-profile'},{'name': 'MoeCheckComponent', 'selector': 'app-moe-check'},{'name': 'MyCoursesComponent', 'selector': 'app-my-courses'},{'name': 'MyNotificationsComponent', 'selector': 'app-my-notifications'},{'name': 'MyResourcesListComponent', 'selector': 'app-my-resources-list'},{'name': 'NotificationSettingsComponent', 'selector': 'app-notification-settings'},{'name': 'PrivacySettingsComponent', 'selector': 'app-privacy-settings'},{'name': 'PublicProfileComponent', 'selector': 'app-public-profile'},{'name': 'QRCComponent', 'selector': 'app-qrc'},{'name': 'RatingComponent', 'selector': 'app-rating'},{'name': 'RecomendedArticlesComponent', 'selector': 'app-recomended-articles'},{'name': 'ReportAbuseComponent', 'selector': 'app-report-abuse'},{'name': 'ResourceDetailComponent', 'selector': 'app-resource-detail'},{'name': 'ResourcesComponent', 'selector': 'app-resources'},{'name': 'SearchResultComponent', 'selector': 'app-search-result'},{'name': 'SensoryCheckComponent', 'selector': 'app-sensory-check'},{'name': 'ShareModalComponent', 'selector': 'app-share-modal'},{'name': 'SubBannerComponent', 'selector': 'app-sub-banner'},{'name': 'TakeTestComponent', 'selector': 'app-take-test'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'},{'name': 'VerifyContentComponent', 'selector': 'app-verify-content'},{'name': 'VerifyTestComponent', 'selector': 'app-take-test'},{'name': 'WCMComponent', 'selector': 'app-wcm'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RecomendedArticlesComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RecomendedArticlesComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

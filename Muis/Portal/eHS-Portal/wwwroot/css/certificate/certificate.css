@@ -1,0 +1,431 @@
+﻿.d-none {
+  display: none;
+}
+
+.page-break {
+  height: 16px;
+}
+
+.certificate .body {
+  all: initial;
+}
+
+  .certificate .body .page {
+    width: 1244px;
+    height: 1740px;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    position: relative;
+  }
+
+    .certificate .body .page .background {
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
+
+    .certificate .body .page .number {
+      font-weight: bold;
+      font-size: 30px;
+      font-family: Arial, Helvetica, sans-serif;
+      top: 70px;
+      right: 83px;
+      position: absolute;
+    }
+
+    .certificate .body .page .expiry {
+      text-align: right;
+      top: 454px;
+      right: 83px;
+      position: absolute;
+    }
+
+      .certificate .body .page .expiry span {
+        font-size: 66px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+    .certificate .body .page .issuedOn {
+      text-align: right;
+      top: 530px;
+      right: 86px;
+      position: absolute;
+    }
+
+      .certificate .body .page .issuedOn span {
+        font-size: 17px;
+        font-style: italic;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+    .certificate .body .page .schemes {
+      width: 1244px;
+      height: 260px;
+      text-align: center;
+      line-height: 260px;
+      vertical-align: middle;
+      bottom: 0px;
+      position: absolute;
+    }
+
+      .certificate .body .page .schemes span {
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
+        font-size: 52px;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+      }
+
+    .certificate .body .page .serialNo {
+      bottom: 8px;
+      left: 8px;
+      position: absolute;
+    }
+
+      .certificate .body .page .serialNo span {
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+    .certificate .body .page .info-group .name {
+      font-size: 21px;
+      font-weight: bold;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      bottom: 48px;
+      position: absolute;
+    }
+
+    .certificate .body .page .info-group .separator {
+      border-bottom: 2px solid #000;
+      width: 100%;
+      bottom: 38px;
+      position: absolute;
+    }
+
+    .certificate .body .page .info-group .label {
+      color: #747474;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 100;
+      font-family: 'Times New Roman', Times, serif;
+      bottom: 0;
+      position: absolute;
+    }
+
+    .certificate .body .page .footnote {
+      font-size: 23px;
+      padding: 16px;
+      border: 2px solid #000;
+      border-radius: 12px;
+    }
+
+    /* Product */
+
+    .certificate .body .page.product .list {
+      line-height: 30px;
+      width: 561px;
+      top: 730px;
+      right: 37.5px;
+      position: absolute;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+      .certificate .body .page.product .list li {
+        padding-left: 8px;
+        font-size: 19px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+    .certificate .body .page.product .declaration {
+      color: #747474;
+      font-size: 27px;
+      font-family: 'Times New Roman', Times, serif;
+      width: 600px;
+      top: 644px;
+      right: 37.5px;
+      position: absolute;
+    }
+
+    .certificate .body .page.product .customer {
+      width: 600px;
+      top: 1090px;
+      right: 37.5px;
+      position: absolute;
+    }
+
+      .certificate .body .page.product .customer .label {
+        color: #747474;
+        font-size: 19px;
+        font-style: italic;
+        font-family: 'Times New Roman', Times, serif;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .certificate .body .page.product .customer .name,
+      .certificate .body .page.product .customer .premise {
+        font-size: 21px;
+        font-weight: bold;
+        font-family: 'Times New Roman', Times, serif;
+        display: block;
+      }
+
+    /* Poultry, Storage, Whole Plant */
+
+    .certificate .body .page.poultry .declaration,
+    .certificate .body .page.poultry .declaration-footer,
+    .certificate .body .page.storage .declaration,
+    .certificate .body .page.storage .declaration-footer,
+    .certificate .body .page.wholeplant .declaration,
+    .certificate .body .page.wholeplant .declaration-footer {
+      font-size: 28px;
+      font-family: 'Times New Roman', Times, serif;
+      width: 640px;
+      top: 770px;
+      right: 110px;
+      position: absolute;
+    }
+
+    .certificate .body .page.poultry .declaration-footer,
+    .certificate .body .page.storage .declaration-footer,
+    .certificate .body .page.wholeplant .declaration-footer {
+      top: 1164px;
+    }
+
+    .certificate .body .page.poultry .customer,
+    .certificate .body .page.storage .customer,
+    .certificate .body .page.wholeplant .customer {
+      width: 640px;
+      height: 120px;
+      top: 865px;
+      right: 110px;
+      position: absolute;
+    }
+
+    .certificate .body .page.poultry .premise,
+    .certificate .body .page.storage .premise,
+    .certificate .body .page.wholeplant .premise {
+      width: 640px;
+      bottom: 600px;
+      right: 110px;
+      position: absolute;
+    }
+
+    .certificate .body .page.poultry .footnote,
+    .certificate .body .page.storage .footnote {
+      width: 480px;
+      right: 106px;
+      bottom: 290px;
+      position: absolute;
+    }
+
+    /* Food Preparation Area, Catering, EE */
+
+    .certificate .body .page.fpa .customer,
+    .certificate .body .page.catering .customer,
+    .certificate .body .page.ee .customer {
+      width: 640px;
+      bottom: 760px;
+      right: 110px;
+      position: absolute;
+      background-color: grey;
+    }
+
+    .certificate .body .page.fpa .premise,
+    .certificate .body .page.catering .premise,
+    .certificate .body .page.ee .premise {
+      width: 640px;
+      bottom: 604px;
+      right: 110px;
+      position: absolute;
+      background-color: grey;
+    }
+
+/* Preview */
+
+.certificate.preview .body .page {
+  width: 816px;
+  height: 1148px;
+}
+
+  .certificate.preview .body .page .background {
+    width: 816px;
+    height: 1148px;
+  }
+
+  .certificate.preview .body .page .number {
+    font-size: 19px;
+    top: 41px;
+    right: 56px;
+  }
+
+  .certificate.preview .body .page .expiry {
+    text-align: right;
+    top: 300px;
+    right: 56px;
+  }
+
+    .certificate.preview .body .page .expiry span {
+      font-size: 43px;
+    }
+
+  .certificate.preview .body .page .issuedOn {
+    text-align: right;
+    top: 340px;
+    right: 60px;
+    position: absolute;
+  }
+
+    .certificate.preview .body .page .issuedOn span {
+      font-size: 11px;
+      font-style: italic;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+  .certificate.preview .body .page .schemes {
+    width: 816px;
+    height: 169px;
+    text-align: center;
+    line-height: 169px;
+    vertical-align: middle;
+    bottom: 0px;
+    position: absolute;
+  }
+
+    .certificate.preview .body .page .schemes span {
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: bold;
+      font-size: 33.8px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+    }
+
+  .certificate.preview .body .page .serialNo span {
+    font-size: 10px;
+  }
+
+  .certificate.preview .body .page .info-group .name {
+    font-size: 14px;
+    bottom: 31px;
+    font-weight: bold;
+  }
+
+  .certificate.preview .body .page .info-group .separator {
+    bottom: 25px;
+  }
+
+  .certificate.preview .body .page .info-group .label {
+    font-size: 16px;
+  }
+
+  .certificate.preview .body .page .footnote {
+    font-size: 15px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  /* Product */
+
+  .certificate.preview .body .page.product .list {
+    line-height: 19.5px;
+    width: 355px;
+    top: 474.5px;
+    right: 24.5px;
+  }
+
+    .certificate.preview .body .page.product .list li {
+      padding-left: 5.24px;
+      font-size: 12.46px;
+    }
+
+  .certificate.preview .body .page.product .declaration {
+    font-size: 17.5px;
+    width: 390px;
+    top: 419px;
+    right: 24.5px;
+  }
+
+  .certificate.preview .body .page.product .customer {
+    width: 393px;
+    top: 715px;
+    right: 24.5px;
+  }
+
+    .certificate.preview .body .page.product .customer .label {
+      font-size: 12.35px;
+      margin-bottom: 4px;
+    }
+
+    .certificate.preview .body .page.product .customer .name,
+    .certificate.preview .body .page.product .customer .premise {
+      font-size: 13.65px;
+    }
+
+  /* Poultry, Storage */
+
+  .certificate.preview .body .page.poultry .declaration,
+  .certificate.preview .body .page.poultry .declaration-footer,
+  .certificate.preview .body .page.storage .declaration,
+  .certificate.preview .body .page.storage .declaration-footer,
+  .certificate.preview .body .page.wholeplant .declaration,
+  .certificate.preview .body .page.wholeplant .declaration-footer {
+    font-size: 18.2px;
+    width: 416px;
+    top: 529px;
+    right: 71.5px;
+  }
+
+  .certificate.preview .body .page.poultry .declaration-footer,
+  .certificate.preview .body .page.storage .declaration-footer,
+  .certificate.preview .body .page.wholeplant .declaration-footer {
+    top: 756.5px;
+  }
+
+  .certificate.preview .body .page.poultry .customer,
+  .certificate.preview .body .page.storage .customer,
+  .certificate.preview .body .page.wholeplant .customer {
+    width: 416px;
+    height: 78px;
+    top: 562px;
+    right: 71.5px;
+  }
+
+  .certificate.preview .body .page.poultry .premise,
+  .certificate.preview .body .page.storage .premise,
+  .certificate.preview .body .page.wholeplant .premise {
+    width: 416px;
+    bottom: 410px;
+    right: 71.5px;
+  }
+
+  .certificate.preview .body .page.poultry .footnote,
+  .certificate.preview .body .page.storage .footnote,
+  .certificate.preview .body .page.wholeplant .footnote {
+    width: 312px;
+    right: 69px;
+    bottom: 188.5px;
+  }
+
+  /* Food Preparation Area, Catering, EE */
+
+  .certificate.preview .body .page.fpa .customer,
+  .certificate.preview .body .page.catering .customer,
+  .certificate.preview .body .page.ee .customer {
+    width: 420px;
+    bottom: 500px;
+    right: 71.5px;
+  }
+
+  .certificate.preview .body .page.fpa .premise,
+  .certificate.preview .body .page.catering .premise,
+  .certificate.preview .body .page.ee .premise {
+    width: 420px;
+    bottom: 396px;
+    right: 71.5px;
+  }

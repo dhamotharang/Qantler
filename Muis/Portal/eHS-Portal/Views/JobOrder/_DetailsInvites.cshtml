@@ -1,0 +1,31 @@
+﻿@model IList<eHS.Portal.Model.Officer>
+
+<div class="card widget invites">
+    <div class="card-body">
+        <div class="wrapper">
+            <h5 class="font-weight-bold mb-3">Invites</h5>
+            <div class="list">
+            </div>
+        </div>
+        <div class="widget-placeholder d-none">
+            <span class="text-muted"></span>
+        </div>
+        <div class="d-flex action d-none">
+            <a data-toggle="modal" data-target="#selectOfficerModal" href="javascript:void(0)">Invite Officer</a>
+        </div>
+    </div>
+</div>
+
+<div class="invites-template" hidden>
+    <div class="item">
+        <span class="img-xs rounded-circle text-white text-avatar {color}">{initial}</span>
+        <div class="wrapper pl-2">
+            <p class="mb-0 text-gray name">{name}</p>
+        </div>
+        <div class="pl-3 {actionVisibility}">
+            <button type="button" data-id="{id}" class="btn btn-danger btn-rounded">
+                <i class="mdi mdi-close"></i>
+            </button>
+        </div>
+    </div>
+</div>

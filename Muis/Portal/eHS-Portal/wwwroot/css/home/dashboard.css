@@ -1,0 +1,94 @@
+﻿.statistics-performance .loader {
+  display: none;
+  height: 56px;
+  width: 86px;
+}
+
+.statistics-performance .assigned .loader span {
+  background-color: #ffaf00;
+}
+
+.statistics-performance .processed .loader span {
+  background-color: #6837d8;
+}
+
+.statistics-performance .new .loader span {
+  background-color: #0c7cd5;
+}
+
+.statistics-performance .closed .loader span {
+  background-color: #ff3225;
+}
+
+.statistics-performance.busy .card-body .info,
+.statistics-performance.busy .card-body small {
+  display: none !important;
+}
+
+.statistics-performance .card canvas {
+  opacity: 1 !important;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.statistics-performance.busy .card canvas {
+  opacity: 0 !important;
+}
+
+.statistics-overview .loader {
+  height: 56px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 50px;
+  display: none;
+}
+
+.statistics-overview.busy .header .badge {
+  display: none !important;
+}
+
+.statistics-status .loader {
+  height: 76px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: none;
+}
+
+  .statistics-status .loader span {
+    background-color: #181c2d;
+  }
+
+.statistics-overview.busy .loader,
+.statistics-status.busy .loader,
+.work-items.busy .loader,
+.statistics-performance.busy .card-body .loader {
+  display: block;
+}
+
+.work-items .loader {
+  height: 56px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 220px;
+  display: none;
+}
+
+.work-items .card-title {
+  margin-bottom: 15px !important;
+}
+
+.work-items tr td:nth-child(2) {
+  width: 300px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+}

@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+يرجى ملاحظة أن هناك مخالفة مرورية غير مدفوعة تم إصدارها ضدك مرتبطة بطلبك {{ArReferenceNumber}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+Please note that there is a pending unpaid traffic fine issued against you and linked to your request {{ReferenceNumber}}.
+Best Regards

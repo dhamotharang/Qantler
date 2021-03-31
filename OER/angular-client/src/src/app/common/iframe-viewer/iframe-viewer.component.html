@@ -1,0 +1,11 @@
+<a href="javascript:;" (click)="showPopUpFrame()" class="ref-lnk"><span class="truncate">{{url}}</span></a>
+<p-dialog header=" {{ (url.length>20)? (url | slice:0:20)+'..':(url) }}" [(visible)]="showPopUp"
+          [style]="{width: '100vw', height: '100vh'}" [contentStyle]="{'max-height':'100vh'}" [positionLeft]="0"
+          [positionTop]="0" [modal]="true" [maximizable]="true">
+  <iframe id="youtubeIFrame" [src]="urlSafe"
+          class="dialog-iframe"></iframe>
+  <p class="mb-1">{{"If you are not able view content," | translate}} <a
+    href="{{ ( (url.search('http://') === 0 || url.search('https://') === 0) ? '' : '//') + url}}"
+    target="_blank" class="ref-lnk">{{"click here" | translate}} </a>
+    {{"to open content in new tab." | translate}}</p>
+</p-dialog>

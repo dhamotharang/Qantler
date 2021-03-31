@@ -1,0 +1,43 @@
+{
+  "Logging": {
+    "LogLevel": "rN4LA+i2RQbS1JfiPs59VQ==",
+    "Address": "7T8JktQS3Ef66CvjL2YdBw==",
+    "Port": "4GK9GPULy9L+uWWk+2GV2Q=="
+  },
+  "AllowedHosts": "XPO4fkodGyttiA4LTR7W3A==",
+  "ConnectionSettings": {
+    "ConnectionString": "51cb4vzSK/oaHnvWHKH99JFkKfs+yeHEn8m5MMJIGAd4F4bPAY48f5epLyAyQ7oC/JGwS0aICRzfnZRMaJBxeV2irBJRVA51FNFgMLu+ryk=",
+    "AuthSecret": "EKP1N25wirygJH/d1HwSI/S/SADVp/RXLtJyFcB+jQFxfpyvFUvUWh4Yqrviwbmk"
+  },
+  "LdapConfig": {
+    "Url": "4hHDWXNhdBga9XWsXA1dgQ==",
+    "BindDn": "nbA9VVqIslpubItbBtBYng==",
+    "BindCredentials": "hPZ+RsEVTXtm8k54BEtkww==",
+    "Domain": "sm59JcfAuRRT01FVGvOPzQ==",
+    "SearchBase": "wddQ3e3RwckVdebOpmXCnHGpCkjzj47NyOeYMYaE8EM=",
+    "AdminCn": "jueBBo+6Z3NbvC2efFsENQ=="
+  },
+  "EmailSettings": {
+    "SMTPHost": "bMrlRQ8QhiYJR98OzL5mxA==",
+    "SMTPPort": "nTOmHgTFSqJmD3eAlBbPIA==",
+    "Email": "Zn/Kv7zztZJXk2/wK9gDg5Y3Al8aCGBNM76PdhOmacw=",
+    "Password": "U07QfLEqYZqfpx6ptIxkaQ==",
+    "EnableSsl": "6D/kRcSbE6ZaDb47hTwNKQ=="
+  },
+  "SMSProvider": {
+    "SMSProviderUrl": "HQeE7jHthqeBYHFb+BG+VIebNFvNoL2COiPK5tGqMbO3U9EHaM9j9jGA6QX0NsBVvna5PFxc3NdDLyNavg1HzMeCzA79Z6DuXpNv+AizZRc=",
+    "SMSProviderUserName": "tP+nBKrT8Mugi1NlaImfcg==",
+    "SMSProviderPassword": "OdNrPe5W2BR+1xlkq7bSXQ=="
+  },
+  "UIConfig": { "Url": "y1j1m01PlSohhjhKEVW0m5UJHSx0md4qeDlx6qFhU83csc+I9A22QePZJR9tUjcBluTMddB0DVNAzMG0fJlzAA==" },
+  "APIConfig": { "Url": "y1j1m01PlSohhjhKEVW0m5UJHSx0md4qeDlx6qFhU80t7SwhSMrLJd8HXYN1zADo" },
+  "NotificationConfig": { "DeletionDay": "QoqlsSbBWc+D5w69CZdEVA==" },
+  "WrdUserLoginCredentials": {
+    "UserName": "4/iLqTy79IpJeQYJI53KWg==",
+    "Password": "UWTBSQau6E0EJCWC3Otb/w=="
+  },
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=",
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg=="
+  }
+}

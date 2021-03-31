@@ -1,0 +1,14 @@
+<div class="top-breadcrumbs">
+  <div class="container">
+    <nav>
+      <ol class="breadcrumb align-items-center">
+        <li class="breadcrumb-item" *ngFor="let item of items" [ngClass]="item.active?'active':''">
+          <a *ngIf="!item.active;else Active" routerLink="{{item.link}}">{{item.text}}</a>
+          <ng-template #Active>
+            {{item.text}}
+          </ng-template>
+        </li>
+      </ol>
+    </nav>
+  </div><!--container-->
+</div><!--top-breadcrumbs-->

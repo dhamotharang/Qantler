@@ -1,0 +1,131 @@
+<section class="content-header">
+  <h1>
+    Courses
+    <small>it all starts here</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">courses</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <p-toast position="center"></p-toast>
+  <form action="">
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Courses List</h3>
+
+      </div>
+      <div class="box-body">
+
+        <div class="container-fluid">
+          <div class="row">
+              <form class="ng-untouched ng-pristine ng-valid">
+                <div class="d-flex search-filter-row">
+              <div class="row">
+                <div class="col-md-4">
+              <label for="" class="">Search</label>
+              <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+            </div>
+            <div class="col-md-1">
+              <div class="form-group search-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                  Clear
+                </button>
+              </div>
+            </div>
+              </div>
+            <!-- <div class="col-xs-6"> 
+            <div class="form-group search-btn-col">
+              <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                Search
+              </button>
+            </div>
+            <div class="form-group clear-btn-col ml-3">
+              <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+               Clear
+              </button>
+            </div>
+            </div> -->
+                </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="Courses List">
+              <thead>
+                <tr>
+                  <th id="title" data-toggle="tooltip" title="Sort By Title" (click)="Clickingevent($event, 1)">Title 
+                  <span *ngIf="spanColNo=='asc-1' && Clickfield=='title'" id="title" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-1' && Clickfield=='title'" id="title" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                  </th>
+                  <th id="descp" data-toggle="tooltip" title="Sort By Description" (click)="Clickingevent($event, 2)">Description 
+                  <span *ngIf="spanColNo=='asc-2' && Clickfield=='descp'" id="descp" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-2' && Clickfield=='descp'" id="descp" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                  </th>                
+                  <th id="category" data-toggle="tooltip" title="Sort By Category" (click)="Clickingevent($event, 3)">Category 
+                  <span *ngIf="spanColNo=='asc-3' && Clickfield=='category'" id="category" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-3' && Clickfield=='category'" id="category" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                  </th>
+                  <th id="createdby" data-toggle="tooltip" title="Sort By CreatedBy" (click)="Clickingevent($event, 4)">Created By 
+                  <span *ngIf="spanColNo=='asc-4' && Clickfield=='createdby'" id="createdby" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-4' && Clickfield=='createdby'" id="createdby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                 </th>
+                  <th id="status" data-toggle="tooltip" title="Sort By Status" (click)="Clickingevent($event, 5)">Status 
+                 <span *ngIf="spanColNo=='asc-5' && Clickfield=='status'" id="status" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                 <span *ngIf="spanColNo=='desc-5' && Clickfield=='status'" id="status" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                 </th>
+                  <th id="action"class="setWidth">Action</th>           
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of courses">
+                <td>{{item.title}}</td>
+                <td>{{item.courseDescription}}</td>
+                <td>{{item.category.name}}</td>
+                <td>{{item.createdBy}}</td>
+                <td>{{item.isApproved ? 'Approved' : item.isDraft ? 'Draft' : 'Submitted for Approval' }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger" (click)="deleteCourse(item)">Delete</button>
+                  <a *ngIf="!item.isApproved && !item.isDraft"
+                     href="{{userportalUrl + 'verify-content/1/' + item.id + '/' + encService.set(0) }}/0/{{encService.set('NA')}}"
+                     target="_blank"
+                     class="btn btn-primary">View Course</a>
+                  <a *ngIf="item.isApproved" href="{{userportalUrl + 'course/' + encService.set(item.id) }}"
+                     target="_blank"
+                     class="btn btn-primary">View Course</a>
+                </td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-right">
+
+        <p-paginator [rows]="10" #pp [totalRecords]="totalLength"
+                     (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>

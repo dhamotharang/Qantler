@@ -1,0 +1,42 @@
+<app-sub-banner [title]="'Course Test' | translate"
+                [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Courses'|translate,link:'/courses',active:false},{text: 'Course',link:'/course/' + encService.set(this.id),active:false},{text: 'Course Test' | translate,link:null,active:true}]">
+</app-breadcrumbs>
+<div class="grey-bg pt-40 pb-40">
+  <div class="container">
+    <div class="panel-box p-30" *ngIf="!courseEnrolled && dataLoadFailed">
+      <p class="text-center"> {{'You have to be enrolled into the course to take this test' | translate}}.</p>
+    </div>
+    <div class="panel-box p-30" *ngIf="courseTest && !dataLoadFailed">
+      <div class="ques-row" *ngFor="let question of courseTest.questions;let i = index">
+        <p class="question-title">
+          {{i+1}} . {{question.questionText}}
+        </p>
+        <div class="media resource-media">
+          <div class="img-block mr-3">
+            <div class="file-viewer-flex">
+              <app-file-viewer *ngIf="question.media" [fileName]="question.fileName ? question.fileName : ''"
+                               [title]="'Course Test'"
+                               [url]="question.media"></app-file-viewer>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngFor="let answer of courseTest.answers">
+          <ng-container *ngIf="question.id === answer.questionId">
+            <div class="rad-list">
+              <label class="rad-container">{{answer.optionText}}
+                <input type="radio" [(ngModel)]="submittedAnswers[i]" name="answer{{answer.id}}{{question.id}}"
+                       value="{{answer.id}}">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div><!--ques-row-->
+      <button (click)="submitAnswer(submittedAnswers)" class="btn btn-primary text-uppercase">{{'Submit' | translate}}
+      </button>
+    </div><!--panel-box-->
+  </div><!--container-->
+</div><!--grey-bg-->

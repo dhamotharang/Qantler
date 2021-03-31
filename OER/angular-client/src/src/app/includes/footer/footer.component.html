@@ -1,0 +1,20 @@
+<footer class="site-footer mt-auto text-center {{router.url === '/' ? ' ftr-home' : ''}}">
+  <div class="container">
+    <ul class="footer-links">
+      <li *ngFor="let item of WCMs">
+        <a routerLink="/{{getRouteLink(item)}}"> {{item.pageName| translate}}</a>
+      </li>
+    </ul>
+  </div>
+  <!--container-->
+  <div class="copy-section">
+    <div class="container">
+      {{"copyright" | translate}}
+    </div>
+    <!--container-->
+  </div>
+</footer>
+<button class="goToTop">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</button>
+<!-- scroll to Top // -->

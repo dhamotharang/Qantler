@@ -1,0 +1,64 @@
+﻿.con-text {
+  border: 1px solid #000;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.financial-header tr th {
+  text-transform: uppercase;
+  color: #8d8d8d;
+}
+
+.financial-header tr td:nth-child(1) {
+  padding: 12px 15px 18px 0px;
+  vertical-align: top;
+}
+
+.financial-header tr td:nth-child(2) {
+  padding: 12px 0px 12px 15px;
+  vertical-align: top;
+}
+
+.table.table-borderless.financial-header tr {
+  border-bottom: 1px solid #f3f3f3;
+}
+
+#Tlisting_filter label {
+  margin-bottom: 0;
+}
+
+#Tlisting_filter {
+  padding: 20px 20px 0;
+}
+
+.dataTables_scrollBody {
+  min-height: 53vh;
+}
+
+.form-control {
+  font-size: 0.875rem;
+}
+
+.cust_AmtPosition {
+  display: block;
+  padding-top:5px;
+  text-align: left;
+}
+
+.cust_DatePosition {
+  display: block;
+  padding-top: 5px;
+  text-align: left;
+}
+
+.effectiveDate {
+  top: -2px;
+}
+
+.tcNote {
+  font-size: 0.875rem;
+}
+
+.table.table-borderless.financial-header tr:last-child {
+  border-bottom: none;
+}

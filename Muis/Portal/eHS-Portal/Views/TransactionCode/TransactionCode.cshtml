@@ -1,0 +1,58 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model eHS.Portal.Models.TransactionCode.TransactionCodeModel
+
+@{
+  ViewData["Title"] = "Transaction Code";
+}
+
+@section CSS {
+  <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+  <link rel="stylesheet" href="~/plugins/datatables.net-select-bs4/select.bootstrap4.min.css" />
+  <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/transactionCode/index.css" />
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+    <h4 class="page-title">Financial Transaction Code</h4>
+  </div>
+}
+
+<div class="row">
+  <div class="col-12 ">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive bg-white">
+          <table id="Tlisting" class="table">
+            <thead>
+              <tr>
+                <th>Code #</th>
+                <th>Gl Entry</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Last Updated</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot />
+            <tbody />
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+  </script>
+  <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+  <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+  <script src="~/plugins/select2/select2.min.js"></script>
+  <script src="~/js/transactionCode/Index.js"></script>
+}

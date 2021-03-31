@@ -1,0 +1,115 @@
+<section class="content-header">
+  <h1>
+    Rejection List
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Rejection List</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <p-toast position="center"></p-toast>
+  <form action="">
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Rejection List</h3>
+      </div>
+      <div class="box-body">
+
+        <div class="container-fluid">
+          <div class="row">
+              <form class="ng-untouched ng-pristine ng-valid">
+                <div class="d-flex search-filter-row">
+              <div class="row">
+                <div class="col-md-4">
+              <label for="" class="">Search</label>
+              <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+            </div>
+            <div class="col-md-1">
+              <div class="form-group search-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                  Clear
+                </button>
+              </div>
+            </div>
+              </div>
+            <!-- <div class="col-xs-6"> 
+            <div class="form-group search-btn-col">
+              <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                Search
+              </button>
+            </div>
+            <div class="form-group clear-btn-col ml-3">
+              <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+               Clear
+              </button>
+            </div>
+            </div> -->
+                </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="Rejection List">
+              <thead>
+              <tr>
+                <th id="title"  data-toggle="tooltip" title="Sort By Title" (click)="Clickingevent($event, 1)">Title
+                  <span *ngIf="spanColNo=='asc-1' && Clickfield=='title'" id="title"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-1' && Clickfield=='title'" id="title" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                  </th>
+                <th id="type" data-toggle="tooltip" title="Sort By Type" (click)="Clickingevent($event, 2)">Type
+                  <span *ngIf="spanColNo=='asc-2' && Clickfield=='type'" id="type"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-2' && Clickfield=='type'" id="type" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                    </th>
+                <th id="action" class="setWidth">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of resources">
+                <td>{{item.title}}</td>
+                <td>{{item.contentType === 1 ? 'Course' : 'Resource'}}</td>
+                <td>
+                  <a *ngIf="item.contentType === 1"
+                     href="{{userportalUrl + 'verify-content/2/' + item.contentId + '/' + encService.set(0) }}/0"
+                     target="_blank"
+                     class="btn btn-primary">View Course</a>
+                  <a *ngIf="item.contentType === 2"
+                     href="{{userportalUrl + 'verify-content/1/' + item.contentId + '/' + encService.set(0) }}/0"
+                     target="_blank"
+                     target="_blank"
+                     class="btn btn-primary">View Resource</a>
+                </td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-right">
+
+        <p-paginator [rows]="10" [totalRecords]="totalLength"
+                     (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>

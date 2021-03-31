@@ -1,0 +1,118 @@
+﻿@model eHS.Portal.Models.Customer.DetailsModel;
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+
+@section CSS
+{
+    <link rel="stylesheet" href="~/plugins/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/customer/details.css">
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
+
+}
+
+@section NavbarTitle {
+    <div class="page-header">
+        <h4 class="page-title">@Model.Data?.Name</h4>
+    </div>
+}
+
+<div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="font-weight-bold mb-4">Customer Details</h5>
+                            <div class="row customer-info">
+                                <div class="col-md-6 info customer">
+                                    <p class="mb-1"><strong>Name : </strong><span id="name"></span></p>
+                                    <p class="mb-1"><strong>UEN : </strong><span id="altid"></span></p>
+                                </div>
+                                <div class="col-md-6 info customer-other">
+                                    <div class="mb-1">
+                                        <strong>Customer Code:</strong>
+                                        <span id="code"></span>
+                                        <button id="codeBtn" type="button" data-toggle="modal" data-target="#selectCodeModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                                    </div>
+                                    <div class="mb-1">
+                                        <strong>Group Code:</strong>
+                                        <span id="code-group"></span>
+                                        <button id="groupCodeBtn" type="button" data-toggle="modal" data-target="#selectCodeModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                                    </div>
+                                    <div class="mb-1">
+                                        <strong>Parent:</strong>
+                                        <span id="parent-code"></span>
+                                        <button id="parentBtn" type="button" data-toggle="modal" data-target="#selectCustomerModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                                    </div>
+                                    <div class="mb-1">
+                                        <strong>Officer-in-Charge:</strong>
+                                        <span id="officer-code"></span>
+                                        <button id="officerBtn" type="button" data-toggle="modal" data-target="#selectOfficerModal" class="btn btn-inverse-primary btn-rounded px-2 py-1 ml-2 d-none"> Assign </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <partial name="_DetailsPremise.cshtml" />
+                </div>
+            </div>
+            <div class="row">
+                <partial name="_DetailsRecentRequest.cshtml" />
+            </div>
+            <div class="row">
+                <partial name="_DetailsRecentPayment.cshtml" />
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsCase.cshtml" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <partial name="_DetailsPeriodicInspection.cshtml" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="/Views/Shared/_SelectCode.cshtml" />
+<partial name="/Views/Shared/_CreateCode.cshtml" />
+<partial name="/Views/Shared/_SelectCustomer.cshtml" />
+<partial name="/Views/Shared/_CreateCustomer.cshtml" />
+<partial name="/Views/Shared/_SelectOfficer.cshtml" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+        app.page.model = @Html.Raw(Json.Serialize(Model));
+    </script>
+    <script src="~/plugins/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/plugins/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/plugins/datatables.net-scroller/dataTables.scroller.min.js"></script>
+    <script src="~/plugins/select2/select2.min.js"></script>
+    <script src="~/js/shared/_createCode.js"></script>
+    <script src="~/js/shared/_selectCode.js"></script>
+    <script src="~/js/shared/_createCustomer.js"></script>
+    <script src="~/js/shared/_selectCustomer.js"></script>
+    <script src="~/js/shared/_selectOfficer.js"></script>
+    <script src="~/js/shared/customer/_assignOfficer.js"></script>
+    <script src="~/js/customer/details.js"></script>
+    <script src="~/js/customer/_detailsRecentRequest.js"></script>
+    <script src="~/js/customer/_detailsRecentPayment.js"></script>
+    <script src="~/js/customer/_detailsPremise.js"></script>
+}

@@ -1,0 +1,60 @@
+﻿.contact span {
+  margin-right: 8px;
+}
+
+
+.response-attachments .attachments {
+  overflow: auto;
+}
+
+  .response-attachments .attachments .item {
+    padding: 10px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: inline-flex !important;
+    background-color: #ffffff;
+  }
+
+    .response-attachments .attachments .item .thumb {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+      .response-attachments .attachments .item .thumb i {
+        font-size: 30px;
+        margin: 0;
+        color: #212529;
+      }
+
+    .response-attachments .attachments .item .details {
+      margin-right: 6px;
+    }
+
+      .response-attachments .attachments .item .details p.file-name {
+        display: block;
+        margin-bottom: 0;
+        margin-top: 2px;
+        color: #212529;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+
+      .response-attachments .attachments .item .details .buttons {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+        .response-attachments .attachments .item .details .buttons .file-size {
+          margin-right: 10px;
+          margin-bottom: 0px;
+          font-size: 0.875rem;
+        }
+
+        .response-attachments .attachments .item .details .buttons a:last-child {
+          margin-right: 0;
+        }

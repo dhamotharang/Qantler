@@ -1,0 +1,46 @@
+<div class="resource-list-rating">
+  <div class="dropdown" id="ratings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="flex-row">
+      <div class="flex-column">
+        <star-rating [starType]="'icon'" [rating]="getRatingNumber() | number : '1.2-2'" [numOfStars]="5" 
+                     [staticColor]="'default'" [showHalfStars]="true" [step]="0.01" [hoverEnabled]="true"
+                     (starClickChange)="rateData($event)"></star-rating>
+      </div>
+      <div class="flex-column">
+        <button type="button" class="rating-drop">({{allUsers}})
+          <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </button>
+
+      </div>
+    </div>
+    <div class="dropdown-menu" aria-labelledby="ratings">
+      <p>{{getRatingNumber() | number : '1.2-2'}} {{"out of 5 stars" | translate}}</p>
+      <ng-container *ngFor="let item of ratingCount">
+        <div *ngIf="checkRating(item)" class="rate-table">
+          <div class="rate-cell">
+            <span>{{item}} {{"Star" | translate}}</span>
+          </div>
+          <div class="rate-cell">
+            <progress-bar [progress]="getPercentage(item)" [color]="'#ba9a3a'">
+            </progress-bar>
+          </div>
+          <div class="rate-cell">
+            <span>{{getUserCount(item)}}</span>
+          </div>
+        </div>
+        <div *ngIf="!checkRating(item)" class="rate-table">
+          <div class="rate-cell">
+            <span>{{item}} {{"Star" | translate}}</span>
+          </div>
+          <div class="rate-cell">
+            <progress-bar [progress]="0" [color]="'#ba9a3a'">
+            </progress-bar>
+          </div>
+          <div class="rate-cell">
+            <span>{{0}}</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

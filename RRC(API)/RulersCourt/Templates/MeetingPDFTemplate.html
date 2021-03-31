@@ -1,0 +1,115 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding:6px;
+        }
+
+        .pdfpara {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+		table.pdftable td, table.pdftable th {
+			border-width: 1px;
+			border-color: #000000;
+			border-style: solid;
+			padding: 15px;
+		}
+
+		table.pdftable td.normalTd-right {			
+			text-align: right;
+		}
+
+		table.pdftable td.normalTd-full {
+			text-align: right;
+		}
+
+            table.pdftable td.greyTd-right {
+                /*background-color: #b6b6ff;*/
+            background-color: lightgrey;
+			text-align: right;
+		}
+
+            table.pdftable td.greyTd-center {
+                /*background-color: #b6b6ff;*/
+                background-color: lightgrey;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="pdfpara">{{MeetingTitle}}</p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right">{{RefNoValue}}</td>
+                <td class="greyTd-right">: {{RefNoLabel}}</td>
+                <td class="normalTd-right">{{OrgDeptValue}}</td>
+                <td class="greyTd-right">: <span dir="rtl">{{OrgDeptLabel}}</span></td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{OrgUserValue}}</td>
+                <td class="greyTd-right">: {{OrgUserLabel}}</td>
+                <td class="normalTd-right">{{LocValue}}</td>
+                <td class="greyTd-right">: {{LocLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{SubjectValue}}</td>
+                <td class="greyTd-right">: {{SubjectLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="3">{{AttendeeValue}}</td>
+                <td class="greyTd-right">: {{AttendeeLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{StartTmValue}}</td>
+                <td class="greyTd-right">: {{StartTmLabel}}</td>
+                <td class="normalTd-right">{{StartDtValue}}</td>
+                <td class="greyTd-right">: {{StartDtLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{EndTmValue}}</td>
+                <td class="greyTd-right">: {{EndTmLabel}}</td>
+                <td class="normalTd-right">{{EndDtValue}}</td>
+                <td class="greyTd-right">: {{EndDtLabel}}</td>
+            </tr>
+            <tr>
+                <td class="greyTd-right" colspan="4">{{PtsDiscussedLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="4">{{PtsDiscussedValue}}</td>
+            </tr>
+            <tr>
+                <td class="greyTd-right" colspan="4">{{PtsPendingLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="4">{{PtsPendingValue}}</td>
+            </tr>
+            <tr>
+                <td class="greyTd-right" colspan="4">{{SuggestionLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right" colspan="4">{{SuggestionValue}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="clear"></p><p class="clear"></p>
+</body>
+</html>

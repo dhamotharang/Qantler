@@ -1,0 +1,84 @@
+<app-sub-banner [title]="'My Notifications'|translate" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Dashboard'|translate,link:'/dashboard',active:false},
+{text: 'My Notifications'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+
+        <div class="panel-box p-30">
+
+          <div class="table-responsive">
+            <table class="table table-bordered th-bg tbl-pad dt-table table-layout-fixed">
+              <thead>
+              <tr>
+                <th scope="col" style="width: 100px;">{{'Message Type' | translate}}</th>
+                <th scope="col">{{'Title' | translate}}</th>
+                <th scope="col" style="width: 180px;">{{'Description' | translate}}</th>
+                <th scope="col" style="width: 180px;">{{'Comments' | translate}}</th>
+                <th scope="col" class="no-sort text-center" style="width: 200px;">{{'Action' | translate}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of notifications">
+                <td>{{item.messageType | translate}}</td>
+                <td *ngIf="item.emailUrl"><a class="text-dark" href="javascript:;"
+                                             (click)="clickAction(item)">{{item.subject | translate}}</a></td>
+                <td *ngIf="!item.emailUrl">{{item.subject | translate}}</td>
+                <td><div class="not-type" *ngIf="item.content.length > 200">
+                  <div *ngIf="!showMore && notifyNo == item.id"> {{ (item.content | translate) | slice:0:200}}  <span>...</span> 
+                  <a href="javascript:;" style=" color:  #1a3464;cursor: pointer; "  (click)="lessMoreItem(item,1)"> {{"See more" | translate}} </a></div>
+                  <div *ngIf="showMore && notifyNo == item.id"> {{item.content | translate }}  
+                    <a href="javascript:;" style="color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,2)">{{"See less" | translate}} </a></div>
+                    <div *ngIf="notifyNo != item.id">  {{ (item.content | translate) | slice:0:200}} <span >...</span> 
+                      <a  href="javascript:;" style="color: #1a3464;cursor: pointer; " (click)="lessMoreItem(item,1)">{{"See more" | translate}} </a></div></div>
+                <div class="not-type" *ngIf="item.content.length < 200">{{item.content | translate }} </div>
+                </td>
+                <td *ngIf="item.messageType != 'Resource Rejection' && item.messageType != 'Course Rejection'">
+                  <ul *ngIf="item.comment" class="tbl-list">
+                    <li><span tooltip="{{item.comment | translate}}" container="body" placement="right">{{item.comment | translate}}</span>
+                    </li>
+                  </ul>
+                </td>
+                <td *ngIf="item.messageType === 'Resource Rejection' || item.messageType === 'Course Rejection'">
+                  <ul *ngFor="let reason of item.reviewerComments" class="tbl-list">
+                    <li><span tooltip="{{reason.reasons}}" container="body" placement="right">{{reason.reasons}}</span>
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <button class="btn-approve btn-action" *ngIf="!item.isRead"
+                          (click)="markNotificationAsRead(item.id)">
+                    {{'Mark as Read' | translate}}
+                  </button>
+                  <button class="btn-reject btn-action" (click)="deleteNotification(item.id)">{{'Delete' | translate}}
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <p-paginator *ngIf="totalrows > pageSize" [totalRecords]="totalrows" [rows]="pageSize"
+                         (onPageChange)="paginate($event)"></p-paginator>
+
+          </div>
+
+        </div>
+        <!--panel-box-->
+
+      </div>
+      <!--col-->
+    </div>
+    <!--row-->
+
+  </div>
+  <!--container-->
+</div>
+<!--grey-bg-->

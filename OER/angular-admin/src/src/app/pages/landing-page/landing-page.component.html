@@ -1,0 +1,154 @@
+<section class="content-header">
+  <h1>
+    Dashboard
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Dashboard</li>
+  </ol>
+</section>
+<!-- Content Header (Page header) -->
+<!-- Main content -->
+<section class="content" *ngIf="user && user.isAdmin">
+  <!-- Info boxes -->
+  <div class="row landing-dashboard">
+    <a routerLink="/users">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua">
+            <em class="ion ion-ios-people"></em>
+          </span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Users</span>
+            <span class="info-box-number">{{users.length}}<small></small></span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+    <a routerLink="/resources">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><em class="ion ion-ios-search"></em></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Resources</span>
+            <span class="info-box-number">{{resource}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+    <!-- /.col -->
+
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+    <a routerLink="/courses">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><em class="ion ion-ios-book"></em></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Courses</span>
+            <span class="info-box-number">{{course}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+
+    <!-- /.col -->
+    <a routerLink="/abuse-reports">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><em class="ion ion-ios-flag"></em></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Abuse Reports</span>
+            <span class="info-box-number">{{abuses.length}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+
+    <!-- /.col -->
+
+    <!-- /.col -->
+    <a routerLink="qrc-list">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><em class="fa fa-user-md"></em></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">QRC Management</span>
+            <span class="info-box-number">{{qrcs.length}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+
+    <!-- /.col -->
+
+    <!-- /.col -->
+    <a routerLink="/external-url-management/requests">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><em class="fa fa-external-link"></em></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">External URL Management</span>
+            <span class="info-box-number">{{requests.length}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+
+    <!-- /.col -->
+
+    <!-- /.col -->
+    <a routerLink="master-data-management">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><em class="fa fa-database"></em></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Master Data Management</span>
+            <span class="info-box-number">{{datas}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+
+    <a routerLink="wcm-management">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-blue"><em class="fa fa-link "></em></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">WCM Management</span>
+            <span class="info-box-number">{{Pages.length}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </a>
+    <!-- /.col -->
+
+
+  </div>
+  <!-- /.row -->
+
+</section>

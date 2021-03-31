@@ -1,0 +1,7 @@
+﻿السلام عليكم ورحمة الله وبركاته
+تم إرسال نموذج إعادة المركبة والخاص بطلبك رقم {{ArReferenceNumber}}.
+مع جزيل الشكر والتقدير
+
+Al Salam Alaikum {{ToName}},
+Return form against the request {{EnService}} {{ReferenceNumber}} has been sent to you.
+Best Regards

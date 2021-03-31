@@ -1,0 +1,84 @@
+﻿<div class="modal fade filter" id="filterModal" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Advanced Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Customer Code</label>
+                        <div class="col-sm-9">
+                            <input id="filterCustomerCode" type="text" class="form-control form-control-lg" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Customer Name</label>
+                        <div class="col-sm-9">
+                            <input id="filterCustomerName" type="text" class="form-control form-control-lg" maxlength="150">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Premise</label>
+                        <div class="col-sm-9">
+                            <input id="filterPremise" type="text" class="form-control form-control-lg" maxlength="700">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Postal</label>
+                        <div class="col-sm-9">
+                            <input id="filterPostal" type="text" class="form-control form-control-lg" maxlength="700">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select id="filterStatusSelect" class="select-multiple select2-hidden-accessible" multiple="multiple" style="width:100%" aria-hidden="true">
+                                <option value="100">Pending</option>
+                                <option value="200">Delivered</option>
+                                <option value="300">Returned</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Issued On</label>
+                        <div class="col-sm-9">
+                            <div id="datepicker-issuedOnFrom" class="input-group date datepicker">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon input-group-append border-left">
+                                    <span class="mdi mdi-calendar input-group-text"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Issued On</label>
+                        <div class="col-sm-9">
+                            <div id="datepicker-issuedOnTo" class="input-group date datepicker">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon input-group-append border-left">
+                                    <span class="mdi mdi-calendar input-group-text"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Serial No</label>
+                        <div class="col-sm-9">
+                            <input id="filterSerialNo" type="text" class="form-control form-control-lg" maxlength="700">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="filterApplyButton" type="button" class="btn btn-outline-primary">Apply</button>
+                <button id="filterClearButton" type="button" class="btn btn-outline-secondary">Clear</button>
+                <button id="filterResetButton" type="button" class="btn btn-outline-secondary">Reset</button>
+                <button id="filterCloseButton" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

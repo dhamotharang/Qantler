@@ -1,0 +1,983 @@
+<app-sub-banner [title]="'Create Course'|translate" [description]="'landing_1'|translate">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Courses'|translate,link:'/courses',active:false},{text: 'Create Course'|translate,link:null,active:true}]">
+</app-breadcrumbs>
+
+<ng-container *ngIf="view === 'Create Course'">
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+      <div class="panel-box p-30 mb-30">
+
+        <form [formGroup]="CourseForm">
+
+          <div class="row">
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormDrafted || courseFormSubmitted || CourseForm.controls.title.touched) && CourseForm.controls.title.invalid) ? 'is-invlaid' : ''}}">
+                <label for="" class="form-label">{{'Cource Title' | translate}} <span
+                    class="text-danger">*</span></label>
+                <input class="form-control alt-bg" formControlName="title">
+                <p *ngIf="(courseFormDrafted || courseFormSubmitted || CourseForm.controls.title.touched) && CourseForm.controls.title.invalid"
+                  class="field-error">
+                  {{'Please enter a valid title' | translate}}.
+                </p>
+                <ng-container *ngIf="(CourseForm.controls.title.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="CourseForm.controls.title.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}{{CourseForm.controls.title.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormDrafted || courseFormSubmitted || CourseForm.controls.categoryId.touched) && CourseForm.controls.categoryId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Categories' | translate}} <span class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="categoryId"
+                  (change)="handleCategoryChange($event.target.value)" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of categories" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                    getCurrentLang() === 'ar' ? item.name_Ar : item.name}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormDrafted || courseFormSubmitted || CourseForm.controls.categoryId.touched) && CourseForm.controls.categoryId.invalid"
+                  class="field-error">
+                  {{'Please select a valid category' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.subCategoryId.touched) && CourseForm.controls.subCategoryId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Sub Categories' | translate}} <span
+                    class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="subCategoryId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of filteredSubCategories" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.name :
+                    getCurrentLang() === 'ar' ? item.name_Ar : item.name}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.subCategoryId.touched) && CourseForm.controls.subCategoryId.invalid"
+                  class="field-error">
+                  {{'Please select a valid sub category' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-8">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.courseDescription.touched) && CourseForm.controls.courseDescription.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Add Course Description' | translate}} <span
+                    class="text-danger">*</span></label>
+                <textarea class="form-control alt-bg" formControlName="courseDescription" rows="8"></textarea>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.courseDescription.touched) && CourseForm.controls.courseDescription.invalid"
+                  class="field-error">
+                  {{'Please enter a valid course description' | translate}}.
+                </p>
+                <ng-container *ngIf="(CourseForm.controls.courseDescription.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="CourseForm.controls.courseDescription.errors.maxlength != null">
+                    {{'Make_Profile_message_4' |
+                    translate}} {{CourseForm.controls.courseDescription.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.thumbnail.touched) && CourseForm.controls.thumbnail.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Upload' |translate}}
+                  {{'Course Thumbnail' |translate}} <span class="text-danger">*</span>&nbsp;<span
+                    tooltip="{{'File_limit_message' |translate}}" placement="top" class="text-info"><i
+                      class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                <div class="kv-avatar" style="width:200px">
+                  <div class="file-input">
+                    <div class="file-preview">
+                      <div class="file-drop-zone file-drop-zone-nojs">
+                        <img src="{{imgURL}}" class="preview-image" />
+                        <input *ngIf="imgURL === defaultImage" type="file" id="file" name="file" class="inputfile"
+                          accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp"
+                          (change)="handleFileInput($event.target.files)">
+                        <label for="file" class="btn btn-djblue" *ngIf="imgURL == defaultImage"> <i
+                            class="fa fa-folder-open"></i><span>{{'Upload Course Thumbnail' | translate}}</span></label>
+                        <label class="btn btn-djblue" *ngIf="imgURL != defaultImage" (click)="removePhoto()">
+                          <i class="fa fa-times"></i><span>{{'Remove' | translate}}</span></label>
+                      </div>
+                    </div>
+                  </div>
+                  <progress-bar *ngIf="thumbnailImageUploadStatus === 'Uploading'" [color]="'#ba9a3a'"
+                    [progress]="courseImageUploadPercentage" [style]="{'height': '20px'}">
+                  </progress-bar>
+                </div>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.thumbnail.touched) && CourseForm.controls.thumbnail.invalid"
+                  class="field-error">
+                  {{'Please select a valid thumbnail' | translate}}.
+                </p>
+
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+
+            <div class="col-md-8">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.keywords.touched) && CourseForm.controls.keywords.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Add Keywords' | translate}}</label>
+                <tag-input formControlName="keywords" placeholder="{{'Enter keywords' | translate}}" [addOnBlur]="true"
+                  (onAdd)="addKeyword($event)" [maxItems]="10" secondaryPlaceholder="{{'Enter keywords' | translate}}">
+                </tag-input>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.keywords.touched) && CourseForm.controls.keywords.invalid"
+                  class="field-error">
+                  {{'Please enter a valid keyword' | translate}}.
+                </p>
+                <ng-container *ngIf="(CourseForm.controls.keywords.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="CourseForm.controls.keywords.errors.maxlength != null">
+                    {{'Make_Profile_message_4'
+                    |translate}}{{CourseForm.controls.keywords.errors.maxlength.requiredLength}}</p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.courseContent.touched) && CourseForm.controls.courseContent.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Course Content' | translate}} <span
+                    class="text-danger">*</span></label>
+
+                <editor formControlName="courseContent" [init]="init"></editor>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.courseContent.touched) && CourseForm.controls.courseContent.invalid"
+                  class="field-error">
+                  {{'Please enter a valid course content' | translate}}.
+                </p>
+                <ng-container *ngIf="(CourseForm.controls.courseContent.errors | json) != 'null'">
+                  <p class="field-error" *ngIf="CourseForm.controls.courseContent.errors.maxlength != null">
+                    {{'Make_Profile_message_4'|translate}}{{CourseForm.controls.courseContent.errors.maxlength.requiredLength}}
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row">
+            <div class="col-md-6">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.courseFiles.touched) && CourseForm.controls.courseFiles.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label"><span
+                    style="unicode-bidi: plaintext;">{{'Upload Associated file (Media/Doc)' | translate}}</span>
+                  &nbsp;<span tooltip="{{'File_limit_message_1' | translate}}" placement="top" class="text-info"><i
+                      class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                <!-- <input type="file" (change)="handlecourseFileChange($event.target.files)" class="form-control alt-bg"
+                  formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                  .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"> -->
+                <div class="upload-btn-wrapper" style="position: relative; overflow: hidden; display: inline-block; background-color: #fff; border: 1px solid #cdcdcd; border-radius: 3px; padding: 8px 12px; height: 39px!important; width:calc(100% - 26px);">
+                  <button class="btnr" style="top: -6px;border: 2px solid #121212;color: #121212; background-color: #eee; padding: 5px 10px; border-radius: 1px; font-size: 14px; font-weight: bold; position: relative; padding: 5px; font-weight: normal;" title="{{'Choose File' | translate}}">{{'Choose File' | translate}}</button>
+                  <span style="vertical-align: 4px; padding: 5px; font-weight: normal;">{{'No file chosen' | translate }} </span>
+                  <input type="file" name="myfile" style="font-size: 42px; position: absolute; left: 0; top: 0; opacity: 0;" (change)="handlecourseFileChange($event.target.files)" class="form-control alt-bg"
+                    formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                  .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"
+                    title="{{'Choose File' | translate}}" />
+                </div>
+                <a href="javascript:;" *ngIf="CourseForm.value.tempFile" (click)="addNewFile()" class="clone-field">+
+                  {{'Add' | translate}}</a>
+
+                <ol *ngIf="courseFiles.length > 0" class="add-list-image">
+                  <li *ngFor="let item of courseFiles; let i = index">
+                    <div class="item-group">
+                      <span *ngIf="item.status != 'Uploading'" class="item-status" title="{{item.status}}"><span
+                          class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span></span>
+                      <span class="item-name"
+                        tooltip="{{'The uploaded file can be previewed in the Course Preview' | translate}}"
+                        container="body"><span class="ellipses">{{item.originalName}}</span></span>
+                      <span class="item-action"><a (click)="removeCourseFile(i)" style="cursor: pointer;"
+                          class="btn btn-link btn-sm text-danger" title="{{'Remove Item' | translate}}"><i
+                            class="fa fa-trash-o" aria-hidden="true"></i></a></span>
+                    </div>
+                    <progress-bar *ngIf="item.status === 'Uploading'" [color]="'#ba9a3a'" [progress]="item.progress"
+                      [style]="{'height': '10px'}">
+                    </progress-bar>
+                  </li>
+                </ol>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.courseFiles.touched) && CourseForm.controls.courseFiles.invalid"
+                  class="field-error">
+                  {{'Please select a valid course file' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-6">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.references.touched) && CourseForm.controls.references.invalid) ? 'is-invalid' : ''}}">
+
+                <label for="" class="form-label">{{'Public URL Reference' | translate}} <span
+                    tooltip="{{'Click add to submit' | translate}}" placement="top" class="text-info"><i
+                      class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                <input type="text" (keyup.enter)="addNewUrl()" class="form-control alt-bg" formControlName="tempUrl">
+                <a href="javascript:;" *ngIf="CourseForm.value.tempUrl" (click)="addNewUrl()" class="clone-field"
+                  data-toggle="modal" data-target="#add-modal">+ {{'Add' | translate}}</a>
+                <ol *ngIf="CourseForm.value['references'] && CourseForm.value['references'].length > 0"
+                  class="add-list">
+                  <li *ngFor="let item of CourseForm.value['references']; let i = index">
+                    <div class="item-group">
+                      <span class="item-name"><span class="ellipses" title="{{item.url}}">{{item.url}}</span></span>
+                      <span class="item-action"><button (click)="removeCourseUrl(i)"
+                          class="btn btn-link btn-sm text-danger" title="{{'Remove Item' | translate}}"><i
+                            class="fa fa-trash-o" aria-hidden="true"></i></button></span>
+                    </div>
+                  </li>
+                </ol>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.references.touched) && CourseForm.controls.references.invalid"
+                  class="field-error">
+                  {{'Please enter a valid reference url' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="" class="form-label">
+                  {{'Add Section' | translate}}</label>
+                <div>
+                  <ol *ngIf="CourseForm.value['sections'] && CourseForm.value['sections'].length > 0" class="add-list">
+                    <li *ngFor="let item of CourseForm.value['sections']; let i = index">
+                      <div class="item-group">
+                        <span class="item-name">
+                          <span class="ellipses" title="{{item.name}}">{{item.name}}</span>
+                        </span>
+                        <span class="item-action">
+                          <button (click)="editSection(i)" class="btn btn-link btn-sm text-danger"
+                            title="{{'Edit Item' | translate}}">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                          </button>
+                          <button (click)="removeSection(i)" class="btn btn-link btn-sm text-danger"
+                            title="{{'Remove Item' | translate}}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+                      <div class="resource-list"
+                        *ngIf="CourseForm.value['sections'][i]['courseResources'] && CourseForm.value['sections'][i]['courseResources'].length > 0">
+                        <div class="item-group"
+                          *ngFor="let item of CourseForm.value['sections'][i]['courseResources']; let j = index">
+                          <span class="item-name"><span class="ellipses"
+                              title="{{item.title}}">{{item.title}}</span></span>
+                          <span class="item-action"><button (click)="removeAttachedResource(i,j)"
+                              class="btn btn-link btn-sm text-danger" title="{{'Remove Item' | translate}}"><i
+                                class="fa fa-trash-o" aria-hidden="true"></i></button></span>
+                        </div>
+                      </div>
+                      <button class="btn btn-secondary btn-sm text-uppercase m-1" (click)="addResources(i)"
+                        data-target="#section-modal">
+                        {{'Attach Resources' | translate}}
+                      </button>
+                    </li>
+                  </ol>
+                  <button type="button" class="btn btn-primary text-uppercase" (click)="addSection()"
+                    data-target="#section-modal">
+                    {{'Add Section' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <!--row-->
+          <div class="row">
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.educationalStandardId.touched) && CourseForm.controls.educationalStandardId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Educational Standard' | translate}} <span
+                    class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="educationalStandardId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of educationalStandards" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.standard :
+                    getCurrentLang() === 'ar' ? item.standard_Ar : item.standard}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.educationalStandardId.touched) && CourseForm.controls.educationalStandardId.invalid"
+                  class="field-error">
+                  {{"Please select a valid Educational Standard" | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.educationalUseId.touched) && CourseForm.controls.educationalUseId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Educational Use' | translate}} <span
+                    class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="educationalUseId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of educationalUses" value="{{item.id}}">{{getCurrentLang() === 'en' ?
+                    item.text :
+                    getCurrentLang() === 'ar' ? item.text_Ar : item.text}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.educationalUseId.touched) && CourseForm.controls.educationalUseId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Educational Use' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.levelId.touched) && CourseForm.controls.levelId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{"Level" | translate}} <span class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="levelId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of levels" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.levelText :
+                    getCurrentLang() === 'ar' ? item.levelText_Ar : item.levelText}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.levelId.touched) && CourseForm.controls.levelId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Level' | translate}}.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal add-->
+          <p-dialog [(visible)]="showWhitelistUrlRequest" (onHide)="closeShowWhitelistUrlRequest()" [modal]="true"
+            [responsive]="true" header="{{'Public URL Reference' | translate}}">
+            <p>{{'We apologize the mentioned URL is not whitelisted as per the content policies of Manara' |
+              translate}}</p>
+            <p>{{'You can request the administrators of Manara portal to whitelist the mentioned URL' | translate}}</p>
+            <p>{{'Not whitelisted URL will visible only if approved by admin' | translate}}</p>
+            <a href="javascript:;" class="lnk-red">{{CourseForm.value.tempUrl}}</a>
+            <!--modal-body-->
+
+            <p-footer>
+              <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal"
+                (click)="RequestWhitelistUrl()">{{'Request' | translate}}
+              </button>
+            </p-footer>
+          </p-dialog>
+
+          <!--modal add-->
+          <div class="form-sub-sec mb-2"><b> {{'Enrollment Criteria' | translate}}<span
+                tooltip="{{'This course is intended for those who qualifies the below;' | translate}}" placement="top"
+                class="text-info"><i class="fa fa-info-circle" aria-hidden="true"></i></span> </b></div>
+
+          <div class="row">
+            <div class="col-md-4">
+
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.educationId.touched) && CourseForm.controls.educationId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Educational Qualification' | translate}} <span
+                    class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="educationId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of educations" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                    item.name_Ar}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.educationId.touched) && CourseForm.controls.educationId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Educational Qualification' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.professionId.touched) && CourseForm.controls.professionId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Professional Qualification' | translate}} <span
+                    class="text-danger">*</span></label>
+                <select class="form-control alt-bg" formControlName="professionId" required>
+                  <option value="">{{'Select' | translate}}</option>
+                  <option *ngFor="let item of professions" value="{{item.id}}">{{getCurrentLang() === 'en' ? item.name :
+                    item.name_Ar}}
+                  </option>
+                </select>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.professionId.touched) && CourseForm.controls.professionId.invalid"
+                  class="field-error">
+                  {{'Please select a valid Professional Qualification' | translate}}.
+                </p>
+              </div>
+            </div>
+            <!--col-->
+            <div class="col-md-4">
+              <div
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.copyRightId.touched) && CourseForm.controls.copyRightId.invalid) ? 'is-invalid' : ''}}">
+                <label for="" class="form-label">{{'Select Copyright' | translate}}<span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control rd-only" placeholder="{{getSelectedCopyRight()}}"
+                  (click)="showCopyRightList = true" readonly>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.copyRightId.touched) && CourseForm.controls.copyRightId.invalid"
+                  class="field-error">
+                  {{'Please select a valid copyright' | translate}}.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--row-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="readtime" class="form-label">{{'Reading time' | translate}}
+                  <span class="text-danger">*</span> : {{CourseForm.value.readingTime ?
+                  CourseForm.value.readingTime : '0 '}} {{'Minutes' | translate}}</label>
+                <!-- <p-slider formControlName="readingTime" [min]="5" [max]="600" [step]="1">
+                </p-slider> -->
+                <div *ngIf="getCurrentLang() == 'en'&&profileService.themeColor=='#1a3464'">
+                  <ng5-slider formControlName="readingTime" [options]="optionsEn"></ng5-slider>
+                </div>
+                <div *ngIf="getCurrentLang() != 'en'&&profileService.themeColor=='#1a3464'">
+                  <ng5-slider formControlName="readingTime" [options]="optionsAr"></ng5-slider>
+                </div>
+                <div *ngIf="getCurrentLang() == 'en'&&profileService.themeColor!='#1a3464'">
+                  <ng5-slider formControlName="readingTime" [options]="optionsThemeEn"></ng5-slider>
+                </div>
+                <div *ngIf="getCurrentLang() != 'en'&&profileService.themeColor!='#1a3464'">
+                  <ng5-slider formControlName="readingTime" [options]="optionsThemeAr"></ng5-slider>
+                </div>
+                <p *ngIf="(courseFormSubmitted || CourseForm.controls.readingTime.touched) && CourseForm.controls.readingTime.invalid"
+                  class="field-error">
+                  {{'Please enter a valid reading time' | translate}}.
+                </p>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <a class="btn btn-primary text-uppercase" *ngIf="CourseForm.value['tests'] === null"
+                  (click)="showAddTestModal()">{{'Add Test' | translate}}</a>
+                <a class="btn btn-primary text-uppercase" *ngIf="CourseForm.value['tests'] != null"
+                  (click)="showEditTestModal()">{{'Edit Test' | translate}}</a>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <div (click)="showTerms()"
+                class="form-group {{((courseFormSubmitted || CourseForm.controls.agreed.touched) && CourseForm.value.agreed === true) ? 'is-invalid' : ''}}">
+                <label class="chk-container">{{'I accept the terms and contents policy of the portal' | translate}}.
+                  <span class="text-danger">*</span>
+                  <input type="checkbox" formControlName="agreed" value="true">
+                  <span class="checkmark"></span>
+                  <p *ngIf="courseFormSubmitted && CourseForm.value.agreed === false" class="field-error">
+                    {{'Please agree terms and contents policy of the portal' | translate}}.
+                  </p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <!--col-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <a href="javascript:;" (click)="clearForm()"
+                  class="btn btn-primary text-uppercase mr-1 ar-mr-0">{{'Clear' |translate}}</a>
+                <a href="javascript:;" (click)="previewCourse()" class="btn btn-primary text-uppercase mr-1">{{'Preview'
+                  | translate}}</a>
+                <a href="javascript:;" (click)="submitForApproval(CourseForm)"
+                  class="btn btn-primary text-uppercase mr-1">{{'Submit for Approval' | translate}}</a>
+                <a href="javascript:;" (click)="saveAsDraft(CourseForm)"
+                  class="btn btn-primary text-uppercase mr-1">{{'Save as draft' | translate}}</a>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+
+          <p-dialog [(visible)]="showCopyRightList" [modal]="true" [responsive]="true"
+            header="{{'Select Copyright' | translate}}" [contentStyle]="{'width':'800px','max-height':'500px'}">
+            <div class="modal-body-cust">
+              <ng-container *ngFor="let item of copyrights">
+                <label class="rad-container"><strong>{{getCurrentLang() === 'en' ? item.title :
+                  getCurrentLang() === 'ar' ? item.title_Ar : item.title}}</strong>
+                  <input type="radio" value="{{item.id}}" formControlName="copyRightId">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="pop-bdy-txt">
+                  <div class="copy-flex">
+                    <div class="img-flex">
+                      <img *ngIf="item.media " src="{{ item.media}}" class="img-fluid" />
+                    </div>
+                    <div class="text-flex">
+                      <p class="mb-0">{{getCurrentLang() === 'en' ? item.description :
+                        getCurrentLang() === 'ar' ? item.description_Ar : item.description}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+              </ng-container>
+            </div>
+            <!--modal-body-->
+
+            <p-footer>
+              <button type="button" class="btn btn-primary text-uppercase" (click)="submitCopyRight()">{{'Select' |
+                translate}}
+              </button>
+              <button type="button" class="btn btn-info text-uppercase" (click)="cancelCopyRight()">
+                {{'Cancel' | translate}}
+              </button>
+            </p-footer>
+          </p-dialog>
+        </form>
+
+      </div>
+      <!--panel-box-->
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+
+
+  <p-dialog header="{{'I accept the terms and contents policy of the portal' | translate}}" [(visible)]="terms"
+    [modal]="true" [responsive]="true" [closable]="false"
+    [style]="{width: '600px', minWidth: '200px', 'max-height':'500px', 'overflow':'auto'}" [minY]="70"
+    [maximizable]="true" [baseZIndex]="10000" focusTrap="false" [focusOnShow]="false">
+    <div [innerHtml]="(getCurrentLang() === 'en' ? termsContent :termsContent_Ar)"></div>
+    <p-footer>
+      <button type="button" class="btn btn-primary" (click)="acceptAgreement(true)">{{'Agree'|translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="acceptAgreement(false)">{{'Cancel'|translate}}</button>
+    </p-footer>
+  </p-dialog>
+
+
+  <p-dialog [(visible)]="showAddSection" [modal]="true" [responsive]="true" header="{{'Add Section' | translate}}"
+    (onHide)="cancelAddSection()" [width]="500" [contentStyle]="{'max-height':'500px', 'min-height':'200px'}">
+    <div class="form-group {{(tempSection.name && tempSection.name.length > 0) ? 'is-invalid' : ''}}"
+      *ngIf="tempSection">
+      <label for="" class="form-label">{{'Section Name' |translate}}</label>
+      <input class="form-control alt-bg" [(ngModel)]="tempSection.name">
+      <p *ngIf="addSectionSubmitted && (!tempSection.name || tempSection.name.length < 1)" class="field-error">
+        {{'Please enter a valid Section Name' | translate}}.
+      </p>
+      <p class="field-error" *ngIf="tempSection.name && tempSection.name.length > 100">
+        {{'Make_Profile_message_4' | translate}} 100</p>
+    </div>
+    <p-footer>
+      <button type="button" class="btn btn-primary pull-left" (click)="cancelAddSection()">{{'Cancel' | translate}}
+      </button>
+      <button type="button" class="btn btn-primary mr-0" (click)="submitSection(tempSection)">{{'Add Section' |
+        translate}}
+      </button>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog [(visible)]="showAddResource" [modal]="true" [responsive]="true" header="{{'Attach Resources' | translate}}"
+    (onHide)="closeAttachResource()" [width]="500" [contentStyle]="{'max-height':'500px', 'min-height':'200px'}">
+    <div class="form-group">
+      <label for="" class="form-label">{{'Resource Name' | translate}}</label>
+      <p-autoComplete [(ngModel)]="queryResource" [suggestions]="queryResults" field="title" [multiple]="true"
+        (completeMethod)="searchResource($event)">
+      </p-autoComplete>
+    </div>
+    <p-footer>
+      <button type="button" class="btn btn-primary mr-0" [disabled]="queryResource.length === 0"
+        (click)="AttachResources()">{{'Attach Resources' | translate}}
+      </button>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog [(visible)]="showAddTest" [modal]="true" [responsive]="true" header="{{'Add Test' | translate}}"
+    (onHide)="cancelTest()" [width]="1000" [contentStyle]="{'max-height':'500px'}" [maximizable]="true">
+    <div class="box">
+      <h3 class="box-title">{{'Create Test' | translate}}</h3>
+      <div class="panel-box p-30 mt-2 mb-2">
+        <form [formGroup]="TestForm">
+          <ng-container formArrayName="questions"
+            *ngFor="let item of TestForm.get('questions')['controls']; let i = index">
+            <ng-container [formGroupName]="i">
+              <p-fieldset [toggleable]="true">
+                <p-header>{{'Question' | translate}} {{i+1}}
+                  <button class="btn btn-primary" (click)="removeQuestion(i)">{{'Remove' |translate}}
+                  </button>
+                </p-header>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="" class="form-label">{{'Add a Question' | translate}}</label>
+                      <input type="text" class="form-control" formControlName="questionText">
+                      <p *ngIf="(AddTestData || TestForm.controls.questions.controls[i].controls.questionText.touched) && TestForm.controls.questions.controls[i].controls.questionText.invalid"
+                        class="field-error">
+                        {{'Please enter a valid Question' | translate}}.
+                      </p>
+                      <ng-container
+                        *ngIf="(TestForm.controls.questions.controls[i].controls.questionText.errors | json) != 'null'">
+                        <p class="field-error"
+                          *ngIf="TestForm.controls.questions.controls[i].controls.questionText.errors.maxlength != null">
+                          {{'Make_Profile_message_4' |translate
+                          }}{{TestForm.controls.questions.controls[i].controls.questionText.errors.maxlength.requiredLength}}
+                        </p>
+                      </ng-container>
+                      <p class="field-error"
+                        *ngIf="!checkRightAnswer(TestForm.controls.questions.controls[i]) && AddTestData">
+                        {{'Please select at least one right answer.' | translate}}</p>
+                    </div>
+                  </div>
+                  <!--col-->
+                </div>
+                <!--row-->
+                <ng-container formArrayName="answerOptions"
+                  *ngFor="let item of  TestForm.get('questions')['controls'][i].get('answerOptions')['controls']; let j = index">
+                  <ng-container [formGroupName]="j">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="" class="form-label">{{'Add Option' | translate}} {{j + 1}}</label>
+                          <input type="text" class="form-control" formControlName="optionText">
+                          <p *ngIf="(AddTestData || TestForm.controls.questions.controls[i].controls.answerOptions.controls[j].controls.optionText.touched) && TestForm.controls.questions.controls[i].controls.answerOptions.controls[j].controls.optionText.invalid"
+                            class="field-error">
+                            {{'Please enter a valid Option' | translate}}.
+                          </p>
+                          <ng-container
+                            *ngIf="(TestForm.controls.questions.controls[i].controls.answerOptions.controls[j].controls.optionText.errors | json) != 'null'">
+                            <p class="field-error"
+                              *ngIf="TestForm.controls.questions.controls[i].controls.answerOptions.controls[j].controls.optionText.errors.maxlength != null">
+                              {{'Make_Profile_message_4' |translate
+                              }}{{TestForm.controls.questions.controls[i].controls.answerOptions.controls[j].controls.optionText.errors.maxlength.requiredLength}}
+                            </p>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <!--col-->
+                    </div>
+                    <!--row-->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="rad-container">{{'Right Answer' | translate}}
+                            <input type="checkbox" formControlName="correctAnswer" [checked]="checkAnswer(i,j)"
+                              (change)="RightAnswerSelection($event,i,j)" value="j">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
+                      <!--col-->
+                    </div>
+                    <!--row-->
+                  </ng-container>
+                </ng-container>
+                <!--row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group" *ngIf="!checkAddedFile(i)">
+                      <label for="" class="form-label">{{'Upload Media' | translate}} &nbsp;<span
+                          tooltip="{{'Question_file_message' | translate}}" placement="top" class="text-info"><i
+                            class="fa fa-info-circle" aria-hidden="true"></i></span></label>
+                      <!-- <input type="file" (change)="handlequestionFileChange($event.target.files,i)"
+                        class="form-control alt-bg" formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                  .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"> -->
+                       <div class="upload-btn-wrapper" style="position: relative; overflow: hidden; display: inline-block; background-color: #fff; border: 1px solid #cdcdcd; border-radius: 3px; padding: 8px 12px; height: 39px!important; width:calc(100% - 26px);">
+                  <button class="btnr" style=" top: -6px;border: 2px solid #121212;color: #121212; background-color: #eee; padding: 5px 10px; border-radius: 1px; font-size: 14px; font-weight: bold; position: relative; padding: 5px; font-weight: normal;" title="{{'Choose File' | translate}}">{{'Choose File' | translate}}</button>
+                  <span style="vertical-align: 4px;padding: 5px; font-weight: normal;">{{'No file chosen' | translate }} </span>
+                  <input type="file" name="myfile" style="font-size: 42px; position: absolute; left: 0; top: 0; opacity: 0;" (change)="handlequestionFileChange($event.target.files,i)" class="form-control alt-bg"
+                    formControlName="tempFile" accept="image/png,image/x-png,image/gif,image/jpeg,image/jpg,image/bmp,.mp4,.webm,
+                  .wav,.mp3,.acc,.ogg,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.pdf,.mpg,.mpeg,.wmv,.tiff,.mov,.avi"
+                    title="{{'Choose File' | translate}}" />
+                </div>
+                      <a href="javascript:;" *ngIf="testTempFile[i] != null" (click)="addQuestionFile(i)"
+                        class="clone-field">+
+                        {{'Add' | translate}}</a>
+                    </div>
+                    <div *ngIf="checkAddedFile(i)">
+                      <div class="item-group">
+                        <span *ngIf="checkAddedFile(i).status != 'Uploading'" class="item-status"
+                          title="{{checkAddedFile(i).status}}"><span class="text-success"><i class="fa fa-check"
+                              aria-hidden="true"></i></span></span><span class="item-name"
+                          tooltip="{{'The uploaded file can be previewed in the Course Preview' | translate}}">{{checkAddedFile(i).originalName}}</span>
+                        <span class="item-action"><button (click)="removeTestFile(i)"
+                            class="btn btn-link btn-sm text-danger" title="{{'Remove Item' | translate}}"><i
+                              class="fa fa-trash-o" aria-hidden="true"></i></button></span>
+                      </div>
+                      <progress-bar *ngIf="checkAddedFile(i).status === 'Uploading'" [color]="'#ba9a3a'"
+                        [progress]="checkAddedFile(i).progress" [style]="{'height': '10px'}">
+                      </progress-bar>
+                    </div>
+                  </div>
+                  <!--col-->
+                </div>
+                <!--row-->
+              </p-fieldset>
+            </ng-container>
+          </ng-container>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <a href="javascript:;" class="clone-field" (click)="addMoreQuestion()">+ {{'Add More Questions' |
+                  translate}}</a>
+              </div>
+            </div>
+            <!--col-->
+          </div>
+          <!--row-->
+        </form>
+
+      </div>
+      <!--panel-box-->
+    </div>
+
+
+    <p-footer>
+      <button type="button" class="btn btn-primary text-uppercase" (click)="AddTest()">{{'Submit' | translate}}</button>
+      <button type="button" class="btn btn-primary text-uppercase" (click)="cancelTest()">{{'Cancel' | translate}}
+      </button>
+    </p-footer>
+  </p-dialog>
+
+</ng-container>
+<ng-container *ngIf="view === 'View Course'">
+  <div class="grey-bg pt-40 pb-40" style="position: relative">
+    <div class="close_btn_preview">
+      <p-button icon="pi pi-times" label="{{'Close Preview' | translate}}" (onClick)="closePreviewCourse()"
+        class="ui-button-primary">
+      </p-button>
+    </div>
+    <div class="container">
+      <div class="detail-content-main ml-0">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="dtl-img-main">
+              <img src="{{CourseForm.value.thumbnail?  CourseForm.value.thumbnail :'assets/images/dtl1.jpg'}}"
+                class="img-fluid">
+              <div class="dtl-img-overlay">
+                <div class="dtl-overlay-txt">
+                  <h4 class="mb-0">{{CourseForm.value.title ? CourseForm.value.title : '' }}</h4>
+                </div>
+                <!--dtl-overlay-txt-->
+              </div>
+            </div>
+            <br><br>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="dtl-h3">{{'Description' | translate}}</h3>
+            <hr>
+            <p class="dtl-p1 text-white-space-pre">{{CourseForm.value.courseDescription ?
+              CourseForm.value.courseDescription : ''}}</p>
+
+            <div class="descr-cnt">
+              <p><span>{{'Category' | translate}}:</span> {{getCategory(CourseForm.value.categoryId)}}</p>
+              <p><span>{{'Date Added' | translate}}:</span> {{whatTime|date}}</p>
+              <p><span>{{'Educational Standard' | translate}}:</span>
+                {{getEduSta(CourseForm.value.educationalStandardId)}}</p>
+              <p><span>{{'Educational Use' | translate}}:</span> {{getEduUse(CourseForm.value.educationalUseId)}}</p>
+              <p><span>{{'Level' | translate}}:</span> {{getEduLevel(CourseForm.value.levelId)}}</p>
+              <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                {{getKeywords(CourseForm.value.keywords)}}</p>
+            </div>
+            <div class="form-group">
+              <a class="btn btn-primary text-uppercase" *ngIf="CourseForm.value.tests" (click)="previewTest()">
+                {{'Preview test' | translate}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30"
+              [innerHTML]="CourseForm.value.courseContent ? CourseForm.value.courseContent : ''">
+            </div>
+
+
+            <div class="course-section" *ngIf="CourseForm.value.sections && CourseForm.value.sections.length > 0">
+              <ng-container *ngFor="let section of CourseForm.value.sections">
+
+                <h3 class="dtl-h3">{{section.name}}</h3>
+                <hr>
+
+                <ng-container *ngFor="let item of section.courseResources">
+                  <div class="panel-box {{i != CourseForm.value.sections.length - 1 ? 'mb-30' : ''}}">
+
+                    <div class="media resource-media">
+                      <div class="img-block mr-3">
+                        <img src="{{ item.thumbnail}}" alt="" class="img-fluid">
+                      </div>
+                      <div class="media-body resource-media-body">
+                        <div class="row">
+                          <div class="col-lg-9">
+                            <h6 class="resource-list-title"><a target="_blank"
+                                href="/resource/{{encService.set(item.id)}}">{{item.title}}</a>
+                            </h6>
+                          </div>
+                          <!--col-->
+                          <div class="col-lg-3">
+                            <div class="resource-list-rating">
+                              <bar-rating [rate]="item.rating" [readOnly]="true" [max]="5"></bar-rating>
+                            </div>
+                          </div>
+                          <!--col-->
+                        </div>
+                        <!--row-->
+                        <ul class="resource-list-auth-date">
+                          <li>
+                            <strong>{{'Category' | translate}}:</strong> <em><a
+                                href="javascript:;">{{item.category.name}}</a></em>
+                          </li>
+                          <li><strong>{{'Author' | translate}}:</strong> <em><a
+                                routerLink="/user/profile/{{encService.set(item.createdById)}}">{{item.createdBy}}</a></em>
+                          </li>
+                          <li><i class="fa fa-calendar" aria-hidden="true"></i> {{item.createdOn|date}}</li>
+                        </ul>
+                        <p class="mb-0 text-white-space-pre">
+                          {{item.resourceDescription}}
+                        </p>
+                        <ul class="resource-list-links">
+                          <li><a routerLink="/resource/{{encService.set(item.id)}}">{{'Read More' | translate}}</a></li>
+                        </ul>
+                      </div>
+                      <!--resource-media-body-->
+                    </div>
+                    <!--resource-media-->
+
+                    <div class="resource-media-outer">
+                      <p class="mb-0 wrap-all"><strong>{{'Keywords' | translate}}:</strong>
+                        {{item.keywords != 'false' ? item.keywords : 'Nil'}}</p>
+                      <ul class="resource-list-stats">
+                        <li>
+                          <p class="resource-list-stat-count">{{item.viewCount ? item.viewCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Visits' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.readingTime ? item.readingTime : 0}} mins</p>
+                          <p class="resource-list-stat-title">{{'Reading time' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.downloadCount ? item.downloadCount : 0}}</p>
+                          <p class="resource-list-stat-title">{{'Download Count' | translate}}</p>
+                        </li>
+                        <li>
+                          <p class="resource-list-stat-count">{{item.sharedCount ? item.sharedCount : 0}}
+                          </p>
+                          <p class="resource-list-stat-title">{{'Shared Count' | translate}}</p>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <!--resource-media-outer-->
+
+
+                  </div>
+                  <!--panel-box-->
+                </ng-container>
+
+
+              </ng-container>
+            </div>
+            <!--course-section-->
+
+          </div>
+          <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Reference Link' | translate}}</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let item of CourseForm.value.references;let i = index">
+                  <app-iframe-viewer [url]="item.url"></app-iframe-viewer>
+                </div>
+                <div class="col-md-6"
+                  *ngIf="CourseForm.value && (!CourseForm.value.references || (CourseForm.value.references && CourseForm.value.references.length === 0))">
+                  <p>{{'No Reference Links Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-box p-30 mb-30">
+              <h3 class="dtl-h3">{{'Course Files' | translate}}</h3>
+              <hr>
+              <div class="file-viewer-flex">
+                <app-file-viewer class="col-md-3" *ngFor="let item of CourseForm.value.courseFiles" [url]="item.url"
+                  [title]="CourseForm.value.title" [fileName]="item.fileName ? item.fileName : ''">
+                </app-file-viewer>
+              </div>
+              <div class="row">
+                <div class="col-md-6"
+                  *ngIf="CourseForm.value && (!CourseForm.value.courseFiles || (CourseForm.value.courseFiles && CourseForm.value.courseFiles.length === 0))">
+                  <p>{{'No Course Files Found' | translate}}.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+
+  <p-dialog [(visible)]="showPreviewAddTest" [responsive]="true" header="{{'Preview Test' | translate}}" [width]="1000"
+    [contentStyle]="{'max-height':'500px'}" [maximizable]="true">
+    <div class="container">
+      <div class="panel-box p-30" *ngIf="CourseForm.value.tests">
+        <div class="ques-row" *ngFor="let question of CourseForm.value.tests.questions;let i = index">
+          <p class="question-title">
+            {{i+1}} . {{question.questionText}}
+          </p>
+          <div class="media resource-media">
+            <div class="img-block mr-3">
+              <div class="file-viewer-flex">
+                <app-file-viewer *ngIf="question.media" [fileName]="question.fileName ? question.fileName : ''"
+                  [title]="CourseForm.value.title" [url]="question.media"></app-file-viewer>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngFor="let answer of question.answerOptions">
+            <div class="rad-list">
+              <label class="rad-container">{{answer.optionText}}
+                <input type="radio">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+        <!--ques-row-->
+      </div>
+      <!--panel-box-->
+    </div>
+    <!--container-->
+  </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="view === 'Blocked Resource'">
+
+  <div class="grey-bg pt-40 pb-40">
+    <div class="container">
+      <div class="panel-box p-30 mb-30">
+
+        <p>{{'Course cannot be further modified' | translate}}</p>
+
+      </div>
+      <!--panel-box-->
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->
+</ng-container>

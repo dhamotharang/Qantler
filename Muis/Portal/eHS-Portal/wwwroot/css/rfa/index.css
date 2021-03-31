@@ -1,0 +1,25 @@
+﻿.dataTables_scrollBody {
+  min-height: 60vh;
+}
+
+p[class="last-action"],
+p[class="customer"] {
+  width: 220px;
+  white-space: pre-wrap;
+  line-height: 1.2rem;
+}
+
+
+@media (min-width: 576px) {
+  .filter .modal-dialog {
+    max-width: 500px;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .filter .modal-lg,
+  .filter .modal-xl {
+    max-width: 50%;
+  }
+}

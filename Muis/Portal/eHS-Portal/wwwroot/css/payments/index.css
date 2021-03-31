@@ -1,0 +1,164 @@
+﻿.payment p {
+  margin-bottom: 0;
+  font-size: .875rem;
+}
+
+.payment .contact-info {
+  margin-top: 16px;
+}
+
+  .payment .contact-info > p {
+    font-size: 1rem;
+    font-weight: 700 !important;
+    margin-left: 12px;
+    margin-bottom: 8px;
+  }
+
+.payment .invoice {
+  display: flex;
+  margin-top: 0px;
+}
+
+  .payment .invoice p {
+    min-height: 36px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .payment .invoice.header {
+    height: 44px;
+    line-height: 44px;
+    background-color: #212529;
+    margin-top: 8px;
+  }
+
+    .payment .invoice.header p {
+      color: #fff;
+      padding: 0;
+    }
+
+  .payment .invoice.section .text {
+    font-weight: bold;
+  }
+
+  .payment .invoice .sno {
+    width: 38px;
+    text-align: center;
+  }
+
+  .payment .invoice .text {
+    flex: 1;
+  }
+
+  .payment .invoice .qty {
+    width: 63px;
+    text-align: center;
+  }
+
+  .payment .invoice .unitPrice {
+    width: 102px;
+    text-align: center;
+  }
+
+.payment .info {
+  display: flex;
+}
+
+.payment .invoice .fee,
+.payment .invoice .gst {
+  width: 79px;
+  text-align: center;
+}
+
+.payment .invoice .total {
+  width: 84px;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 16px;
+}
+
+.payment .invoice.footer {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  justify-content: flex-end;
+}
+
+  .payment .invoice.footer p {
+    text-align: right;
+    padding-right: 16px;
+    font-weight: bold;
+    font-size: 1rem;
+    padding-top: 0;
+  }
+
+    .payment .invoice.footer p.value {
+      width: 105px;
+    }
+
+  .payment .invoice.footer.sub p {
+    font-size: .875rem;
+    padding-bottom: 0;
+    padding-top: 8px;
+  }
+
+  .payment .invoice.footer.sub .value {
+    border-top: 1px solid #dee2e6;
+  }
+
+.payment .invoice.info {
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+  .payment .invoice.info > div {
+    display: flex;
+  }
+
+  .payment .invoice.info p {
+    min-height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex: 1;
+  }
+
+  .payment .invoice.info .action p {
+    line-height: 27px;
+  }
+
+  .payment .invoice.info .action a {
+    font-size: .65rem;
+  }
+
+.invoice .showviewrequest {
+  text-align: right;
+}
+
+.contactinfo .left {
+  padding-left: 0px !important;
+}
+
+@media (min-width: 576px) {
+  .filter .modal-dialog {
+    max-width: 500px;
+    margin: 30px auto;
+  }
+
+  .payment .modal-dialog {
+    max-width: 94%;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .filter .modal-lg,
+  .filter .modal-xl {
+    max-width: 50%;
+  }
+
+  .payment .modal-dialog {
+    max-width: 900px;
+    margin: 30px auto;
+  }
+}

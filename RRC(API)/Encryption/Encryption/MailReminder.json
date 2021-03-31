@@ -1,0 +1,14 @@
+{
+  "sqlServerConnectionString": "Data Source=QtK2DEV\\SQLEXPRESS;database=RulersCourt;Integrated Security=true;",
+  "fromAddress": "rrc.notification@verbat.com",
+  "smtpuser": "rrc.notification@verbat.com",
+  "smtppassword": "hbhjsb@2725&7Gb",
+  "smtphost": "mail.verbat.com",
+  "SMTPPort": 25,
+  "EnableSsl": false,
+  "Url": "http://qtk2dev.westus.cloudapp.azure.com/rrcui/#/",
+  "EncryptionKeys": {
+    "Key": "cqQZqWEP9sUMyDhKkId75D3KX4zQFdQFepZpkdqvPIg=", //Do not change this
+    "IV": "5DgP2DrvJ9xKTn6jA+Dstg==" //Do not change this
+  }
+}

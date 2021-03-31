@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <style>
+        .clear {
+            padding:6px;
+        }
+
+        .pdfpara {
+            text-align: center;
+            font-family: Arial;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        table.pdftable {
+            width: 100%;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            color: #000000;
+            font-family: Arial;
+            font-size: 20px;
+        }
+
+            table.pdftable td, table.pdftable th {
+                border-width: 1px;
+                border-color: #000000;
+                border-style: solid;
+                padding: 15px;
+            }
+
+                table.pdftable td.normalTd-right {
+                    width: 70%;
+                    text-align: right;
+                }
+
+                table.pdftable td.normalTd-full {
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-right {
+                    background-color: lightgrey;
+                    text-align: right;
+                }
+
+                table.pdftable td.greyTd-center {
+                    background-color: lightgrey;
+                    text-align: center;
+                }
+    </style>
+</head>
+<body>
+    <p class="clear"></p><p class="clear"></p><p class="clear"></p><p class="clear"></p>
+    <p class="pdfpara">{{MemoTitle}}</p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right">{{RefNoValue}}</td>
+                <td class="greyTd-right">: {{RefNoLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{Date}}</td>
+                <td class="greyTd-right">: {{DateLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <table class="pdftable">
+        <tbody>
+            <tr>
+                <td class="normalTd-right">{{ApproverValue}}</td>
+                <td class="greyTd-right">: {{ApproverLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{DestinationValue}}</td>
+                <td class="greyTd-right">: {{DestinationLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right">{{SubjectValue}}</td>
+                <td class="greyTd-right">: {{SubjectLabel}}</td>
+            </tr>
+            <tr>
+                <td class="greyTd-center" colspan="2">{{DescLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-full" colspan="2">{{DescValue}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right"><img style="display:{{ShowApproverSignature}};" src="{{ApproverSignatureValue}}" width="200" height="50" /></td>
+                <td class="greyTd-right">: {{ApproverSignatureLabel}}</td>
+            </tr>
+            <tr>
+                <td class="normalTd-right"><img style="display:{{ShowRedirectSignature}};" src="{{RedirectSignatureValue}}" width="200" height="50" /></td>
+                <td class="greyTd-right">: {{RedirectSignatureLabel}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="clear"></p><p class="clear"></p>
+</body>
+</html>

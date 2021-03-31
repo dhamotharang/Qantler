@@ -1,0 +1,36 @@
+<app-sub-banner [title]="'Privacy Settings'" [description]="''">
+</app-sub-banner>
+<app-breadcrumbs
+  [items]="[{text: 'Home'|translate,link:'/',active:false},{text: 'Privacy Settings',link:null,active:true}]">
+</app-breadcrumbs>
+
+<div class="grey-bg pt-40 pb-40 fix-height">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-dashboard-side-menu></app-dashboard-side-menu>
+      </div>
+      <!--col-->
+      <div class="col-lg-9">
+        <div class="panel-box p-30 mb-30 min-height">
+          <div class="form-group row">
+            <label class="col-xs-12 col-sm-3 col-md-3 control-label" for="email_notification">Email
+              notifications</label>
+            <div class="col-xs-12 col-sm-9 col-md-9">
+              <select class="form-control" id="email_notification">
+                <option value="">Receive "type name here" request notification only</option>
+                <option value="">Receive "type name here"</option>
+                <option value="">Receive all notifications</option>
+                <option value="">Do not receive email notifications</option>
+              </select>
+            </div>
+          </div>
+          <!--panel-box-->
+        </div>
+        <!--col-->
+      </div>
+      <!--row-->
+    </div>
+    <!--container-->
+  </div>
+  <!--grey-bg-->

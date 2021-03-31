@@ -1,0 +1,50 @@
+﻿<div class="modal fade review-modal" id="reviewModal" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label">Submit for Approval</h5>
+      </div>
+      <div class="modal-body">
+        <form id="reviewForm" class="form" method="get" action="#">
+        </form>
+        <div class="form-group flex-column rejection-email d-none">
+          <button type="button" class="btn btn-outline-primary btn-rounded compose-email" data-toggle="modal" data-target="#composeEmail" data-backdrop="static" data-keyboard="false" style="align-self: center;">
+            <i class="mdi mdi-file-document"></i>
+            Draft Rejection Email
+          </button>
+          <label class="error mt-2 text-danger" style="align-self: center;">Rejection email is required.</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-primary submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="reviewmodel-template" hidden>
+  <div class="review-recommendation">
+    <h5 class="mb-3">{text}</h5>
+    <fieldset data-scheme="{scheme}" data-subscheme="{subscheme}">
+      <div class="form-group row">
+        <label class="col-sm-3 col-md-3 col-form-label" for="recommendationSelect"> Recommendation:</label>
+        <div class="col-lg-5">
+          <select class="select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+            <option></option>
+            <option value="1">Recommend for Approval</option>
+            <option value="0">Recommend for Rejection</option>
+          </select>
+        </div>
+        <div class="offset-sm-3 offset-md-3">
+          <label class="error mt-2 text-danger" for="firstname">Please select your recommendation</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="remarks"> Remarks</label>
+        <textarea class="form-control" id="remarks" name="remarks" rows="5" maxlength="2000" placeholder="Enter remarks here" required></textarea>
+        <label class="error mt-2 text-danger" for="firstname">Please enter your remarks</label>
+      </div>
+    </fieldset>
+  </div>
+</div>

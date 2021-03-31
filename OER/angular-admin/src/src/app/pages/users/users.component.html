@@ -1,0 +1,123 @@
+<section class="content-header">
+  <h1>
+    Users
+    <small>it all starts here</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Users</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <p-toast position="center"></p-toast>
+  <form action="">
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Users List</h3>
+
+      </div>
+      <div class="box-body">
+
+        <div class="container-fluid">
+          <div class="row">
+              <form class="ng-untouched ng-pristine ng-valid">
+                <div class="d-flex search-filter-row">
+              <div class="row">
+                <div class="col-md-4">
+              <label for="" class="">Search</label>
+              <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+            </div>
+            <div class="col-md-1">
+              <div class="form-group search-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group clear-btn-col" style="margin-top: 24px;">
+                <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+                  Clear
+                </button>
+              </div>
+            </div>
+              </div>
+            <!-- <div class="col-xs-6"> 
+            <div class="form-group search-btn-col">
+              <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+                Search
+              </button>
+            </div>
+            <div class="form-group clear-btn-col ml-3">
+              <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+               Clear
+              </button>
+            </div>
+            </div> -->
+                </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover datatable" aria-describedby="users list">
+              <thead>
+              <!-- <tr>
+                <th id="firstname">First Name</th>
+                <th id="lastname">Last Name</th>
+                <th id="email">Email</th>
+                <th id="action">Action</th>
+              </tr> -->
+
+              <tr>
+                <th id="firstname" data-toggle="tooltip" title="Sort By FirstName" (click)="Clickingevent($event, 1)">First Name
+                  <span *ngIf="spanColNo=='asc-1' && Clickfield=='firstname'" id="firstname"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                  <span *ngIf="spanColNo=='desc-1' && Clickfield=='firstname'" id="firstname" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                  </th>
+                  <th id="lastname" data-toggle="tooltip" title="Sort By lastName" (click)="Clickingevent($event, 2)">Last Name 
+                    <span *ngIf="spanColNo=='asc-2' && Clickfield=='lastname'" id="lastname"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                    <span *ngIf="spanColNo=='desc-2' && Clickfield=='lastname'" id="lastname" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                     </th>                
+                  <th id="email" data-toggle="tooltip" title="Sort By Email" (click)="Clickingevent($event, 3)">Email 
+                    <span *ngIf="spanColNo=='asc-3' && Clickfield=='email'" id="email"  class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+                    <span *ngIf="spanColNo=='desc-3' && Clickfield=='email'" id="email" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+                       </th>
+                  <th id="action"class="setWidth">Action</th>  
+              </tr>
+
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of userList">
+                <td>{{item.firstName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.email}}</td>
+                <td class="setWidth">
+                  <a href="{{userportalUrl + 'user/profile/' + encService.set(item.id) }}" target="_blank"
+                     class="btn btn-primary">View Profile</a>
+                </td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-right">
+
+        <p-paginator *ngIf="userList.length > 0" #pp [rows]="10" [totalRecords]="length"
+                     (onPageChange)="paginateCat($event)"></p-paginator>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>

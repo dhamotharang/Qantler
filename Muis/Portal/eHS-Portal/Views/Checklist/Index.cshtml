@@ -1,0 +1,82 @@
+@{
+  ViewData["Title"] = "Checklist";
+}
+
+@section CSS
+{
+  <link rel="stylesheet" href="~/css/checklist/index.css" />
+  <link rel="stylesheet" href="~/plugins/select2/select2.min.css" />
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap-theme/select2-bootstrap.min.css" />
+}
+
+@section NavbarTitle {
+  <div class="page-header">
+    <h4 class="page-title">Inspection Checklist</h4>
+  </div>
+}
+
+@section Toolbar {
+  <div class="quick-link-wrapper">
+    <ul class="quick-links ml-auto">
+      <li><a id="new-version-new" class="add-new-btn" data-toggle="modal" data-target="#filterModal" href="javascript:void(0)"><i class="mdi mdi-plus"></i>New Version</a></li>
+    </ul>
+  </div>
+}
+
+<div class="row">
+  <div class="col-sm-12 col-md-4">
+    <div class="card widget rfa">
+      <div class="card-body">
+        <div class="wrapper">
+          <div class="form-group">
+            <select id="schemeSelect" onchange="app.page.getChecklist($('#schemeSelect').val())" class="form-control select-single select2-hidden-accessible" style="width:100%" aria-hidden="true">
+              <option value="100">Eating Establishment</option>
+              <option value="200">Food Preparation Area</option>
+              <option value="300">Food Manufacturing</option>
+              <option value="400">Poultry</option>
+              <option value="500">Endorsement</option>
+              <option value="600">Storage Facility</option>
+            </select>
+          </div>
+          <div class="container p-0">
+            <ul class="list-unstyled  border-bottom checklist-versions">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="font-weight-bold mb-4">
+          <span class="dropdown cursor-pointer">
+            <i class="mdi mdi-dots-vertical float-right" data-toggle="dropdown" aria-expanded="false"></i>
+            <span class="dropdown-menu p-0" aria-labelledby="dropdownMenuOutlineButton5" x-placement="bottom-start">
+              <a class="dropdown-item" id="new-version" href="#">Create new version</a>
+              <a class="dropdown-item" id="edit-version" href="#">Edit latest version</a>
+            </span>
+          </span>
+        </h4>
+        <div class="tab-content tab-content-solid" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="scheme100" data-scheme="100">
+            <div class="row">
+              <div class="col-lg-12 left">
+                <div class="lineitem-list" id="checklist-value">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<partial name="/Views/Shared/_ChecklistTemplate.cshtml" />
+
+@section Scripts
+{
+  <script src="~/js/checklist/index.js"></script>
+  <script src="~/plugins/select2/select2.min.js"></script>
+}

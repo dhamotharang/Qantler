@@ -1,0 +1,146 @@
+﻿.customer-other div {
+  display: flex;
+}
+
+.customer-other strong {
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+.customer-other span {
+  margin-left: 4px;
+}
+
+.customer-other button {
+  font-size: 0.65rem;
+  align-self: start;
+  margin-top: 2px;
+}
+
+.recent-request .loader {
+  height: 76px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  bottom: 0;
+  margin: auto;
+  display: none;
+}
+
+.recent-request {
+  min-height: 320px;
+}
+
+.loader span {
+  background-color: #0c7cd5;
+}
+
+.recent-payment {
+  min-height: 320px;
+}
+
+.recent-payment .loader {
+  height: 76px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  bottom: 0;
+  margin: auto;
+  display: none;
+}
+
+.recent-payment .loader span {
+  background-color: #ff3225;
+}
+
+.premises .loader {
+  height: 76px;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40px;
+  bottom: 0;
+  margin: auto;
+  display: none;
+}
+
+.premises {
+  min-height: 220px;
+}
+.customer-info {
+  font-family: "roboto", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.71;
+}
+
+.premises .loader span {
+  background-color: #6837d8;
+}
+
+  .recent-payment.busy .card-body .loader,
+  .recent-payment.busy .card-body .loader,
+  .premises.busy .card-body .loader {
+    display: block;
+  }
+
+.premises .row {
+  flex-direction: column;
+}
+
+.premises .certificate-container {
+  flex: 1;
+}
+
+  .premises .certificate-container span {
+    font-size: 0.785rem;
+  }
+
+  .premises .certificate-container .certificate-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+.premises .certificate-container {
+  border-bottom: 1px solid #dee2e6 !important;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding-left: 0px;
+  padding-bottom: 16px;
+}
+
+.premises .row .certificate-container:last-child {
+  border-bottom: 0px !important;
+}
+
+.premises .certificate-container p {
+  margin-bottom: 8px !important;
+  margin-top: 16px;
+}
+
+.premises .certificate-container:first-child p {
+  margin-top: 0px;
+}
+
+.premises .certificate-container .certificate-item {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin-left: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  align-items: flex-start;
+}
+
+  .premises .certificate-container .certificate-item span {
+    font-size: 0.875rem;
+    margin-left: 32px;
+  }
+
+    .premises .certificate-container .certificate-item span:nth-child(3) {
+      font-size: 0.65rem;
+    }

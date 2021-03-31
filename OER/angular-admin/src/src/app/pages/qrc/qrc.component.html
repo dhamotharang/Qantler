@@ -1,0 +1,411 @@
+<section class="content-header">
+  <h1>
+    QRC Management
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">QRC Management</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <app-pagetop></app-pagetop>
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <form action="">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">QRC Management</h3>
+      </div>
+      <div class="box-body">
+
+        <div class="panel-box p-30">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="">Select Category</label>
+                <select [(ngModel)]="qrcFilterCategory" name="category" (change)="getQrcList()" class="form-control">
+                  <option *ngFor="let item of Allcategories" value="{{item.id}}">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="form-group">
+                <label for="">QRC Name</label>
+                <select [(ngModel)]="qrc" name="qrc" id="" (change)="getCategoryByQRC()" class="form-control">
+                  <option *ngFor="let item of qrcs" value="{{item.id}}">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- row : END -->
+          <p-table [value]="users" [(selection)]="selectedUsers" dataKey="userId" [paginator]="true" [rows]="pageSize">
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="username">Username</th>
+                <th id="resources">Resources Contributed</th>
+                <th id="courses">Courses Created</th>
+                <th id="currqrc">Current QRCs</th>
+                <th id="reviews">No:of Reviews</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+              <tr>
+                <td>{{user.userName}}</td>
+                <td>{{user.resourceContributed}}</td>
+                <td>{{user.courseCreated}}</td>
+                <td>{{user.currentQRCS}}</td>
+                <td>{{user.noOfReviews}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button class="btn btn-primary pull-right" (click)="showAddQRCFormModel()">Add QRC</button>
+        <button class="btn btn-secondary mr-1" *ngIf="qrc" (click)="showEditQRCFormModel()">Edit QRC</button>
+        <button class="btn btn-secondary mr-1" *ngIf="qrc && category && users.length === 0"
+                (click)="showAddUsersFormModel()">Add Users
+        </button>
+        <button class="btn btn-secondary mr-1" *ngIf="qrc && category && users.length > 0"
+                (click)="showAddUsersFormModel()">Edit Users
+        </button>
+        <button class="btn btn-secondary mr-1" *ngIf="qrc && category && users.length === 0"
+                (click)="DeleteQRC()">Delete QRC
+        </button>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+  </form>
+</section>
+<!-- /.content -->
+
+<p-dialog header="{{QRCForm.value.updatedBy != null ? 'Update' :
+        'Add'}} QRC" [(visible)]="showAddQRCForm" [modal]="true"
+          [style]="{'overflow-x': 'hidden', width: '800px', height: 'auto', 'max-height':'600px'}">
+  <form [formGroup]="QRCForm">
+    <div class="form">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div
+            class="form-group {{((!QRCForm.controls['name'].valid && (!QRCForm.controls['name'].untouched || QRCForm.controls['name'].dirty)))? 'has-error' : ''}} ">
+            <label for="">QRC Name</label>
+            <input type="text" formControlName="name" class="form-control">
+            <span class="help-block"
+                  *ngIf="!QRCForm.controls['name'].valid && (!QRCForm.controls['name'].untouched || QRCForm.controls['name'].dirty)">Please
+              enter valid name</span>
+            <ng-container *ngIf="(QRCForm.controls.name.errors | json) != 'null'">
+              <span class="help-block" *ngIf="QRCForm.controls.name.errors.maxlength != null">Maximum
+                characters allowed is {{QRCForm.controls.name.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngIf="users.length > 0" class="col-xs-12 col-md-6">
+          <div
+            class="form-group {{((!QRCForm.controls['categoryIds'].valid && (!QRCForm.controls['categoryIds'].untouched || QRCForm.controls['categoryIds'].dirty)))? 'has-error' : ''}} ">
+            <label for="">Select Category</label>
+            <select formControlName="categoryIds" [attr.disabled]="QRCForm.value.updatedBy != null ? '' : null"
+                    name="category" class="form-control">
+              <option value=""></option>
+              <option *ngFor="let item of Allcategories" value="{{item.id}}">{{item.name}}</option>
+            </select>
+            <span class="help-block"
+                  *ngIf="!QRCForm.controls['categoryIds'].valid && (!QRCForm.controls['categoryIds'].untouched || QRCForm.controls['categoryIds'].dirty)">Please
+              select categories</span>
+          </div>
+        </div>
+        <div *ngIf="users.length === 0" class="col-xs-12 col-md-6">
+          <div
+            class="form-group {{((!QRCForm.controls['categoryIds'].valid && (!QRCForm.controls['categoryIds'].untouched || QRCForm.controls['categoryIds'].dirty)))? 'has-error' : ''}} ">
+            <label for="">Select Category</label>
+            <select formControlName="categoryIds" name="category" class="form-control">
+              <option value=""></option>
+              <option *ngFor="let item of Allcategories" value="{{item.id}}">{{item.name}}</option>
+            </select>
+            <span class="help-block"
+                  *ngIf="!QRCForm.controls['categoryIds'].valid && (!QRCForm.controls['categoryIds'].untouched || QRCForm.controls['categoryIds'].dirty)">Please
+              select categories</span>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div
+            class="form-group {{((!QRCForm.controls['description'].valid && (!QRCForm.controls['description'].untouched || QRCForm.controls['description'].dirty)))? 'has-error' : ''}} ">
+            <label for="">QRC Description</label>
+            <textarea formControlName="description" rows="10" class="form-control"></textarea>
+            <span class="help-block"
+                  *ngIf="!QRCForm.controls['description'].valid && (!QRCForm.controls['description'].untouched || QRCForm.controls['description'].dirty)">Please
+              enter description</span>
+            <ng-container *ngIf="(QRCForm.controls.description.errors | json) != 'null'">
+              <span class="help-block" *ngIf="QRCForm.controls.description.errors.maxlength != null">Maximum
+                characters allowed is {{QRCForm.controls.description.errors.maxlength.requiredLength}}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-footer class="text-right">
+      <button class="btn btn-primary pull-right" [disabled]="QRCForm.invalid"
+              (click)="QRCForm.value.updatedBy != null ? UpdateQRCForm(QRCForm) : SubmitQRCForm(QRCForm)">
+        {{QRCForm.value.updatedBy != null ? 'Update' :
+        'Add'}} QRC
+      </button>
+      <button class="btn btn-secondary " (click)="showAddQRCForm = false">Cancel</button>
+    </p-footer>
+  </form>
+</p-dialog>
+
+<p-dialog header="Add Users" [(visible)]="showAddUsersForm" [modal]="true" [responsive]="true"
+          [contentStyle]="{'max-width':'90vw', 'max-height':'70vh', 'overflow':'hidden','overflow-y':'auto'}"
+          [positionTop]="100">
+  <div class="table-responsive">
+    <p-table [paginator]="true" [rows]="10" [totalRecords]="newUsersTotal" [first]="newUsersFirst" #dt
+             [value]="newUsers"
+             [(selection)]="selectedNewUsers">
+      <ng-template pTemplate="header">
+        <tr>
+          <th id="col" class="setWidth">
+          </th>
+          <th id="user">User</th>
+          <th id="course">Course Created</th>
+          <th id="currqrc">Current QRCS</th>
+          <th id="reviews">No Of Reviews</th>
+          <th id="resource">Resource Contributed</th>
+          <th id="action" class="setWidthAction">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr [pSelectableRow]="user">
+          <td>
+            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+          </td>
+          <td>{{user.userName}}</td>
+          <td>{{user.courseCreated}}</td>
+          <td>{{user.currentQRCS}}</td>
+          <td>{{user.noOfReviews}}</td>
+          <td>{{user.resourceContributed}}</td>
+          <td><a href="javascript:;" (click)="showUserProfile(user.userId)" class="btn btn-primary btn-sm">View
+            Profile</a></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <p>Total Selected Users : {{selectedNewUsers.length}}</p>
+        <ul class="chips-container">
+          <li *ngFor="let user of selectedNewUsers" class="chips-item">
+            {{user.userName}}
+          </li>
+        </ul>
+      </ng-template>
+    </p-table>
+  </div>
+  <p-footer class="text-right">
+    <button type="button" class="btn btn-primary pull-right" (click)="addUsers(selectedNewUsers)"
+            [disabled]="selectedNewUsers.length === 0">Submit
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancelAddusers()">Cancel</button>
+  </p-footer>
+
+</p-dialog>
+
+
+<p-dialog header="User Profile" [(visible)]="userProfile" [modal]="true" [responsive]="true"
+          [contentStyle]="{'max-height':'90vh', 'overflow':'hidden','overflow-y':'auto'}" [width]="1000"
+          [positionTop]="100">
+
+  <div class="public-profile">
+    <div class="panel-box">
+      <div class="info-flex">
+        <div class="title">
+          <div class="profile-photo">
+            <img src="{{publicUser && publicUser.photo ?  publicUser.photo : 'assets/images/default-user.png'}}"
+                 class="img-fluid" alt="profileImg"/>
+          </div>
+        </div>
+        <div class="description first">
+          <h3>{{publicUser ? publicUser.title ? publicUser.title.name : '' : ''}}
+            {{publicUser ? publicUser.firstName : ''}}
+            {{publicUser ? publicUser.middleName : ''}} {{publicUser ? publicUser.lastName : ''}}</h3>
+          <p>{{publicUser ? publicUser.profileDescription : ''}}</p>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex">
+        <div class="title">
+          <h3>Basic Information</h3>
+        </div>
+        <div class="description">
+          <p><strong>Country</strong>: {{publicUser ? publicUser.country ? publicUser.country.name : '' : ''}}</p>
+          <p><strong>State</strong>: {{publicUser ? publicUser.state ? publicUser.state.name : '' : ''}}</p>
+          <p><strong>Gender</strong>: {{publicUser ? publicUser.gender ? publicUser.gender.name : '' : ''}}</p>
+          <p><strong>Date Of Birth</strong>:
+            <span *ngIf="publicUser && publicUser.dateOfBirth">{{ publicUser.dateOfBirth| date:'mediumDate' }}</span>
+          </p>
+          <p><strong>Portal Language Preference</strong>:
+            {{publicUser ? publicUser.portalLanguage ? publicUser.portalLanguage.name : '' : ''}}
+          </p>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex" *ngIf="publicUser && publicUser.userEducations">
+        <div class="title">
+          <h3>Educational Qualifications</h3>
+        </div>
+        <div class="description">
+          <div class="table-responsive">
+            <table class="table table-sm" *ngIf="publicUser && publicUser.userEducations" aria-describedby="educational qualfications">
+              <thead>
+              <tr>
+                <th id="university">University / School</th>
+                <th id="major">Major</th>
+                <th id="grade">Grade</th>
+                <th id="from">From</th>
+                <th id="to">To</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of publicUser.userEducations">
+                <td>{{item.universitySchool}}</td>
+                <td>{{item.major}}</td>
+                <td>{{item.grade}}</td>
+                <td>{{item.fromDate | date:'mediumDate'}}</td>
+                <td>{{item.toDate | date:'mediumDate'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex" *ngIf="publicUser && publicUser.userCertifications">
+        <div class="title">
+          <h3>Certifications</h3>
+        </div>
+        <div class="description">
+          <div class="table-responsive">
+            <table class="table table-sm" *ngIf="publicUser && publicUser.userCertifications" aria-describedby="Certifications">
+              <thead>
+              <tr>
+                <th id="certification">Certification Name</th>
+                <th id="year">Year</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of publicUser.userCertifications">
+                <td>{{item.certificationName}}</td>
+                <td>{{item.year}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex" *ngIf="publicUser && publicUser.userExperiences">
+        <div class="title">
+          <h3>Experiences</h3>
+        </div>
+        <div class="description">
+          <div class="table-responsive">
+            <table class="table table-sm" *ngIf="publicUser && publicUser.userExperiences" aria-describedby="Experiences">
+              <thead>
+              <tr>
+                <th id="org">Organization Name</th>
+                <th id="desig">Designation</th>
+                <th id="from">From</th>
+                <th id="to">To</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of publicUser.userExperiences">
+                <td>{{item.organizationName}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.fromDate | date:'mediumDate'}}</td>
+                <td>{{item.toDate | date:'mediumDate'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex" *ngIf="publicUser && publicUser.subjectsInterested">
+        <div class="title">
+          <h3>Subjects Interested</h3>
+        </div>
+        <div class="description">
+          <p><strong>{{publicUser && subjectsInterested}}</strong></p>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex languages" *ngIf="publicUser && publicUser.userLanguages">
+        <div class="title">
+          <h3>Known Languages</h3>
+        </div>
+        <div class="description">
+          <div class="table-responsive">
+            <table class="table table-sm" *ngIf="publicUser && publicUser.userLanguages" aria-describedby="Known languages">
+              <thead>
+              <tr>
+                <th id="lang">Language</th>
+                <th id="speak">Speak</th>
+                <th id="read">Read</th>
+                <th id="write">Write</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of publicUser.userLanguages">
+                <td>{{item.language.name}}</td>
+                <td><span class="badge badge-pill badge-primary" *ngIf="item.isSpeak"><i class="fa fa-check"
+                                                                                         aria-hidden="true"></i></span>
+                  <span class="badge badge-pill badge-dark" *ngIf="!item.isSpeak"> <i class="fa fa-times"
+                                                                                      aria-hidden="true"></i></span>
+
+                </td>
+                <td><span class="badge badge-pill badge-primary" *ngIf="item.isRead"><i class="fa fa-check"
+                                                                                        aria-hidden="true"></i></span>
+                  <span class="badge badge-pill badge-dark" *ngIf="!item.isRead"> <i class="fa fa-times"
+                                                                                     aria-hidden="true"></i></span>
+                </td>
+                <td><span class="badge badge-pill badge-primary" *ngIf="item.isWrite"><i class="fa fa-check"
+                                                                                         aria-hidden="true"></i></span>
+                  <span class="badge badge-pill badge-dark" *ngIf="!item.isWrite"> <i class="fa fa-times"
+                                                                                      aria-hidden="true"></i></span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- info flex :END -->
+      <!-- ====================  Next Section ====================-->
+      <div class="info-flex" *ngIf="publicUser && publicUser.userSocialMedias">
+        <div class="title">
+          <h3>Social Media</h3>
+        </div>
+        <div class="description">
+          <div class="table-responsive">
+            <table class="table table-sm" *ngIf="publicUser && publicUser.userSocialMedias" aria-describedby="Social Media">
+              <thead>
+              <tr>
+                <th id="platforms">Platforms</th>
+                <th id="url">URL</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of publicUser.userSocialMedias">
+                <td>{{item.socialMedia.name}}</td>
+                <td>{{item.url}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- info flex :END -->
+    </div>
+  </div> <!-- public profile :END-->
+</p-dialog>

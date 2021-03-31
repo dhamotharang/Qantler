@@ -1,0 +1,150 @@
+$sides: ("": "",
+    "t": "top",
+    "b": "bottom",
+    "l": "left",
+    "r": "right",
+);
+
+$breakpoints: ("": "",
+    "xs": 576px,
+    "sm": 768pxm,
+    "md": 992px,
+    "lg": 1200px,
+);
+
+@each $breakName,
+$breakValue in $breakpoints {
+
+    @each $sideName,
+    $sideValue in $sides {
+        @for $i from 0 through 10 {
+
+            $property: if($sideName=='', '', -#{$sideValue});
+            $space: $i * 10;
+            $selector: '';
+
+            @if $breakName !="" {
+                $selector: #{$sideName}-#{$breakName}-#{$i};
+            }
+
+            @else {
+                $selector: #{$sideName}-#{$i};
+            }
+
+            @if $breakName !="" {
+                @media (min-width: $breakValue) {
+                    .m#{$selector} {
+                        margin#{$property}: #{$space}px;
+                    }
+
+                    .p#{$selector} {
+                        padding#{$property}: #{$space}px;
+                    }
+                }
+            }
+
+            @else {
+                .m#{$selector} {
+                    margin#{$property}: #{$space}px;
+                }
+
+                .p#{$selector} {
+                    padding#{$property}: #{$space}px;
+                }
+            }
+        }
+    }
+}
+
+.login-logo {
+    width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.logo {
+    background-color: #fff;
+
+    &:hover,
+    &:focus {
+        background-color: #eee;
+    }
+
+    .logo-lg {
+        width: 145px;
+        margin: 0 auto;
+    }
+
+    .logo-mini {
+        img {
+            width: 70%;
+            max-width: 33px;
+        }
+    }
+}
+
+.toolbar {
+    &.pagetop {
+        display: block;
+        margin: 20px -10px;
+
+        .btn-app {
+            min-width: 115px;
+            height: 75px;
+
+            &>.fa,
+            &>.glyphicon,
+            &>.ion {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+.box-header,
+.box-body,
+.box-footer {
+    padding: 15px 20px;
+}
+
+.btn-primary {
+    background-color: #ba9a3a;
+    border-color: #ba9a3a;
+}
+
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: #a67e31;
+    border-color: #a67e31;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #ba9a3a;
+    border-color: #ba9a3a;
+}
+
+.checkbox,
+.radio {
+    &.icheck {
+        label {
+            div {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.table .btn{
+    margin-right: 0.5rem;
+}
+
+.table .btn:last-child{
+    margin-right: 0;
+}

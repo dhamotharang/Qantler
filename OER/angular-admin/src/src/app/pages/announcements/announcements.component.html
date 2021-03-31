@@ -1,0 +1,167 @@
+<section class="content-header">
+  <h1>
+    Announcements
+    <small>it all starts here</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a routerLink="/"><em class="fa fa-dashboard"></em> Home</a></li>
+    <li class="active">Announcements</li>
+  </ol>
+  <app-pagetop></app-pagetop>
+</section>
+
+<!-- Main content -->
+<section class="content" *ngIf="!showAnnouncementForm">
+  <div class="container-fluid">
+    <div class="row">
+        <form class="ng-untouched ng-pristine ng-valid">
+          <div class="d-flex search-filter-row">
+        <div class="row">
+          <div class="col-md-4">
+        <label for="" class="">Search</label>
+        <input class="form-control" name="ressrch" [(ngModel)]="searchKeyword">
+      </div>
+      <div class="col-md-1">
+        <div class="form-group search-btn-col" style="margin-top: 24px;">
+          <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group clear-btn-col" style="margin-top: 24px;">
+          <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+            Clear
+          </button>
+        </div>
+      </div>
+        </div>
+      <!-- <div class="col-xs-6"> 
+      <div class="form-group search-btn-col">
+        <button class="btn btn-primary text-uppercase txtside-btn txtht-btn" type="submit" (click)="search()">
+          Search
+        </button>
+      </div>
+      <div class="form-group clear-btn-col ml-3">
+        <button class="btn btn-light text-uppercase txtside-btn txtht-btn" (click)="clearSearch()" type="button">
+         Clear
+        </button>
+      </div>
+      </div> -->
+          </div>
+    </form>
+    </div>
+  </div>
+
+  <!-- top toolbar btns :End -->
+  <!-- Default box -->
+  <p-table [value]="Announcements">
+    <ng-template pTemplate="header">
+      <tr>
+        <th id="announcement"  data-toggle="tooltip" title="Sort By Announcement" (click)="Clickingevent($event, 1)">Announcement
+          <span *ngIf="spanColNo=='asc-1' && Clickfield=='announcement'" id="announcement" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-1' && Clickfield=='announcement'" id="announcement" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="announcementarabic"  data-toggle="tooltip" title="Sort By AnnouncementArabic" (click)="Clickingevent($event, 2)">Announcement Arabic
+          <span *ngIf="spanColNo=='asc-2' && Clickfield=='announcementarabic'" id="announcementarabic" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-2' && Clickfield=='announcementarabic'" id="announcementarabic" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="createdby"  data-toggle="tooltip" title="Sort By CreatedBy" (click)="Clickingevent($event, 3)">Created By
+          <span *ngIf="spanColNo=='asc-3' && Clickfield=='createdby'" id="createdby" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-3' && Clickfield=='createdby'" id="createdby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="createdon"  data-toggle="tooltip" title="Sort By CreatedOn" (click)="Clickingevent($event, 4)">Created On
+          <span *ngIf="spanColNo=='asc-4' && Clickfield=='createdon'" id="createdon" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-4' && Clickfield=='createdon'" id="createdon" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="updatedby" data-toggle="tooltip" title="Sort By UpdatedBy" (click)="Clickingevent($event, 5)">Updated By
+          <span *ngIf="spanColNo=='asc-5' && Clickfield=='updatedby'" id="updatedby" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-5' && Clickfield=='updatedby'" id="updatedby" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="updatedon" data-toggle="tooltip" title="Sort By UpdatedOn" (click)="Clickingevent($event, 6)">Updated On
+          <span *ngIf="spanColNo=='asc-6' && Clickfield=='updatedon'" id="updatedon" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-6' && Clickfield=='updatedon'" id="updatedon" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="status" data-toggle="tooltip" title="Sort By Status" (click)="Clickingevent($event, 7)">Status
+          <span *ngIf="spanColNo=='asc-7' && Clickfield=='status'" id="status" disabled="true" class="glyphicon glyphicon-chevron-up" style="float:right;"></span>
+          <span *ngIf="spanColNo=='desc-7' && Clickfield=='status'" id="status" class="glyphicon glyphicon-chevron-down" style="float:right;"></span>
+        </th>
+        <th id="action" class="setWidth">Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-Announcement>
+      <tr>
+        <td style="overflow: auto;" [innerHtml]="Announcement.text"></td>
+        <td style="overflow: auto;" [innerHtml]="Announcement.text_Ar"></td>
+        <td>{{Announcement.createdBy}}</td>
+        <td>{{Announcement.createdOn| date:'long'}}</td>
+        <td>{{Announcement.updatedBy}}</td>
+        <td>{{Announcement.updatedOn| date:'long'}}</td>
+        <td>{{Announcement.active ? 'Active' : 'Inactive'}}</td>
+        <td>
+          <button class="btn btn-info mr-1" (click)="editAnnouncement(Announcement)">Edit</button>
+          <button class="btn btn-warning" (click)="deleteAnnouncement(Announcement)">Delete</button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+ <div class="pt-2 pb-2 text-right">
+  <button class="btn btn-primary" (click)="AddAnnouncement()">Add Announcement</button>
+ </div>
+</section>
+<section class="content" *ngIf="showAnnouncementForm">
+<div class="box" *ngIf="showAnnouncementForm">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{(patchId && patchId > 0) ? 'Edit Announcement' : 'Add Announcement'}}</h3>
+  </div>
+  <div class="box-body">
+
+    <div class="panel-box p-30">
+      <form *ngIf="showAnnouncementForm" [formGroup]="AnnouncementForm">
+        <div
+          class="form-group {{(AnnouncementForm.controls['text'].invalid && (AnnouncementForm.controls['text'].touched || AnnouncementFormSubmitted))? 'has-error' : ''}} ">
+          <label for="page-title"> {{(patchId && patchId > 0) ? 'Edit' : 'Add'}} Announcement</label>
+          <editor [init]="init" formControlName="text"></editor>
+          <span class="help-block"
+                *ngIf="AnnouncementForm.controls['text'].invalid && (AnnouncementForm.controls['text'].touched || AnnouncementFormSubmitted)">Please enter valid Announcement</span>
+          <ng-container *ngIf="(AnnouncementForm.controls.text.errors | json) != 'null'">
+              <span class="help-block" *ngIf="AnnouncementForm.controls.text.errors.maxlength != null">Maximum
+        characters allowed is {{AnnouncementForm.controls.text.errors.maxlength.requiredLength}}</span>
+          </ng-container>
+        </div>
+        <div
+          class="form-group {{(AnnouncementForm.controls['text_Ar'].invalid && (AnnouncementForm.controls['text_Ar'].touched || AnnouncementFormSubmitted))? 'has-error' : 'material'}} ">
+          <label for="page-title"> {{(patchId && patchId > 0) ? 'Edit' : 'Add'}} Arabic Announcement</label>
+          <editor [init]="init1" formControlName="text_Ar"></editor>
+          <span class="help-block"
+                *ngIf="AnnouncementForm.controls['text_Ar'].invalid && (AnnouncementForm.controls['text_Ar'].touched || AnnouncementFormSubmitted)">Please enter valid Arabic Announcement</span>
+          <ng-container *ngIf="(AnnouncementForm.controls.text_Ar.errors | json) != 'null'">
+                <span class="help-block" *ngIf="AnnouncementForm.controls.text_Ar.errors.maxlength != null">Maximum
+          characters allowed is {{AnnouncementForm.controls.text_Ar.errors.maxlength.requiredLength}}</span>
+          </ng-container>
+        </div>
+        <div
+          class="form-group {{(AnnouncementForm.controls['active'].invalid && (AnnouncementForm.controls['active'].touched || AnnouncementFormSubmitted))? 'has-error' : 'material'}} ">
+          <label for="role"> Active</label>
+          <select class="form-control" id="role" formControlName="active">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+          <span class="help-block"
+                *ngIf="AnnouncementForm.controls['active'].invalid && (AnnouncementForm.controls['active'].touched || AnnouncementFormSubmitted)">Please enter Valid Status</span>
+        </div>
+        <button class="btn btn-info mr-1"
+                (click)="(patchId && patchId > 0) ? updateForm(AnnouncementForm) : submitForm(AnnouncementForm)">
+          {{(patchId
+          && patchId > 0) ? 'Update' : 'Submit'}}
+        </button>
+        <button class="btn btn-warning" (click)="cancelForm()">Cancel</button>
+      </form>
+
+    </div>
+
+  </div>
+  <!-- /.box-body -->
+  <!-- /.box-footer-->
+</div>
+</section>
